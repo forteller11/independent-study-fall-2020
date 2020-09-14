@@ -20,6 +20,9 @@ namespace Indpendent_Study_Fall_2020
         };
 
         private int VBOHandle;
+        private int VAOHandle;
+        
+        private ShaderProgram _shaderProgram;
         
         #region initialise
         public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
@@ -51,10 +54,24 @@ namespace Indpendent_Study_Fall_2020
             
             GL.ClearColor(1f,0f,1f,1f);
             
+            _shaderProgram = new ShaderProgram("test.vert", "test.frag");
+            
+            
+            VAOHandle = GL.GenVertexArray();
+            GL.BindVertexArray(VAOHandle);
+            GL.VertexAttribPointer(_shaderProgram.GetAttribLocation("screenPosition"), 
+                3,
+                VertexAttribPointerType.Float,
+                false,
+                sizeof(float) * 3,
+                0);
+            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("screenPosition"));
+            
             VBOHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
-            
-            Shader shader = new Shader("test.vert", "test.frag");
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+
+            _shaderProgram.Use();
         }
 
         protected override void OnUnload(EventArgs e)
@@ -73,9 +90,11 @@ namespace Indpendent_Study_Fall_2020
             
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this only clears colour and not depth texture for isntance 
             
+            _shaderProgram.Use();
+            GL.BindVertexArray(VAOHandle);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+            
             base.OnUpdateFrame(e);
-            
-            
             Context.SwapBuffers();
 
         }

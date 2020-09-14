@@ -4,12 +4,12 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020
 {
-    public class Shader
+    public class ShaderProgram
     {
         public int Handle { get; private set; }
 
 
-        public Shader(string vertexFileName, string fragmentFileName) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
+        public ShaderProgram(string vertexFileName, string fragmentFileName) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
             string vertexFile;
             string fragmentFile;
@@ -45,10 +45,12 @@ namespace Indpendent_Study_Fall_2020
             GL.UseProgram(Handle);
         }
         
-        ~Shader()
+        ~ShaderProgram()
         {
             GL.DeleteProgram(Handle);
         }
         //TODO implement iDisposable to free up memory?? what is wrong with using destructor? is it that an exception will be thrown if openGL context is not active? put program.delete in window.unload() then
+
+        public int GetAttribLocation(string name) => GL.GetAttribLocation(Handle, name);
     }
 }
