@@ -25,8 +25,9 @@ namespace Indpendent_Study_Fall_2020
             GL.ShaderSource(vertexHandle, vertexFile); //bind handle to text
             GL.ShaderSource(fragmentHandle, fragmentFile);
             
-            GL.CompileShader(vertexHandle);
-            GL.CompileShader(fragmentHandle);
+            
+            CompileShaderAndDebug(vertexHandle);
+            CompileShaderAndDebug(fragmentHandle);
 
             Handle = GL.CreateProgram();
             GL.AttachShader(Handle, vertexHandle);
@@ -40,6 +41,14 @@ namespace Indpendent_Study_Fall_2020
 
         }
 
+        private void CompileShaderAndDebug(int shaderHandle)
+        {
+            GL.CompileShader(shaderHandle);
+            
+            string infoLogVert = GL.GetShaderInfoLog(shaderHandle);
+            if (infoLogVert != String.Empty) 
+                Console.WriteLine(infoLogVert);
+        }
         public void Use()
         {
             GL.UseProgram(Handle);
@@ -51,6 +60,12 @@ namespace Indpendent_Study_Fall_2020
         }
         //TODO implement iDisposable to free up memory?? what is wrong with using destructor? is it that an exception will be thrown if openGL context is not active? put program.delete in window.unload() then
 
-        public int GetAttribLocation(string name) => GL.GetAttribLocation(Handle, name);
+        public int GetAttribLocation(string name)
+        {
+            int location = GL.GetAttribLocation(Handle, name);
+            if (location == -1)
+                throw new Exception("AttribLocation cannot be found (are you using it in the shader?)");
+            return location;
+        }
     }
 }

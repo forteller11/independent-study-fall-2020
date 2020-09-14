@@ -55,23 +55,21 @@ namespace Indpendent_Study_Fall_2020
             GL.ClearColor(1f,0f,1f,1f);
             
             _shaderProgram = new ShaderProgram("test.vert", "test.frag");
-            
+
+            VBOHandle = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
             
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
-            GL.VertexAttribPointer(_shaderProgram.GetAttribLocation("screenPosition"), 
+            GL.VertexAttribPointer(0, 
                 3,
                 VertexAttribPointerType.Float,
                 false,
                 sizeof(float) * 3,
                 0);
-            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("screenPosition"));
-            
-            VBOHandle = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            GL.EnableVertexAttribArray(0);
 
-            _shaderProgram.Use();
         }
 
         protected override void OnUnload(EventArgs e)
@@ -88,15 +86,20 @@ namespace Indpendent_Study_Fall_2020
             if (keyboard.IsKeyDown(Key.Escape))
                 Exit();
             
+            base.OnUpdateFrame(e);
+        }
+
+        protected override void OnRenderFrame(FrameEventArgs e)
+        {
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this only clears colour and not depth texture for isntance 
             
             _shaderProgram.Use();
             GL.BindVertexArray(VAOHandle);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
             
-            base.OnUpdateFrame(e);
-            Context.SwapBuffers();
-
+            base.OnRenderFrame(e);
+            SwapBuffers();
         }
 
         protected override void OnResize(EventArgs e)
