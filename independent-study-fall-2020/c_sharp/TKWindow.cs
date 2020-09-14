@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Input;
 
 namespace Indpendent_Study_Fall_2020
 {
@@ -26,11 +29,39 @@ namespace Indpendent_Study_Fall_2020
             GL.Enable(EnableCap.DebugOutput);
             GL.DebugMessageCallback(GLErrorListener, IntPtr.Zero);
             
-            newTKWindow.Run();
+            newTKWindow.Run(60d);
 
             return newTKWindow;
         }
-        
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            
+            GL.ClearColor(1f,0f,1f,1f);
+        }
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {
+            var keyboard = Keyboard.GetState();
+            if (keyboard.IsKeyDown(Key.Escape))
+                Exit();
+            
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this only clears colour and not depth texture for isntance 
+            
+            base.OnUpdateFrame(e);
+            
+            
+            Context.SwapBuffers();
+
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+        }
+
+
         static void GLErrorListener (DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr param) 
         {
             Console.WriteLine($"___________ GL Error Callback _________");
