@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\Indpendent Study Fall 2020.csproj": {}
+  },
+  "projects": {
+    "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\Indpendent Study Fall 2020.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\Indpendent Study Fall 2020.csproj",
+        "projectName": "Indpendent Study Fall 2020",
+        "projectPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\Indpendent Study Fall 2020.csproj",
+        "packagesPath": "C:\\Users\\Charly\\.nuget\\packages\\",
+        "outputPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Charly\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "OpenTK": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "OpenTK/3.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/OpenTK.dll": {}
+        },
+        "runtime": {
+          "lib/net20/OpenTK.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "OpenTK/3.2.0": {
+      "sha512": "31L+x7r3EV1bnRjzqk/Z6rh3oO4h2kNa68+hbwAvXctHS+eI00x9d+ox++wY+uoKg2y0ILi7wQRBLktcb7/fEQ==",
+      "type": "package",
+      "path": "opentk/3.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/OpenTK.dll.config",
+        "lib/net20/OpenTK.dll",
+        "lib/net20/OpenTK.pdb",
+        "lib/net20/OpenTK.xml",
+        "opentk.3.2.0.nupkg.sha512",
+        "opentk.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "OpenTK >= 3.2.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Charly\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\Indpendent Study Fall 2020.csproj",
+      "projectName": "Indpendent Study Fall 2020",
+      "projectPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\Indpendent Study Fall 2020.csproj",
+      "packagesPath": "C:\\Users\\Charly\\.nuget\\packages\\",
+      "outputPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-fall-2020\\Indpendent Study Fall 2020\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Charly\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "dependencies": {
+          "OpenTK": {
+            "target": "Package",
+            "version": "[3.2.0, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'OpenTK 3.2.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "OpenTK",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
+}
