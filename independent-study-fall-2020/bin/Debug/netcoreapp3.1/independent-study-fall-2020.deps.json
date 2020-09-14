@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "independent-study-fall-2020/1.0.0": {
+        "dependencies": {
+          "OpenTK": "3.2.0"
+        },
+        "runtime": {
+          "independent-study-fall-2020.dll": {}
+        }
+      },
+      "OpenTK/3.2.0": {
+        "runtime": {
+          "lib/net20/OpenTK.dll": {
+            "assemblyVersion": "3.2.0.0",
+            "fileVersion": "3.2.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "independent-study-fall-2020/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "OpenTK/3.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-31L+x7r3EV1bnRjzqk/Z6rh3oO4h2kNa68+hbwAvXctHS+eI00x9d+ox++wY+uoKg2y0ILi7wQRBLktcb7/fEQ==",
+      "path": "opentk/3.2.0",
+      "hashPath": "opentk.3.2.0.nupkg.sha512"
+    }
+  }
+}

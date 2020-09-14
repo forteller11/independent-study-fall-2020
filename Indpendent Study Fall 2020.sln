@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indpendent Study Fall 2020", "Indpendent Study Fall 2020\Indpendent Study Fall 2020.csproj", "{A3F08523-328D-4EDB-B06F-AD6146272E10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "independent-study-fall-2020", "independent-study-fall-2020\independent-study-fall-2020.csproj", "{A3F08523-328D-4EDB-B06F-AD6146272E10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
