@@ -9,10 +9,13 @@ namespace Indpendent_Study_Fall_2020
 {
     public class TKWindow : GameWindow
     {
+        public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
+        public TKWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device) : base(width, height, mode, title, options, device) { }
+
         public static TKWindow CreateAndRun()
         {
-            
-            var newTKWindow = (TKWindow) new GameWindow(
+
+            var newTKWindow = new TKWindow(
                 420, 
                 420, 
                 GraphicsMode.Default, 
