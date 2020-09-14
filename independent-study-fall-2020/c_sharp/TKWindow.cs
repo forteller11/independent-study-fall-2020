@@ -52,8 +52,9 @@ namespace Indpendent_Study_Fall_2020
             GL.ClearColor(1f,0f,1f,1f);
             
             VBOHandle = GL.GenBuffer();
-            
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+            
+            Shader shader = new Shader("test.vert", "test.frag");
         }
 
         protected override void OnUnload(EventArgs e)
