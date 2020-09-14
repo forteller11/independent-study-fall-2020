@@ -8,10 +8,20 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
 
+
 namespace Indpendent_Study_Fall_2020
 {
     public class TKWindow : GameWindow
     {
+        float[] vertices = {
+            -0.5f, -0.5f, 0.0f, //Bottom-left vertex
+            0.5f, -0.5f, 0.0f, //Bottom-right vertex
+            0.0f,  0.5f, 0.0f  //Top vertex
+        };
+
+        private int VBOHandle;
+        
+        #region initialise
         public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
         public TKWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device) : base(width, height, mode, title, options, device) { }
 
@@ -33,12 +43,25 @@ namespace Indpendent_Study_Fall_2020
 
             return newTKWindow;
         }
+        #endregion
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             
             GL.ClearColor(1f,0f,1f,1f);
+            
+            VBOHandle = GL.GenBuffer();
+            
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+        }
+
+        protected override void OnUnload(EventArgs e)
+        {
+            base.OnUnload(e);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //reset binding to null
+            GL.DeleteBuffer(VBOHandle);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -54,6 +77,12 @@ namespace Indpendent_Study_Fall_2020
             
             Context.SwapBuffers();
 
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            GL.Viewport(0,0, Width, Height);
         }
 
         protected override void OnClosing(CancelEventArgs e)
