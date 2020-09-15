@@ -27,7 +27,7 @@ namespace Indpendent_Study_Fall_2020
 
         }
 
-        private int CompileShaderAndDebug(string shaderFileName, ShaderType shaderType)
+        private int CompileShaderAndDebug(string shaderFileName, ShaderType shaderType)//
         {
             string shaderCodeText;
             using (var streamReader = new StreamReader(SerializationManager.ShaderPath + "\\" + shaderFileName))
