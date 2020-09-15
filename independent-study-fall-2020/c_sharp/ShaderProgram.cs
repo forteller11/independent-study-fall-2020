@@ -12,24 +12,8 @@ namespace Indpendent_Study_Fall_2020
         public ShaderProgram(string vertexFileName, string fragmentFileName) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
             
-            
-            string vertexFile;
-            string fragmentFile;
-            
-            using (var streamReader = new StreamReader(SerializationManager.ShaderPath + "\\" + vertexFileName)) //read text from file
-                vertexFile = streamReader.ReadToEnd();
-            using (var streamReader = new StreamReader(SerializationManager.ShaderPath + "\\" + fragmentFileName))
-                fragmentFile = streamReader.ReadToEnd();
-
-            int vertexHandle = GL.CreateShader(ShaderType.VertexShader); //create handles
-            int fragmentHandle = GL.CreateShader(ShaderType.VertexShader);
-            
-            GL.ShaderSource(vertexHandle, vertexFile); //bind handle to text
-            GL.ShaderSource(fragmentHandle, fragmentFile);
-            
-            
-            CompileShaderAndDebug(vertexHandle);
-            CompileShaderAndDebug(fragmentHandle);
+            int vertexHandle = CompileShaderAndDebug(vertexFileName, ShaderType.VertexShader); GL.CreateShader(ShaderType.VertexShader); //create handles
+            int fragmentHandle = CompileShaderAndDebug(fragmentFileName, ShaderType.FragmentShader); GL.CreateShader(ShaderType.VertexShader); //create handles
 
             Handle = GL.CreateProgram();
             GL.AttachShader(Handle, vertexHandle);
@@ -43,14 +27,25 @@ namespace Indpendent_Study_Fall_2020
 
         }
 
-        private void CompileShaderAndDebug(int shaderHandle)
+        private int CompileShaderAndDebug(string shaderFileName, ShaderType shaderType)
         {
+            string shaderCodeText;
+            using (var streamReader = new StreamReader(SerializationManager.ShaderPath + "\\" + shaderFileName))
+                shaderCodeText = streamReader.ReadToEnd();
+
+            int shaderHandle = GL.CreateShader(shaderType);
+            
+            GL.ShaderSource(shaderHandle, shaderCodeText);
+            
             GL.CompileShader(shaderHandle);
             
             string infoLogVert = GL.GetShaderInfoLog(shaderHandle);
             if (infoLogVert != String.Empty) 
                 Console.WriteLine(infoLogVert);
+
+            return shaderHandle;
         }
+        
         public void Use()
         {
             GL.UseProgram(Handle);
