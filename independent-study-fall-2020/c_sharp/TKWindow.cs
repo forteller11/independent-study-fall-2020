@@ -62,13 +62,13 @@ namespace Indpendent_Study_Fall_2020
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
             GL.VertexAttribPointer(
-                0, 
+                _shaderProgram.GetAttribLocation("vertPositions"), 
                 3,
                 VertexAttribPointerType.Float,
                 false,
                 sizeof(float) * 3,
                 0);
-            OpenTK.Graphics.OpenGL4.GL.EnableVertexAttribArray(0);
+            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("vertPositions"));
 
         }
 
