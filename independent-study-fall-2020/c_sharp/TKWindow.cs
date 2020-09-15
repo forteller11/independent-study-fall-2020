@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
 
@@ -62,13 +61,14 @@ namespace Indpendent_Study_Fall_2020
             
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
-            GL.VertexAttribPointer(0, 
+            GL.VertexAttribPointer(
+                0, 
                 3,
                 VertexAttribPointerType.Float,
                 false,
                 sizeof(float) * 3,
                 0);
-            GL.EnableVertexAttribArray(0);
+            OpenTK.Graphics.OpenGL4.GL.EnableVertexAttribArray(0);
 
         }
 
@@ -78,6 +78,7 @@ namespace Indpendent_Study_Fall_2020
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //reset binding to null
             GL.DeleteBuffer(VBOHandle);
+            GL.DeleteBuffer(VAOHandle);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)

@@ -6,11 +6,13 @@ namespace Indpendent_Study_Fall_2020
 {
     public class ShaderProgram
     {
-        public int Handle { get; private set; }
+        public int Handle { get; }
 
 
         public ShaderProgram(string vertexFileName, string fragmentFileName) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
+            
+            
             string vertexFile;
             string fragmentFile;
             
