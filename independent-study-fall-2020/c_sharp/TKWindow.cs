@@ -35,10 +35,9 @@ namespace Indpendent_Study_Fall_2020
         float[] vertices = //interweaving of position and tex coords into same vbo and array is done for perf reasons (less state-changes in opengl)
         {
             //Position          Texture coordinates
-            0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f  // top left
+            -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, // Bottom-left vertex
+             0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Bottom-right vertex
+             0.0f,  0.5f, 0.0f, 0.5f, 1.0f //Top vertex
         };
 
         private int VBOVertHandle;
@@ -99,7 +98,7 @@ namespace Indpendent_Study_Fall_2020
                 3,
                 VertexAttribPointerType.Float,
                 false,
-                sizeof(float) * 5,
+                5 * sizeof(float),
                 0);
             GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("in_position"));
             
