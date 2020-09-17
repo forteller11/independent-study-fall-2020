@@ -12,8 +12,8 @@ namespace Indpendent_Study_Fall_2020
         public ShaderProgram(string vertexFileName, string fragmentFileName) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
             
-            int vertexHandle = CompileShaderAndDebug(vertexFileName, ShaderType.VertexShader); GL.CreateShader(ShaderType.VertexShader); //create handles
-            int fragmentHandle = CompileShaderAndDebug(fragmentFileName, ShaderType.FragmentShader); GL.CreateShader(ShaderType.VertexShader); //create handles
+            int vertexHandle = CompileShaderAndDebug(vertexFileName, ShaderType.VertexShader);
+            int fragmentHandle = CompileShaderAndDebug(fragmentFileName, ShaderType.FragmentShader);
 
             Handle = GL.CreateProgram();
             GL.AttachShader(Handle, vertexHandle);

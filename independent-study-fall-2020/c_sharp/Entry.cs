@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
 
@@ -10,9 +11,8 @@ namespace Indpendent_Study_Fall_2020
     {
         private static void Main(string[] _)
         {
-            Console.WriteLine("Hello World!");
 
-            var glWindow = TKWindow.CreateAndRun();
+      var glWindow = TKWindow.CreateAndRun();
         }
     }
 }
