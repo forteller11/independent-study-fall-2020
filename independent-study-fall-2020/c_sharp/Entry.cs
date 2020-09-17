@@ -29,6 +29,7 @@ namespace Indpendent_Study_Fall_2020
 
             //ImageSharp loads from the top-left pixel, whereas OpenGL loads from the bottom-left, causing the texture to be flipped vertically.
             //This will correct that, making the texture display properly.
+        
             Image.Mutate(x => x.Flip(FlipMode.Vertical));
 
             //Get an array of the pixels, in ImageSharp's internal format.
@@ -36,6 +37,7 @@ namespace Indpendent_Study_Fall_2020
 
             //Convert ImageSharp's format into a byte array, so we can use it with OpenGL.
 
+            
             foreach (Rgba32 p in tempPixels)
              { 
                  //Console.Write(p.R + "|");

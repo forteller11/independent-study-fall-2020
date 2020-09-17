@@ -142,7 +142,7 @@ namespace Indpendent_Study_Fall_2020
         protected override void OnRenderFrame(FrameEventArgs e)
         {
 
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this only clears colour and not depth texture for isntance 
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
             
             _shaderProgram.Use();
             GL.BindVertexArray(VAOHandle);
@@ -166,14 +166,33 @@ namespace Indpendent_Study_Fall_2020
 
         static void GLErrorListener (DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr param) 
         {
+            ConsoleColor color;
+            switch (severity)
+            {
+                case DebugSeverity.DebugSeverityNotification:
+                    color = ConsoleColor.DarkGray;
+                    break;
+                case DebugSeverity.DebugSeverityMedium:
+                    color = ConsoleColor.Yellow;
+                    break;
+                case DebugSeverity.DebugSeverityHigh:
+                    color = ConsoleColor.Red;
+                    break;
+                default:
+                    color = ConsoleColor.Gray;
+                    break;
+            }
+            Console.ForegroundColor = color;
+            
             Console.WriteLine($"___________ GL Error Callback _________");
             Console.WriteLine($"source: {source}");
             Console.WriteLine($"type: {type}");
             Console.WriteLine($"severity: {severity}");
             Console.WriteLine($"message: {Marshal.PtrToStringUTF8(message)}");
-            Console.WriteLine($"userParam: {param}");
+//            Console.WriteLine($"userParam: {param}");
             Console.WriteLine($"___________ End of Callback _________");
-
+            
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }
