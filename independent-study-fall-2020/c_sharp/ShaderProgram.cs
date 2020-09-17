@@ -61,7 +61,7 @@ namespace Indpendent_Study_Fall_2020
         {
             int location = GL.GetAttribLocation(Handle, name);
             if (location == -1)
-                throw new Exception("AttribLocation cannot be found (are you using it in the shader? Is there inconsistency in the attribute's naming?)");
+                throw new Exception($"AttribLocation \"{name}\" cannot be found (are you using it in the shader? Is there inconsistency in the attribute's naming?)");
             return location;
         }
     }

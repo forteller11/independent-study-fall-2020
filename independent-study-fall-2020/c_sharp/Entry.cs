@@ -15,7 +15,7 @@ namespace Indpendent_Study_Fall_2020
     static class Entry
     {
         
-        public static List<byte> TexturePixels;
+        public static List<byte> TexturePixels = new List<byte>();
         public static Image<Rgba32> Image;
         private static void Main(string[] _)
         {

@@ -1,7 +1,10 @@
 ﻿#version 330 core
-in vec3 vertPositions;
+in vec3 in_position;
+in vec2 in_uv;
 
+out vec2 uv;
 void main()
 {
-    gl_Position = vec4(vertPositions, 1.0);
+    uv = in_uv;
+    gl_Position = vec4(positions, 1.0);
 }

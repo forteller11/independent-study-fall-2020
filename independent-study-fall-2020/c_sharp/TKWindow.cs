@@ -16,16 +16,29 @@ namespace Indpendent_Study_Fall_2020
 {
     public class TKWindow : GameWindow
     {
-        float[] vertices = {
-            -0.5f, -0.5f, 0.0f, //Bottom-left vertex
-            0.5f, -0.5f, 0.0f, //Bottom-right vertex
-            0.0f,  0.5f, 0.0f  //Top vertex
-        };
+//        float[] positions = {
+//            -0.5f, -0.5f, 0.0f, //Bottom-left vertex
+//            0.5f, -0.5f, 0.0f, //Bottom-right vertex
+//            0.0f,  0.5f, 0.0f  //Top vertex
+//        };
+//        
+//        float[] uvs = {
+//            0.0f, 0.0f, //Bottom-left vertex
+//            1.0f, 0.0f, //Bottom-right vertex
+//            0.5f, 1.0f  //Top vertex
+//        };
+
+//todo combine multiple datas into single  vbo and auto space in vao
+//todo vbo that is static, vbo that aint static and is changed a meme temps
+//todo flyweight vbo (mesh) and also per instance vbo
         
-        float[] uvs = {
-            0.0f, 0.0f, //Bottom-left vertex
-            1.0f, 0.0f, //Bottom-right vertex
-            0.5f, 1.0f  //Top vertex
+        float[] vertices = //interweaving of position and tex coords into same vbo and array is done for perf reasons (less state-changes in opengl)
+        {
+            //Position          Texture coordinates
+            0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // top right
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f  // top left
         };
 
         private int VBOVertHandle;
@@ -72,10 +85,6 @@ namespace Indpendent_Study_Fall_2020
             VBOVertHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOVertHandle);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
-            
-            VBOUVHandle = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOUVHandle);
-            GL.BufferData(BufferTarget.ArrayBuffer, uvs.Length * sizeof(float), uvs, BufferUsageHint.StaticDraw);
             #endregion
             
             #region texture
@@ -86,21 +95,22 @@ namespace Indpendent_Study_Fall_2020
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
             GL.VertexAttribPointer(
-                _shaderProgram.GetAttribLocation("vertPositions"), 
+                _shaderProgram.GetAttribLocation("in_position"), 
                 3,
                 VertexAttribPointerType.Float,
                 false,
-                sizeof(float) * 3,
+                sizeof(float) * 5,
                 0);
-            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("vertPositions"));
+            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("in_position"));
+            
             GL.VertexAttribPointer(
-                _shaderProgram.GetAttribLocation("uv"), 
+                _shaderProgram.GetAttribLocation("in_uv"), 
                 2,
                 VertexAttribPointerType.Float,
                 false,
-                sizeof(float) * 2,
-                0); //todo offset??
-            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("uv"));
+                5 * sizeof(float), //total size of a vertex
+                3 * sizeof(float)); //memory offset within stride
+            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("in_uv"));
             #endregion
             
             #region tex settings
