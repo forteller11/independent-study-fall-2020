@@ -17,8 +17,15 @@ namespace Indpendent_Study_Fall_2020
             0.5f, -0.5f, 0.0f, //Bottom-right vertex
             0.0f,  0.5f, 0.0f  //Top vertex
         };
+        
+        float[] uvs = {
+            0.0f, 0.0f, //Bottom-left vertex
+            1.0f, 0.0f, //Bottom-right vertex
+            0.5f, 1.0f  //Top vertex
+        };
 
-        private int VBOHandle;
+        private int VBOVertHandle;
+        private int VBOUVHandle;
         private int VAOHandle;
         
         private ShaderProgram _shaderProgram;
@@ -49,15 +56,21 @@ namespace Indpendent_Study_Fall_2020
 
         protected override void OnLoad(EventArgs e)
         {
+            
+            //todo have function to handle creating new vbo and auto asignment to vao
             base.OnLoad(e);
             
             GL.ClearColor(1f,0f,1f,1f);
             
             _shaderProgram = new ShaderProgram("test.vert", "test.frag");
 
-            VBOHandle = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
+            VBOVertHandle = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOVertHandle);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            
+            VBOUVHandle = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOUVHandle);
+            GL.BufferData(BufferTarget.ArrayBuffer, uvs.Length * sizeof(float), uvs, BufferUsageHint.StaticDraw);
             
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
@@ -69,6 +82,14 @@ namespace Indpendent_Study_Fall_2020
                 sizeof(float) * 3,
                 0);
             GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("vertPositions"));
+            GL.VertexAttribPointer(
+                _shaderProgram.GetAttribLocation("uv"), 
+                2,
+                VertexAttribPointerType.Float,
+                false,
+                sizeof(float) * 2,
+                0); //todo offset??
+            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("uv"));
 
         }
 
@@ -77,7 +98,7 @@ namespace Indpendent_Study_Fall_2020
             base.OnUnload(e);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //reset binding to null
-            GL.DeleteBuffer(VBOHandle);
+            GL.DeleteBuffer(VBOVertHandle);
             GL.DeleteBuffer(VAOHandle);
         }
 
