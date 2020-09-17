@@ -68,6 +68,7 @@ namespace Indpendent_Study_Fall_2020
             
             _shaderProgram = new ShaderProgram("test.vert", "test.frag");
 
+            #region vbos
             VBOVertHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOVertHandle);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
@@ -75,7 +76,13 @@ namespace Indpendent_Study_Fall_2020
             VBOUVHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOUVHandle);
             GL.BufferData(BufferTarget.ArrayBuffer, uvs.Length * sizeof(float), uvs, BufferUsageHint.StaticDraw);
+            #endregion
             
+            #region texture
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Entry.Image.Width, Entry.Image.Width, 0, PixelFormat.Rgba, PixelType.UnsignedByte,Entry.TexturePixels.ToArray());
+            #endregion
+            
+            #region vao
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
             GL.VertexAttribPointer(
@@ -94,14 +101,13 @@ namespace Indpendent_Study_Fall_2020
                 sizeof(float) * 2,
                 0); //todo offset??
             GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("uv"));
+            #endregion
             
             #region tex settings
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat); //tex wrap mode
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling up, tex interp
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling down
-
-     
             #endregion
 
         }
