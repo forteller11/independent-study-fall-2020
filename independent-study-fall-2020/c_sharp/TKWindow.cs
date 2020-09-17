@@ -35,10 +35,13 @@ namespace Indpendent_Study_Fall_2020
         float[] vertices = //interweaving of position and tex coords into same vbo and array is done for perf reasons (less state-changes in opengl)
         {
             //Position          Texture coordinates
-            -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, // Bottom-left vertex
-             0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Bottom-right vertex
-             0.0f,  0.5f, 0.0f, 0.5f, 1.0f //Top vertex
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // Bottom-left vertex
+             1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // Bottom-right vertex
+             0.0f,  1.0f, 0.0f, 0.5f, 1.0f //Top vertex
         };
+        
+//        // For documentation on this, check Texture.cs
+//        private Texture _texture;
 
         private int VBOVertHandle;
         private int VBOUVHandle;
@@ -62,6 +65,7 @@ namespace Indpendent_Study_Fall_2020
                 DisplayDevice.Default);
             
             GL.Enable(EnableCap.DebugOutput);
+            GL.Enable(EnableCap.Texture2D);
             GL.DebugMessageCallback(GLErrorListener, IntPtr.Zero);
             
             newTKWindow.Run(60d);
@@ -87,7 +91,8 @@ namespace Indpendent_Study_Fall_2020
             #endregion
             
             #region texture
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Entry.Image.Width, Entry.Image.Width, 0, PixelFormat.Rgba, PixelType.UnsignedByte,Entry.TexturePixels.ToArray());
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Entry.Image.Width, Entry.Image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Entry.TexturePixels.ToArray());
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
             #endregion
             
             #region vao
