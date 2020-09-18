@@ -43,6 +43,8 @@ namespace Indpendent_Study_Fall_2020
 //        // For documentation on this, check Texture.cs
 //        private Texture _texture;
 
+        private Texture Texture1;
+        private Texture Texture2;
         private int VBOVertHandle;
         private int VBOUVHandle;
         private int VAOHandle;
@@ -89,10 +91,13 @@ namespace Indpendent_Study_Fall_2020
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOVertHandle);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
             #endregion
-            
+       
             #region texture
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Entry.Image.Width, Entry.Image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Entry.TexturePixels.ToArray());
-            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+            Texture1 = new Texture("unwrap_helper.jpg");
+            Texture2 = new Texture("face.jpg");
+            GL.ActiveTexture(TextureUnit.Texture0); // activate the texture unit first before binding texture
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+            
             #endregion
             
             #region vao

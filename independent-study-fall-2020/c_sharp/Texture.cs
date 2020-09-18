@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using OpenTK.Graphics.OpenGL4;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -15,7 +16,7 @@ namespace Indpendent_Study_Fall_2020
         public int Height => LaborsImage.Height;
         public int Area => Width * Height;
 
-        Texture(string fileName, bool cookOnLoad = true)
+        public Texture(string fileName, bool cookOnLoad = true)
         {
             LoadImage(fileName);
             if (cookOnLoad)
@@ -45,6 +46,25 @@ namespace Indpendent_Study_Fall_2020
                 Colors[indexStart + 2] = tempPixels[i].B;
                 Colors[indexStart + 3] = tempPixels[i].A;
             }
+        }
+
+        public void SendToOpenGL()
+        {
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+        }
+
+        public void BindToUniform(TextureUnit unit, ShaderProgram shader, string attribName, int texOrder)
+        {
+            GL.ActiveTexture(unit);
+            shader.SetUniform(attribName, texOrder);
+            GL.BindTexture(TextureTarget.Texture2D, texOrder);
+        }
+        
+        public void Use(TextureUnit unit, int texOrder)
+        {
+            GL.ActiveTexture(unit);
+            GL.BindTexture(TextureTarget.Texture2D, texOrder);
         }
     }
 }

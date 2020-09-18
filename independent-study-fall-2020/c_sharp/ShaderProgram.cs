@@ -64,5 +64,11 @@ namespace Indpendent_Study_Fall_2020
                 throw new Exception($"AttribLocation \"{name}\" cannot be found (are you using it in the shader? Is there inconsistency in the attribute's naming?)");
             return location;
         }
+
+        public void SetUniform(string uniformName, double uniformHandle)
+        {
+            int location = GetAttribLocation(uniformName);
+            GL.Uniform1(location, uniformHandle);
+        }
     }
 }
