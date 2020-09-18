@@ -54,6 +54,12 @@ namespace Indpendent_Study_Fall_2020
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
+        public void UploadToOpenGLUniform(string name, TextureUnit textureUnit, ShaderProgram shader)
+        {
+            GL.ActiveTexture(textureUnit); // activate the texture unit first before binding texture
+            GL.BindTexture(TextureTarget.Texture2D, shader.GetUniformLocation(name));
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
+        }
         public void BindToUniform(TextureUnit unit, ShaderProgram shader, string attribName, int texOrder)
         {
             GL.ActiveTexture(unit);

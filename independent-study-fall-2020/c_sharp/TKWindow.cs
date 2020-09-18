@@ -1,32 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Advanced;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
-
 
 namespace Indpendent_Study_Fall_2020
 {
     public class TKWindow : GameWindow
     {
-//        float[] positions = {
-//            -0.5f, -0.5f, 0.0f, //Bottom-left vertex
-//            0.5f, -0.5f, 0.0f, //Bottom-right vertex
-//            0.0f,  0.5f, 0.0f  //Top vertex
-//        };
-//        
-//        float[] uvs = {
-//            0.0f, 0.0f, //Bottom-left vertex
-//            1.0f, 0.0f, //Bottom-right vertex
-//            0.5f, 1.0f  //Top vertex
-//        };
 
 //todo combine multiple datas into single  vbo and auto space in vao
 //todo vbo that is static, vbo that aint static and is changed a meme temps
@@ -95,10 +77,8 @@ namespace Indpendent_Study_Fall_2020
        
             #region texture
             Texture1 = new Texture("unwrap_helper.jpg");
-            Texture2 = new Texture("face.jpg");
-            GL.ActiveTexture(TextureUnit.Texture0); // activate the texture unit first before binding texture
-            GL.BindTexture(TextureTarget.Texture2D, texture);
-            
+//            Texture2 = new Texture("face.jpg");
+            Texture1.UploadToOpenGLUniform("texture1", TextureUnit.Texture0, _shaderProgram);
             #endregion
             
             #region vao
@@ -156,6 +136,7 @@ namespace Indpendent_Study_Fall_2020
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
             
             _shaderProgram.Use();
+
             GL.BindVertexArray(VAOHandle);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
             
