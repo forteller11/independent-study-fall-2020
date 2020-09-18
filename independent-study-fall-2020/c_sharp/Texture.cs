@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using OpenTK.Graphics.OpenGL4;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -10,6 +11,7 @@ namespace Indpendent_Study_Fall_2020
 {
     public class Texture
     {
+        public readonly int Handle;
         public byte[] Colors; //todo make array for perf
         public Image<Rgba32> LaborsImage;
         public int Width => LaborsImage.Width;
@@ -18,6 +20,9 @@ namespace Indpendent_Study_Fall_2020
 
         public Texture(string fileName, bool cookOnLoad = true)
         {
+            Handle = GL.GenTexture();
+            Use();
+            SetSettings();
             LoadImage(fileName);
             if (cookOnLoad)
                 CookImageToByteArray();
@@ -48,30 +53,28 @@ namespace Indpendent_Study_Fall_2020
             }
         }
 
-        public void SendToOpenGL()
+        public void UploadToOpenGLUniform(string name, TextureUnit textureUnit, ShaderProgram shader)
         {
+            Use(textureUnit);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
-        public void UploadToOpenGLUniform(string name, TextureUnit textureUnit, ShaderProgram shader)
-        {
-            GL.ActiveTexture(textureUnit); // activate the texture unit first before binding texture
-            GL.BindTexture(TextureTarget.Texture2D, shader.GetUniformLocation(name));
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
-            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-        }
-        public void BindToUniform(TextureUnit unit, ShaderProgram shader, string attribName, int texOrder)
-        {
-            GL.ActiveTexture(unit);
-            shader.SetUniform(attribName, texOrder);
-            GL.BindTexture(TextureTarget.Texture2D, texOrder);
-        }
         
-        public void Use(TextureUnit unit, int texOrder)
+        public void Use(TextureUnit textureUnit=TextureUnit.Texture0)
         {
-            GL.ActiveTexture(unit);
-            GL.BindTexture(TextureTarget.Texture2D, texOrder);
+            GL.ActiveTexture(textureUnit);
+            GL.BindTexture(TextureTarget.Texture2D, Handle);
         }
+
+        private void SetSettings()
+        {
+            Use();
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat); //tex wrap mode
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling up, tex interp
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling down
+        }
+
     }
 }

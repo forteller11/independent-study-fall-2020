@@ -75,6 +75,7 @@ namespace Indpendent_Study_Fall_2020
 
         public void SetUniform(string uniformName, double value)
         {
+            GL.UseProgram(Handle);
             int location = GetUniformLocation(uniformName);
             GL.Uniform1(location, value);
         }

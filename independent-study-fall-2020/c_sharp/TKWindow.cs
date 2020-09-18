@@ -77,8 +77,13 @@ namespace Indpendent_Study_Fall_2020
        
             #region texture
             Texture1 = new Texture("unwrap_helper.jpg");
-//            Texture2 = new Texture("face.jpg");
-            Texture1.UploadToOpenGLUniform("texture1", TextureUnit.Texture0, _shaderProgram);
+            Texture1.UploadToOpenGLUniform("texture0", TextureUnit.Texture0, _shaderProgram);
+            _shaderProgram.SetUniform("texture0", 0);
+            
+            Texture2 = new Texture("face.jpg");
+            Texture2.UploadToOpenGLUniform("texture1", TextureUnit.Texture1, _shaderProgram);
+            _shaderProgram.SetUniform("texture1", 1);
+   
             #endregion
             
             #region vao
@@ -103,12 +108,6 @@ namespace Indpendent_Study_Fall_2020
             GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("in_uv"));
             #endregion
             
-            #region tex settings
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat); //tex wrap mode
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.Repeat);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling up, tex interp
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling down
-            #endregion
 
         }
 
@@ -137,6 +136,9 @@ namespace Indpendent_Study_Fall_2020
             
             _shaderProgram.Use();
 
+            Texture1.Use(TextureUnit.Texture0);
+            Texture2.Use(TextureUnit.Texture1);
+            
             GL.BindVertexArray(VAOHandle);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
             
