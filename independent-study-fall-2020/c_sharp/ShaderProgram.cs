@@ -61,14 +61,22 @@ namespace Indpendent_Study_Fall_2020
         {
             int location = GL.GetAttribLocation(Handle, name);
             if (location == -1)
-                throw new Exception($"AttribLocation \"{name}\" cannot be found (are you using it in the shader? Is there inconsistency in the attribute's naming?)");
+                Debug.LogWarning($"AttribLocation \"{name}\" cannot be found (are you using it in the shader? Is there inconsistency in the attribute's naming?)");
+            return location;
+        }
+        
+        public int GetUniformLocation(string name)
+        {
+            int location = GL.GetUniformLocation(Handle, name);
+            if (location == -1)
+                Debug.LogWarning($"Uniform Location \"{name}\" cannot be found (are you using it in the shader? Is there inconsistency in the uniforms's naming?)");
             return location;
         }
 
-        public void SetUniform(string uniformName, double uniformHandle)
+        public void SetUniform(string uniformName, double value)
         {
-            int location = GetAttribLocation(uniformName);
-            GL.Uniform1(location, uniformHandle);
+            int location = GetUniformLocation(uniformName);
+            GL.Uniform1(location, value);
         }
     }
 }

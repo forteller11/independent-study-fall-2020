@@ -68,7 +68,8 @@ namespace Indpendent_Study_Fall_2020
             
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.Texture2D);
-            GL.DebugMessageCallback(GLErrorListener, IntPtr.Zero);
+            
+            GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
             newTKWindow.Run(60d);
 
@@ -174,35 +175,6 @@ namespace Indpendent_Study_Fall_2020
         }
 
 
-        static void GLErrorListener (DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr param) 
-        {
-            ConsoleColor color;
-            switch (severity)
-            {
-                case DebugSeverity.DebugSeverityNotification:
-                    color = ConsoleColor.DarkGray;
-                    break;
-                case DebugSeverity.DebugSeverityMedium:
-                    color = ConsoleColor.Yellow;
-                    break;
-                case DebugSeverity.DebugSeverityHigh:
-                    color = ConsoleColor.Red;
-                    break;
-                default:
-                    color = ConsoleColor.Gray;
-                    break;
-            }
-            Console.ForegroundColor = color;
-            
-            Console.WriteLine($"___________ GL Error Callback _________");
-            Console.WriteLine($"source: {source}");
-            Console.WriteLine($"type: {type}");
-            Console.WriteLine($"severity: {severity}");
-            Console.WriteLine($"message: {Marshal.PtrToStringUTF8(message)}");
-//            Console.WriteLine($"userParam: {param}");
-            Console.WriteLine($"___________ End of Callback _________");
-            
-            Console.ForegroundColor = ConsoleColor.Gray;
-        }
+        
     }
 }
