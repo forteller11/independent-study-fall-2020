@@ -73,7 +73,7 @@ namespace Indpendent_Study_Fall_2020
             return location;
         }
 
-        public void SetUniform(string uniformName, double value)
+        public void SetUniformInt(string uniformName, int value)
         {
             GL.UseProgram(Handle);
             int location = GetUniformLocation(uniformName);

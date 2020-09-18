@@ -14,6 +14,6 @@ void main()
     vec4 texMap2 = texture(texture1, uv);
 //    vec4 uvVisualize = vec4(uv.x,uv.y,0,1);
     
-    fragColor = mix(texMap1, texMap2, 0.5f);
+    fragColor = mix(texMap1, texMap2, 0.8f);
 //    fragColor = texMap2;
 }

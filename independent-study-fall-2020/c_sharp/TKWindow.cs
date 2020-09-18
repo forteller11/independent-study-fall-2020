@@ -78,11 +78,11 @@ namespace Indpendent_Study_Fall_2020
             #region texture
             Texture1 = new Texture("unwrap_helper.jpg");
             Texture1.UploadToOpenGLUniform("texture0", TextureUnit.Texture0, _shaderProgram);
-            _shaderProgram.SetUniform("texture0", 0);
+            _shaderProgram.SetUniformInt("texture0", 0);
             
             Texture2 = new Texture("face.jpg");
             Texture2.UploadToOpenGLUniform("texture1", TextureUnit.Texture1, _shaderProgram);
-            _shaderProgram.SetUniform("texture1", 1);
+            _shaderProgram.SetUniformInt("texture1", 1);
    
             #endregion
             
