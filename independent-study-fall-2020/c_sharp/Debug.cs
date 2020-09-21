@@ -12,7 +12,8 @@ namespace Indpendent_Study_Fall_2020
         {
             Log = default,
             Warning,
-            GLError
+            GLError, 
+            Graph,
         }
 
         private static PreviousDebugCall PreviousCall;
@@ -38,17 +39,37 @@ namespace Indpendent_Study_Fall_2020
             Console.ForegroundColor = DefaultForegroundColor;
         }
         
-        //todo auto graphing of any object and ienumerator...
-        public static void Graph<T>(T obj) where T: IEnumerator
+//        //todo auto graphing of any object and ienumerator...
+//        public static void Graph<T>(T obj) where T: IEnumerator
+//        {
+//            string log = "";
+//            while (obj.Current != null)
+//            {
+//                log += obj.ToString() + ",";
+//                obj.MoveNext();
+//            }
+//            Log(log);
+//        }
+        
+        public static void Graph(object obj)
         {
-            string log = "";
-            while (obj.Current != null)
+            DrawSeperatorConditionally(PreviousDebugCall.Graph);
+            
+            Console.WriteLine("Class: " + obj.GetType().Name);
+            var members = obj.GetType().GetFields();
+            foreach (var m in members)
+                Console.WriteLine($"{m.Name}: {m.GetValue(obj)}");
+            
+            var props = obj.GetType().GetProperties();
+            foreach (var p in props)
             {
-                log += obj.ToString() + ",";
-                obj.MoveNext();
+                Console.WriteLine($"{p.Name}: {p.GetValue(obj)}");
             }
-            Log(log);
+
         }
+        
+        
+        
         
         static public void GLErrorCallback (DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr param)
         {
