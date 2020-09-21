@@ -75,11 +75,11 @@ namespace Indpendent_Study_Fall_2020
             
             _material = new Material( new ShaderProgram("test.vert", "test.frag"));
             _material.SetupVAO(
-                new AttributeBuffer("in_positions", 3, positions),
-                new AttributeBuffer("in_uv", 3, uvs )
+                new AttributeBuffer("in_position", 3, positions)
+//                new AttributeBuffer("in_uv", 2, uvs )
             );
-            _material.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
-            _material.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 0);
+//            _material.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
+//            _material.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 0);
 
         }
 

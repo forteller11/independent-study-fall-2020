@@ -35,7 +35,8 @@ namespace Indpendent_Study_Fall_2020
             
             _buffer = new float[totalAttributesCount];
             
-            for (int vertIndex = 0; vertIndex < attributeBuffers.Length; vertIndex++)
+            
+            for (int vertIndex = 0; vertIndex < attributeBuffers.Length; vertIndex++) //TODO FIX THIS COMBINATION ALGO
             {
                 for (int strideIndex = 0; strideIndex < attributeBuffers[vertIndex].Stride; strideIndex++)
                 {
