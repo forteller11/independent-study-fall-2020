@@ -9,17 +9,12 @@ namespace Indpendent_Study_Fall_2020
 {
     public class TKWindow : GameWindow
     {
-
-//todo combine multiple datas into single  vbo and auto space in vao
-//todo vbo that is static, vbo that aint static and is changed a meme temps
-//todo flyweight vbo (mesh) and also per instance vbo
+        private CameraController _cameraController;
         
-
-        
-                float[] positions = {
-                    -1.0f, -1.0f, 0.0f, //Bottom-left vertex
-                    1.0f, -1.0f, 0.0f, //Bottom-right vertex
-                    0.0f,  1.0f, 0.0f,  //Top vertex
+        float[] positions = {
+            -1.0f,  -1.0f, -1.0f, //Bottom-left vertex
+            1.0f,  -1.0f, -1.0f, //Bottom-right vertex
+            0.0f,  1.0f,  -1.0f,  //Top vertex
         };
         
         float[] uvs = {
@@ -81,6 +76,7 @@ namespace Indpendent_Study_Fall_2020
             _material.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
             _material.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
 
+            _cameraController = new CameraController();
         }
 
         protected override void OnUnload(EventArgs e)
@@ -94,8 +90,11 @@ namespace Indpendent_Study_Fall_2020
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            var keyboard = Keyboard.GetState();
-            if (keyboard.IsKeyDown(Key.Escape))
+            var keyboardState = Keyboard.GetState();
+            
+            _cameraController.OnUpdate(e.Time, keyboardState);
+            
+            if (keyboardState.IsKeyDown(Key.Escape))
                 Exit();
             
             base.OnUpdateFrame(e);
@@ -106,7 +105,9 @@ namespace Indpendent_Study_Fall_2020
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
 
-            _material.SetMatrix4("transform", Matrix4.CreateRotationZ(50));
+            Matrix4.CreatePerspectiveFieldOfView(MathF.PI/2, 1f, 0.5f, 1000f, out Matrix4 mat);
+            _material.SetMatrix4("transform", mat);
+            _material.SetVector3("cam_position", _cameraController.Position);
            _material.Draw();
             
             base.OnRenderFrame(e);
