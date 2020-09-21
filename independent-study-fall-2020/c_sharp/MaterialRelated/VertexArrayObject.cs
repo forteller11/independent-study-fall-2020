@@ -34,15 +34,23 @@ namespace Indpendent_Study_Fall_2020
             }
             
             _buffer = new float[totalAttributesCount];
-            
-            
-            for (int vertIndex = 0; vertIndex < attributeBuffers.Length; vertIndex++) //TODO FIX THIS COMBINATION ALGO
+
+            int mergedBufferIndex = 0;
+            for (int vertIndex = 0; vertIndex < VerticesCount; vertIndex++) //TODO FIX THIS COMBINATION ALGO
             {
-                for (int strideIndex = 0; strideIndex < attributeBuffers[vertIndex].Stride; strideIndex++)
+                for (int bufferIndex = 0; bufferIndex < attributeBuffers.Length; bufferIndex++)
                 {
-                    int startOfStride = vertIndex * attributeBuffers[vertIndex].Stride;
-                    _buffer[startOfStride + strideIndex] = attributeBuffers[vertIndex].Buffer[strideIndex];
+                    for (int intraStrideIndex = 0; intraStrideIndex < attributeBuffers[bufferIndex].Stride; intraStrideIndex++)
+                    {
+ 
+                        int startOfStrideIndex = vertIndex * attributeBuffers[bufferIndex].Stride;
+                        int attribIndex = startOfStrideIndex + intraStrideIndex;
+                        
+                        _buffer[mergedBufferIndex] = attributeBuffers[bufferIndex].Buffer[attribIndex];
+                        mergedBufferIndex++;
+                    }
                 }
+                
             }
 
             //to
