@@ -43,8 +43,8 @@ namespace Indpendent_Study_Fall_2020
                 rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, angularAccelerationThisFrame);
             if (keyboardState.IsKeyDown(Key.Right))
                 rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -angularAccelerationThisFrame);
-
-            Rotation *= rotationHorz * rotationVert;
+            
+            Rotation =  rotationHorz * Rotation * rotationVert;
 
 
         }
