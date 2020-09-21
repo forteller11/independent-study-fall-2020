@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
@@ -35,6 +36,18 @@ namespace Indpendent_Study_Fall_2020
             Console.WriteLine(message.ToString());
             
             Console.ForegroundColor = DefaultForegroundColor;
+        }
+        
+        //todo auto graphing of any object and ienumerator...
+        public static void Graph<T>(T obj) where T: IEnumerator
+        {
+            string log = "";
+            while (obj.Current != null)
+            {
+                log += obj.ToString() + ",";
+                obj.MoveNext();
+            }
+            Log(log);
         }
         
         static public void GLErrorCallback (DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr param)
