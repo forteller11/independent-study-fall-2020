@@ -20,9 +20,9 @@ namespace Indpendent_Study_Fall_2020
             UniformLocations = new Dictionary<string, int>(uniformCount);
             for (int i = 0; i < uniformCount; i++)
             {
-                var name = GL.GetActiveUniform(Shader.Handle, i, out _, out var type);
+                var name = GL.GetActiveUniform(Shader.Handle, i, out _, out _);
                 var location = GL.GetUniformLocation(Shader.Handle, name);
-                UniformLocations.Add(name,location);
+                UniformLocations.Add(name, location);
             }
         }
         
@@ -47,7 +47,7 @@ namespace Indpendent_Study_Fall_2020
             if (UniformLocations.TryGetValue(name, out int location))
                 GL.UniformMatrix4(location, true, ref matrix4);
             else
-                Debug.LogWarning($"Uniform {name} not found in shader program!");
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         public void SetVector3(string name, OpenTK.Vector3 vector3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
@@ -55,7 +55,7 @@ namespace Indpendent_Study_Fall_2020
             if (UniformLocations.TryGetValue(name, out int location))
                 GL.Uniform3(location, ref vector3);
             else
-                Debug.LogWarning($"Uniform {name} not found in shader program!");
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
 
         public void Draw()

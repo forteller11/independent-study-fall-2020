@@ -91,6 +91,7 @@ namespace Indpendent_Study_Fall_2020
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             var keyboardState = Keyboard.GetState();
+//            var mouseDevice = ;
             
             _cameraController.OnUpdate(e.Time, keyboardState);
             
@@ -106,8 +107,9 @@ namespace Indpendent_Study_Fall_2020
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
 
             Matrix4.CreatePerspectiveFieldOfView(MathF.PI/2, 1f, 0.5f, 1000f, out Matrix4 mat);
-            _material.SetMatrix4("transform", mat);
-            _material.SetVector3("cam_position", _cameraController.Position);
+            _material.SetMatrix4("Rotation", Matrix4.CreateFromQuaternion(_cameraController.Rotation));
+            _material.SetMatrix4("Transform", mat);
+            _material.SetVector3("CamPosition", _cameraController.Position);
            _material.Draw();
             
             base.OnRenderFrame(e);
