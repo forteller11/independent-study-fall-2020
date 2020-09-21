@@ -76,12 +76,10 @@ namespace Indpendent_Study_Fall_2020
             #endregion
        
             #region texture
-            Texture1 = new Texture("unwrap_helper.jpg");
-            Texture1.UploadToOpenGLUniform("texture0", TextureUnit.Texture0, _shaderProgram);
+            Texture1 = new Texture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0);
             _shaderProgram.SetUniformInt("texture0", 0);
             
-            Texture2 = new Texture("face.jpg");
-            Texture2.UploadToOpenGLUniform("texture1", TextureUnit.Texture1, _shaderProgram);
+            Texture2 = new Texture("face.jpg", "texture1", TextureUnit.Texture1);
             _shaderProgram.SetUniformInt("texture1", 1);
    
             #endregion
@@ -136,8 +134,8 @@ namespace Indpendent_Study_Fall_2020
             
             _shaderProgram.Use();
 
-            Texture1.Use(TextureUnit.Texture0);
-            Texture2.Use(TextureUnit.Texture1);
+            Texture1.Use();
+            Texture2.Use();
             
             GL.BindVertexArray(VAOHandle);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);

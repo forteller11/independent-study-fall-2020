@@ -9,20 +9,28 @@ using SixLabors.ImageSharp.Processing;
 
 namespace Indpendent_Study_Fall_2020
 {
-    public class Texture
+    public class Texture : Uniform
     {
+        public string ShaderName { get; set; }
+        public TextureUnit TextureUnit;
+        
         public readonly int Handle;
+        
         public byte[] Colors; //todo make array for perf
+        
         public Image<Rgba32> LaborsImage;
         public int Width => LaborsImage.Width;
         public int Height => LaborsImage.Height;
         public int Area => Width * Height;
 
-        public Texture(string fileName, bool cookOnLoad = true)
+        public Texture(string fileName, string shaderName, TextureUnit textureUnit, bool cookOnLoad = true) //turn cookOnLoad off if you're going to manipulate image on cpu before uploading to openGL
         {
             Handle = GL.GenTexture();
+            ShaderName = shaderName;
+            TextureUnit = textureUnit;
+            
             Use();
-            SetSettings();
+            ApplyTextureSettings();
             LoadImage(fileName);
             if (cookOnLoad)
                 CookImageToByteArray();
@@ -53,21 +61,20 @@ namespace Indpendent_Study_Fall_2020
             }
         }
 
-        public void UploadToOpenGLUniform(string name, TextureUnit textureUnit, ShaderProgram shader)
+        public void Use()
         {
-            Use(textureUnit);
+            GL.ActiveTexture(TextureUnit);
+            GL.BindTexture(TextureTarget.Texture2D, Handle);
+        }
+        
+        public void UploadToShader()
+        {
+            Use();
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
-        
-        public void Use(TextureUnit textureUnit=TextureUnit.Texture0)
-        {
-            GL.ActiveTexture(textureUnit);
-            GL.BindTexture(TextureTarget.Texture2D, Handle);
-        }
-
-        private void SetSettings()
+        private void ApplyTextureSettings()
         {
             Use();
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat); //tex wrap mode
@@ -75,6 +82,7 @@ namespace Indpendent_Study_Fall_2020
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling up, tex interp
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling down
         }
+
 
     }
 }
