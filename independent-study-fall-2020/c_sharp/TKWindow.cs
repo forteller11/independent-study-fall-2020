@@ -76,11 +76,14 @@ namespace Indpendent_Study_Fall_2020
             #endregion
        
             #region texture
+            _shaderProgram.Use();
             Texture1 = new Texture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0);
             _shaderProgram.SetUniformInt("texture0", 0);
+            Texture1.UploadToShader();
             
             Texture2 = new Texture("face.jpg", "texture1", TextureUnit.Texture1);
             _shaderProgram.SetUniformInt("texture1", 1);
+            Texture2.UploadToShader();
    
             #endregion
             

@@ -1,26 +1,45 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Input;
 
 namespace Indpendent_Study_Fall_2020
 {
     public static class Debug
     {
+        private enum PreviousDebugCall
+        {
+            Log = default,
+            Warning,
+            GLError
+        }
+
+        private static PreviousDebugCall PreviousCall;
         private static ConsoleColor PreviousConsoleBackgroundColor = ConsoleColor.Black;
         private static ConsoleColor DefaultForegroundColor = ConsoleColor.Gray;
         public static void LogWarning(string message)
         {
-            DrawSeperator();
+            DrawSeperatorConditionally(PreviousDebugCall.Warning);
             Console.ForegroundColor = ConsoleColor.Yellow;
             
-            Console.WriteLine("Warning: " + message);
+            Console.WriteLine("Warning: " + message.ToString());
+            
+            Console.ForegroundColor = DefaultForegroundColor;
+        }
+        
+        public static void Log(object message)
+        {
+            DrawSeperatorConditionally(PreviousDebugCall.Log);
+            Console.ForegroundColor = ConsoleColor.White;
+            
+            Console.WriteLine(message.ToString());
             
             Console.ForegroundColor = DefaultForegroundColor;
         }
         
         static public void GLErrorCallback (DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr param)
         {
-            DrawSeperator();
+            DrawSeperatorConditionally(PreviousDebugCall.GLError);
             
             ConsoleColor foregroundColor;
             switch (severity)
@@ -44,22 +63,21 @@ namespace Indpendent_Study_Fall_2020
             Console.WriteLine($"type: {type}");
             Console.WriteLine($"severity: {severity}");
             Console.WriteLine($"message: {Marshal.PtrToStringUTF8(message)}");
-//            Console.WriteLine($"userParam: {param}");
 
             Console.ForegroundColor = DefaultForegroundColor;
         }
 
-        private static void DrawSeperator()
+        private static void DrawSeperatorConditionally(PreviousDebugCall currentCall)
         {
-            Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("                                                                                                                                              ");
-            Console.BackgroundColor = ConsoleColor.Black;
-//            ConsoleColor newColor = 
-//                PreviousConsoleBackgroundColor == ConsoleColor.Black
-//                    ? ConsoleColor.White
-//                    : ConsoleColor.Black;
-//            Console.BackgroundColor = newColor;
-//            PreviousConsoleBackgroundColor = newColor;
+            if (PreviousCall != PreviousDebugCall.Log)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+//                Console.WriteLine(new string(' ', 98));
+                Console.WriteLine("");
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
+
+            PreviousCall = currentCall;
         }
     }
 }
