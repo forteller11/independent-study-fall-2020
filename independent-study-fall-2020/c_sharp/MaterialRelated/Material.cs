@@ -4,43 +4,44 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020
 {
-    public class Material
+    public class Material //todo add uniforms, modify them,,,
     {
-        private ShaderProgram _shader;
-        private Dictionary<string, int> Attrib;
-        private List<Uniform> _uniforms;
+        public ShaderProgram Shader { get; private set; }
+        private Dictionary<string, int> _uniformLocations = new Dictionary<string, int>();
         private List<Texture> _textures = new List<Texture>();
         public VertexArrayObject VAO;
 
 
         public Material(ShaderProgram shaderProgram)
         {
-            _shader = shaderProgram;
+            Shader = shaderProgram;
         }
         
         public void SetupVAO(params AttributeBuffer[] attributeBuffers)
         {
-            VAO = new VertexArrayObject(_shader, attributeBuffers);
+            VAO = new VertexArrayObject(Shader, attributeBuffers);
         }
 
         public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum, int textureUnitIndex)
         {
-            _shader.Use();
+            Shader.Use();
             var newTexture = new Texture(fileName, samplerName, textureUnitEnum);
             _textures.Add(newTexture);
-            _shader.SetUniformInt(samplerName, textureUnitIndex);
+            Shader.SetUniformInt(samplerName, textureUnitIndex);
             newTexture.UploadToShader();
         }
-
-
         
-        public void SetupUniform()
+        
+        public void SetMatrix4(string name, OpenTK.Matrix4 matrix4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
-            //todo
+            if (useProgram)
+                Shader.Use();
+            GL.UniformMatrix4(GL.GetUniformLocation(Shader.Handle, name), true, ref matrix4);
         }
+
         public void Draw()
         {
-            _shader.Use();
+            Shader.Use();
             for (int i = 0; i < _textures.Count; i++)
                 _textures[i].Use();
             

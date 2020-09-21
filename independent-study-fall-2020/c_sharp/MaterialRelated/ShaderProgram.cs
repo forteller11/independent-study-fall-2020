@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using OpenTK.Graphics.OpenGL4;
 
@@ -7,7 +8,7 @@ namespace Indpendent_Study_Fall_2020
     public class ShaderProgram
     {
         public int Handle { get; }
-
+        public Dictionary<string, int> UniformLocations = new Dictionary<string, int>();
 
         public ShaderProgram(string vertexFileName, string fragmentFileName) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
@@ -79,5 +80,10 @@ namespace Indpendent_Study_Fall_2020
             int location = GetUniformLocation(uniformName);
             GL.Uniform1(location, value);
         }
+        
+
+
+        
+ 
     }
 }

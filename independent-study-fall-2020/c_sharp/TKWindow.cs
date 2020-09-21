@@ -105,7 +105,8 @@ namespace Indpendent_Study_Fall_2020
         {
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
-            
+
+            _material.SetMatrix4("transform", Matrix4.CreateRotationZ(50));
            _material.Draw();
             
             base.OnRenderFrame(e);
