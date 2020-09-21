@@ -63,10 +63,7 @@ namespace Indpendent_Study_Fall_2020
 
         public void Use()
         {
-            Debug.Log("Log");
-            Debug.Log("shadername: " + ShaderName);
-            Debug.Log("TexUnit: " + TextureUnit);
-            Debug.Log("handle: " + Handle);
+       
             GL.ActiveTexture(TextureUnit);
             GL.BindTexture(TextureTarget.Texture2D, Handle);
         }

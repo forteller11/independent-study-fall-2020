@@ -14,12 +14,18 @@ namespace Indpendent_Study_Fall_2020
 //todo vbo that is static, vbo that aint static and is changed a meme temps
 //todo flyweight vbo (mesh) and also per instance vbo
         
-        float[] vertices = //interweaving of position and tex coords into same vbo and array is done for perf reasons (less state-changes in opengl)
-        {
-            //Position          Texture coordinates
-            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // Bottom-left vertex
-             1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // Bottom-right vertex
-             0.0f,  1.0f, 0.0f, 0.5f, 1.0f //Top vertex
+
+        
+                float[] positions = {
+                    -1.0f, -1.0f, 0.0f, //Bottom-left vertex
+                    1.0f, -1.0f, 0.0f, //Bottom-right vertex
+                    0.0f,  1.0f, 0.0f,  //Top vertex
+        };
+        
+        float[] uvs = {
+            0.0f, 0.0f, //Bottom-left vertex
+            1.0f, 0.0f, //Bottom-right vertex
+            0.5f, 1.0f  //Top vertex
         };
         
 //        // For documentation on this, check Texture.cs
@@ -31,7 +37,7 @@ namespace Indpendent_Study_Fall_2020
         private int VBOUVHandle;
         private int VAOHandle;
         
-        private ShaderProgram _shaderProgram;
+        private Material _material;
         
         #region initialise
         public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
@@ -67,48 +73,13 @@ namespace Indpendent_Study_Fall_2020
             
             GL.ClearColor(1f,0f,1f,1f);
             
-            _shaderProgram = new ShaderProgram("test.vert", "test.frag");
-
-            #region vbos
-            VBOVertHandle = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOVertHandle);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
-            #endregion
-       
-            #region texture
-            _shaderProgram.Use();
-            Texture1 = new Texture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0);
-            _shaderProgram.SetUniformInt("texture0", 0);
-            Texture1.UploadToShader();
-            
-            Texture2 = new Texture("face.jpg", "texture1", TextureUnit.Texture1);
-            _shaderProgram.SetUniformInt("texture1", 1);
-            Texture2.UploadToShader();
-   
-            #endregion
-            
-            #region vao
-            VAOHandle = GL.GenVertexArray();
-            GL.BindVertexArray(VAOHandle);
-            GL.VertexAttribPointer(
-                _shaderProgram.GetAttribLocation("in_position"), 
-                3,
-                VertexAttribPointerType.Float,
-                false,
-                5 * sizeof(float),
-                0);
-            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("in_position"));
-            
-            GL.VertexAttribPointer(
-                _shaderProgram.GetAttribLocation("in_uv"), 
-                2,
-                VertexAttribPointerType.Float,
-                false,
-                5 * sizeof(float), //total size of a vertex
-                3 * sizeof(float)); //memory offset within stride
-            GL.EnableVertexAttribArray(_shaderProgram.GetAttribLocation("in_uv"));
-            #endregion
-            
+            _material = new Material( new ShaderProgram("test.vert", "test.frag"));
+            _material.SetupVAO(
+                new AttributeBuffer("in_positions", 3, positions),
+                new AttributeBuffer("in_uv", 3, uvs )
+            );
+            _material.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
+            _material.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 0);
 
         }
 
@@ -135,13 +106,7 @@ namespace Indpendent_Study_Fall_2020
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
             
-            _shaderProgram.Use();
-
-            Texture1.Use();
-            Texture2.Use();
-            
-            GL.BindVertexArray(VAOHandle);
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+           _material.Draw();
             
             base.OnRenderFrame(e);
             SwapBuffers();

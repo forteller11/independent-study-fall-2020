@@ -14,12 +14,13 @@ namespace Indpendent_Study_Fall_2020
         public int VAOHandle { get; private set; }
         public Dictionary<string, int> AttributeIndex;
 
-        void JoinBuffersAndCreateAttributes(ShaderProgram program, params AttributeBuffer [] attributeBuffers)
+        public VertexArrayObject(ShaderProgram program, params AttributeBuffer [] attributeBuffers)
         {
-            int StrideLength = 0;
-            int VerticesCount = attributeBuffers[0].VerticesCount;
+            StrideLength = 0;
+            VerticesCount = attributeBuffers[0].VerticesCount;
             AttributeIndex = new Dictionary<string, int>(attributeBuffers.Length);
-            
+            int totalAttributesCount = 0;
+
             for (int i = 0; i < attributeBuffers.Length; i++)
             {
                 if (attributeBuffers[i].VerticesCount != attributeBuffers[0].VerticesCount) //error checking
@@ -28,8 +29,11 @@ namespace Indpendent_Study_Fall_2020
                                         $" doesn't have the same number of vertices as attribute: \"{attributeBuffers[i].AttributeName}!\"");
                 }
 //                AttributeIndex.Add(GL.GetAttribLocation(program.Handle, attributeBuffers[i].AttributeName), i);
+                totalAttributesCount += attributeBuffers[i].Stride * VerticesCount;
                 StrideLength += attributeBuffers[i].Stride;
             }
+            
+            _buffer = new float[totalAttributesCount];
             
             for (int vertIndex = 0; vertIndex < attributeBuffers.Length; vertIndex++)
             {
