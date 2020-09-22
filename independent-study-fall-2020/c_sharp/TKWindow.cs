@@ -1,5 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using Indpendent_Study_Fall_2020.EntitySystem;
+using Indpendent_Study_Fall_2020.EntitySystem.Gameobjects;
+using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
@@ -9,8 +12,7 @@ namespace Indpendent_Study_Fall_2020
 {
     public class TKWindow : GameWindow
     {
-        private CameraController _cameraController;
-        
+
         float[] positions = {
             -1.0f,  -1.0f, -1.0f, //Bottom-left vertex
             1.0f,  -1.0f, -1.0f, //Bottom-right vertex
@@ -26,13 +28,8 @@ namespace Indpendent_Study_Fall_2020
 //        // For documentation on this, check Texture.cs
 //        private Texture _texture;
 
-        private Texture Texture1;
-        private Texture Texture2;
-        private int VBOVertHandle;
-        private int VBOUVHandle;
-        private int VAOHandle;
-        
-        private Material _material;
+
+        private GameObjectManager _gameObjectManager;
         
         #region initialise
         public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
@@ -68,34 +65,52 @@ namespace Indpendent_Study_Fall_2020
             
             GL.ClearColor(1f,0f,1f,1f);
             
-            _material = new Material( new ShaderProgram("test.vert", "test.frag"));
-            _material.SetupVAO(
+            
+            #region materials
+            var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
+            testMat.SetupVAO(
                 new AttributeBuffer("in_position", 3, positions),
                 new AttributeBuffer("in_uv", 2, uvs )
             );
-            _material.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
-            _material.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
+            testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
+            testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
 
-            _cameraController = new CameraController();
+            Globals.DrawManager.SetupAllMaterials(
+                testMat
+                );
+            #endregion
+            
+            _gameObjectManager.Add(
+                new CameraControllerSingleton(),
+                new TestTriangleTexture()
+            );
+            
+            _gameObjectManager.LoadAllGameObjects();
+     
         }
 
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //reset binding to null
-            GL.DeleteBuffer(VBOVertHandle);
-            GL.DeleteBuffer(VAOHandle);
+//todo 
+//            GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //reset binding to null
+//            GL.DeleteBuffer(VBOVertHandle);
+//            GL.DeleteBuffer(VAOHandle);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            var keyboardState = Keyboard.GetState();
-//            var mouseDevice = ;
+
+            //todo cache this object allocation so not creating objects everyframe
+            var eventArgs = new GameObjectUpdateEventArgs(
+                e.Time,
+                Keyboard.GetState()
+            );
+      
             
-            _cameraController.OnUpdate(e.Time, keyboardState);
+            _gameObjectManager.UpdateAllGameObjects(eventArgs);
             
-            if (keyboardState.IsKeyDown(Key.Escape))
+            if (eventArgs.KeyboardState.IsKeyDown(Key.Escape))
                 Exit();
             
             base.OnUpdateFrame(e);
@@ -106,12 +121,8 @@ namespace Indpendent_Study_Fall_2020
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
 
-            Matrix4.CreatePerspectiveFieldOfView(MathF.PI/2, 1f, 0.5f, 1000f, out Matrix4 mat);
-            _material.SetMatrix4("Rotation", Matrix4.CreateFromQuaternion(_cameraController.Rotation));
-            _material.SetMatrix4("Transform", mat);
-            _material.SetVector3("CamPosition", _cameraController.Position);
-           _material.PrepareAndDraw();
-            
+            Globals.DrawManager.RenderFrame();
+
             base.OnRenderFrame(e);
             SwapBuffers();
         }
@@ -122,10 +133,7 @@ namespace Indpendent_Study_Fall_2020
             GL.Viewport(0,0, Width, Height);
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-        }
+
 
 
         

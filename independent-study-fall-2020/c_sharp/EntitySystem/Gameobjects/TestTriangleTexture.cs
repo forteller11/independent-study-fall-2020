@@ -8,11 +8,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 {
     public class TestTriangleTexture : GameObject
     {
-
-        public override void OnLoad()
-        {
-            MaterialName = "test_mat";
-        }
+        public override string MaterialName => "test_mat";
 
         public override void SendUniformsToShader()
         {

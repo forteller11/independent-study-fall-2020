@@ -16,18 +16,17 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         {
             _gameObjects.Add(gameObject);
             Globals.DrawManager.UseMaterial(gameObject, gameObject.MaterialName);
-            //todo automatically add to draw manager
         }
 
         public void Remove(GameObject gameObject) => _gameObjects.Remove(gameObject);
 
-        void LoadAllGameObjects()
+        public void LoadAllGameObjects()
         {
             for (int i = 0; i < _gameObjects.Count; i++)
                 _gameObjects[i].OnLoad();
         }
         
-        void UpdateAllGameObjects(GameObjectUpdateEventArgs eventArgs)
+        public void  UpdateAllGameObjects(GameObjectUpdateEventArgs eventArgs)
         {
             for (int i = 0; i < _gameObjects.Count; i++)
                 _gameObjects[i].OnUpdate(eventArgs);
