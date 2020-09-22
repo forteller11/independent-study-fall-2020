@@ -8,8 +8,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     public abstract class GameObject
     {
         public readonly Guid GUID = Guid.NewGuid();
-        public string MaterialName;
-        public Material Material;
+        public virtual string MaterialName { get; } = String.Empty; // "" means no material are being used
+        public Material Material; //this is set automatically by drawManager before unLoad is called
         
         public virtual void OnLoad() { }
         public virtual void OnUpdate(GameObjectUpdateEventArgs eventArgs) {}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK.Graphics.ES10;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
@@ -34,12 +35,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             
         }
         
-        public void UseMaterial(GameObject gameObject, Material material)
+        public void UseMaterial(GameObject gameObject, string materialName)
         {
-            if (!Batches.ContainsKey(material.Name))
-                throw new Exception($"You're trying to render a GameObject with \"{material.Name}\" but it hasn't been setup in the DrawManager!");
-            Batches[material.Name].Add(gameObject);
-            gameObject.Material = material;
+            if (materialName == String.Empty)
+                return;
+            
+            if (!Batches.ContainsKey(materialName))
+                throw new Exception($"You're trying to render a GameObject with \"{materialName}\" but it hasn't been setup/doesn't exist in the DrawManager!");
+            
+            Batches[materialName].Add(gameObject);
+            gameObject.Material = Materials[materialName];
         }
 
         public void StopUsingMaterial(GameObject gameObject, Material material)
