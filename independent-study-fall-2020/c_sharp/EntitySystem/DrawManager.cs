@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using OpenTK.Graphics.ES10;
 
 namespace Indpendent_Study_Fall_2020
 {
@@ -8,21 +9,24 @@ namespace Indpendent_Study_Fall_2020
     {
         //deals with batching renders of gameobjects with same materials together
 
-        public Dictionary<string, Dictionary<Guid, GameObject>> Batches { get; private set; }
+        public Dictionary<string, Material> Materials;
+        public Dictionary<string, List<GameObject>> Batches { get; private set; }
         private string[] _materialKeys;
-        //todo store material
+        //todo loop through everything 
 
         public void SetupAllMaterials(params Material[] materials)
         {
-            Batches = new Dictionary<string, Dictionary<Guid, GameObject>>(materials.Length);
+            Batches = new Dictionary<string, List<GameObject>>(materials.Length);
             _materialKeys = new string [materials.Length];
+            Materials = new Dictionary<string, Material> (materials.Length);
             
             for (int i = 0; i < materials.Length; i++)
             {
                 if (Batches.ContainsKey(materials[i].Name))
                     throw new Exception($"There are multiple materials with the name \"{materials[i].Name}\"");
                 
-                Batches.Add(materials[i].Name, new Dictionary<Guid, GameObject>());
+                Materials.Add(materials[i].Name, materials[i]);
+                Batches.Add(materials[i].Name, new List<GameObject>());
                 _materialKeys[i] = materials[i].Name;
             }
 
@@ -34,30 +38,44 @@ namespace Indpendent_Study_Fall_2020
         {
             if (!Batches.ContainsKey(material.Name))
                 throw new Exception($"You're trying to render a GameObject with \"{material.Name}\" but it hasn't been setup in the DrawManager!");
-            Batches[material.Name].Add(gameObject.GUID, gameObject);
+            Batches[material.Name].Add(gameObject);
+            gameObject.Material = material;
         }
 
         public void StopUsingMaterial(GameObject gameObject, Material material)
         {
             if (!Batches.ContainsKey(material.Name))
                 throw new Exception($"You're trying to render a GameObject with \"{material.Name}\" but it hasn't been setup in the DrawManager!");
-            if (!Batches[material.Name].ContainsKey(gameObject.GUID))
-               Debug.LogWarning($"You're trying to remove a GameObject from \"{material.Name}\" material batch but it was never added!");
-
-            Batches[material.Name].Remove(gameObject.GUID);
+            
+            gameObject.Material = null;
+            var batch = Batches[material.Name];
+            
+            for (int i = 0; i < batch.Count; i++)
+            {
+                if (batch[i] == gameObject)
+                {
+                    batch.RemoveAt(i);
+                    return;
+                }
+            }
+            
+            Debug.LogWarning($"You're trying to remove a GameObject from \"{material.Name}\" material batch but it was never added!");
         }
-        public void Draw()
+        public void RenderFrame()
         {
             for (int i = 0; i < _materialKeys.Length; i++)
             {
-                //BEGIN USING MATERIAL, UPLOAD VAO HERE
-                Dictionary<Guid, GameObject> batch = Batches[_materialKeys[i]];
-                foreach (var gameobjectKeyValue in batch)
+                List<GameObject> batchObjects = Batches[_materialKeys[i]];
+                
+                var materialForBatch = Materials[_materialKeys[i]];
+                materialForBatch.PrepareBatchForDrawing();
+                
+                for (int j = 0; j < batchObjects.Count; j++)
                 {
-                    batch[gameobjectKeyValue.Key].OnRender(); //upload uniforms here
-                    //remder
+                    batchObjects[i].SendUniformsToShader();
+                    materialForBatch.Draw();
                 }
-              
+
             }
         }
     }

@@ -110,7 +110,7 @@ namespace Indpendent_Study_Fall_2020
             _material.SetMatrix4("Rotation", Matrix4.CreateFromQuaternion(_cameraController.Rotation));
             _material.SetMatrix4("Transform", mat);
             _material.SetVector3("CamPosition", _cameraController.Position);
-           _material.Draw();
+           _material.PrepareAndDraw();
             
             base.OnRenderFrame(e);
             SwapBuffers();

@@ -17,11 +17,11 @@ namespace Indpendent_Study_Fall_2020
             
         }
         
-        public void OnRender()
+        public void SendUniformsToShader()
         {
             //todo batch like draw calls together?
             if (ShouldRender)
-                Material.Draw();
+                Material.PrepareAndDraw();
         }
 
         public void OnClose()

@@ -60,17 +60,22 @@ namespace Indpendent_Study_Fall_2020
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
 
-        public void Draw()
+        public void PrepareAndDraw()
+        {
+            PrepareBatchForDrawing();
+            GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
+        }
+
+        public void PrepareBatchForDrawing()
         {
             Shader.Use();
             for (int i = 0; i < _textures.Count; i++)
                 _textures[i].Use();
-            
-            //set uniforms here
-            
-            //.................
-            
             GL.BindVertexArray(VAO.VAOHandle);
+        }
+
+        public void Draw()
+        {
             GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
         }
         
