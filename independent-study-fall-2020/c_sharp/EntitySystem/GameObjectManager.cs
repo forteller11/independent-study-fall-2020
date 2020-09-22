@@ -6,6 +6,10 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     {
         private List<GameObject> _gameObjects;
 
+        public GameObjectManager()
+        {
+            _gameObjects = new List<GameObject>();
+        }
         public void Add(params GameObject[] gameObjects)
         {
             for (int i = 0; i < gameObjects.Length; i++)

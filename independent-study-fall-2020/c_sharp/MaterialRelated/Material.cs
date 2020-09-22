@@ -23,8 +23,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             for (int i = 0; i < uniformCount; i++)
             {
                 var uniformName = GL.GetActiveUniform(Shader.Handle, i, out _, out _);
-                var location = GL.GetUniformLocation(Shader.Handle, name);
-                UniformLocations.Add(name, location);
+                var location = GL.GetUniformLocation(Shader.Handle, uniformName);
+                UniformLocations.Add(uniformName, location);
             }
         }
         

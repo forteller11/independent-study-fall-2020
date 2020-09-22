@@ -80,6 +80,7 @@ namespace Indpendent_Study_Fall_2020
                 );
             #endregion
             
+            _gameObjectManager = new GameObjectManager();
             _gameObjectManager.Add(
                 new CameraControllerSingleton(),
                 new TestTriangleTexture()
