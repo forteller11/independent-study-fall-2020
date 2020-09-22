@@ -1,33 +1,20 @@
 ﻿using System;
+using Indpendent_Study_Fall_2020.MaterialRelated;
+using OpenTK;
+using OpenTK.Input;
 
-namespace Indpendent_Study_Fall_2020
+namespace Indpendent_Study_Fall_2020.EntitySystem
 {
-    public class GameObject
+    public abstract class GameObject
     {
         public readonly Guid GUID = Guid.NewGuid();
-        public bool ShouldRender;
+        public string MaterialName;
         public Material Material;
-        public void OnLoad()
-        {
-            
-        }
-
-        public void OnUpdate()
-        {
-            
-        }
         
-        public void SendUniformsToShader()
-        {
-            //todo batch like draw calls together?
-            if (ShouldRender)
-                Material.PrepareAndDraw();
-        }
-
-        public void OnClose()
-        {
-            
-        }
+        public virtual void OnLoad() { }
+        public virtual void OnUpdate(GameObjectUpdateEventArgs eventArgs) {}
+        public virtual void SendUniformsToShader() { }
+        public virtual void OnClose() { }
 
         #region dictionary performance stuff
         public override bool Equals(object obj)

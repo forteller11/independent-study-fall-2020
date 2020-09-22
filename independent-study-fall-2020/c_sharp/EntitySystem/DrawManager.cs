@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using OpenTK.Graphics.ES10;
 
-namespace Indpendent_Study_Fall_2020
+namespace Indpendent_Study_Fall_2020.EntitySystem
 {
     public class DrawManager
     {
