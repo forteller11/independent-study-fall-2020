@@ -6,21 +6,23 @@ namespace Indpendent_Study_Fall_2020
 {
     public class Material //todo add uniforms, modify them,,,
     {
+        public readonly string Name;
         public ShaderProgram Shader { get; private set; }
         public readonly Dictionary<string, int> UniformLocations;
         private List<Texture> _textures = new List<Texture>();
         public VertexArrayObject VAO;
 
 
-        public Material(ShaderProgram shaderProgram)
+        public Material(string name, ShaderProgram shaderProgram)
         {
+            Name = name;
             Shader = shaderProgram;
             
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
             for (int i = 0; i < uniformCount; i++)
             {
-                var name = GL.GetActiveUniform(Shader.Handle, i, out _, out _);
+                var uniformName = GL.GetActiveUniform(Shader.Handle, i, out _, out _);
                 var location = GL.GetUniformLocation(Shader.Handle, name);
                 UniformLocations.Add(name, location);
             }
@@ -71,6 +73,8 @@ namespace Indpendent_Study_Fall_2020
             GL.BindVertexArray(VAO.VAOHandle);
             GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
         }
+        
+        
         
         //todo, automatically assign unifroms and textures
     }
