@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
@@ -41,17 +42,18 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 vertsFlattened[rootIndex + 1] = obj.Vertices[i].Position.Y;
                 vertsFlattened[rootIndex + 2] = obj.Vertices[i].Position.Z;
             }
-
+//            vertsFlattened.Reverse();
+            
             int uvStride = 2;
             float[] uvsFlattened = new float[obj.TextureVertices.Count * uvStride];
             for (int i = 0; i < obj.TextureVertices.Count; i++)
             {
-                int rootIndex = i * uvStride;
+                int rootIndex = (obj.TextureVertices.Count * uvStride) - (i * uvStride) - uvStride; //reverse uv coords by vertex
                 uvsFlattened[rootIndex + 0] = obj.TextureVertices[i].X;
                 uvsFlattened[rootIndex + 1] = obj.TextureVertices[i].Y;
             }
             
-            var positionAttrib = new AttributeBuffer("in_position", vertStride, uvsFlattened);
+            var positionAttrib = new AttributeBuffer("in_position", vertStride, vertsFlattened);
             var uvAttrib = new AttributeBuffer("in_uv", uvStride, uvsFlattened);
             
             //todo normals

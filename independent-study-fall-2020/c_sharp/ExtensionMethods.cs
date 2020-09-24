@@ -20,5 +20,7 @@ namespace Indpendent_Study_Fall_2020
             return v1.X.EqualsAprox(v2.X) &&
                    v1.Y.EqualsAprox(v2.Y);
         }
+        
+
     }
 }

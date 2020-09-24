@@ -65,13 +65,10 @@ namespace Indpendent_Study_Fall_2020
             
             GL.ClearColor(1f,0f,1f,1f);
 
-            var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.AssetPath + "\\boxBent.obj");
-            
-            Debug.GraphEnumerable(obj.TextureVertices);
-//            Debug.GraphObject(obj);
+
             #region materials
             var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
-            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("boxBent.obj"));
+            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("test_triangle.obj"));
             testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
             testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
 
