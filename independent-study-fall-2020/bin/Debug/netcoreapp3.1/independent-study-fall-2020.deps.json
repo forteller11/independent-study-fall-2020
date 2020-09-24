@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "independent-study-fall-2020/1.0.0": {
         "dependencies": {
+          "JeremyAnsel.Media.WavefrontObj": "2.0.19",
           "Microsoft.Win32.Primitives": "4.3.0",
           "Microsoft.Win32.SystemEvents": "4.7.0",
           "OpenTK": "3.2.0",
@@ -16,6 +17,14 @@
         },
         "runtime": {
           "independent-study-fall-2020.dll": {}
+        }
+      },
+      "JeremyAnsel.Media.WavefrontObj/2.0.19": {
+        "runtime": {
+          "lib/netstandard2.0/JeremyAnsel.Media.WavefrontObj.dll": {
+            "assemblyVersion": "2.0.19.0",
+            "fileVersion": "2.0.19.0"
+          }
         }
       },
       "Microsoft.NETCore.Platforms/3.1.0": {},
@@ -101,6 +110,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "JeremyAnsel.Media.WavefrontObj/2.0.19": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GIpxn2ydTda6kQMpOhQNLaebAQMMWNCctcgaQLwE/wjcmpyIf7rISqQwoCUOD63E1pUIVZIWV/Uo7/5b4XuuJw==",
+      "path": "jeremyansel.media.wavefrontobj/2.0.19",
+      "hashPath": "jeremyansel.media.wavefrontobj.2.0.19.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",

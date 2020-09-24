@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "JeremyAnsel.Media.WavefrontObj/2.0.19": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/JeremyAnsel.Media.WavefrontObj.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/JeremyAnsel.Media.WavefrontObj.dll": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -103,6 +112,20 @@
     }
   },
   "libraries": {
+    "JeremyAnsel.Media.WavefrontObj/2.0.19": {
+      "sha512": "GIpxn2ydTda6kQMpOhQNLaebAQMMWNCctcgaQLwE/wjcmpyIf7rISqQwoCUOD63E1pUIVZIWV/Uo7/5b4XuuJw==",
+      "type": "package",
+      "path": "jeremyansel.media.wavefrontobj/2.0.19",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "jeremyansel.media.wavefrontobj.2.0.19.nupkg.sha512",
+        "jeremyansel.media.wavefrontobj.nuspec",
+        "lib/net40/JeremyAnsel.Media.WavefrontObj.dll",
+        "lib/netstandard2.0/JeremyAnsel.Media.WavefrontObj.dll"
+      ]
+    },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
@@ -375,6 +398,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "JeremyAnsel.Media.WavefrontObj >= 2.0.19",
       "Microsoft.Win32.Primitives >= 4.3.0",
       "Microsoft.Win32.SystemEvents >= 4.7.0",
       "OpenTK >= 3.2.0",
@@ -417,6 +441,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "JeremyAnsel.Media.WavefrontObj": {
+            "target": "Package",
+            "version": "[2.0.19, )"
+          },
           "Microsoft.Win32.Primitives": {
             "target": "Package",
             "version": "[4.3.0, )"

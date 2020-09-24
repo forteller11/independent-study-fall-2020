@@ -27,8 +27,37 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 UniformLocations.Add(uniformName, location);
             }
         }
-        
-        public void SetupVAO(params AttributeBuffer[] attributeBuffers)
+
+        public AttributeBuffer[] GetAttribBuffersFromObjFile(string fileName)
+        {
+            var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.AssetPath + "\\" + fileName);
+
+            int vertStride = 3;
+            float[] vertsFlattened = new float[obj.Vertices.Count * vertStride];
+            for (int i = 0; i < obj.Vertices.Count; i++)
+            {
+                int rootIndex = i * vertStride;
+                vertsFlattened[rootIndex + 0] = obj.Vertices[i].Position.X;
+                vertsFlattened[rootIndex + 1] = obj.Vertices[i].Position.Y;
+                vertsFlattened[rootIndex + 2] = obj.Vertices[i].Position.Z;
+            }
+
+            int uvStride = 2;
+            float[] uvsFlattened = new float[obj.TextureVertices.Count * uvStride];
+            for (int i = 0; i < obj.TextureVertices.Count; i++)
+            {
+                int rootIndex = i * uvStride;
+                uvsFlattened[rootIndex + 0] = obj.TextureVertices[i].X;
+                uvsFlattened[rootIndex + 1] = obj.TextureVertices[i].Y;
+            }
+            
+            var positionAttrib = new AttributeBuffer("in_position", vertStride, uvsFlattened);
+            var uvAttrib = new AttributeBuffer("in_uv", uvStride, uvsFlattened);
+            
+            //todo normals
+            return new [] {positionAttrib, uvAttrib};
+        }
+        public void SetupVAOFromAttribBuffers(params AttributeBuffer[] attributeBuffers)
         {
             VAO = new VertexArrayObject(Shader, attributeBuffers);
         }

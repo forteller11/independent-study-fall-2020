@@ -51,7 +51,7 @@ namespace Indpendent_Study_Fall_2020
 //            Log(log);
 //        }
         
-        public static void Graph(object obj)
+        public static void GraphObject(object obj)
         {
             DrawSeperatorConditionally(PreviousDebugCall.Graph);
             
@@ -65,7 +65,13 @@ namespace Indpendent_Study_Fall_2020
             {
                 Console.WriteLine($"{p.Name}: {p.GetValue(obj)}");
             }
+        }
 
+        public static void GraphEnumerable(IEnumerable enumerable)
+        {
+            Log(enumerable.GetType().Name +": ");
+            foreach (var thing in enumerable)
+                Log(thing.ToString());
         }
         
         

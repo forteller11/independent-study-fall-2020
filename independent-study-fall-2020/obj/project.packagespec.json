@@ -26,6 +26,10 @@
   "frameworks": {
     "netcoreapp3.1": {
       "dependencies": {
+        "JeremyAnsel.Media.WavefrontObj": {
+          "target": "Package",
+          "version": "[2.0.19, )"
+        },
         "Microsoft.Win32.Primitives": {
           "target": "Package",
           "version": "[4.3.0, )"
