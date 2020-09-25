@@ -73,9 +73,16 @@ namespace Indpendent_Study_Fall_2020
             foreach (var thing in enumerable)
                 Log(thing.ToString());
         }
-        
-        
-        
+
+
+        static public void CheckForGLErrors()
+        {
+            var error = GL.GetError();
+            if (error != ErrorCode.NoError)
+            {
+                throw new Exception($"OpenGLError: {error}");
+            }
+        }
         
         static public void GLErrorCallback (DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr param)
         {

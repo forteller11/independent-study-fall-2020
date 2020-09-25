@@ -14,10 +14,10 @@ namespace Indpendent_Study_Fall_2020
     {
 
         float[] positions = {
-            0.5f,  0.5f, 0.0f,  // top right
-            0.5f, -0.5f, 0.0f,  // bottom right
-            -0.5f, -0.5f, 0.0f,  // bottom left
-            -0.5f,  0.5f, 0.0f   // top left
+            0.5f,  0.5f, -1.0f,  // top right
+            0.5f, -0.5f, -1.0f,  // bottom right
+            -0.5f, -0.5f, -1.0f,  // bottom left
+            -0.5f,  0.5f, -1.0f   // top left
         };
         
         uint[] indices = {
@@ -50,23 +50,27 @@ namespace Indpendent_Study_Fall_2020
                 420, 
                 420, 
                 GraphicsMode.Default, 
-                "Independent Study Fall 2020 - Charly Yan Miller",
+                $"Independent Study Fall 2020 - Charly Yan Miller ",
                 GameWindowFlags.Default,
                 DisplayDevice.Default);
             
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.Texture2D);
-            
+
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
             newTKWindow.Run(60d);
-
             return newTKWindow;
         }
         #endregion
 
         protected override void OnLoad(EventArgs e)
         {
+            Debug.Log($"");
+            Debug.Log($"Renderer: {GL.GetString(StringName.Renderer)}");
+            Debug.Log($"Version: {GL.GetString(StringName.Version)}");
+            Debug.Log($"Vendor: {GL.GetString(StringName.Vendor)}");
+            Debug.Log($"");
             
             //todo have function to handle creating new vbo and auto asignment to vao
             base.OnLoad(e);
@@ -79,7 +83,7 @@ namespace Indpendent_Study_Fall_2020
             var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
 //            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("boxBent.obj"));
             testMat.FeedBufferAndIndicesData(
-                null,
+                indices,
                 new AttributeBuffer("in_uv", 2, uvs),
                 new AttributeBuffer("in_position", 3, positions)
                 );
@@ -139,6 +143,7 @@ namespace Indpendent_Study_Fall_2020
 
             base.OnRenderFrame(e);
             SwapBuffers();
+            
         }
 
         protected override void OnResize(EventArgs e)
