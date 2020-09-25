@@ -26,6 +26,10 @@
   "frameworks": {
     "netcoreapp3.1": {
       "dependencies": {
+        "FbxSharp": {
+          "target": "Package",
+          "version": "[0.9.0, )"
+        },
         "JeremyAnsel.Media.WavefrontObj": {
           "target": "Package",
           "version": "[2.0.19, )"

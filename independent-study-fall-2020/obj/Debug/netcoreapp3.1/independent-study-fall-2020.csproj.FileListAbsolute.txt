@@ -20,3 +20,4 @@ D:\MOVE\Homework\Concordia_Year_03\Independent_Study\Repos\independent-study-fal
 D:\MOVE\Homework\Concordia_Year_03\Independent_Study\Repos\independent-study-fall-2020\independent-study-fall-2020\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\MOVE\Homework\Concordia_Year_03\Independent_Study\Repos\independent-study-fall-2020\independent-study-fall-2020\bin\Debug\netcoreapp3.1\SixLabors.ImageSharp.dll
 D:\MOVE\Homework\Concordia_Year_03\Independent_Study\Repos\independent-study-fall-2020\independent-study-fall-2020\bin\Debug\netcoreapp3.1\JeremyAnsel.Media.WavefrontObj.dll
+D:\MOVE\Homework\Concordia_Year_03\Independent_Study\Repos\independent-study-fall-2020\independent-study-fall-2020\bin\Debug\netcoreapp3.1\FbxSharp.dll

@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "FbxSharp/0.9.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/FbxSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net40/FbxSharp.dll": {}
+        }
+      },
       "JeremyAnsel.Media.WavefrontObj/2.0.19": {
         "type": "package",
         "compile": {
@@ -112,6 +121,20 @@
     }
   },
   "libraries": {
+    "FbxSharp/0.9.0": {
+      "sha512": "0pt868BFMfRXqtcY3A2CHsOWxrYQl7/JVptjg2eyoniHSokENl6Yjg2J+laJh/N8IOVQ89bfxNireNQv4M2KMA==",
+      "type": "package",
+      "path": "fbxsharp/0.9.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fbxsharp.0.9.0.nupkg.sha512",
+        "fbxsharp.nuspec",
+        "lib/net40/FbxSharp.dll",
+        "tools/FbxPrint.exe"
+      ]
+    },
     "JeremyAnsel.Media.WavefrontObj/2.0.19": {
       "sha512": "GIpxn2ydTda6kQMpOhQNLaebAQMMWNCctcgaQLwE/wjcmpyIf7rISqQwoCUOD63E1pUIVZIWV/Uo7/5b4XuuJw==",
       "type": "package",
@@ -398,6 +421,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "FbxSharp >= 0.9.0",
       "JeremyAnsel.Media.WavefrontObj >= 2.0.19",
       "Microsoft.Win32.Primitives >= 4.3.0",
       "Microsoft.Win32.SystemEvents >= 4.7.0",
@@ -441,6 +465,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "FbxSharp": {
+            "target": "Package",
+            "version": "[0.9.0, )"
+          },
           "JeremyAnsel.Media.WavefrontObj": {
             "target": "Package",
             "version": "[2.0.19, )"
@@ -480,6 +508,16 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'FbxSharp 0.9.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "FbxSharp",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",

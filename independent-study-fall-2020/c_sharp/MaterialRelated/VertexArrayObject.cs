@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
@@ -25,10 +26,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             {
                 if (attributeBuffers[i].VerticesCount != attributeBuffers[0].VerticesCount) //error checking
                 {
-                    throw new Exception($"The attribute \"{attributeBuffers[i].AttributeName}\"" +
+                    throw new DataException($"The attribute \"{attributeBuffers[i].AttributeName}\"" +
                                         $" doesn't have the same number of vertices as attribute: \"{attributeBuffers[i].AttributeName}!\"");
                 }
-//                AttributeIndex.Add(GL.GetAttribLocation(program.Handle, attributeBuffers[i].AttributeName), i);
                 totalAttributesCount += attributeBuffers[i].Stride * VerticesCount;
                 StrideLength += attributeBuffers[i].Stride;
             }

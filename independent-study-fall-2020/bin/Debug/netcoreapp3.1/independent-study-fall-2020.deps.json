@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "independent-study-fall-2020/1.0.0": {
         "dependencies": {
+          "FbxSharp": "0.9.0",
           "JeremyAnsel.Media.WavefrontObj": "2.0.19",
           "Microsoft.Win32.Primitives": "4.3.0",
           "Microsoft.Win32.SystemEvents": "4.7.0",
@@ -17,6 +18,14 @@
         },
         "runtime": {
           "independent-study-fall-2020.dll": {}
+        }
+      },
+      "FbxSharp/0.9.0": {
+        "runtime": {
+          "lib/net40/FbxSharp.dll": {
+            "assemblyVersion": "0.9.0.0",
+            "fileVersion": "0.9.0.0"
+          }
         }
       },
       "JeremyAnsel.Media.WavefrontObj/2.0.19": {
@@ -110,6 +119,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "FbxSharp/0.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0pt868BFMfRXqtcY3A2CHsOWxrYQl7/JVptjg2eyoniHSokENl6Yjg2J+laJh/N8IOVQ89bfxNireNQv4M2KMA==",
+      "path": "fbxsharp/0.9.0",
+      "hashPath": "fbxsharp.0.9.0.nupkg.sha512"
     },
     "JeremyAnsel.Media.WavefrontObj/2.0.19": {
       "type": "package",

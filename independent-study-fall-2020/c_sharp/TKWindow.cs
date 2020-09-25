@@ -17,9 +17,27 @@ namespace Indpendent_Study_Fall_2020
             -1.0f,  -1.0f, -1.0f, //Bottom-left vertex
             1.0f,  -1.0f, -1.0f, //Bottom-right vertex
             0.0f,  1.0f,  -1.0f,  //Top vertex
+            
+            -1.0f, -1.0f,  1.0f,  //Top vertex
+            1.0f,  -1.0f,  1.0f,  //Top vertex
+            0.0f,  1.0f,  1.0f,  //Top vertex
+        };
+        
+        int[] indices = {
+            0, //Bottom-left vertex
+            1, //Bottom-right vertex
+            2,  //Top vertex
+            
+            3,  //Top vertex
+            4,  //Top vertex
+            5,  //Top vertex
         };
         
         float[] uvs = {
+            0.0f, 0.0f, //Bottom-left vertex
+            1.0f, 0.0f, //Bottom-right vertex
+            0.5f, 1.0f,  //Top vertex
+            
             0.0f, 0.0f, //Bottom-left vertex
             1.0f, 0.0f, //Bottom-right vertex
             0.5f, 1.0f  //Top vertex
@@ -64,11 +82,18 @@ namespace Indpendent_Study_Fall_2020
             base.OnLoad(e);
             
             GL.ClearColor(1f,0f,1f,1f);
-
+            
 
             #region materials
             var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
-            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("test_triangle.obj"));
+//            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("boxBent.obj"));
+            testMat.FeedBufferAndIndicesData(
+                indices,
+                new AttributeBuffer("in_uv", 2, uvs),
+                new AttributeBuffer("in_position", 3, positions)
+                );
+//            testMat.SetupIndices();
+            
             testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
             testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
 

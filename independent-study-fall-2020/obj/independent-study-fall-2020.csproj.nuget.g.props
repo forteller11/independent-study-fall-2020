@@ -12,4 +12,7 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgFbxSharp Condition=" '$(PkgFbxSharp)' == '' ">C:\Users\Charly\.nuget\packages\fbxsharp\0.9.0</PkgFbxSharp>
+  </PropertyGroup>
 </Project>

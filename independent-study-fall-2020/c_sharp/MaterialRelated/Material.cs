@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using OpenTK.Graphics.OpenGL4;
 
@@ -12,6 +13,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public readonly Dictionary<string, int> UniformLocations;
         private List<Texture> _textures = new List<Texture>();
         public VertexArrayObject VAO;
+        public bool UseIndices { get; private set; }
+        public int[] Indices = null;
+        public int IndicesHandle;
 
 
         public Material(string name, ShaderProgram shaderProgram)
@@ -29,7 +33,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             }
         }
 
-        public AttributeBuffer[] GetAttribBuffersFromObjFile(string fileName)
+        public AttributeBuffer[] GetAttribBuffersFromObjFile(string fileName) //TODO collaspe indices' specefic attribs into one
         {
             var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.AssetPath + "\\" + fileName);
 
@@ -42,8 +46,17 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 vertsFlattened[rootIndex + 1] = obj.Vertices[i].Position.Y;
                 vertsFlattened[rootIndex + 2] = obj.Vertices[i].Position.Z;
             }
-//            vertsFlattened.Reverse();
             
+            int normalStride = 3;
+            float[] normalsFlattened = new float[obj.VertexNormals.Count * normalStride];
+            for (int i = 0; i < obj.VertexNormals.Count; i++)
+            {
+                int rootIndex = i * normalStride;
+                normalsFlattened[rootIndex + 0] = obj.VertexNormals[i].X;
+                normalsFlattened[rootIndex + 1] = obj.VertexNormals[i].Y;
+                normalsFlattened[rootIndex + 2] = obj.VertexNormals[i].Z;
+            }
+
             int uvStride = 2;
             float[] uvsFlattened = new float[obj.TextureVertices.Count * uvStride];
             for (int i = 0; i < obj.TextureVertices.Count; i++)
@@ -54,14 +67,35 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             }
             
             var positionAttrib = new AttributeBuffer("in_position", vertStride, vertsFlattened);
+            var normalAttrib = new AttributeBuffer("in_normal", normalStride, normalsFlattened);
             var uvAttrib = new AttributeBuffer("in_uv", uvStride, uvsFlattened);
+            //todo indices
             
-            //todo normals
-            return new [] {positionAttrib, uvAttrib};
+            return new [] {positionAttrib, normalAttrib, uvAttrib};
         }
-        public void SetupVAOFromAttribBuffers(params AttributeBuffer[] attributeBuffers)
+        public void FeedBufferAndIndicesData(int[] indices, params AttributeBuffer[] attributeBuffers)
         {
             VAO = new VertexArrayObject(Shader, attributeBuffers);
+            SetupIndices(indices);
+        }
+
+        private void SetupIndices(int[] indices)
+        {
+            UseIndices = indices != null;
+            if (UseIndices)
+            {
+                Indices = indices;
+                if (Indices.Length != VAO.VerticesCount)
+                    throw new DataException($"Indices length don't match the VAO's length on material {Name}!");
+                
+                IndicesHandle = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndicesHandle);
+                GL.BufferData(
+                    BufferTarget.ArrayBuffer, 
+                    Indices.Length * sizeof(int),
+                    Indices,
+                    BufferUsageHint.StaticDraw);
+            }
         }
 
         public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum, int textureUnitIndex)
@@ -94,7 +128,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void PrepareAndDraw()
         {
             PrepareBatchForDrawing();
-            GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
+            Draw();
         }
 
         public void PrepareBatchForDrawing()
@@ -107,7 +141,22 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
         public void Draw()
         {
-            GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
+            if (UseIndices == false)
+            {
+                GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
+            }
+            else
+            {
+                GL.DrawElements(PrimitiveType.Triangles, VAO.VerticesCount, DrawElementsType.UnsignedInt, 0);
+//                GL.DrawElementsInstanced(PrimitiveType.Triangles,
+//                    0,
+//                    DrawElementsType.UnsignedInt,
+//                    Indices,
+//                    ref VAO.VerticesCount);
+            }
+
+            //todo
+//            GL.DrawElementsInstanced(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedInt, ref Indices, int 0);
         }
         
         

@@ -103,8 +103,14 @@ namespace Indpendent_Study_Fall_2020
             Console.WriteLine($"type: {type}");
             Console.WriteLine($"severity: {severity}");
             Console.WriteLine($"message: {Marshal.PtrToStringUTF8(message)}");
-
+            
             Console.ForegroundColor = DefaultForegroundColor;
+            
+            if (severity != DebugSeverity.DontCare && //for stack tracing
+                severity != DebugSeverity.DebugSeverityNotification)
+            {
+                throw new Exception("OpenGL Error");
+            }
         }
 
         private static void DrawSeperatorConditionally(PreviousDebugCall currentCall)
