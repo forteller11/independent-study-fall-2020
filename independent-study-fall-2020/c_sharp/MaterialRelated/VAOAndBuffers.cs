@@ -9,7 +9,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class VAOAndBuffers
     {
         public float[] Buffer;
-        public int[] IndicesBuffer;
+        public uint[] IndicesBuffer;
         
         public int VerticesCount { get; private set; }
         public int StrideLength { get; private set; }
@@ -19,7 +19,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public bool UseIndices;
         public Dictionary<string, int> AttributeIndex;
 
-        public VAOAndBuffers(ShaderProgram program, int[] indices, params AttributeBuffer [] attributeBuffers)
+        public VAOAndBuffers(ShaderProgram program, uint[] indices, params AttributeBuffer [] attributeBuffers)
         {
             MergeBuffers(attributeBuffers, out Buffer);
 
@@ -91,7 +91,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             }
         }
         
-        private void SetupIndices(int[] indices)
+        private void SetupIndices(uint[] indices)
         {
             UseIndices = indices != null;
             if (UseIndices)
@@ -106,7 +106,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndicesHandle);
                 GL.BufferData(
                     BufferTarget.ArrayBuffer, 
-                    IndicesBuffer.Length * sizeof(int),
+                    IndicesBuffer.Length * sizeof(uint),
                     IndicesBuffer,
                     BufferUsageHint.StaticDraw);
             }

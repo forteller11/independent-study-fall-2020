@@ -20,16 +20,16 @@ namespace Indpendent_Study_Fall_2020
             -0.5f,  0.5f, 0.0f   // top left
         };
         
-        int[] indices = {
-            0, 1, 3,   // first triangle
-            1, 2, 3    // second triangle
+        uint[] indices = {
+            0, 1, 3, // The first triangle will be the bottom-right half of the triangle
+            1, 2, 3  // Then the second will be the top-right half of the triangle
         };
         
         float[] uvs = {
-            0.0f, 0.0f, //Bottom-left vertex
+            1.0f, 1.0f, //Bottom-left vertex
             1.0f, 0.0f, //Bottom-right vertex
+            0.0f, 0.0f,  //Top vertex
             0.0f, 1.0f,  //Top vertex
-            1.0f, 1.0f,  //Top vertex
             
         };
         
@@ -73,12 +73,13 @@ namespace Indpendent_Study_Fall_2020
             
             GL.ClearColor(1f,0f,1f,1f);
             
+            Globals.Init();
 
             #region materials
             var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
 //            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("boxBent.obj"));
             testMat.FeedBufferAndIndicesData(
-                indices,
+                null,
                 new AttributeBuffer("in_uv", 2, uvs),
                 new AttributeBuffer("in_position", 3, positions)
                 );

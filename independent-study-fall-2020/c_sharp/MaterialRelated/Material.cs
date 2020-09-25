@@ -70,7 +70,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             
             return new [] {positionAttrib, normalAttrib, uvAttrib};
         }
-        public void FeedBufferAndIndicesData(int[] indices, params AttributeBuffer[] attributeBuffers)
+        public void FeedBufferAndIndicesData(uint[] indices, params AttributeBuffer[] attributeBuffers)
         {
             VAO = new VAOAndBuffers(Shader, indices, attributeBuffers);
      
@@ -124,10 +124,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             if (VAO.UseIndices == false)
             {
+                Debug.Log("draw arrays");
                 GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
             }
             else
             {
+                Debug.Log("draw elements");
                 GL.DrawElements(PrimitiveType.Triangles, VAO.IndicesBuffer.Length, DrawElementsType.UnsignedInt, 0);
 //                GL.DrawElementsInstanced(PrimitiveType.Triangles,
 //                    0,

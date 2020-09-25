@@ -21,10 +21,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
-
             Rotate(eventArgs);
             Move(eventArgs);
-
         }
 
         void Rotate(GameObjectUpdateEventArgs eventArgs) //todo can't rotate around
