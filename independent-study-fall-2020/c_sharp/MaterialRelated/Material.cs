@@ -12,10 +12,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public ShaderProgram Shader { get; private set; }
         public readonly Dictionary<string, int> UniformLocations;
         private List<Texture> _textures = new List<Texture>();
-        public VertexArrayObject VAO;
-        public bool UseIndices { get; private set; }
-        public int[] Indices = null;
-        public int IndicesHandle;
+        public VAOAndBuffers VAO;
 
 
         public Material(string name, ShaderProgram shaderProgram)
@@ -75,28 +72,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         }
         public void FeedBufferAndIndicesData(int[] indices, params AttributeBuffer[] attributeBuffers)
         {
-            VAO = new VertexArrayObject(Shader, attributeBuffers);
-            SetupIndices(indices);
+            VAO = new VAOAndBuffers(Shader, indices, attributeBuffers);
+     
         }
 
-        private void SetupIndices(int[] indices)
-        {
-            UseIndices = indices != null;
-            if (UseIndices)
-            {
-                Indices = indices;
-                if (Indices.Length != VAO.VerticesCount)
-                    throw new DataException($"Indices length don't match the VAO's length on material {Name}!");
-                
-                IndicesHandle = GL.GenBuffer();
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndicesHandle);
-                GL.BufferData(
-                    BufferTarget.ArrayBuffer, 
-                    Indices.Length * sizeof(int),
-                    Indices,
-                    BufferUsageHint.StaticDraw);
-            }
-        }
+       
 
         public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum, int textureUnitIndex)
         {
@@ -137,17 +117,18 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             for (int i = 0; i < _textures.Count; i++)
                 _textures[i].Use();
             GL.BindVertexArray(VAO.VAOHandle);
+//            GL.BindBuffer(BufferTarget.ArrayBuffer, VAO.IndicesHandle);
         }
 
         public void Draw()
         {
-            if (UseIndices == false)
+            if (VAO.UseIndices == false)
             {
                 GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
             }
             else
             {
-                GL.DrawElements(PrimitiveType.Triangles, VAO.VerticesCount, DrawElementsType.UnsignedInt, 0);
+                GL.DrawElements(PrimitiveType.Triangles, VAO.IndicesBuffer.Length, DrawElementsType.UnsignedInt, 0);
 //                GL.DrawElementsInstanced(PrimitiveType.Triangles,
 //                    0,
 //                    DrawElementsType.UnsignedInt,
@@ -158,9 +139,5 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             //todo
 //            GL.DrawElementsInstanced(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedInt, ref Indices, int 0);
         }
-        
-        
-        
-        //todo, automatically assign unifroms and textures
     }
 }

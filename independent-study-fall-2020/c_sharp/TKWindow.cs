@@ -14,33 +14,23 @@ namespace Indpendent_Study_Fall_2020
     {
 
         float[] positions = {
-            -1.0f,  -1.0f, -1.0f, //Bottom-left vertex
-            1.0f,  -1.0f, -1.0f, //Bottom-right vertex
-            0.0f,  1.0f,  -1.0f,  //Top vertex
-            
-            -1.0f, -1.0f,  1.0f,  //Top vertex
-            1.0f,  -1.0f,  1.0f,  //Top vertex
-            0.0f,  1.0f,  1.0f,  //Top vertex
+            0.5f,  0.5f, 0.0f,  // top right
+            0.5f, -0.5f, 0.0f,  // bottom right
+            -0.5f, -0.5f, 0.0f,  // bottom left
+            -0.5f,  0.5f, 0.0f   // top left
         };
         
         int[] indices = {
-            0, //Bottom-left vertex
-            1, //Bottom-right vertex
-            2,  //Top vertex
-            
-            3,  //Top vertex
-            4,  //Top vertex
-            5,  //Top vertex
+            0, 1, 3,   // first triangle
+            1, 2, 3    // second triangle
         };
         
         float[] uvs = {
             0.0f, 0.0f, //Bottom-left vertex
             1.0f, 0.0f, //Bottom-right vertex
-            0.5f, 1.0f,  //Top vertex
+            0.0f, 1.0f,  //Top vertex
+            1.0f, 1.0f,  //Top vertex
             
-            0.0f, 0.0f, //Bottom-left vertex
-            1.0f, 0.0f, //Bottom-right vertex
-            0.5f, 1.0f  //Top vertex
         };
         
 //        // For documentation on this, check Texture.cs
