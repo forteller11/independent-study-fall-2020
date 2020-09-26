@@ -15,13 +15,12 @@ namespace Indpendent_Study_Fall_2020
     {
 
         float[] positions = {
-             1f,  -1f, -1.0f,  //rd
-            -1f, -1f, -1.0f, //ld
-            -1f, 1f, -1.0f,  //lu
-
-            1f, -1f, -1.0f,  //rd  
-            1f, 1f, -1.0f,  //ru
-            -1f, 1f, -1.0f,  //rd
+             1f/2,  -1f/2, -1/2f,  //rd
+            -1f/2, -1f/2, -1/2f, //ld
+            -1f/2, 1f/2, -1/2f,  //
+            1f/2,  -1f/2, 1/2f,  //rd
+            -1f/2, -1f/2, 1/2f, //ld
+            -1f/2, 1f/2, 1/2f,  //lu
         };
         
         uint[] indices = {
@@ -62,11 +61,11 @@ namespace Indpendent_Study_Fall_2020
             
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.DepthTest);
+//            GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.DebugOutputSynchronous);
-            GL.Enable(EnableCap.Blend);
-//            GL.BlendEquation(BlendEquationMode.FuncAdd);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+//            GL.Enable(EnableCap.Blend);
+////            GL.BlendEquation(BlendEquationMode.FuncAdd);
+//            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
@@ -103,18 +102,18 @@ namespace Indpendent_Study_Fall_2020
                 colorsFlat[baseIndex + 3] = 1;
             }
             
-            var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
-            var modelAttribs = testMat.GetAttribBuffersFromObjFile("boxBent1.obj");
-            AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
-            attribMergedBuffer[0] = colAttrib;
-            modelAttribs.CopyTo(attribMergedBuffer, 1);
+//            var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
+//            var modelAttribs = testMat.GetAttribBuffersFromObjFile("boxBent1.obj");
+//            AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
+//            attribMergedBuffer[0] = colAttrib;
+//            modelAttribs.CopyTo(attribMergedBuffer, 1);
             
-            testMat.FeedBufferAndIndicesData(null, modelAttribs);
-//            testMat.FeedBufferAndIndicesData(
-//                null,
-////                new AttributeBuffer("in_uv", 2, uvs),
-//                new AttributeBuffer("in_position", 3, positions)
-//                );
+//            testMat.FeedBufferAndIndicesData(null, modelAttribs);
+            testMat.FeedBufferAndIndicesData(
+                null,
+//                new AttributeBuffer("in_uv", 2, uvs),
+                new AttributeBuffer("in_position", 3, positions)
+                );
 
             testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
             testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
@@ -127,7 +126,6 @@ namespace Indpendent_Study_Fall_2020
             _gameObjectManager = new GameObjectManager();
             _gameObjectManager.Add(
                 new CameraControllerSingleton(),
-
                 new TestTriangleTexture()
             );
             
