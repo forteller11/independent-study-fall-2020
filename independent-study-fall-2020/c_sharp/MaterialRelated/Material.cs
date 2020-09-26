@@ -41,9 +41,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 int rootIndex = i * vertStride;
                 for (int j = 0; j < obj.Faces[i].Vertices.Count; j++)
                 {
-                    vertsFlattened[rootIndex + 0] = obj.Vertices[i].Position.X;
-                    vertsFlattened[rootIndex + 1] = obj.Vertices[i].Position.Y;
-                    vertsFlattened[rootIndex + 2] = obj.Vertices[i].Position.Z;
+                    int vertexIndex = obj.Faces[i].Vertices[j].Vertex-1;
+                    int texIndex = obj.Faces[i].Vertices[j].Texture-1;
+                    int normIndex = obj.Faces[i].Vertices[j].Normal-1;
+                    
+                    vertsFlattened[rootIndex + 0] = obj.Vertices[vertexIndex].Position.X;
+                    vertsFlattened[rootIndex + 1] = obj.Vertices[vertexIndex].Position.Y;
+                    vertsFlattened[rootIndex + 2] = obj.Vertices[vertexIndex].Position.Z;
+                    if (j > 2)
+                        throw new Exception($"face is not triangulated and has more than 3 vertices");
                 }
             }
             
