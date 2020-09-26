@@ -35,15 +35,20 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.AssetPath + "\\" + fileName);
 
             int vertStride = 3;
-            float[] vertsFlattened = new float[obj.Vertices.Count * vertStride];
-            for (int i = 0; i < obj.Vertices.Count; i++)
+            float[] vertsFlattened = new float[obj.Faces.Count * vertStride];
+            for (int i = 0; i < obj.Faces.Count; i++)
             {
                 int rootIndex = i * vertStride;
-                vertsFlattened[rootIndex + 0] = obj.Vertices[i].Position.X;
-                vertsFlattened[rootIndex + 1] = obj.Vertices[i].Position.Y;
-                vertsFlattened[rootIndex + 2] = obj.Vertices[i].Position.Z;
+                for (int j = 0; j < obj.Faces[i].Vertices.Count; j++)
+                {
+                    vertsFlattened[rootIndex + 0] = obj.Vertices[i].Position.X;
+                    vertsFlattened[rootIndex + 1] = obj.Vertices[i].Position.Y;
+                    vertsFlattened[rootIndex + 2] = obj.Vertices[i].Position.Z;
+                }
             }
             
+            Debug.GraphEnumerable(vertsFlattened);
+
             int normalStride = 3;
             float[] normalsFlattened = new float[obj.VertexNormals.Count * normalStride];
             for (int i = 0; i < obj.VertexNormals.Count; i++)
@@ -64,11 +69,16 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             }
             
             var positionAttrib = new AttributeBuffer("in_position", vertStride, vertsFlattened);
-            var normalAttrib = new AttributeBuffer("in_normal", normalStride, normalsFlattened);
+//            var normalAttrib = new AttributeBuffer("in_normal", normalStride, normalsFlattened);
             var uvAttrib = new AttributeBuffer("in_uv", uvStride, uvsFlattened);
             //todo indices
             
-            return new [] {positionAttrib, normalAttrib, uvAttrib};
+            return new [] {
+                positionAttrib,
+//                normalAttrib, 
+//                uvAttrib
+                
+            };
         }
         public void FeedBufferAndIndicesData(uint[] indices, params AttributeBuffer[] attributeBuffers)
         {

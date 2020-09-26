@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using FbxSharp;
 using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.EntitySystem.Gameobjects;
 using Indpendent_Study_Fall_2020.MaterialRelated;
@@ -85,15 +86,32 @@ namespace Indpendent_Study_Fall_2020
             GL.ClearColor(1f,0f,1f,1f);
             
             Globals.Init();
-
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
-//            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("boxBent.obj"));
-            testMat.FeedBufferAndIndicesData(
-                null,
-                new AttributeBuffer("in_uv", 2, uvs),
-                new AttributeBuffer("in_position", 3, positions)
-                );
+            var testMat = new Material("test_mat", new ShaderProgram("textureless.vert", "textureless.frag"));
+
+            float[] colorsFlat = new float[6 * 4];
+            for (int i = 0; i < 6; i++)
+            {
+                var col = Helpers.Color.RandomColor(Globals.Random);
+                int baseIndex = i * 4;
+                colorsFlat[baseIndex + 0] = col.R;
+                colorsFlat[baseIndex + 1] = col.G;
+                colorsFlat[baseIndex + 2] = col.B;
+                colorsFlat[baseIndex + 3] = 1;
+            }
+            
+            var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
+            var modelAttribs = testMat.GetAttribBuffersFromObjFile("boxBent.obj");
+            AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
+            attribMergedBuffer[0] = colAttrib;
+            modelAttribs.CopyTo(attribMergedBuffer, 1);
+            
+            testMat.FeedBufferAndIndicesData(null, modelAttribs);
+//            testMat.FeedBufferAndIndicesData(
+//                null,
+//                new AttributeBuffer("in_uv", 2, uvs),
+//                new AttributeBuffer("in_position", 3, positions)
+//                );
 //            testMat.SetupIndices();
             
             testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);

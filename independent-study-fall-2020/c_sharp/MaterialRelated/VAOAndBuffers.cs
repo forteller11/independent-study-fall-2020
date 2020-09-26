@@ -44,7 +44,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 if (attributeBuffers[i].VerticesCount != attributeBuffers[0].VerticesCount) //error checking
                 {
                     throw new DataException($"The attribute \"{attributeBuffers[i].AttributeName}\"" +
-                                            $" doesn't have the same number of vertices as attribute: \"{attributeBuffers[i].AttributeName}!\"");
+                                            $" doesn't have the same number of vertices as attribute: \"{attributeBuffers[0].AttributeName}!\"");
                 }
                 totalAttributesCount += attributeBuffers[i].Stride * VerticesCount;
                 StrideLength += attributeBuffers[i].Stride;

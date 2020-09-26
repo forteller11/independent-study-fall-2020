@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System;
+using OpenTK;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
@@ -9,10 +10,12 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static Vector3 CameraPosition;
         public static Quaternion CameraRotation;
         public static Matrix4 CameraPerspective;
+        public static Random Random;
 
         public static void Init()
         {
             Matrix4.CreatePerspectiveFieldOfView(MHelper.DEG_TO_RAD * 90, 1f, 0.5f, 1000f, out CameraPerspective);
+            Random = new Random(0);
         }
 
     }
