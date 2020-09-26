@@ -14,10 +14,13 @@ namespace Indpendent_Study_Fall_2020
     {
 
         float[] positions = {
-            0.5f,  0.5f, -1.0f,  // top right
-            0.5f, -0.5f, -1.0f,  // bottom right
-            -0.5f, -0.5f, -1.0f,  // bottom left
-            -0.5f,  0.5f, -1.0f   // top left
+             1f,  -1f, -1.0f,  //rd
+            -1f, -1f, -1.0f, //ld
+            -1f, 1f, -1.0f,  //lu
+
+            1f, -1f, -1.0f,  //rd  
+            1f, 1f, -1.0f,  //ru
+            -1f, 1f, -1.0f,  //rd
         };
         
         uint[] indices = {
@@ -26,11 +29,13 @@ namespace Indpendent_Study_Fall_2020
         };
         
         float[] uvs = {
-            1.0f, 1.0f, //Bottom-left vertex
-            1.0f, 0.0f, //Bottom-right vertex
-            0.0f, 0.0f,  //Top vertex
-            0.0f, 1.0f,  //Top vertex
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f,
             
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
         };
         
 //        // For documentation on this, check Texture.cs
@@ -56,6 +61,8 @@ namespace Indpendent_Study_Fall_2020
             
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.DebugOutputSynchronous);
 
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
@@ -83,7 +90,7 @@ namespace Indpendent_Study_Fall_2020
             var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
 //            testMat.SetupVAOFromAttribBuffers(testMat.GetAttribBuffersFromObjFile("boxBent.obj"));
             testMat.FeedBufferAndIndicesData(
-                indices,
+                null,
                 new AttributeBuffer("in_uv", 2, uvs),
                 new AttributeBuffer("in_position", 3, positions)
                 );

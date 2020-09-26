@@ -78,9 +78,11 @@ namespace Indpendent_Study_Fall_2020
         static public void CheckForGLErrors()
         {
             var error = GL.GetError();
-            if (error != ErrorCode.NoError)
+            while (error != ErrorCode.NoError)
             {
-                throw new Exception($"OpenGLError: {error}");
+                
+                LogWarning($"OpenGLError: {error}");
+                error = GL.GetError();
             }
         }
         

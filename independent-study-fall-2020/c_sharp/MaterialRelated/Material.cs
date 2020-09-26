@@ -124,12 +124,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             if (VAO.UseIndices == false)
             {
-                Debug.Log("draw arrays");
+//                Debug.Log("draw arrays");
                 GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
             }
             else
             {
-                Debug.Log("draw elements");
+//                Debug.Log("draw elements");
                 GL.DrawElements(PrimitiveType.Triangles, VAO.IndicesBuffer.Length, DrawElementsType.UnsignedInt, 0);
 //                GL.DrawElementsInstanced(PrimitiveType.Triangles,
 //                    0,

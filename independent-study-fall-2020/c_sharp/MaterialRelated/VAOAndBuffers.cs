@@ -29,7 +29,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
             GenerateVAOFromBuffer(program, attributeBuffers);
 
-            SetupIndices(indices);
+            SetupIndices(indices); 
         }
 
         private void MergeBuffers(AttributeBuffer[] attributeBuffers, out float[] buffer)
