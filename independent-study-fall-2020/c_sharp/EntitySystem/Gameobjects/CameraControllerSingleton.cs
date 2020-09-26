@@ -8,21 +8,22 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
     public class CameraControllerSingleton : GameObject
     {
         private float acceleration = 1f;
-        private float angularAcceleration = 1.8f;
+        private float angularAcceleration = 4f;
         
         private float _horziontalMaxVelocity = .05f;
         private float _verticalMaxVelocity = 1f;
 
         public override void OnLoad()
         {
-            Globals.CameraPosition = Vector3.Zero;
+            Globals.CameraPosition = new Vector3(0,0,2);
             Globals.CameraRotation = Quaternion.Identity;
         }
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
-        {
+        {  
             Rotate(eventArgs);
             Move(eventArgs);
+            
         }
 
         void Rotate(GameObjectUpdateEventArgs eventArgs) //todo can't rotate around

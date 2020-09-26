@@ -11,10 +11,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
         public override string MaterialName => "test_mat";
 
         public override void SendUniformsToShader()
-        { 
-            Material.SetMatrix4("Rotation", Matrix4.CreateFromQuaternion(Globals.CameraRotation));
-            Material.SetMatrix4("Transform", Globals.CameraPerspective);
-            Material.SetVector3("CamPosition", Globals.CameraPosition);
+        {
+            var worldTranslation = Matrix4.CreateTranslation(Globals.CameraPosition);
+            var worldRotation = Matrix4.CreateFromQuaternion(Globals.CameraRotation);
+            var modelToWorld = worldRotation * worldTranslation;
+
+            var worldToView = Globals.CameraPerspective;
+            
+            Material.SetMatrix4("ModelToWorld", modelToWorld);
+            Material.SetMatrix4("WorldToView", worldToView);
+//            Material.SetVector3("CamPosition", Globals.CameraPosition);
         }
         
     }

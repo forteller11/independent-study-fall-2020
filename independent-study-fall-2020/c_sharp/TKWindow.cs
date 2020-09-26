@@ -53,8 +53,8 @@ namespace Indpendent_Study_Fall_2020
         {
 
             var newTKWindow = new TKWindow(
-                420, 
-                420, 
+                640, 
+                640, 
                 GraphicsMode.Default, 
                 $"Independent Study Fall 2020 - Charly Yan Miller ",
                 GameWindowFlags.Default,
@@ -104,7 +104,7 @@ namespace Indpendent_Study_Fall_2020
             }
             
             var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
-            var modelAttribs = testMat.GetAttribBuffersFromObjFile("boxBent.obj");
+            var modelAttribs = testMat.GetAttribBuffersFromObjFile("boxBent1.obj");
             AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
             attribMergedBuffer[0] = colAttrib;
             modelAttribs.CopyTo(attribMergedBuffer, 1);
@@ -112,11 +112,10 @@ namespace Indpendent_Study_Fall_2020
             testMat.FeedBufferAndIndicesData(null, modelAttribs);
 //            testMat.FeedBufferAndIndicesData(
 //                null,
-//                new AttributeBuffer("in_uv", 2, uvs),
+////                new AttributeBuffer("in_uv", 2, uvs),
 //                new AttributeBuffer("in_position", 3, positions)
 //                );
-//            testMat.SetupIndices();
-            
+
             testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
             testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
 
@@ -128,6 +127,7 @@ namespace Indpendent_Study_Fall_2020
             _gameObjectManager = new GameObjectManager();
             _gameObjectManager.Add(
                 new CameraControllerSingleton(),
+
                 new TestTriangleTexture()
             );
             
