@@ -9,6 +9,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
+using Vector3 = OpenTK.Vector3;
 
 namespace Indpendent_Study_Fall_2020
 {
@@ -74,19 +75,19 @@ namespace Indpendent_Study_Fall_2020
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
             newTKWindow.Run(60d);
-            return newTKWindow;
-        }
-        #endregion
-
-        protected override void OnLoad(EventArgs e)
-        {
+            
             Debug.Log($"");
             Debug.Log($"Renderer: {GL.GetString(StringName.Renderer)}");
             Debug.Log($"Version: {GL.GetString(StringName.Version)}");
             Debug.Log($"Vendor: {GL.GetString(StringName.Vendor)}");
             Debug.Log($"");
             
-            //todo have function to handle creating new vbo and auto asignment to vao
+            return newTKWindow;
+        }
+        #endregion
+
+        protected override void OnLoad(EventArgs e)
+        {
             base.OnLoad(e);
             
             GL.ClearColor(1f,0f,1f,1f);
@@ -95,23 +96,8 @@ namespace Indpendent_Study_Fall_2020
             #region materials
             var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
 
-            float[] colorsFlat = new float[6 * 4];
-            for (int i = 0; i < 6; i++)
-            {
-                var col = Helpers.Color.RandomColor(Globals.Random);
-                int baseIndex = i * 4;
-                colorsFlat[baseIndex + 0] = col.R;
-                colorsFlat[baseIndex + 1] = col.G;
-                colorsFlat[baseIndex + 2] = col.B;
-                colorsFlat[baseIndex + 3] = 1;
-            }
-            
-//            var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
             var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("quad_uv_test.obj", true, true, false);
-//            modelAttribs = testMat.GetAttribBuffersFromFBXFile("planes_mesh.fbx");
-//            AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
-//            attribMergedBuffer[0] = colAttrib;
-//            modelAttribs.CopyTo(attribMergedBuffer, 1);
+
             
             testMat.FeedBufferAndIndicesData(null, modelAttribs);
 //            testMat.FeedBufferAndIndicesData(null, new AttributeBuffer("in_position", 3, positions));
@@ -122,6 +108,7 @@ namespace Indpendent_Study_Fall_2020
             Globals.DrawManager.SetupAllMaterials(
                 testMat
                 );
+//            Globals.DirectionLights.Add(new DirectionLight(Vector3.UnitY,  ));
             #endregion
             
             _gameObjectManager = new GameObjectManager();
@@ -152,7 +139,7 @@ namespace Indpendent_Study_Fall_2020
                 Keyboard.GetState()
             );
       
-            
+            Globals.Update(eventArgs);
             _gameObjectManager.UpdateAllGameObjects(eventArgs);
             
             if (eventArgs.KeyboardState.IsKeyDown(Key.Escape))
