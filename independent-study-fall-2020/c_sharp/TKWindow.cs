@@ -21,6 +21,9 @@ namespace Indpendent_Study_Fall_2020
             1f/2,  -1f/2, 1/2f,  //rd
             -1f/2, -1f/2, 1/2f, //ld
             -1f/2, 1f/2, 1/2f,  //lu
+            1f, 2f, 0,
+            -1, 2f, 0,
+            0, -2f, 0
         };
         
         uint[] indices = {
@@ -65,7 +68,7 @@ namespace Indpendent_Study_Fall_2020
             GL.Enable(EnableCap.DebugOutputSynchronous);
             GL.Enable(EnableCap.Blend);
 ////            GL.BlendEquation(BlendEquationMode.FuncAdd);
-//            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
@@ -89,7 +92,7 @@ namespace Indpendent_Study_Fall_2020
             
             Globals.Init();
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
+            var testMat = new Material("test_mat", new ShaderProgram("textureless.vert", "textureless.frag"));
 
             float[] colorsFlat = new float[6 * 4];
             for (int i = 0; i < 6; i++)
@@ -103,17 +106,14 @@ namespace Indpendent_Study_Fall_2020
             }
             
 //            var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
-//            var modelAttribs = testMat.GetAttribBuffersFromObjFile("boxBent1.obj");
+            var modelAttribs = testMat.GetAttribBuffersFromObjFile("circle_mesh.obj");
+//            modelAttribs = testMat.GetAttribBuffersFromFBXFile("planes_mesh.fbx");
 //            AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
 //            attribMergedBuffer[0] = colAttrib;
 //            modelAttribs.CopyTo(attribMergedBuffer, 1);
             
-//            testMat.FeedBufferAndIndicesData(null, modelAttribs);
-            testMat.FeedBufferAndIndicesData(
-                null,
-                new AttributeBuffer("in_uv", 2, uvs),
-                new AttributeBuffer("in_position", 3, positions)
-                );
+            testMat.FeedBufferAndIndicesData(null, modelAttribs);
+//            testMat.FeedBufferAndIndicesData(null, new AttributeBuffer("in_position", 3, positions));
 
             testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
             testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);

@@ -24,8 +24,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
             Rotate(eventArgs);
             Move(eventArgs);
             
-            Debug.Log( Globals.CameraPosition);
-            Debug.Log( Globals.CameraRotation);
+//            Debug.Log( Globals.CameraPosition);
+//            Debug.Log( Globals.CameraRotation);
             
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using FbxSharp;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
@@ -30,17 +31,29 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             }
         }
 
+        public AttributeBuffer[] GetAttribBuffersFromFBXFile(string fileName)
+        {
+            var fbxImporter = new Importer(fileName);
+            var scene = fbxImporter.Import(SerializationManager.AssetPath + "\\" + fileName);
+            return null;
+        }
         public AttributeBuffer[] GetAttribBuffersFromObjFile(string fileName) //TODO collaspe indices' specefic attribs into one
         {
             var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.AssetPath + "\\" + fileName);
 
             int vertStride = 3;
-            float[] vertsFlattened = new float[obj.Faces.Count * vertStride];
+            float[] vertsFlattened = new float[obj.Faces.Count * vertStride * 3];
+            int rootIndex = 0;
             for (int i = 0; i < obj.Faces.Count; i++)
             {
-                int rootIndex = i * vertStride;
-                for (int j = 0; j < obj.Faces[i].Vertices.Count; j++)
+                if (obj.Faces[i].Vertices.Count != 3)
+                    throw new DataException($"A face doesn't has \"{obj.Faces[i].Vertices.Count}\" and not 3 vertices, was the mesh not triangulated?");
+                
+
+                for (int j = 0; j < 3; j++)
                 {
+                    
+                    
                     int vertexIndex = obj.Faces[i].Vertices[j].Vertex-1;
                     int texIndex = obj.Faces[i].Vertices[j].Texture-1;
                     int normIndex = obj.Faces[i].Vertices[j].Normal-1;
@@ -48,35 +61,21 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                     vertsFlattened[rootIndex + 0] = obj.Vertices[vertexIndex].Position.X;
                     vertsFlattened[rootIndex + 1] = obj.Vertices[vertexIndex].Position.Y;
                     vertsFlattened[rootIndex + 2] = obj.Vertices[vertexIndex].Position.Z;
-                    if (j > 2)
-                        throw new Exception($"face is not triangulated and has more than 3 vertices");
+                    
+                    rootIndex += 3;
                 }
             }
             
-            Debug.GraphEnumerable(vertsFlattened);
-
-            int normalStride = 3;
-            float[] normalsFlattened = new float[obj.VertexNormals.Count * normalStride];
-            for (int i = 0; i < obj.VertexNormals.Count; i++)
-            {
-                int rootIndex = i * normalStride;
-                normalsFlattened[rootIndex + 0] = obj.VertexNormals[i].X;
-                normalsFlattened[rootIndex + 1] = obj.VertexNormals[i].Y;
-                normalsFlattened[rootIndex + 2] = obj.VertexNormals[i].Z;
-            }
-
-            int uvStride = 2;
-            float[] uvsFlattened = new float[obj.TextureVertices.Count * uvStride];
-            for (int i = 0; i < obj.TextureVertices.Count; i++)
-            {
-                int rootIndex = (obj.TextureVertices.Count * uvStride) - (i * uvStride) - uvStride; //reverse uv coords by vertex
-                uvsFlattened[rootIndex + 0] = obj.TextureVertices[i].X;
-                uvsFlattened[rootIndex + 1] = obj.TextureVertices[i].Y;
-            }
+//            Debug.GraphEnumerable(vertsFlattened);
+            for (int i = 0; i < vertsFlattened.Length; i+=3)
+                Debug.Log($"{vertsFlattened[i]}, {vertsFlattened[i+1]}, {vertsFlattened[i+2]}");
+                
+            
+ 
             
             var positionAttrib = new AttributeBuffer("in_position", vertStride, vertsFlattened);
 //            var normalAttrib = new AttributeBuffer("in_normal", normalStride, normalsFlattened);
-            var uvAttrib = new AttributeBuffer("in_uv", uvStride, uvsFlattened);
+//            var uvAttrib = new AttributeBuffer("in_uv", uvStride, uvsFlattened);
             //todo indices
             
             return new [] {
