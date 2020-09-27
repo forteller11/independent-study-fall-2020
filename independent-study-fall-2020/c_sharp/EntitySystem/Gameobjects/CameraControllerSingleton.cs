@@ -8,7 +8,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
     public class CameraControllerSingleton : GameObject
     {
         private float acceleration = 1f;
-        private float angularAcceleration = 4f;
+        private float angularAcceleration = 2.7f;
         
         private float _horziontalMaxVelocity = .05f;
         private float _verticalMaxVelocity = 1f;

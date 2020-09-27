@@ -1,5 +1,8 @@
 ﻿#version 330 core
 in vec3 in_position;
+in vec3 in_uv;
+
+out vec2 v2f_uv;
 //in vec4 in_color;
 
 uniform mat4 ModelToWorld;
@@ -14,6 +17,7 @@ void main()
     vec4 viewPos =   worldPos * WorldToView;
     
     gl_Position = viewPos;
+    v2c_uv = in_uv;
 
 //    color = in_color;
 }

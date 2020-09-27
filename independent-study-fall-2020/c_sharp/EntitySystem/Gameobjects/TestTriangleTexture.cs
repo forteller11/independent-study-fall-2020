@@ -17,6 +17,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
             var worldTranslation = Matrix4.CreateTranslation(Position - Globals.CameraPosition);
             var worldRotation = Matrix4.CreateFromQuaternion(Globals.CameraRotation);
 
+            //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
             var modelToWorld = Matrix4.Mult(worldTranslation, Matrix4.Transpose(worldRotation));
             Material.SetMatrix4("ModelToWorld", modelToWorld);
             

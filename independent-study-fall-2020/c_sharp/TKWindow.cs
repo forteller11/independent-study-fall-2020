@@ -61,9 +61,9 @@ namespace Indpendent_Study_Fall_2020
             
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.Texture2D);
-//            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.DebugOutputSynchronous);
-//            GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.Blend);
 ////            GL.BlendEquation(BlendEquationMode.FuncAdd);
 //            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
@@ -89,7 +89,7 @@ namespace Indpendent_Study_Fall_2020
             
             Globals.Init();
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("textureless.vert", "textureless.frag"));
+            var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
 
             float[] colorsFlat = new float[6 * 4];
             for (int i = 0; i < 6; i++)
@@ -111,7 +111,7 @@ namespace Indpendent_Study_Fall_2020
 //            testMat.FeedBufferAndIndicesData(null, modelAttribs);
             testMat.FeedBufferAndIndicesData(
                 null,
-//                new AttributeBuffer("in_uv", 2, uvs),
+                new AttributeBuffer("in_uv", 2, uvs),
                 new AttributeBuffer("in_position", 3, positions)
                 );
 
