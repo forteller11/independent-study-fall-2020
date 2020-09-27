@@ -66,9 +66,9 @@ namespace Indpendent_Study_Fall_2020
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.DebugOutputSynchronous);
-            GL.Enable(EnableCap.Blend);
+//            GL.Enable(EnableCap.Blend);
 ////            GL.BlendEquation(BlendEquationMode.FuncAdd);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+//            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
@@ -106,7 +106,7 @@ namespace Indpendent_Study_Fall_2020
             }
             
 //            var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
-            var modelAttribs = testMat.GetAttribBuffersFromObjFile("circle_mesh.obj");
+            var modelAttribs = testMat.GetAttribBuffersFromObjFile("planes_mesh_uvs.obj", true, false, false);
 //            modelAttribs = testMat.GetAttribBuffersFromFBXFile("planes_mesh.fbx");
 //            AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
 //            attribMergedBuffer[0] = colAttrib;
