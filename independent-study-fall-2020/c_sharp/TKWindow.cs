@@ -3,6 +3,7 @@ using System.ComponentModel;
 using FbxSharp;
 using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.EntitySystem.Gameobjects;
+using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK;
 using OpenTK.Graphics;
@@ -92,7 +93,7 @@ namespace Indpendent_Study_Fall_2020
             
             Globals.Init();
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("textureless.vert", "textureless.frag"));
+            var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
 
             float[] colorsFlat = new float[6 * 4];
             for (int i = 0; i < 6; i++)
@@ -106,7 +107,7 @@ namespace Indpendent_Study_Fall_2020
             }
             
 //            var colAttrib = new AttributeBuffer("in_Color", 4, colorsFlat);
-            var modelAttribs = testMat.GetAttribBuffersFromObjFile("planes_mesh_uvs.obj", true, false, false);
+            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("quad_uv_test.obj", true, true, false);
 //            modelAttribs = testMat.GetAttribBuffersFromFBXFile("planes_mesh.fbx");
 //            AttributeBuffer[] attribMergedBuffer = new AttributeBuffer[1 + modelAttribs.Length];
 //            attribMergedBuffer[0] = colAttrib;
