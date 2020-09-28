@@ -36,54 +36,26 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// </summary>
         //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
         //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
-        public static void SendLights(GameObject gameObject) 
+        private const string DIR_LIGHT = "DirectionLights";
+        private const string POINT_LIGHT = "PointLights";
+        public static void SendLights(GameObject gameObject)
         {
-            int lightStride = 3;
-            float[] pointPosFlat =   new float[Globals.PointLights.Count * lightStride];
-            float[] pointColorFlat = new float[Globals.PointLights.Count * lightStride];
-            
-            float[] dirDirFlat =   new float[Globals.DirectionLights.Count * lightStride];
-            float[] dirColorFlat = new float[Globals.DirectionLights.Count * lightStride];
-            
-            for (int i = 0; i < Globals.PointLights.Count; i++)
-            {
-                int baseIndex = i * lightStride;
-                pointPosFlat[baseIndex + 0] = Globals.PointLights[i].Position.X;
-                pointPosFlat[baseIndex + 1] = Globals.PointLights[i].Position.Y;
-                pointPosFlat[baseIndex + 2] = Globals.PointLights[i].Position.Z;
-                
-                pointColorFlat[baseIndex + 0] = Globals.PointLights[i].Color.X;
-                pointColorFlat[baseIndex + 1] = Globals.PointLights[i].Color.Y;
-                pointColorFlat[baseIndex + 2] = Globals.PointLights[i].Color.Z;
-            }
-            
+            SetInt(gameObject.Material, $"{DIR_LIGHT}Length", Globals.DirectionLights.Count);
             for (int i = 0; i < Globals.DirectionLights.Count; i++)
             {
-                int baseIndex = i * lightStride;
-                dirDirFlat[baseIndex + 0] = Globals.DirectionLights[i].Direction.X;
-                dirDirFlat[baseIndex + 1] = Globals.DirectionLights[i].Direction.Y;
-                dirDirFlat[baseIndex + 2] = Globals.DirectionLights[i].Direction.Z;
-                
-                dirColorFlat[baseIndex + 0] = Globals.DirectionLights[i].Color.X;
-                dirColorFlat[baseIndex + 1] = Globals.DirectionLights[i].Color.Y;
-                dirColorFlat[baseIndex + 2] = Globals.DirectionLights[i].Color.Z;
+                SetVector3(gameObject.Material, $"{DIR_LIGHT}[{i}].Color",     Globals.DirectionLights[i].Color, false);
+                SetVector3(gameObject.Material, $"{DIR_LIGHT}[{i}].Direction", Globals.DirectionLights[i].Direction, false);
             }
             
-            SetInt(gameObject.Material,"DirectionLightsLength", Globals.DirectionLights.Count);
-//            SetInt(gameObject.Material,"PointLightsLength", Globals.PointLights.Count);
-            
-//            SetVector3Array(gameObject.Material,"PointLightsPositions", pointPosFlat, false, false);
-//            SetVector3Array(gameObject.Material,"PointLightsColors", pointColorFlat, false, false);
-//            SetVector3Array(gameObject.Material,"DirectionLightsDirections", dirDirFlat, false, false);
-            SetVector3Array(gameObject.Material,"DirectionLightsColors", dirColorFlat, false, false);
- 
-            
-          
-            
-
-//            gameObject.Material.SetVector4("in_directionLight",new Vector4(Globals.DirectionLights[0].Direction, Globals.DirectionLights[0].Intensity ));
+            SetInt(gameObject.Material,$"{POINT_LIGHT}Length", Globals.PointLights.Count);
+            for (int i = 0; i < Globals.PointLights.Count; i++)
+            {
+                SetVector3(gameObject.Material, $"{POINT_LIGHT}[{i}].Color",    Globals.PointLights[i].Color, false);
+                SetVector3(gameObject.Material, $"{POINT_LIGHT}[{i}].Position", Globals.PointLights[i].Position, false);
+            }
         }
 
+        //todo set element vec
         public static void SendTime(GameObject gameObject)
         {
             SetVector4(gameObject.Material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));

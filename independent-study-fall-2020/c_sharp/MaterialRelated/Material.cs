@@ -93,18 +93,18 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 //            if (VAO.UseIndices == false)
 //            {
 ////                Debug.Log("draw arrays");
-//                GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
+                GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
 //            }
-            else
-            {
+//            else
+//            {
 //                Debug.Log("draw elements");
-                GL.DrawElements(PrimitiveType.Triangles, VAO.IndicesBuffer.Length, DrawElementsType.UnsignedInt, 0);
+//                GL.DrawElements(PrimitiveType.Triangles, VAO.IndicesBuffer.Length, DrawElementsType.UnsignedInt);
 //                GL.DrawElementsInstanced(PrimitiveType.Triangles,
 //                    0,
 //                    DrawElementsType.UnsignedInt,
 //                    Indices,
 //                    ref VAO.VerticesCount);
-            }
+//            }
 
             //todo
 //            GL.DrawElementsInstanced(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedInt, ref Indices, int 0);

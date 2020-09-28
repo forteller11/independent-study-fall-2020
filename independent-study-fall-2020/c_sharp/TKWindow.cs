@@ -94,15 +94,15 @@ namespace Indpendent_Study_Fall_2020
             GL.ClearColor(1f,0f,1f,1f);
             
             Globals.Init();
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(0,0,1)));
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,0,0)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(0,1,1)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,1,0)));
             
             Globals.PointLights.Add(
-                new PointLight(new Vector3(0,3,4), new Vector3(1,0,0))
+                new PointLight(new Vector3(0,3,4), new Vector3(1,1,1))
             );
             
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("textureless"));
+            var testMat = new Material("test_mat", new ShaderProgram("shaded"));
 
             var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
 

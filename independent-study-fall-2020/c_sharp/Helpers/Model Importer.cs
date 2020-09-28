@@ -46,11 +46,11 @@ namespace Indpendent_Study_Fall_2020.Helpers
                 }
             }
             
-            for (int i = 0; i < positionsFlattened.Length; i+=3)
-                Debug.Log($"{positionsFlattened[i]}, {positionsFlattened[i+1]}, {positionsFlattened[i+2]}");
-            Debug.Log("UVS====================");
-            for (int i = 0; i < uvsFlattened.Length; i+=3)
-                Debug.Log($"{uvsFlattened[i]}, {uvsFlattened[i+1]}");
+//            for (int i = 0; i < positionsFlattened.Length; i+=3)
+//                Debug.Log($"{positionsFlattened[i]}, {positionsFlattened[i+1]}, {positionsFlattened[i+2]}");
+//            Debug.Log("UVS====================");
+//            for (int i = 0; i < uvsFlattened.Length; i+=3)
+//                Debug.Log($"{uvsFlattened[i]}, {uvsFlattened[i+1]}");
 
 
             List<AttributeBuffer> result = new List<AttributeBuffer>(3);
