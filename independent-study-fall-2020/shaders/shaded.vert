@@ -3,9 +3,9 @@ in vec3 in_position;
 in vec2 in_uv;
 //in vec3 in_normal;
 
-uniform vec3 PointLightsPositions [4];
-uniform vec3 PointLightsColors [4];
-uniform int  PointLightsLength;
+//uniform vec3 PointLightsPositions [4];
+//uniform vec3 PointLightsColors [4];
+//uniform int  PointLightsLength;
 
 uniform vec3 DirectionLightsDirections[4]; //NOTE holy canoli the SECOND ELEMENT is getting optimized out...
 uniform vec3 DirectionLightsColors[4];
@@ -36,5 +36,5 @@ void main()
 //        vec3 diffuseColor = diffuseShade * DirectionLightsColors[i];
 //        diffuseColorSum += diffuseColor;
 //    }
-    v2f_diffuse = DirectionLightsColors[1];
+    v2f_diffuse = DirectionLightsColors[0];
 }

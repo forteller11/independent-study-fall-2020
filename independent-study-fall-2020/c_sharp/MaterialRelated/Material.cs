@@ -24,7 +24,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             UniformLocations = new Dictionary<string, int>(uniformCount);
             for (int i = 0; i < uniformCount; i++)
             {
-                var uniformName = GL.GetActiveUniform(Shader.Handle, i, out _, out _);
+                var uniformName = GL.GetActiveUniform(Shader.Handle, i, out _, out var type);// TODO found it!!! it
+                Debug.Log(type);
+//                var uniformName = GL.GetActiveUniforms(Shader.Handle, i, );// TODO found it!!! it
                 var location = GL.GetUniformLocation(Shader.Handle, uniformName);
                 UniformLocations.Add(uniformName, location);
             }
@@ -57,32 +59,31 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
 
-        public void SetVector4Array(string name, Vector4 [] vectors, bool useProgram = true, bool includeLength=true)
-        {
-            if (useProgram) Shader.Use();
-            
-            for (int i = 0; i < vectors.Length; i++)
-            {
-                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location)) 
-                    GL.Uniform4(location, ref vectors[i]);
-                else
-                    Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
-            }
-            SetInt(name + "Length", vectors.Length, useProgram);
-        }
+//        public void SetVector4Array(string name, Vector4 [] vectors, bool useProgram = true, bool includeLength=true)
+//        {
+//            if (useProgram) Shader.Use();
+//            
+//            for (int i = 0; i < vectors.Length; i++)
+//            {
+//                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location)) 
+//                    GL.Uniform4(location, vectors.Length, vectors[i]);
+//                else
+//                    Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+//            }
+//            SetInt(name + "Length", vectors.Length, useProgram);
+//        }
         
-        public void SetVector3Array(string name, Vector3 [] vectors, bool useProgram = true, bool includeLength=true)
+        public void SetVector3Array(string name, float [] vectors, bool useProgram = true, bool includeLength=false)
         {
             if (useProgram) Shader.Use();
             
-            for (int i = 0; i < vectors.Length; i++)
-            {
-                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location))
-                    GL.Uniform3(location, ref vectors[i]);
-                else
-                    Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
-            }    
-            SetInt(name + "Length", vectors.Length, useProgram);
+            if (UniformLocations.TryGetValue(name, out int location))
+                    GL.Uniform3(location, vectors.Length, vectors);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            
+            if (includeLength)
+                SetInt(name + "Length", vectors.Length, useProgram);
         }
 
         public void SetVector3Element(string name, Vector3 vector, bool useProgram, int index)
@@ -90,7 +91,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             if (useProgram) Shader.Use();
             
             string indexedName = $"{name}[{index}]";
-            if (UniformLocations.TryGetValue($"{name}[{index}]", out int location))
+            var location = GL.GetUniformLocation(Shader.Handle, name);
+            if (location != -1)
                 GL.Uniform3(location, ref vector);
             else
                 Debug.LogWarning($"Uniform \"{indexedName}\" not found in shader program! Are you using it in your output? (optimized out?)");
