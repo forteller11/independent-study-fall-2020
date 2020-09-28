@@ -89,20 +89,22 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             if (useProgram) Shader.Use();
             
+            string indexedName = $"{name}[{index}]";
             if (UniformLocations.TryGetValue($"{name}[{index}]", out int location))
                 GL.Uniform3(location, ref vector);
             else
-                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+                Debug.LogWarning($"Uniform \"{indexedName}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
         public void SetVector4Element(string name, Vector4 vector, bool useProgram, int index)
         {
             if (useProgram) Shader.Use();
             
-            if (UniformLocations.TryGetValue($"{name}[{index}]", out int location))
+            string indexedName = $"{name}[{index}]";
+            if (UniformLocations.TryGetValue(indexedName, out int location))
                 GL.Uniform4(location, ref vector);
             else
-                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+                Debug.LogWarning($"Uniform \"{indexedName}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
         

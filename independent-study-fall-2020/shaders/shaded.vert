@@ -7,8 +7,8 @@ in vec3 in_normal;
 //uniform vec3 PointLightsColors [4];
 //uniform int  PointLightsLength;
 
-uniform vec3 DirectionLightsDirections [4];
-uniform vec3 DirectionLightsColors [4];
+uniform vec3 DirectionLightsDirections[2]; //NOTE holy canoli the SECOND ELEMENT is getting optimized out...
+uniform vec3 DirectionLightsColors[2];
 uniform int  DirectionLightsLength;
 
 out vec2 v2f_uv;
@@ -31,7 +31,7 @@ void main()
     v2f_normal_world = (vec4(in_normal, 1f) * ModelRotation).xyz;
     
     vec3 diffuseColorSum = vec3(0,0,0);
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < DirectionLightsLength; i++){
         float product = dot(DirectionLightsDirections[i], v2f_normal_world);
         float diffuseShade = clamp(product, 0, 1);
         vec3 diffuseColor = product * DirectionLightsColors[i];
