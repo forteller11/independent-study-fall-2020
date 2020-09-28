@@ -92,8 +92,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             string indexedName = $"{name}[{index}]";
             if (UniformLocations.TryGetValue($"{name}[{index}]", out int location))
                 GL.Uniform3(location, ref vector);
-
+            else
+                Debug.LogWarning($"Uniform \"{indexedName}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
+        
+        //todo send arrays again and FLATTEN
         
         public void SetVector4Element(string name, Vector4 vector, bool useProgram, int index)
         {

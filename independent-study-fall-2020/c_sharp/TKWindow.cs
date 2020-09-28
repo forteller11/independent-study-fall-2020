@@ -104,7 +104,7 @@ namespace Indpendent_Study_Fall_2020
             #region materials
             var testMat = new Material("test_mat", new ShaderProgram("shaded"));
 
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
+            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, false);
 
             
             testMat.FeedBufferAndIndicesData(null, modelAttribs);

@@ -11,6 +11,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public virtual string MaterialName { get; } = String.Empty; // "" means no material are being used
         public Material Material; //this is set automatically by drawManager before unLoad is called
         
+        //todo only send pos/rot/scale if the values are dirty
         public Vector3 Position = new Vector3(0,0,0);
         public Quaternion Rotation = Quaternion.Identity;
         public Vector3 Scale = new Vector3(1,1,1);
