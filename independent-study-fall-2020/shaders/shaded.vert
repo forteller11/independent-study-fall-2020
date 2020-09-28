@@ -37,9 +37,14 @@ void main()
     gl_Position = viewPos;
     v2f_uv = in_uv;
 
+    vec3 worldNormal = (vec4(in_normal, 1) * ModelRotation).xyz;
     v2f_diffuse = vec3(0,0,0);
+    
     for (int i = 0; i < DirectionLightsLength; i++){
-        v2f_diffuse += DirectionLights[i].Color;
+        float product = dot(worldNormal, DirectionLights[i].Direction);
+        float shade = clamp(product,0,1);
+        vec3 diffuse = DirectionLights[i].Color * shade;
+        v2f_diffuse += diffuse;
     }
  
 }
