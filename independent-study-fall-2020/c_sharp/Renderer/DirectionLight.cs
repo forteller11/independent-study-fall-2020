@@ -1,19 +1,20 @@
 ﻿using System.Data;
 using OpenTK;
+using OpenTK.Graphics;
 
 namespace Indpendent_Study_Fall_2020
 {
     public struct DirectionLight
     {
         public Vector3 Direction;
-        public float Intensity;
+        public Vector3 Color;
 
-        public DirectionLight(Vector3 direction, float intensity)
+        public DirectionLight(Vector3 direction, Vector3 color)
         {
             if (!direction.EqualsAprox(direction.Normalized()))
                 throw new DataException($"direction at directionLight is not normalized!");
             Direction = direction;
-            Intensity = intensity;
+            Color = color;
         }
     }
 }

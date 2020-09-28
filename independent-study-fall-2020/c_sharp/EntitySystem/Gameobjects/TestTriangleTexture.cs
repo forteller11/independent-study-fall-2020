@@ -13,14 +13,14 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 
         public override void OnLoad()
         {
-            Position = new Vector3(0,0,1);
             Scale *= 0.5f;
         }
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
             base.OnUpdate(eventArgs);
-            Rotation = Quaternion.FromEulerAngles((float)Globals.AbsoluteTime,(float)Globals.AbsoluteTime/3,0);
+            Rotation = Quaternion.FromEulerAngles(Globals.AbsTimeF,Globals.AbsTimeF/3,MathF.Sin(Globals.AbsTimeF/4));
+            Position = new Vector3(MathF.Sin(Globals.AbsTimeF/4), 0, 1);
         }
 
         /// <summary>

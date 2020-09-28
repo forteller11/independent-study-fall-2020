@@ -15,7 +15,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static Random Random;
         public static List<DirectionLight> DirectionLights;
         public static List<PointLight> PointLights;
-        public static double AbsoluteTime = 0;
+        public static double AbsTime = 0;
+        public static float AbsTimeF = 0;
 
         public static void Init()
         {
@@ -27,7 +28,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         public static void Update(GameObjectUpdateEventArgs args)
         {
-            AbsoluteTime += args.DeltaTime;
+            AbsTime += args.DeltaTime;
+            AbsTimeF = (float) AbsTime;
         }
 
     }

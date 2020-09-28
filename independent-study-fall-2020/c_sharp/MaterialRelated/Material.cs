@@ -1,10 +1,8 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using FbxSharp;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Vector4 = OpenTK.Vector4;
+
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
@@ -65,18 +63,50 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             
             for (int i = 0; i < vectors.Length; i++)
             {
-                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location))
-                {
+                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location)) 
                     GL.Uniform4(location, ref vectors[i]);
-                    SetInt(name + "Length", vectors.Length, useProgram);
-                }
+                else
+                    Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            }
+            SetInt(name + "Length", vectors.Length, useProgram);
+        }
+        
+        public void SetVector3Array(string name, Vector3 [] vectors, bool useProgram = true, bool includeLength=true)
+        {
+            if (useProgram) Shader.Use();
+            
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location))
+                    GL.Uniform3(location, ref vectors[i]);
                 else
                     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
             }    
+            SetInt(name + "Length", vectors.Length, useProgram);
+        }
+
+        public void SetVector3Element(string name, Vector3 vector, bool useProgram, int index)
+        {
+            if (useProgram) Shader.Use();
+            
+            if (UniformLocations.TryGetValue($"{name}[{index}]", out int location))
+                GL.Uniform3(location, ref vector);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        public void SetVector4Element(string name, Vector4 vector, bool useProgram, int index)
+        {
+            if (useProgram) Shader.Use();
+            
+            if (UniformLocations.TryGetValue($"{name}[{index}]", out int location))
+                GL.Uniform4(location, ref vector);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
         
-        public void SetVector3(string name, OpenTK.Vector3 vector3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        public void SetVector3(string name, Vector3 vector3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) Shader.Use();
             if (UniformLocations.TryGetValue(name, out int location))

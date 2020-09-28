@@ -94,12 +94,11 @@ namespace Indpendent_Study_Fall_2020
             GL.ClearColor(1f,0f,1f,1f);
             
             Globals.Init();
-            Globals.DirectionLights.Add(
-                new DirectionLight(new Vector3(0,1,0), 1f)
-                );
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(1,0,.5f)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(2,-1,0), new Vector3(0,1,0f)));
             
             Globals.PointLights.Add(
-                new PointLight(new Vector3(0,3,4), 1f)
+                new PointLight(new Vector3(0,3,4), new Vector3(1,0,0))
             );
             
             #region materials

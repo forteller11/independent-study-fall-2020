@@ -3,13 +3,16 @@ in vec3 in_position;
 in vec2 in_uv;
 in vec3 in_normal;
 
-uniform vec4 PointLights [4];
-uniform int PointLightsLength;
-uniform vec4 DirectionLights [4];
-uniform int DirectionLightsLength;
+uniform vec3 PointLightsPositions [4];
+uniform vec3 PointLightsColors [4];
+uniform int  PointLightsLength;
+
+uniform vec3 DirectionLightsDirections [4];
+uniform vec3 DirectionLightsColors [4];
+uniform int  DirectionLightsLength;
 
 out vec2 v2f_uv;
-out float v2f_shade;
+out vec3 v2f_diffuse;
 out vec3 v2f_normal_world;
 
 uniform mat4 ModelRotation;
@@ -26,16 +29,15 @@ void main()
     v2f_uv = in_uv;
 
     v2f_normal_world = (vec4(in_normal, 1f) * ModelRotation).xyz;
-
-//    float shade = abs(dot(DirectionLights[0].xyz, v2f_normal_world));
-//    v2f_shade = DirectionLightsLength;
-    float diffuseSum = 0;
+    
+    vec3 diffuseColorSum = vec3(0,0,0);
     for (int i = 0; i < DirectionLightsLength; i++){
-        float diffuse = dot(DirectionLights[0].xyz, v2f_normal_world);
-        diffuseSum += abs(diffuse);
+        float product = dot(DirectionLightsDirections[i].xyz, v2f_normal_world);
+        float diffuseShade = clamp(product, 0, 1);
+        vec3 diffuseColor = diffuseShade * DirectionLightsColors[i];
+        diffuseColorSum += diffuseColor;
     }
-    float diffuseMean = diffuseSum / DirectionLightsLength;
-    v2f_shade = diffuseMean;
+    v2f_diffuse = clamp(diffuseColorSum, 0, 1);
 
 //        float dotSums = 0;
 //        int i;

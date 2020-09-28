@@ -1,6 +1,7 @@
 ﻿using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK;
+using OpenTK.Graphics.ES10;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
@@ -36,40 +37,30 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
         public static void SendLights(GameObject gameObject) 
         {
-            int lightStride = 4;
-            float[] pointLightsFlattened = new float[Globals.PointLights.Count * lightStride];
-            float[] directionLightsFlattened = new float[Globals.DirectionLights.Count * lightStride];
 
-            for (int i = 0; i < Globals.PointLights.Count; i++)
-            {
-                int baseIndex = i * lightStride;
-                pointLightsFlattened[baseIndex + 0] = Globals.PointLights[i].Position.X;
-                pointLightsFlattened[baseIndex + 1] = Globals.PointLights[i].Position.Y;
-                pointLightsFlattened[baseIndex + 2] = Globals.PointLights[i].Position.Z;
-                pointLightsFlattened[baseIndex + 3] = Globals.PointLights[i].Intensity;
-            }
-            
+            gameObject.Material.SetInt("DirectionLightsLength", Globals.DirectionLights.Count);
             for (int i = 0; i < Globals.DirectionLights.Count; i++)
             {
-                int baseIndex = i * lightStride;
-                directionLightsFlattened[baseIndex + 0] = Globals.DirectionLights[i].Direction.X;
-                directionLightsFlattened[baseIndex + 1] = Globals.DirectionLights[i].Direction.Y;
-                directionLightsFlattened[baseIndex + 2] = Globals.DirectionLights[i].Direction.Z;
-                directionLightsFlattened[baseIndex + 3] = Globals.DirectionLights[i].Intensity;
+                gameObject.Material.SetVector3Element("DirectionLightsDirections", Globals.DirectionLights[i].Direction, false, i);
+                gameObject.Material.SetVector3Element("DirectionLightsColors", Globals.DirectionLights[i].Color, false, i);
             }
-            Vector4[] pointLightVecs = new Vector4[Globals.PointLights.Count];
-            Vector4[] directionLightVecs = new Vector4[Globals.DirectionLights.Count];
             
+            gameObject.Material.SetInt("PointLightsLength", Globals.DirectionLights.Count);
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                pointLightVecs[i] = new Vector4(Globals.PointLights[i].Position, Globals.PointLights[i].Intensity);
+            {
+                gameObject.Material.SetVector3Element("PointLightsPositions", Globals.PointLights[i].Position, false, i);
+                gameObject.Material.SetVector3Element("PointLightsColors", Globals.PointLights[i].Color, false, i);
+            }
+
             
-            for (int i = 0; i < Globals.DirectionLights.Count; i++)
-                directionLightVecs[i] = new Vector4(Globals.DirectionLights[i].Direction, Globals.DirectionLights[i].Intensity);
-            
-            gameObject.Material.SetVector4Array("PointLights", pointLightVecs, false, true);
-            gameObject.Material.SetVector4Array("DirectionLights", directionLightVecs, false, true);
 
 //            gameObject.Material.SetVector4("in_directionLight",new Vector4(Globals.DirectionLights[0].Direction, Globals.DirectionLights[0].Intensity ));
+        }
+
+        public static void SendTime(GameObject gameObject)
+        {
+//            gameObject.Material.set
+//            Globals.AbsoluteTime
         }
     }
 }
