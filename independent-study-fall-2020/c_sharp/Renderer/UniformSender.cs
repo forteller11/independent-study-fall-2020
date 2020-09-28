@@ -29,7 +29,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// where the first 3 components are the position/direction
         /// and the last component is the intensity
         /// </summary>
-        public static void SendLights(GameObject gameObject) //todo optimise uniforms which should only be changed once per frame, not per object
+        public static void SendLights(GameObject gameObject) //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
         {
             int lightStride = 4;
             float[] pointLightsFlattened = new float[Globals.PointLights.Count * lightStride];

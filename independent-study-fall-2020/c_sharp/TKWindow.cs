@@ -93,8 +93,12 @@ namespace Indpendent_Study_Fall_2020
             GL.ClearColor(1f,0f,1f,1f);
             
             Globals.Init();
+            Globals.DirectionLights.Add(
+                new DirectionLight(new Vector3(0,-1,0), 1f)
+                );
+            
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("test.vert", "test.frag"));
+            var testMat = new Material("test_mat", new ShaderProgram("shaded", "shaded"));
 
             var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("quad_uv_test.obj", true, true, false);
 
@@ -108,7 +112,6 @@ namespace Indpendent_Study_Fall_2020
             Globals.DrawManager.SetupAllMaterials(
                 testMat
                 );
-//            Globals.DirectionLights.Add(new DirectionLight(Vector3.UnitY,  ));
             #endregion
             
             _gameObjectManager = new GameObjectManager();

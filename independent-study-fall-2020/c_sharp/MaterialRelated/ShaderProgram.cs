@@ -13,8 +13,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public ShaderProgram(string vertexFileName, string fragmentFileName) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
             //todo auto add vbos and stuff here
-            int vertexHandle = CompileShaderAndDebug(vertexFileName, ShaderType.VertexShader);
-            int fragmentHandle = CompileShaderAndDebug(fragmentFileName, ShaderType.FragmentShader);
+            int vertexHandle = CompileShaderAndDebug(vertexFileName + ".vert", ShaderType.VertexShader);
+            int fragmentHandle = CompileShaderAndDebug(fragmentFileName + ".frag", ShaderType.FragmentShader);
 
             Handle = GL.CreateProgram();
             GL.AttachShader(Handle, vertexHandle);

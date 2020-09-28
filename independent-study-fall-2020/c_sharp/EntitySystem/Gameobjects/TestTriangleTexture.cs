@@ -28,6 +28,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
         public override void SendUniformsToShaderPerObject()
         {
             UniformSender.SendTransformMatrices(this);
+            UniformSender.SendLights(this);
         }
         
     }
