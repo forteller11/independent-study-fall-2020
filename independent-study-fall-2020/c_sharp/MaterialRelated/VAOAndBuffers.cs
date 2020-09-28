@@ -15,21 +15,47 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public int StrideLength { get; private set; }
         public int VBOHandle { get; private set; }
         public int VAOHandle { get; private set; }
-        public int IndicesHandle { get; private set; }
-        public bool UseIndices;
+//        public int IndicesHandle { get; private set; }
+//        public bool UseIndices = false;
         public Dictionary<string, int> AttributeIndex;
-
-        public VAOAndBuffers(ShaderProgram program, uint[] indices, params AttributeBuffer [] attributeBuffers)
+ 
+        public VAOAndBuffers(Material material, uint[] indices, params AttributeBuffer [] attributeBuffers)
         {
-            MergeBuffers(attributeBuffers, out Buffer);
+            List<AttributeBuffer> attribsInShader = new List<AttributeBuffer>(attributeBuffers.Length);
+
+            //make sure all attributes in shader have correspondant buffers (in name at least, not necessarily stride)
+            foreach (var attribInShader in material.VertexAttribLocations)
+            {
+                bool foundAttribInBuffer = false;
+                for (int i = 0; i < attributeBuffers.Length; i++)
+                {
+                    if (attribInShader.Key == attributeBuffers[i].AttributeName)
+                        foundAttribInBuffer = true;
+                }
+
+                if (foundAttribInBuffer == false)
+                    throw new DataException($"Vertex Attribute with name {attribInShader.Key} has not been found in shader");
+            }
+
+            for (int i = 0; i < attributeBuffers.Length; i++) //only include attribs found in the shader program
+            {
+                if (material.VertexAttribLocations.ContainsKey(attributeBuffers[i].AttributeName))
+                    attribsInShader.Add(attributeBuffers[i]);
+                else
+                    Debug.LogWarning($"Vertex Attribute {attributeBuffers[i].AttributeName} has not been found in shader {material.Shader.FileName}, it will automatically be removed from the program.");
+            }
+
+            var attribsInShaderArray = attribsInShader.ToArray();
+            
+            MergeBuffers(attribsInShaderArray, out Buffer);
 
             VBOHandle = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOHandle);
             GL.BufferData(BufferTarget.ArrayBuffer, Buffer.Length * sizeof(float), Buffer, BufferUsageHint.StaticDraw);
 
-            GenerateVAOFromBuffer(program, attributeBuffers);
+            GenerateVAOFromBuffer(material, attribsInShaderArray);
 
-            SetupIndices(indices); 
+//            SetupIndices(indices); 
         }
 
         private void MergeBuffers(AttributeBuffer[] attributeBuffers, out float[] buffer)
@@ -70,46 +96,47 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 
             }
         }
-        private void GenerateVAOFromBuffer(ShaderProgram program, AttributeBuffer[] attributeBuffers)
+        private void GenerateVAOFromBuffer(Material mat, AttributeBuffer[] attributeBuffers)
         {
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
             int offset = 0;
             for (int i = 0; i < attributeBuffers.Length; i++)
             {
+                int attribLocation = mat.GetAttribLocation(attributeBuffers[i].AttributeName);
                 GL.VertexAttribPointer(
-                    GL.GetAttribLocation(program.Handle, attributeBuffers[i].AttributeName),
+                    attribLocation,
                     attributeBuffers[i].Stride,
                     VertexAttribPointerType.Float,
                     false,
                     StrideLength * sizeof(float),
                     offset
                 );
-                GL.EnableVertexAttribArray(program.GetAttribLocation(attributeBuffers[i].AttributeName));
+                GL.EnableVertexAttribArray(attribLocation);
                    
                 offset += attributeBuffers[i].Stride * sizeof(float);
             }
         }
         
-        private void SetupIndices(uint[] indices)
-        {
-            UseIndices = indices != null;
-            if (UseIndices)
-            {
-                for (int i = 0; i < indices.Length; i++)
-                    if (indices[i] > VerticesCount - 1)
-                        throw new DataException($"Indices reference a vertex which don't not exist in the VAO");
-
-                IndicesBuffer = indices;
-                
-                IndicesHandle = GL.GenBuffer();
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndicesHandle);
-                GL.BufferData(
-                    BufferTarget.ArrayBuffer, 
-                    IndicesBuffer.Length * sizeof(uint),
-                    IndicesBuffer,
-                    BufferUsageHint.StaticDraw);
-            }
-        }
+//        private void SetupIndices(uint[] indices)
+//        {
+//            UseIndices = indices != null;
+//            if (UseIndices)
+//            {
+//                for (int i = 0; i < indices.Length; i++)
+//                    if (indices[i] > VerticesCount - 1)
+//                        throw new DataException($"Indices reference a vertex which don't not exist in the VAO");
+//
+//                IndicesBuffer = indices;
+//                
+//                IndicesHandle = GL.GenBuffer();
+//                GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndicesHandle);
+//                GL.BufferData(
+//                    BufferTarget.ArrayBuffer, 
+//                    IndicesBuffer.Length * sizeof(uint),
+//                    IndicesBuffer,
+//                    BufferUsageHint.StaticDraw);
+//            }
+//        }
     }
 }

@@ -1,7 +1,8 @@
-﻿using Indpendent_Study_Fall_2020.EntitySystem;
+﻿using System;
+using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK;
-using OpenTK.Graphics.ES10;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
@@ -20,12 +21,12 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             
             //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
             var modelToWorld = modelRotation * modelScale * worldTranslation * worldRotation;
-            gameObject.Material.SetMatrix4("ModelToWorld", modelToWorld, false);
+            SetMatrix4(gameObject.Material, "ModelToWorld", modelToWorld, false);
             
-            gameObject.Material.SetMatrix4("ModelRotation", modelRotation, false);
+            SetMatrix4(gameObject.Material, "ModelRotation", modelRotation, false);
             
             var worldToView = Globals.CameraPerspective;
-            gameObject.Material.SetMatrix4("WorldToView", worldToView, false);
+            SetMatrix4(gameObject.Material, "WorldToView", worldToView, false);
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
         public static void SendLights(GameObject gameObject) 
         {
- int lightStride = 3;
+            int lightStride = 3;
             float[] pointPosFlat =   new float[Globals.PointLights.Count * lightStride];
             float[] pointColorFlat = new float[Globals.PointLights.Count * lightStride];
             
@@ -68,13 +69,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
                 dirColorFlat[baseIndex + 2] = Globals.DirectionLights[i].Color.Z;
             }
             
-            gameObject.Material.SetInt("DirectionLightsLength", Globals.DirectionLights.Count);
-//            gameObject.Material.SetInt("PointLightsLength", Globals.PointLights.Count);
+            SetInt(gameObject.Material,"DirectionLightsLength", Globals.DirectionLights.Count);
+//            SetInt(gameObject.Material,"PointLightsLength", Globals.PointLights.Count);
             
-//            gameObject.Material.SetVector3Array("PointLightsPositions", pointPosFlat, false, false);
-//            gameObject.Material.SetVector3Array("PointLightsColors", pointColorFlat, false, false);
-//            gameObject.Material.SetVector3Array("DirectionLightsDirections", dirDirFlat, false, false);
-            gameObject.Material.SetVector3Array("DirectionLightsColors", dirColorFlat, false, false);
+//            SetVector3Array(gameObject.Material,"PointLightsPositions", pointPosFlat, false, false);
+//            SetVector3Array(gameObject.Material,"PointLightsColors", pointColorFlat, false, false);
+//            SetVector3Array(gameObject.Material,"DirectionLightsDirections", dirDirFlat, false, false);
+            SetVector3Array(gameObject.Material,"DirectionLightsColors", dirColorFlat, false, false);
  
             
           
@@ -85,8 +86,99 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 
         public static void SendTime(GameObject gameObject)
         {
-//            gameObject.Material.set
+            SetVector4(gameObject.Material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
+//            gameObject.Material.set 
 //            Globals.AbsoluteTime
+        }
+        
+        
+        public static void SetMatrix4(Material mat, string name, OpenTK.Matrix4 matrix4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.UniformMatrix4(location, true, ref matrix4);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+
+//        public void SetVector4Array(string name, Vector4 [] vectors, bool useProgram = true, bool includeLength=true)
+//        {
+//            if (useProgram) Shader.Use();
+//            
+//            for (int i = 0; i < vectors.Length; i++)
+//            {
+//                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location)) 
+//                    GL.Uniform4(location, vectors.Length, vectors[i]);
+//                else
+//                    Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+//            }
+//            SetInt(name + "Length", vectors.Length, useProgram);
+//        }
+        
+        public static void SetVector3Array(Material mat, string name, float [] vectors, bool useProgram = true, bool includeLength=false)
+        {
+            if (useProgram) mat.Shader.Use();
+            
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                    GL.Uniform3(location, vectors.Length, vectors);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            
+            if (includeLength)
+                SetInt(mat, name + "Length", vectors.Length, useProgram);
+        }
+
+        public static void SetVector3Element(Material mat, string name, Vector3 vector, bool useProgram, int index)
+        {
+            if (useProgram) mat.Shader.Use();
+            
+            string indexedName = $"{name}[{index}]";
+            var location = GL.GetUniformLocation(mat.Shader.Handle, name);
+            if (location != -1)
+                GL.Uniform3(location, ref vector);
+            else
+                Debug.LogWarning($"Uniform \"{indexedName}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        //todo send arrays again and FLATTEN
+        
+        public static void SetVector4Element(Material mat, string name, Vector4 vector, bool useProgram, int index)
+        {
+            if (useProgram) mat.Shader.Use();
+            
+            string indexedName = $"{name}[{index}]";
+            if (mat.UniformLocations.TryGetValue(indexedName, out int location))
+                GL.Uniform4(location, ref vector);
+            else
+                Debug.LogWarning($"Uniform \"{indexedName}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        
+        public static void SetVector3(Material mat, string name, Vector3 vector3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform3(location, ref vector3);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        public static void SetInt(Material mat, string name, int integer, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform1(location, integer);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        public static void SetVector4(Material mat, string name, OpenTK.Vector4 vector4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform4(location, ref vector4);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
     }
 }

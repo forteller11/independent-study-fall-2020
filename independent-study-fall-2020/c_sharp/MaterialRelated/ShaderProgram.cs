@@ -9,10 +9,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     {
         public int Handle { get; }
         public Dictionary<string, int> UniformLocations = new Dictionary<string, int>();
+        public readonly string FileName;
 
         public ShaderProgram(string shadeFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
-            //todo auto add vbos and stuff here
+            FileName = shadeFileNames;
+            
             int vertexHandle = CompileShaderAndDebug(shadeFileNames + ".vert", ShaderType.VertexShader);
             int fragmentHandle = CompileShaderAndDebug(shadeFileNames + ".frag", ShaderType.FragmentShader);
 

@@ -1,7 +1,5 @@
-﻿
-#version 330 core
+﻿#version 330 core
 
-//todo v2f naming coventions
 out vec4 fragColor;
 
 in vec2 v2f_uv;

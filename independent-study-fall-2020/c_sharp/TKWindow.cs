@@ -102,12 +102,12 @@ namespace Indpendent_Study_Fall_2020
             );
             
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("shaded"));
+            var testMat = new Material("test_mat", new ShaderProgram("textureless"));
 
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, false);
+            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
 
             
-            testMat.FeedBufferAndIndicesData(null, modelAttribs);
+            testMat.FeedBuffersAndCreateVAO(null, modelAttribs);
 //            testMat.FeedBufferAndIndicesData(null, new AttributeBuffer("in_position", 3, positions));
 
             testMat.SetupATexture("diamond.jpg", "texture0", TextureUnit.Texture0, 0);
