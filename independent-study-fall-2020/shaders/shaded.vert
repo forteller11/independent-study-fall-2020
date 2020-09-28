@@ -4,7 +4,9 @@ in vec2 in_uv;
 in vec3 in_normal;
 
 uniform vec4 PointLights [4];
+uniform int PointLightsLength;
 uniform vec4 DirectionLights [4];
+uniform int DirectionLightsLength;
 
 out vec2 v2f_uv;
 out float v2f_shade;
@@ -25,8 +27,15 @@ void main()
 
     v2f_normal_world = (vec4(in_normal, 1f) * ModelRotation).xyz;
 
-    float shade = dot(DirectionLights[0].xyz, v2f_normal_world);
-    v2f_shade = shade;
+//    float shade = abs(dot(DirectionLights[0].xyz, v2f_normal_world));
+//    v2f_shade = DirectionLightsLength;
+    float diffuseSum = 0;
+    for (int i = 0; i < DirectionLightsLength; i++){
+        float diffuse = dot(DirectionLights[0].xyz, v2f_normal_world);
+        diffuseSum += abs(diffuse);
+    }
+    float diffuseMean = diffuseSum / DirectionLightsLength;
+    v2f_shade = diffuseMean;
 
 //        float dotSums = 0;
 //        int i;

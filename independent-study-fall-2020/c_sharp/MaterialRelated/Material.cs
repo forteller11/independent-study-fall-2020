@@ -82,6 +82,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
+        public void SetInt(string name, int integer, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) Shader.Use();
+            if (UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform1(location, integer);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
         public void SetVector4(string name, OpenTK.Vector4 vector4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) Shader.Use();
