@@ -22,9 +22,10 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Name = name;
             Shader = shaderProgram;
             
+            //todo check it's of same type?
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
-            for (int i = 0; i < uniformCount; i++)
+            for (int i = 0; i < uniformCount; i++) 
             {
                 var uniformName = GL.GetActiveUniform(Shader.Handle, i, out int size, out var type);
                 Debug.Log(uniformName);

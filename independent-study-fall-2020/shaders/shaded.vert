@@ -16,10 +16,10 @@ struct PointLight{
 };
 
 uniform DirectionLight DirectionLights [NR_LIGHTS];
-uniform float DirectionLightsLength;
+uniform int DirectionLightsLength;
 
 uniform PointLight PointLights [NR_LIGHTS];
-uniform float PointLightsLength;
+uniform int PointLightsLength;
 
 out vec2 v2f_uv;
 out vec3 v2f_diffuse;
@@ -38,7 +38,7 @@ void main()
     v2f_uv = in_uv;
 
     v2f_diffuse = vec3(0,0,0);
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < DirectionLightsLength; i++){
         v2f_diffuse += DirectionLights[i].Color;
     }
  
