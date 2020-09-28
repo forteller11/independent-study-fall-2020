@@ -20,7 +20,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
         {
             base.OnUpdate(eventArgs);
             Rotation = Quaternion.FromEulerAngles(Globals.AbsTimeF,Globals.AbsTimeF/3,MathF.Sin(Globals.AbsTimeF/4));
-            Position = new Vector3(MathF.Sin(Globals.AbsTimeF/4), 0, 1);
+            Position = new Vector3(MathF.Sin(Globals.AbsTimeF/3)*3, 0, 1);
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
                 gameObject.Material.SetVector3Element("DirectionLightsColors", Globals.DirectionLights[i].Color, false, i);
             }
             
-            gameObject.Material.SetInt("PointLightsLength", Globals.DirectionLights.Count);
+            gameObject.Material.SetInt("PointLightsLength", Globals.PointLights.Count);
             for (int i = 0; i < Globals.PointLights.Count; i++)
             {
                 gameObject.Material.SetVector3Element("PointLightsPositions", Globals.PointLights[i].Position, false, i);

@@ -94,8 +94,8 @@ namespace Indpendent_Study_Fall_2020
             GL.ClearColor(1f,0f,1f,1f);
             
             Globals.Init();
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(1,0,.5f)));
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(2,-1,0), new Vector3(0,1,0f)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(0,0,1)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,1,1)));
             
             Globals.PointLights.Add(
                 new PointLight(new Vector3(0,3,4), new Vector3(1,0,0))
@@ -104,13 +104,13 @@ namespace Indpendent_Study_Fall_2020
             #region materials
             var testMat = new Material("test_mat", new ShaderProgram("shaded"));
 
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("cube_test", true, true, true);
+            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
 
             
             testMat.FeedBufferAndIndicesData(null, modelAttribs);
 //            testMat.FeedBufferAndIndicesData(null, new AttributeBuffer("in_position", 3, positions));
 
-            testMat.SetupATexture("unwrap_helper.jpg", "texture0", TextureUnit.Texture0, 0);
+            testMat.SetupATexture("diamond.jpg", "texture0", TextureUnit.Texture0, 0);
             testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
 
             Globals.DrawManager.SetupAllMaterials(
