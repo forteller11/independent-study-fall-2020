@@ -74,10 +74,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 
                 var materialForBatch = Materials[_materialKeys[i]];
                 materialForBatch.PrepareBatchForDrawing();
+                batchObjects[i].SendUniformsToShaderPerMaterial();
                 
                 for (int j = 0; j < batchObjects.Count; j++)
                 {
-                    batchObjects[i].SendUniformsToShader();
+                    batchObjects[i].SendUniformsToShaderPerObject();
                     materialForBatch.Draw();
                 }
 

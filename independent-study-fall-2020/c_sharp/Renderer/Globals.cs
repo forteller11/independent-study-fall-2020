@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
 using OpenTK;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
@@ -13,11 +14,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static Matrix4 CameraPerspective;
         public static Random Random;
         public static List<DirectionLight> DirectionLights;
+        public static List<PointLight> PointLights;
         public static double AbsoluteTime = 0;
-
-
-        
-
 
         public static void Init()
         {

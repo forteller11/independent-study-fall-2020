@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using FbxSharp;
 using OpenTK.Graphics.OpenGL4;
+using Vector4 = OpenTK.Vector4;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
@@ -57,6 +58,17 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             else
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
+
+        public void SetVector4Array(string name, float [] vector4s, bool useProgram = true)
+        {
+            if (useProgram) Shader.Use();
+            if (UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform4(location, vector4s.Length, vector4s);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        
         public void SetVector3(string name, OpenTK.Vector3 vector3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) Shader.Use();
