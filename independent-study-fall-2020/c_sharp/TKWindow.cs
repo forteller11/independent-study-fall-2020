@@ -95,7 +95,7 @@ namespace Indpendent_Study_Fall_2020
             
             Globals.Init();
             Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(0,0,1)));
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,1,1)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,0,0)));
             
             Globals.PointLights.Add(
                 new PointLight(new Vector3(0,3,4), new Vector3(1,0,0))
