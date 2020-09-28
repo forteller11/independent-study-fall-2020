@@ -59,13 +59,17 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
 
-        public void SetVector4Array(string name, float [] vector4s, bool useProgram = true)
+        public void SetVector4Array(string name, Vector4 [] vectors, bool useProgram = true)
         {
             if (useProgram) Shader.Use();
-            if (UniformLocations.TryGetValue(name, out int location))
-                GL.Uniform4(location, vector4s.Length, vector4s);
-            else
-                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location))
+                    GL.Uniform4(location, ref vectors[i]);
+                else
+                    Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            }    
         }
         
         
@@ -74,6 +78,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             if (useProgram) Shader.Use();
             if (UniformLocations.TryGetValue(name, out int location))
                 GL.Uniform3(location, ref vector3);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        public void SetVector4(string name, OpenTK.Vector4 vector4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) Shader.Use();
+            if (UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform4(location, ref vector4);
             else
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }

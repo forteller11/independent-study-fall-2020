@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using FbxSharp;
+using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
 using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.EntitySystem.Gameobjects;
 using Indpendent_Study_Fall_2020.Helpers;
@@ -94,13 +95,17 @@ namespace Indpendent_Study_Fall_2020
             
             Globals.Init();
             Globals.DirectionLights.Add(
-                new DirectionLight(new Vector3(0,-1,0), 1f)
+                new DirectionLight(new Vector3(0,1,0), 1f)
                 );
+            
+            Globals.PointLights.Add(
+                new PointLight(new Vector3(0,3,4), 1f)
+            );
             
             #region materials
             var testMat = new Material("test_mat", new ShaderProgram("shaded"));
 
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("quad_uv_test.obj", true, true, true);
+            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("cube_test", true, true, true);
 
             
             testMat.FeedBufferAndIndicesData(null, modelAttribs);

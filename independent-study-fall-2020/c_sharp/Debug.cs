@@ -127,7 +127,6 @@ namespace Indpendent_Study_Fall_2020
             if (PreviousCall != PreviousDebugCall.Log)
             {
                 Console.BackgroundColor = ConsoleColor.DarkGray;
-//                Console.WriteLine(new string(' ', 98));
                 Console.WriteLine("");
                 Console.BackgroundColor = ConsoleColor.Black;
             }

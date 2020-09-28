@@ -32,7 +32,9 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// where the first 3 components are the position/direction
         /// and the last component is the intensity
         /// </summary>
-        public static void SendLights(GameObject gameObject) //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
+        //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
+        //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
+        public static void SendLights(GameObject gameObject) 
         {
             int lightStride = 4;
             float[] pointLightsFlattened = new float[Globals.PointLights.Count * lightStride];
@@ -55,9 +57,19 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
                 directionLightsFlattened[baseIndex + 2] = Globals.DirectionLights[i].Direction.Z;
                 directionLightsFlattened[baseIndex + 3] = Globals.DirectionLights[i].Intensity;
             }
+            Vector4[] pointLightVecs = new Vector4[Globals.PointLights.Count];
+            Vector4[] directionLightVecs = new Vector4[Globals.DirectionLights.Count];
             
-            gameObject.Material.SetVector4Array("in_pointLights", pointLightsFlattened, false);
-            gameObject.Material.SetVector4Array("in_directionLights", directionLightsFlattened, false);
+            for (int i = 0; i < Globals.PointLights.Count; i++)
+                pointLightVecs[i] = new Vector4(Globals.PointLights[i].Position, Globals.PointLights[i].Intensity);
+            
+            for (int i = 0; i < Globals.DirectionLights.Count; i++)
+                directionLightVecs[i] = new Vector4(Globals.DirectionLights[i].Direction, Globals.DirectionLights[i].Intensity);
+            
+            gameObject.Material.SetVector4Array("in_pointLights", pointLightVecs, false);
+            gameObject.Material.SetVector4Array("in_directionLights", directionLightVecs, false);
+            
+//            gameObject.Material.SetVector4("in_directionLight",new Vector4(Globals.DirectionLights[0].Direction, Globals.DirectionLights[0].Intensity ));
         }
     }
 }

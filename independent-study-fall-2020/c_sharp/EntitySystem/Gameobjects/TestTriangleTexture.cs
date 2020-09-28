@@ -14,6 +14,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
         public override void OnLoad()
         {
             Position = new Vector3(0,0,1);
+            Scale *= 0.5f;
         }
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)

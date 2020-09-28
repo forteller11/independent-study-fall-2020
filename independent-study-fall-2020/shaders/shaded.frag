@@ -11,7 +11,7 @@ in vec3 v2f_normal_world;
 uniform sampler2D texture0;
 uniform sampler2D texture1;
 
-in vec4 in_directionLights[];
+uniform vec4 in_directionLights [1];
 
 void main()
 {
@@ -19,8 +19,10 @@ void main()
     vec4 texMap2 = texture(texture1, v2f_uv);
     vec4 texColor = mix(texMap1, texMap2, 0.5f);
     
-    vec4 texColorShaded = vec4(texColor.xyz * v2f_shade * v2f_normal_world, 1);;
-    fragColor = texColorShaded;
+    vec4 texColorShaded = vec4(abs(texColor.xyz) * v2f_shade * v2f_normal_world, 1);
+    vec4 dirAbs = in_directionLights[0];
+    texColorShaded *= dirAbs;
 //    fragColor = in_directionLights[0];
+    fragColor = texColorShaded;
     //    fragColor = vec4(v2f_uv.x, v2f_uv.y, 0, 1);
 }
