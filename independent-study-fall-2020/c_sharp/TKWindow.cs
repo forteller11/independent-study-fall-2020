@@ -98,9 +98,9 @@ namespace Indpendent_Study_Fall_2020
                 );
             
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("shaded", "shaded"));
+            var testMat = new Material("test_mat", new ShaderProgram("shaded"));
 
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("quad_uv_test.obj", true, true, false);
+            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("quad_uv_test.obj", true, true, true);
 
             
             testMat.FeedBufferAndIndicesData(null, modelAttribs);

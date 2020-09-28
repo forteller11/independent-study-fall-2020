@@ -12,13 +12,16 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// </summary>
         public static void SendTransformMatrices(GameObject gameObject)
         {
-            var modelRotation = Matrix4.CreateFromQuaternion(gameObject.Rotation);
+            var modelRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(gameObject.Rotation));
             var worldTranslation = Matrix4.CreateTranslation(gameObject.Position - Globals.CameraPosition);
-            var worldRotation = Matrix4.CreateFromQuaternion(Globals.CameraRotation);
-
+            var worldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(Globals.CameraRotation));
+            var modelScale = Matrix4.CreateScale(gameObject.Scale); //transponse?
+            
             //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
-            var modelToWorld = Matrix4.Transpose(modelRotation) * Matrix4.CreateScale(gameObject.Scale) * worldTranslation * Matrix4.Transpose(worldRotation);
+            var modelToWorld = modelRotation * modelScale * worldTranslation * worldRotation;
             gameObject.Material.SetMatrix4("ModelToWorld", modelToWorld, false);
+            
+            gameObject.Material.SetMatrix4("ModelRotation", modelRotation, false);
             
             var worldToView = Globals.CameraPerspective;
             gameObject.Material.SetMatrix4("WorldToView", worldToView, false);
