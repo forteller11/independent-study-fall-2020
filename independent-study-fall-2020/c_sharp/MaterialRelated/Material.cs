@@ -59,14 +59,17 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
 
-        public void SetVector4Array(string name, Vector4 [] vectors, bool useProgram = true)
+        public void SetVector4Array(string name, Vector4 [] vectors, bool useProgram = true, bool includeLength=true)
         {
             if (useProgram) Shader.Use();
             
             for (int i = 0; i < vectors.Length; i++)
             {
                 if (UniformLocations.TryGetValue($"{name}[{i}]", out int location))
+                {
                     GL.Uniform4(location, ref vectors[i]);
+                    SetInt(name + "Length", vectors.Length, useProgram);
+                }
                 else
                     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
             }    

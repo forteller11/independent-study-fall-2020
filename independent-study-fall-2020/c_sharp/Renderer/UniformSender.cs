@@ -66,11 +66,9 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             for (int i = 0; i < Globals.DirectionLights.Count; i++)
                 directionLightVecs[i] = new Vector4(Globals.DirectionLights[i].Direction, Globals.DirectionLights[i].Intensity);
             
-            gameObject.Material.SetVector4Array("PointLights", pointLightVecs, false);
-            gameObject.Material.SetInt("PointLightsLength", pointLightVecs.Length, false);
-            gameObject.Material.SetVector4Array("DirectionLights", directionLightVecs, false);
-            gameObject.Material.SetInt("DirectionLightsLength", directionLightVecs.Length, false);
-            
+            gameObject.Material.SetVector4Array("PointLights", pointLightVecs, false, true);
+            gameObject.Material.SetVector4Array("DirectionLights", directionLightVecs, false, true);
+
 //            gameObject.Material.SetVector4("in_directionLight",new Vector4(Globals.DirectionLights[0].Direction, Globals.DirectionLights[0].Intensity ));
         }
     }
