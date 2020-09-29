@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
@@ -14,7 +15,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         private const string VERTEX_FILE_EXT = ".vert";
         private const string FRAG_FILE_EXT = ".frag";
         private const string LIBRARY_FILE_EXT = ".glsl";
-        private const string SHADER_VERSION_DIR = "#version 330 core\n";
+        private static string SHADER_VERSION_DIR = "#version 330 core"+ Environment.NewLine;
 
         public ShaderProgram(string shadeFileNames, params string[] shaderLibraryFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
@@ -52,27 +53,40 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                         new StreamReader(
                             SerializationManager.ShaderPath + "\\" + libraryFileNames[i] + LIBRARY_FILE_EXT))
                         shaderLibraryCodeText = streamReader.ReadToEnd();
-                    shaderCodeAndLibraries = shaderLibraryCodeText + '\n' + shaderCodeAndLibraries;
+                    shaderCodeAndLibraries = shaderLibraryCodeText + Environment.NewLine + shaderCodeAndLibraries;
                 }
             }
 
             #endregion
 
             shaderCodeAndLibraries = SHADER_VERSION_DIR + shaderCodeAndLibraries;
-            Debug.Log(shaderCodeAndLibraries);
+
             int shaderHandle = GL.CreateShader(shaderType);
             
             GL.ShaderSource(shaderHandle, shaderCodeAndLibraries);
             
             GL.CompileShader(shaderHandle);
             
+            #region Debugging
             string infoLogVert = GL.GetShaderInfoLog(shaderHandle);
-            if (infoLogVert != String.Empty) 
-                Console.WriteLine(infoLogVert);
+            if (infoLogVert != String.Empty)
+            {
+                string[] lines = shaderCodeAndLibraries.Split(Environment.NewLine);
+                StringBuilder shaderWithLineNumbers = new StringBuilder();
+                
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    shaderWithLineNumbers.Append(i+1 + ": " + lines[i] + Environment.NewLine);
+                }
+               
+                Debug.LogWarning(shaderWithLineNumbers.ToString());
+                throw new Exception("Shader Compilation Error: " + infoLogVert);
+            }
 
+            #endregion
             return shaderHandle;
         }
-        
+
         public void Use()
         {
             GL.UseProgram(Handle);
