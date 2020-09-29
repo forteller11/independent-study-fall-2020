@@ -16,7 +16,7 @@ void main()
     vec4 viewPos =   vec4(in_position, 1) * ModelToView;
     vec3 worldNorm = (vec4(in_normal, 1) * ModelRotation).xyz;
 
-    v2f_diffuse = calculate_diffuse(worldNorm, worldPos);
+    v2f_diffuse = calculate_diffuse(worldNorm, worldPos.xyz);
     gl_Position = viewPos;
     v2f_uv = in_uv;
 }

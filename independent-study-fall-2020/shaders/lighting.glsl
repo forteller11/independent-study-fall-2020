@@ -26,14 +26,15 @@ vec3 calculate_diffuse(vec3 worldNorm, vec3 worldPos){
         diffuseSum += diffuse;
     }
     
-    //for (int i = 0; i < PointLightsLength; i++){
-    //    vec3 lightToVert = PointLights[i].Position - worldPosition;
-    //    vec3 lightToVertDir = norm(lightToVert);
-    //
-    //    float product = dot(worldNormal, lightToVertDir);
-    //    float shade = clamp(product,0,1);
-    //    vec3 diffuse = PointLights[i].Color * shade;
-    //    diffuseSum += diffuse;
-    //}
+    for (int i = 0; i < PointLightsLength; i++){
+        vec3 lightToVert = PointLights[i].Position - worldPos;
+        vec3 lightToVertDir = normalize(lightToVert);
+    
+        float product = dot(worldNorm, lightToVertDir);
+        float shade = clamp(product,0,1);
+        vec3 diffuse = PointLights[i].Color * shade;
+        diffuseSum += diffuse;
+    }
+    
     return diffuseSum;
 }
