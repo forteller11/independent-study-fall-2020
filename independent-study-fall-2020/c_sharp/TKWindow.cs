@@ -18,37 +18,6 @@ namespace Indpendent_Study_Fall_2020
     public class TKWindow : GameWindow
     {
 
-        float[] positions = {
-             1f/2,  -1f/2, -1/2f,  //rd
-            -1f/2, -1f/2, -1/2f, //ld
-            -1f/2, 1f/2, -1/2f,  //
-            1f/2,  -1f/2, 1/2f,  //rd
-            -1f/2, -1f/2, 1/2f, //ld
-            -1f/2, 1f/2, 1/2f,  //lu
-            1f, 2f, 0,
-            -1, 2f, 0,
-            0, -2f, 0
-        };
-        
-        uint[] indices = {
-            0, 1, 3, // The first triangle will be the bottom-right half of the triangle
-            1, 2, 3  // Then the second will be the top-right half of the triangle
-        };
-        
-        float[] uvs = {
-            1.0f, 0.0f,
-            0.0f, 0.0f,
-            0.0f, 1.0f,
-            
-            1.0f, 0.0f,
-            1.0f, 1.0f,
-            0.0f, 1.0f,
-        };
-        
-//        // For documentation on this, check Texture.cs
-//        private Texture _texture;
-
-
         private GameObjectManager _gameObjectManager;
         
         #region initialise
@@ -59,8 +28,8 @@ namespace Indpendent_Study_Fall_2020
         {
 
             var newTKWindow = new TKWindow(
-                640, 
-                640, 
+                1000, 
+                1000, 
                 GraphicsMode.Default, 
                 $"Independent Study Fall 2020 - Charly Yan Miller ",
                 GameWindowFlags.Default,
