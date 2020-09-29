@@ -28,6 +28,17 @@ uniform mat4 ModelRotation;
 uniform mat4 ModelToWorld;
 uniform mat4 WorldToView;
 
+vec3 calculate_diffuse(vec3 worldNormal){
+    vec3 diffuseSum = vec3(0,0,0);
+    
+    for (int i = 0; i < DirectionLightsLength; i++){
+        float product = dot(worldNormal, DirectionLights[i].Direction);
+        float shade = clamp(product,0,1);
+        vec3 diffuse = DirectionLights[i].Color * shade;
+        diffuseSum += diffuse;
+    }
+    return diffuseSum;
+}
 
 void main()
 {
@@ -38,13 +49,6 @@ void main()
     v2f_uv = in_uv;
 
     vec3 worldNormal = (vec4(in_normal, 1) * ModelRotation).xyz;
-    v2f_diffuse = vec3(0,0,0);
-    
-    for (int i = 0; i < DirectionLightsLength; i++){
-        float product = dot(worldNormal, DirectionLights[i].Direction);
-        float shade = clamp(product,0,1);
-        vec3 diffuse = DirectionLights[i].Color * shade;
-        v2f_diffuse += diffuse;
-    }
- 
+    v2f_diffuse = calculate_diffuse(worldNormal);
 }
+
