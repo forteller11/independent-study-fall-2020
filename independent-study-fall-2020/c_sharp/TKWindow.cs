@@ -92,10 +92,10 @@ namespace Indpendent_Study_Fall_2020
         {
             base.OnLoad(e);
             
-            GL.ClearColor(1f,0f,1f,1f);
+            GL.ClearColor(0f,0f,0f,1f);
             
             Globals.Init();
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(0,1,0)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(.8f)));
 //            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,0,0)));
 //            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,0,1), new Vector3(0,1,1)));
             

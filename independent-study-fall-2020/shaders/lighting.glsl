@@ -10,6 +10,7 @@ struct PointLight{
 };
 
 #define NR_LIGHTS 4
+#define DIR_LIGHTS_DIST 100000
 uniform DirectionLight DirectionLights [NR_LIGHTS];
 uniform int DirectionLightsLength;
 
@@ -39,21 +40,37 @@ vec3 calculate_diffuse(vec3 worldNorm, vec3 worldPos){
     return diffuseSum;
 }
 
-vec3 calculate_specular(vec3 vertWorldNorm, vec3 vertPosWorld, vec3 camPosWorld){
+vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld){
 
     vec3 specSum = vec3(0,0,0);
-    vec3 camToVert = vertPosWorld - camPosWorld;
-    vec3 camToVertNorm = normalize(camToVert);
+    vec3 camToMesh = camPosWorld - meshPosWorld;
+    vec3 camToMeshDir = normalize(camToMesh);
+    float specular_strength = 0.8f;
     
     for (int i = 0; i < PointLightsLength; i++){
-        vec3 lightToVert = PointLights[i].Position - vertPosWorld;
-        vec3 reflectedLight = reflect(lightToVert, vertWorldNorm);
-        float product = dot(reflectedLight, camToVertNorm)*.5;
-        float shade = clamp(product,0,2);
-        float shadeCocentrated = pow(shade, 8) * .02;
+        vec3 meshToLightDir = normalize(meshPosWorld - PointLights[i].Position);
+        vec3 reflectedLightDir = reflect(meshToLightDir, meshNormWorld);
+        float product = dot(reflectedLightDir, camToMeshDir); //.5 should not be necessary?
+        float shade = max(product, 0);
+        float shadeCocentrated = pow(shade, 32)  ;
         
-        specSum += shadeCocentrated * PointLights[i].Color;
+        specSum += shadeCocentrated * specular_strength * PointLights[i].Color;
     }
+    
+    for (int i = 0; i < PointLightsLength; i++){
+    
+        vec3 dirPosition = DirectionLights[i].Direction * DIR_LIGHTS_DIST;
+        vec3 meshToLightDir = normalize(meshPosWorld - dirPosition);
+        vec3 reflectedLightDir = reflect(meshToLightDir, meshNormWorld);
+        float product = dot(reflectedLightDir, camToMeshDir); //.5 should not be necessary?
+        float shade = max(product, 0);
+        float shadeCocentrated = pow(shade, 32)  ;
+        
+        specSum += shadeCocentrated * specular_strength * DirectionLights[i].Color;
+    }
+    
+
     
     return specSum;
 }
+
