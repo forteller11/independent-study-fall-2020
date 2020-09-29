@@ -32,6 +32,8 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             SetMatrix4(gameObject.Material, "WorldToView", worldToView, false);
             SetMatrix4(gameObject.Material, "ModelRotation", modelToWorldRotation, false);
             SetMatrix4(gameObject.Material, "ModelToWorld", modelToWorld, false);
+            
+            SetVector3(gameObject.Material, "CamPosition", Globals.CameraPosition, false); //todo batch with like materials
         }
 
         /// <summary>

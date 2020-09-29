@@ -4,6 +4,7 @@ in vec3 in_normal;
 
 out vec2 v2f_uv;
 out vec3 v2f_diffuse;
+out vec3 v2f_specular;
 out vec3 v2f_worldNorm;
 out vec3 v2f_worldPos;
 
