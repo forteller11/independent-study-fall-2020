@@ -16,14 +16,24 @@ uniform int DirectionLightsLength;
 uniform PointLight PointLights [NR_LIGHTS];
 uniform int PointLightsLength;
 
-vec3 calculate_diffuse(vec3 worldNormal){
+vec3 calculate_diffuse(vec3 worldNorm, vec3 worldPos){
     vec3 diffuseSum = vec3(0,0,0);
     
     for (int i = 0; i < DirectionLightsLength; i++){
-        float product = dot(worldNormal, DirectionLights[i].Direction);
+        float product = dot(worldNorm, DirectionLights[i].Direction);
         float shade = clamp(product,0,1);
         vec3 diffuse = DirectionLights[i].Color * shade;
         diffuseSum += diffuse;
     }
+    
+    //for (int i = 0; i < PointLightsLength; i++){
+    //    vec3 lightToVert = PointLights[i].Position - worldPosition;
+    //    vec3 lightToVertDir = norm(lightToVert);
+    //
+    //    float product = dot(worldNormal, lightToVertDir);
+    //    float shade = clamp(product,0,1);
+    //    vec3 diffuse = PointLights[i].Color * shade;
+    //    diffuseSum += diffuse;
+    //}
     return diffuseSum;
 }

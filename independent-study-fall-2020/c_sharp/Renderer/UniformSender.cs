@@ -8,25 +8,29 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
     public static class UniformSender
     {
+        private const string DIR_LIGHT = "DirectionLights";
+        private const string POINT_LIGHT = "PointLights";
         
         /// <summary>
         /// Sends "ModelToWorld" and "WorldToView" uniform matrices to shader
         /// </summary>
         public static void SendTransformMatrices(GameObject gameObject)
         {
-            var modelRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(gameObject.Rotation));
-            var worldTranslation = Matrix4.CreateTranslation(gameObject.Position - Globals.CameraPosition);
-            var worldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(Globals.CameraRotation));
-            var modelScale = Matrix4.CreateScale(gameObject.Scale); //transponse?
+            var modelToWorldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(gameObject.Rotation));
+            var worldToViewTranslation = Matrix4.CreateTranslation(-Globals.CameraPosition);
+            var modelToWorldTranslation = Matrix4.CreateTranslation(gameObject.Position);
+            var modelToViewTranslation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(Globals.CameraRotation));
+            var modelToWorldScale = Matrix4.CreateScale(gameObject.Scale); //transponse?
             
             //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
-            var modelToWorld = modelRotation * modelScale * worldTranslation * worldRotation;
+            //todo consolidate matrices and refactor.... then go bk into shader
+            var modelToWorld = modelToWorldRotation * modelToWorldScale * modelToWorldTranslation;
+            var worldToView = worldToViewTranslation * modelToViewTranslation * Globals.CameraPerspective;
+            var modelToView = modelToWorld * worldToView;
+            
+            SetMatrix4(gameObject.Material, "ModelToView", modelToView, false);
+            SetMatrix4(gameObject.Material, "ModelRotation", modelToWorldRotation, false);
             SetMatrix4(gameObject.Material, "ModelToWorld", modelToWorld, false);
-            
-            SetMatrix4(gameObject.Material, "ModelRotation", modelRotation, false);
-            
-            var worldToView = Globals.CameraPerspective;
-            SetMatrix4(gameObject.Material, "WorldToView", worldToView, false);
         }
 
         /// <summary>
@@ -36,8 +40,6 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// </summary>
         //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
         //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
-        private const string DIR_LIGHT = "DirectionLights";
-        private const string POINT_LIGHT = "PointLights";
         public static void SendLights(GameObject gameObject)
         {
             SetInt(gameObject.Material, $"{DIR_LIGHT}Length", Globals.DirectionLights.Count);
