@@ -1,6 +1,4 @@
-﻿#version 330 core
-
-out vec4 fragColor;
+﻿out vec4 fragColor;
 
 in vec2 v2f_uv;
 in vec3 v2f_diffuse;

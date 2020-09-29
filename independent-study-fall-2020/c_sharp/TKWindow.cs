@@ -102,7 +102,7 @@ namespace Indpendent_Study_Fall_2020
             );
             
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("shaded"));
+            var testMat = new Material("test_mat", new ShaderProgram("shaded", "lighting"));
 
             var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
 

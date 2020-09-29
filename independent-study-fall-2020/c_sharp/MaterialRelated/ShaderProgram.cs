@@ -10,13 +10,18 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public int Handle { get; }
         public Dictionary<string, int> UniformLocations = new Dictionary<string, int>();
         public readonly string FileName;
+        
+        private const string VERTEX_FILE_EXT = ".vert";
+        private const string FRAG_FILE_EXT = ".frag";
+        private const string LIBRARY_FILE_EXT = ".glsl";
+        private const string SHADER_VERSION_DIR = "#version 330 core\n";
 
-        public ShaderProgram(string shadeFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
+        public ShaderProgram(string shadeFileNames, params string[] shaderLibraryFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
             FileName = shadeFileNames;
             
-            int vertexHandle = CompileShaderAndDebug(shadeFileNames + ".vert", ShaderType.VertexShader);
-            int fragmentHandle = CompileShaderAndDebug(shadeFileNames + ".frag", ShaderType.FragmentShader);
+            int vertexHandle = CompileShaderAndDebug(shadeFileNames + VERTEX_FILE_EXT, shaderLibraryFileNames, ShaderType.VertexShader);
+            int fragmentHandle = CompileShaderAndDebug(shadeFileNames + FRAG_FILE_EXT, shaderLibraryFileNames, ShaderType.FragmentShader);
 
             Handle = GL.CreateProgram();
             GL.AttachShader(Handle, vertexHandle);
@@ -30,15 +35,34 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
         }
 
-        private int CompileShaderAndDebug(string shaderFileName, ShaderType shaderType)
+        private int CompileShaderAndDebug(string shaderFileName, string[] libraryFileNames, ShaderType shaderType)
         {
             string shaderCodeText;
             using (var streamReader = new StreamReader(SerializationManager.ShaderPath + "\\" + shaderFileName))
                 shaderCodeText = streamReader.ReadToEnd();
 
+            #region add all shader libraries
+            string shaderCodeAndLibraries = shaderCodeText;
+            if (libraryFileNames != null)
+            {
+                for (int i = 0; i < libraryFileNames.Length; i++)
+                {
+                    string shaderLibraryCodeText;
+                    using (var streamReader =
+                        new StreamReader(
+                            SerializationManager.ShaderPath + "\\" + libraryFileNames[i] + LIBRARY_FILE_EXT))
+                        shaderLibraryCodeText = streamReader.ReadToEnd();
+                    shaderCodeAndLibraries = shaderLibraryCodeText + '\n' + shaderCodeAndLibraries;
+                }
+            }
+
+            #endregion
+
+            shaderCodeAndLibraries = SHADER_VERSION_DIR + shaderCodeAndLibraries;
+            Debug.Log(shaderCodeAndLibraries);
             int shaderHandle = GL.CreateShader(shaderType);
             
-            GL.ShaderSource(shaderHandle, shaderCodeText);
+            GL.ShaderSource(shaderHandle, shaderCodeAndLibraries);
             
             GL.CompileShader(shaderHandle);
             
