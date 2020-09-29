@@ -52,7 +52,8 @@ vec3 calculate_specular(vec3 vertWorldNorm, vec3 vertPosWorld, vec3 camPosWorld)
         vec3 reflectedLight = reflect(lightToVert, vertWorldNorm);
         float product = dot(reflectedLight, camToVertNorm);
         float shade = clamp(product,0,1);
-        specSum += shade;
+        float shadeCocentrated = pow(shade, 16) * .5;
+        specSum += vec3(shadeCocentrated)/4;
     }
     
     return specSum;
