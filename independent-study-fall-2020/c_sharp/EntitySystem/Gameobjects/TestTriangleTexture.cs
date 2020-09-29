@@ -13,13 +13,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 
         public override void OnLoad()
         {
-            Scale *= 0.5f;
+            Scale *= 1f;
         }
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
             Rotation = Quaternion.FromEulerAngles(Globals.AbsTimeF,Globals.AbsTimeF/3,MathF.Sin(Globals.AbsTimeF/4));
-            Position = new Vector3(MathF.Sin(Globals.AbsTimeF/1)*4, 0, MathF.Sin(Globals.AbsTimeF/3)*3);
+            Position = new Vector3(MathF.Sin(Globals.AbsTimeF/2)*2, 0, MathF.Sin(Globals.AbsTimeF/2)*2);
         }
         
         public override void SendUniformsToShaderPerObject()
