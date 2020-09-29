@@ -9,7 +9,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 {
     public class TestTriangleTexture : GameObject
     {
-        public override string MaterialName => "test_mat";
+        public override string MaterialName => "shaded_mat";
 
         public override void OnLoad()
         {
@@ -22,10 +22,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
             Rotation = Quaternion.FromEulerAngles(Globals.AbsTimeF,Globals.AbsTimeF/3,MathF.Sin(Globals.AbsTimeF/4));
             Position = new Vector3(MathF.Sin(Globals.AbsTimeF/1)*4, 0, MathF.Sin(Globals.AbsTimeF/3)*3);
         }
-
-        /// <summary>
-        /// Sends "ModelToWorld" and "WorldToView" uniforms to shader
-        /// </summary>
+        
         public override void SendUniformsToShaderPerObject()
         {
             UniformSender.SendTransformMatrices(this);

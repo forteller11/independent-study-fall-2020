@@ -10,7 +10,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         {
             _gameObjects = new List<GameObject>();
         }
-        public void Add(params GameObject[] gameObjects)
+        public void AddRange(params GameObject[] gameObjects)
         {
             for (int i = 0; i < gameObjects.Length; i++)
                 Add(gameObjects[i]);
@@ -24,13 +24,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         public void Remove(GameObject gameObject) => _gameObjects.Remove(gameObject);
 
-        public void LoadAllGameObjects()
+        public void InvokeOnLoad()
         {
             for (int i = 0; i < _gameObjects.Count; i++)
                 _gameObjects[i].OnLoad();
         }
         
-        public void  UpdateAllGameObjects(GameObjectUpdateEventArgs eventArgs)
+        public void  InvokeOnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
             for (int i = 0; i < _gameObjects.Count; i++)
                 _gameObjects[i].OnUpdate(eventArgs);

@@ -41,7 +41,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 return;
             
             if (!Batches.ContainsKey(materialName))
-                throw new Exception($"You're trying to render a GameObject with \"{materialName}\" but it hasn't been setup/doesn't exist in the DrawManager!");
+                throw new Exception($"You're trying to render a GameObject with \"{materialName}\" but it hasn't been setup/doesn't exist in the DrawManager! Is there a typo?");
             
             Batches[materialName].Add(gameObject);
             gameObject.Material = Materials[materialName];
@@ -74,12 +74,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 
                 var materialForBatch = Materials[_materialKeys[i]];
                 materialForBatch.PrepareBatchForDrawing();
-                batchObjects[i].SendUniformsToShaderPerMaterial();
-                
-                for (int j = 0; j < batchObjects.Count; j++)
+
+                if (batchObjects.Count > 1)
                 {
-                    batchObjects[i].SendUniformsToShaderPerObject();
-                    materialForBatch.Draw();
+                    batchObjects[0].SendUniformsToShaderPerMaterial(); //todo this should really be like a static method
+
+                    for (int j = 0; j < batchObjects.Count; j++)
+                    {
+                        batchObjects[i].SendUniformsToShaderPerObject();
+                        materialForBatch.Draw();
+                    }
                 }
 
             }

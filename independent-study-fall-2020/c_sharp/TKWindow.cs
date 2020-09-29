@@ -6,6 +6,7 @@ using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.EntitySystem.Gameobjects;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
+using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
@@ -103,30 +104,13 @@ namespace Indpendent_Study_Fall_2020
             );
             
             #region materials
-            var testMat = new Material("test_mat", new ShaderProgram("shaded", "lighting"));
-
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
-
-            
-            testMat.FeedBuffersAndCreateVAO(null, modelAttribs);
-//            testMat.FeedBufferAndIndicesData(null, new AttributeBuffer("in_position", 3, positions));
-
-            testMat.SetupATexture("diamond.jpg", "texture0", TextureUnit.Texture0, 0);
-            testMat.SetupATexture("face.jpg", "texture1", TextureUnit.Texture1, 1);
-
-            Globals.DrawManager.SetupAllMaterials(
-                testMat
-                );
+            Globals.DrawManager.SetupAllMaterials(CreateMaterials.Create());
             #endregion
             
             _gameObjectManager = new GameObjectManager();
-            _gameObjectManager.Add(
-                new CameraControllerSingleton(),
-                new TestTriangleTexture()
-            );
+            _gameObjectManager.AddRange(CreateGameObjects.Create());
             
-            _gameObjectManager.LoadAllGameObjects();
-     
+            _gameObjectManager.InvokeOnLoad();
         }
 
         protected override void OnUnload(EventArgs e)
@@ -148,7 +132,7 @@ namespace Indpendent_Study_Fall_2020
             );
       
             Globals.Update(eventArgs);
-            _gameObjectManager.UpdateAllGameObjects(eventArgs);
+            _gameObjectManager.InvokeOnUpdate(eventArgs);
             
             if (eventArgs.KeyboardState.IsKeyDown(Key.Escape))
                 Exit();

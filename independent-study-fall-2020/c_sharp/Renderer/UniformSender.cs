@@ -29,6 +29,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             var modelToView = modelToWorld * worldToView;
             
             SetMatrix4(gameObject.Material, "ModelToView", modelToView, false);
+            SetMatrix4(gameObject.Material, "WorldToView", worldToView, false);
             SetMatrix4(gameObject.Material, "ModelRotation", modelToWorldRotation, false);
             SetMatrix4(gameObject.Material, "ModelToWorld", modelToWorld, false);
         }

@@ -3,6 +3,9 @@
 in vec2 v2f_uv;
 in vec3 v2f_diffuse;
 
+in vec3 v2f_worldNorm;
+in vec3 v2f_worldPos;
+
 uniform sampler2D texture0;
 uniform sampler2D texture1;
 
