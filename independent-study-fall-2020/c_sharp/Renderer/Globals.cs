@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
 using OpenTK;
+using OpenTK.Input;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
@@ -18,18 +19,23 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static double AbsTime = 0;
         public static float AbsTimeF = 0;
 
+        public static Vector2 MousePositionLastFrame = new Vector2();
         public static void Init()
         {
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, .1f, 100f, out CameraPerspective);
             DirectionLights = new List<DirectionLight>();
             PointLights = new List<PointLight>();
             Random = new Random(0);
+            MousePositionLastFrame = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
         }
 
         public static void Update(GameObjectUpdateEventArgs args)
         {
             AbsTime += args.DeltaTime;
             AbsTimeF = (float) AbsTime;
+            MousePositionLastFrame = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            
+            
         }
 
     }

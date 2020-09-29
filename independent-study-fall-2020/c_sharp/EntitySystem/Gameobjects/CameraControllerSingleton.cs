@@ -8,7 +8,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
     public class CameraControllerSingleton : GameObject
     {
         private float acceleration = 1f;
-        private float angularAcceleration = 2.7f;
+        private float angularAcceleration = 0.2f;
         
         private float _horziontalMaxVelocity = .05f;
         private float _verticalMaxVelocity = 1f;
@@ -23,10 +23,6 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
         {  
             Rotate(eventArgs);
             Move(eventArgs);
-            
-//            Debug.Log( Globals.CameraPosition);
-//            Debug.Log( Globals.CameraRotation);
-            
         }
 
         void Rotate(GameObjectUpdateEventArgs eventArgs) //todo can't rotate around
@@ -35,15 +31,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
             float angularAccelerationThisFrame = (float) eventArgs.DeltaTime * angularAcceleration;
             Quaternion rotationVert = Quaternion.Identity;
             Quaternion rotationHorz = Quaternion.Identity;
+
+            Vector2 accelerationInput = eventArgs.MouseDelta * angularAccelerationThisFrame;
             
-            if (keyboardState.IsKeyDown(Key.Up))
-                rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, angularAccelerationThisFrame);
-            if (keyboardState.IsKeyDown(Key.Down))
-                rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, -angularAccelerationThisFrame);
-            if (keyboardState.IsKeyDown(Key.Left))
-                rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, angularAccelerationThisFrame);
-            if (keyboardState.IsKeyDown(Key.Right))
-                rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -angularAccelerationThisFrame);
+            rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
+            rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
+            Debug.Log(accelerationInput.Y);
+  
             
             Globals.CameraRotation =  rotationHorz * Globals.CameraRotation * rotationVert;
         }

@@ -50,7 +50,7 @@ vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld)
     for (int i = 0; i < PointLightsLength; i++){
         vec3 meshToLightDir = normalize(meshPosWorld - PointLights[i].Position);
         vec3 reflectedLightDir = reflect(meshToLightDir, meshNormWorld);
-        float product = dot(reflectedLightDir, camToMeshDir); //.5 should not be necessary?
+        float product = dot(reflectedLightDir, camToMeshDir);
         float shade = max(product, 0);
         float shadeCocentrated = pow(shade, 32)  ;
         
@@ -62,7 +62,7 @@ vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld)
         vec3 dirPosition = DirectionLights[i].Direction * DIR_LIGHTS_DIST;
         vec3 meshToLightDir = normalize(meshPosWorld - dirPosition);
         vec3 reflectedLightDir = reflect(meshToLightDir, meshNormWorld);
-        float product = dot(reflectedLightDir, camToMeshDir); //.5 should not be necessary?
+        float product = dot(reflectedLightDir, camToMeshDir);
         float shade = max(product, 0);
         float shadeCocentrated = pow(shade, 32)  ;
         

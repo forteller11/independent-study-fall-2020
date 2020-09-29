@@ -1,17 +1,11 @@
 ﻿using System;
-using System.ComponentModel;
-using FbxSharp;
 using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
 using Indpendent_Study_Fall_2020.EntitySystem;
-using Indpendent_Study_Fall_2020.EntitySystem.Gameobjects;
-using Indpendent_Study_Fall_2020.Helpers;
-using Indpendent_Study_Fall_2020.MaterialRelated;
 using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
-using Vector3 = OpenTK.Vector3;
 
 namespace Indpendent_Study_Fall_2020
 {
@@ -93,10 +87,14 @@ namespace Indpendent_Study_Fall_2020
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
 
+            var  m = Mouse.GetState();
+            
             //todo cache this object allocation so not creating objects everyframe
             var eventArgs = new GameObjectUpdateEventArgs(
                 e.Time,
-                Keyboard.GetState()
+                Keyboard.GetState(),
+                m,
+                new Vector2(m.X-Globals.MousePositionLastFrame.X,-m.Y+Globals.MousePositionLastFrame.Y)
             );
       
             Globals.Update(eventArgs);
@@ -125,10 +123,6 @@ namespace Indpendent_Study_Fall_2020
             base.OnResize(e);
             GL.Viewport(0,0, Width, Height);
         }
-
-
-
-
         
     }
 }
