@@ -12,7 +12,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #region shaded
             var shaded = new Material("shaded_mat", new ShaderProgram("shaded", "lighting"));
 
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
+            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere_2", true, true, true);
             shaded.FeedBuffersAndCreateVAO(null, modelAttribs);
 
             shaded.SetupATexture("diamond.jpg", "texture0", TextureUnit.Texture0, 0);

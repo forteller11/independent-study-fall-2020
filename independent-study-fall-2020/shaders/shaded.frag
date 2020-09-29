@@ -2,8 +2,7 @@
 
 in vec2 v2f_uv;
 in vec3 v2f_diffuse;
-in vec3 v2f_specular;
-
+in vec3 v2f_norm;
 in vec3 v2f_worldNorm;
 in vec3 v2f_worldPos;
 
@@ -11,6 +10,8 @@ uniform sampler2D texture0;
 uniform sampler2D texture1;
 
 uniform vec3 CamPosition;
+
+uniform mat4 ModelRotation;
 
 void main()
 {

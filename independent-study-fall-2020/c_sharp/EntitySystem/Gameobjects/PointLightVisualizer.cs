@@ -17,7 +17,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
-            Position = Globals.PointLights[Index].Position;
+            var light = Globals.PointLights[Index];
+            light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);
+            Position = light.Position;
         }
 
 

@@ -6,6 +6,7 @@ out vec2 v2f_uv;
 out vec3 v2f_diffuse;
 out vec3 v2f_specular;
 out vec3 v2f_worldNorm;
+out vec3 v2f_norm;
 out vec3 v2f_worldPos;
 
 uniform mat4 ModelToWorld;
@@ -18,6 +19,7 @@ void main()
 {
     v2f_worldPos =  (vec4(in_position, 1) * ModelToWorld).xyz;
     v2f_worldNorm = (vec4(in_normal, 1) * ModelRotation).xyz;
+    v2f_norm = in_normal;
     
     vec4 viewPos =   vec4(in_position, 1f) * ModelToView;
 

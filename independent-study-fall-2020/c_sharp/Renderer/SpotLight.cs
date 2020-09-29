@@ -2,7 +2,7 @@
 
 namespace Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer
 {
-    public struct PointLight
+    public class PointLight
     {
         public Vector3 Position;
         public Vector3 Color;

@@ -4,7 +4,7 @@ using OpenTK.Graphics;
 
 namespace Indpendent_Study_Fall_2020
 {
-    public struct DirectionLight
+    public class DirectionLight
     {
         public Vector3 Direction;
         public Vector3 Color;
