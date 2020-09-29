@@ -75,13 +75,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 var materialForBatch = Materials[_materialKeys[i]];
                 materialForBatch.PrepareBatchForDrawing();
 
-                if (batchObjects.Count > 1)
+                if (batchObjects.Count > 0)
                 {
                     batchObjects[0].SendUniformsToShaderPerMaterial(); //todo this should really be like a static method
 
                     for (int j = 0; j < batchObjects.Count; j++)
                     {
-                        batchObjects[i].SendUniformsToShaderPerObject();
+                        batchObjects[j].SendUniformsToShaderPerObject();
                         materialForBatch.Draw();
                     }
                 }

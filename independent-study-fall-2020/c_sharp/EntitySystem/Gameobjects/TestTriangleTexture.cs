@@ -18,7 +18,6 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
-            base.OnUpdate(eventArgs);
             Rotation = Quaternion.FromEulerAngles(Globals.AbsTimeF,Globals.AbsTimeF/3,MathF.Sin(Globals.AbsTimeF/4));
             Position = new Vector3(MathF.Sin(Globals.AbsTimeF/1)*4, 0, MathF.Sin(Globals.AbsTimeF/3)*3);
         }

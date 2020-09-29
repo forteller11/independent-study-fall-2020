@@ -12,11 +12,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
         public PointLightVisualizer(int index)
         {
             Index = index;
+            Scale *= 0.2f;
         }
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
-            base.OnUpdate(eventArgs);
             Position = Globals.PointLights[Index].Position;
         }
 

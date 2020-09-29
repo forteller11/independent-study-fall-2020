@@ -25,6 +25,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             //todo check it's of same type?
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
+            Debug.Log(Name);
             for (int i = 0; i < uniformCount; i++) 
             {
                 var uniformName = GL.GetActiveUniform(Shader.Handle, i, out int size, out var type);

@@ -11,10 +11,10 @@ namespace Indpendent_Study_Fall_2020.Scripts
             List<GameObject> gameObjects = new List<GameObject>();
             
             gameObjects.Add(new CameraControllerSingleton());
-            gameObjects.Add(new TestTriangleTexture());
+//            gameObjects.Add(new TestTriangleTexture());
 
-//            for (int i = 0; i < Globals.PointLights.Count; i++)
-//                gameObjects.Add(new PointLightVisualizer(i));
+            for (int i = 0; i < Globals.PointLights.Count; i++)
+                gameObjects.Add(new PointLightVisualizer(i));
 
             return gameObjects.ToArray();
         }   
