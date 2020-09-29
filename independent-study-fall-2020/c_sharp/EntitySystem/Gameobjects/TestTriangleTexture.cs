@@ -18,8 +18,10 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
-            Rotation = Quaternion.FromEulerAngles(Globals.AbsTimeF,Globals.AbsTimeF/3,MathF.Sin(Globals.AbsTimeF/4));
-            Position = new Vector3(MathF.Sin(Globals.AbsTimeF/2)*2, 0, MathF.Sin(Globals.AbsTimeF/2)*2);
+            Rotation = Quaternion.FromEulerAngles(0,0,Globals.AbsTimeF);
+            Position = Globals.CameraPosition + new Vector3(0,0,-3);
+            
+            
         }
         
         public override void SendUniformsToShaderPerObject()
