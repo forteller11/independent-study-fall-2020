@@ -36,9 +36,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
             
             rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
-            Debug.Log(accelerationInput.Y);
-  
-            
+
             Globals.CameraRotation =  rotationHorz * Globals.CameraRotation * rotationVert;
         }
         void Move(GameObjectUpdateEventArgs eventArgs)

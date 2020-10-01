@@ -51,27 +51,23 @@ namespace Indpendent_Study_Fall_2020
         }
         #endregion
 
+        
         protected override void OnLoad(EventArgs e)
         {
+
             base.OnLoad(e);
             
             GL.ClearColor(0f,0f,0f,1f);
             
             Globals.Init();
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(.8f)));
-//            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,0,0)));
-//            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,0,1), new Vector3(0,1,1)));
-            
-            Globals.PointLights.Add(new PointLight(new Vector3(-2,-3f,0), new Vector3(.3f,.3f,1)));
-            Globals.PointLights.Add(new PointLight(new Vector3(2,-3f,0), new Vector3(1,.3f,.3f)));
+            SceneSetup.CreateGlobals();
             
             #region materials
             Globals.DrawManager.SetupAllMaterials(CreateMaterials.Create());
             #endregion
             
             _gameObjectManager = new GameObjectManager();
-            _gameObjectManager.AddRange(CreateGameObjects.Create());
-            
+            _gameObjectManager.AddRange(SceneSetup.CreateGameObjects());
             _gameObjectManager.InvokeOnLoad();
         }
 

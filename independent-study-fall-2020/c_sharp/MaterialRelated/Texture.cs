@@ -35,7 +35,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
         public void LoadImage(string fileName)
         {
-            string path = SerializationManager.AssetPath + fileName;
+            string path = SerializationManager.TexturePath + fileName;
             LaborsImage = Image.Load<Rgba32>(path);
             LaborsImage.Mutate(x => x.Flip(FlipMode.Vertical)); //ImageSharp loads from the top-left pixel, whereas OpenGL loads from the bottom-left, causing the texture to be flipped vertically.
         }

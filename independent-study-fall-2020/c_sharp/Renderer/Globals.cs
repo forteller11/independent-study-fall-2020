@@ -18,6 +18,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static List<PointLight> PointLights;
         public static double AbsTime = 0;
         public static float AbsTimeF = 0;
+//        public static Vector3 Gravity = new Vector3(0,0.1f,0);
+//        public static Vector3 Gravity = new Vector3(0,0.1f,0);
 
         public static Vector2 MousePositionLastFrame = new Vector2();
         public static void Init()
