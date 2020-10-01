@@ -15,8 +15,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
             var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             shaded.FeedBuffersAndCreateVAO(null, modelAttribs);
 
-            shaded.SetupATexture("GroundClay002_COL_VAR1_3K.jpg", "Texture0", TextureUnit.Texture0, 0);
-            shaded.SetupATexture("GroundClay002_NRM_3K.jpg", "Texture1", TextureUnit.Texture1, 1);
+            shaded.SetupATexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0, 0);
+//            shaded.SetupATexture("GroundClay002_NRM_3K.jpg", "Texture1", TextureUnit.Texture1, 1);
             #endregion
             
             #region solid_color
