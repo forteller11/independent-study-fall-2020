@@ -77,20 +77,17 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 //            else
 //                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
+        
+        public static void SetMatrix3(Material mat, string name, OpenTK.Matrix3 matrix3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.UniformMatrix3(location, true, ref matrix3);
+//            else
+//                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
 
-//        public void SetVector4Array(string name, Vector4 [] vectors, bool useProgram = true, bool includeLength=true)
-//        {
-//            if (useProgram) Shader.Use();
-//            
-//            for (int i = 0; i < vectors.Length; i++)
-//            {
-//                if (UniformLocations.TryGetValue($"{name}[{i}]", out int location)) 
-//                    GL.Uniform4(location, vectors.Length, vectors[i]);
-//                else
-//                    Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
-//            }
-//            SetInt(name + "Length", vectors.Length, useProgram);
-//        }
+
         
         public static void SetVector3Array(Material mat, string name, float [] vectors, bool useProgram = true, bool includeLength=false)
         {
@@ -145,6 +142,15 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))
                 GL.Uniform1(location, integer);
+            else
+                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        public static void SetFloat(Material mat, string name, float value, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform1(location, value);
             else
                 Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }

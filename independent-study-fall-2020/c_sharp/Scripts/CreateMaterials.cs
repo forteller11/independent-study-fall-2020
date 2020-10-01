@@ -26,7 +26,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             normal.FeedBuffersAndCreateVAO(null, modelAttribsNormal);
 
             normal.SetupATexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0, 0);
-            normal.SetupATexture("GroundClay002_NRM_3K.jpg", "Texture1", TextureUnit.Texture1, 1);
+            normal.SetupATexture("GroundClay002_NRM_3K.jpg", "Normal", TextureUnit.Texture1, 1);
             #endregion
             
             #region solid_color
