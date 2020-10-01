@@ -9,7 +9,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 {
     public class TestTriangleTexture : GameObject
     {
-        public override string MaterialName => "shaded_mat";
+        public override string MaterialName => "normal_mat";
 
         public override void OnLoad()
         {
@@ -18,7 +18,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
 
         public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
         {
-            Rotation = Quaternion.FromEulerAngles(MathF.Sin(Globals.AbsTimeF/2)*3,MathF.Cos(Globals.AbsTimeF/7)*9,Globals.AbsTimeF);
+            Rotation = Quaternion.FromEulerAngles(MathF.Sin(Globals.AbsTimeF/8)*3,MathF.Cos(Globals.AbsTimeF/30)*9,Globals.AbsTimeF/20);
             Position =  new Vector3(MathF.Sin(Globals.AbsTimeF/6)*2,0,0);
             
             

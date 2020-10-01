@@ -22,8 +22,7 @@ void main()
     v2f_norm = in_normal;
 
     vec4 viewPos =   vec4(in_position, 1f) * ModelToView;
-
-    v2f_diffuse = calculate_diffuse(v2f_worldNorm, v2f_worldPos);
+    
     gl_Position = viewPos;
     v2f_uv = in_uv;
 }
