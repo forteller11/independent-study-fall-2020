@@ -15,7 +15,7 @@ void main()
 {
     vec4 diffuseColor = texture(Color, v2f_uv);
     
-    vec3 specular = calculate_specular(v2f_worldNorm, v2f_worldPos, CamPosition);
+    vec3 specular = calculate_specular(v2f_worldNorm, v2f_worldPos, CamPosition, 0.8f, 32);
     
     vec3 texColorShaded = diffuseColor.xyz * (v2f_diffuse + specular);
 

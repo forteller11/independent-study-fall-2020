@@ -29,6 +29,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
             UniformSender.SendTransformMatrices(this);
             UniformSender.SendLights(this);
             UniformSender.SetFloat(Material, "NormalMapStrength", 1);
+            UniformSender.SetFloat(Material, "SpecularRoughness", 16);
         }
         
     }

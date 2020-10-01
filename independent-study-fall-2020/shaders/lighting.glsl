@@ -52,21 +52,20 @@ vec3 calculate_diffuse(vec3 worldNorm, vec3 worldPos){
     return diffuseSum;
 }
 
-vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld){
+vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld, float strength, float roughness){
 
     vec3 specSum = vec3(0,0,0);
     vec3 camToMesh = camPosWorld - meshPosWorld;
     vec3 camToMeshDir = normalize(camToMesh);
-    float specular_strength = 0.8f;
     
     for (int i = 0; i < PointLightsLength; i++){
         vec3 meshToLightDir = normalize(meshPosWorld - PointLights[i].Position);
         vec3 reflectedLightDir = reflect(meshToLightDir, meshNormWorld);
         float product = dot(reflectedLightDir, camToMeshDir);
         float shade = max(product, 0);
-        float shadeCocentrated = pow(shade, 32)  ;
+        float shadeCocentrated = pow(shade, roughness)  ;
         
-        specSum += shadeCocentrated * specular_strength * PointLights[i].Color;
+        specSum += shadeCocentrated * strength * PointLights[i].Color;
     }
     
     for (int i = 0; i < PointLightsLength; i++){
@@ -76,9 +75,9 @@ vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld)
         vec3 reflectedLightDir = reflect(meshToLightDir, meshNormWorld);
         float product = dot(reflectedLightDir, camToMeshDir);
         float shade = max(product, 0);
-        float shadeCocentrated = pow(shade, 32)  ;
+        float shadeCocentrated = pow(shade, roughness)  ;
         
-        specSum += shadeCocentrated * specular_strength * DirectionLights[i].Color;
+        specSum += shadeCocentrated * strength * DirectionLights[i].Color;
     }
     
 
