@@ -33,7 +33,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Gameobjects
             Quaternion rotationHorz = Quaternion.Identity;
 
             Vector2 accelerationInput = eventArgs.MouseDelta * angularAccelerationThisFrame;
-            
+
             rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
 
