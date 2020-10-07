@@ -9,8 +9,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 {
     public abstract class GameObject //todo... make mega object with flags... add physics component?
     {
-        public readonly Guid GUID = Guid.NewGuid();
-        public virtual string MaterialName { get; } = String.Empty; // "" means no material are being used
+        public readonly Guid GUID;
+        public readonly string MaterialName  = String.Empty; // "" means no material are being used
         public Material Material; //this is set automatically by drawManager before unLoad is called
         public Behaviors Flags;
         [Flags]
@@ -29,7 +29,12 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public Vector3 Velocity;
         public Vector3 VelocityAngular;
         public float Mass;
-        
+
+        public GameObject(string materialName)
+        {
+            MaterialName = materialName;
+            GUID = Guid.NewGuid();
+        }
         public virtual void OnLoad() { }
 
         public virtual void OnUpdate(GameObjectUpdateEventArgs eventArgs)
@@ -42,8 +47,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 //                }
 //            }
         }
-        public virtual void SendUniformsToShaderPerObject() { }
-        public virtual void SendUniformsToShaderPerMaterial() { }
+        public virtual void SendUniformsAndBindTexturesPerObject() { }
+        public virtual void SendUniformsAndBindTexturesPerMaterial() { }
         public virtual void OnClose() { }
 
         #region dictionary performance stuff

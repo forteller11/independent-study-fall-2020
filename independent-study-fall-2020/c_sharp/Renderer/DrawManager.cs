@@ -77,11 +77,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
                 if (batchObjects.Count > 0)
                 {
-                    batchObjects[0].SendUniformsToShaderPerMaterial(); //todo this should really be like a static method
+                    batchObjects[0].SendUniformsAndBindTexturesPerMaterial(); //todo this should really be like a static method
 
                     for (int j = 0; j < batchObjects.Count; j++)
                     {
-                        batchObjects[j].SendUniformsToShaderPerObject();
+                        batchObjects[j].SendUniformsAndBindTexturesPerObject();
                         materialForBatch.Draw();
                     }
                 }

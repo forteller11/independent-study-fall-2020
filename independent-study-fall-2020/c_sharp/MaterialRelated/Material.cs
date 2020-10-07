@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-
+using Indpendent_Study_Fall_2020.Helpers;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
@@ -61,19 +61,21 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             VAO = new VAOAndBuffers(this, indices, attributeBuffers);
         }
 
-       
-
-        public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum, int textureUnitIndex)
+        
+        public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum)
         {
             Shader.Use();
             var newTexture = new Texture(fileName, samplerName, textureUnitEnum);
             _textures.Add(newTexture);
-            Shader.SetUniformInt(samplerName, textureUnitIndex);
+            Shader.SetUniformInt(samplerName, textureUnitEnum.ToIndex());
             newTexture.UploadToShader();
         }
-        
-        
-        
+
+        public void UseAllAttachedTextures()
+        {
+            for (int i = 0; i < _textures.Count; i++)
+                _textures[i].Use();
+        }
 
         public void PrepareAndDraw()
         {
@@ -84,10 +86,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void PrepareBatchForDrawing()
         {
             Shader.Use();
-            for (int i = 0; i < _textures.Count; i++)
-                _textures[i].Use();
             GL.BindVertexArray(VAO.VAOHandle);
-//            GL.BindBuffer(BufferTarget.ArrayBuffer, VAO.IndicesHandle);
         }
 
         public void Draw()

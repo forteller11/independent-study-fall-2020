@@ -24,10 +24,10 @@ void main()
     vec4 glossMapTex = texture(Gloss, v2f_uv);
 
     vec3 normalMapModelSpace = calculate_norm_map_model_space(normalMapTex.xyz, v2f_tangentToModelSpace);
-    vec3 normalsWithMapModel = normalize(v2f_norm + (normalMapModelSpace * NormalMapStrength));
+    vec3 normalsWithMapModel = normalize(v2f_norm + (normalMapModelSpace ));
     vec3 normalsWithMapWorld = normalsWithMapModel * mat3(ModelRotation);
 
-    vec3 specular = calculate_specular(normalsWithMapWorld, v2f_worldPos, CamPosition, glossMapTex.x, SpecularRoughness);
+    vec3 specular = calculate_specular(normalsWithMapWorld, v2f_worldPos, CamPosition, glossMapTex.x * NormalMapStrength, SpecularRoughness);
     vec3 diffuse = calculate_diffuse(normalsWithMapWorld, v2f_worldPos);
 
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular);

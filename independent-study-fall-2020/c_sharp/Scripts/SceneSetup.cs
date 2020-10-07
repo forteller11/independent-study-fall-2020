@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
 using Indpendent_Study_Fall_2020.EntitySystem;
-using Indpendent_Study_Fall_2020.EntitySystem.Gameobjects;
+using Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects;
 using OpenTK;
 
 namespace Indpendent_Study_Fall_2020.Scripts
@@ -12,11 +13,15 @@ namespace Indpendent_Study_Fall_2020.Scripts
         {
             List<GameObject> gameObjects = new List<GameObject>();
             
-            gameObjects.Add(new CameraControllerSingleton());
-            gameObjects.Add(new TestTriangleTexture());
+            gameObjects.Add(new CameraControllerSingleton(String.Empty));
+            
+            gameObjects.Add(new Sphere("dirt_mat", new Vector3(-1,0,0)));
+            gameObjects.Add(new Sphere("dirt_mat", new Vector3(0,0,0)));
+            gameObjects.Add(new Sphere("floor_mat", new Vector3(1,0,0)));
+
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                gameObjects.Add(new PointLightVisualizer(i));
+                gameObjects.Add(new PointLightVisualizer("solidColor_mat", i));
 
             return gameObjects.ToArray();
         }
