@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
+using Indpendent_Study_Fall_2020.Scripts.Materials;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.Scripts
@@ -9,6 +10,25 @@ namespace Indpendent_Study_Fall_2020.Scripts
     {
         public static Material[] Create()
         {
+            var dirt = new NormalMaterial(
+                "dirt_mat",
+                 new ShaderProgram("normal_map", "lighting"),
+                ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
+                "GroundClay002_COL_VAR1_3K.jpg",
+                "GroundClay002_NRM_3K.jpg",
+                "GroundClay002_GLOSS_3K.jpg"
+                );
+            
+            const string bathroomTiles = "InteriorDesignRugStarryNight/";
+            var tile = new NormalMaterial(
+                "tile_mat",
+                 new ShaderProgram("normal_map", "lighting"),
+                ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
+                bathroomTiles+"COL_VAR2_3K.jpg",
+                bathroomTiles+"NRM_3K.jpg",
+                bathroomTiles+"GLOSS_3K.jpg"
+                );
+            
             #region shaded
             var shaded = new Material("shaded_mat", new ShaderProgram("shaded", "lighting"));
 
@@ -30,26 +50,6 @@ namespace Indpendent_Study_Fall_2020.Scripts
             normal.SetupATexture("GroundClay002_GLOSS_3K.jpg", "Gloss", TextureUnit.Texture2);
             #endregion
             
-            #region normal_map
-            var normal2 = new Material("normal_mat2", new ShaderProgram("normal_map", "lighting"));
-
-            var modelAttribsNormal2 = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
-            normal2.FeedBuffersAndCreateVAO(null, modelAttribsNormal);
-
-            const string bathroomTiles = "InteriorDesignRugStarryNight/";
-            normal2.SetupATexture(bathroomTiles+"COL_VAR2_3K.jpg", "Color", TextureUnit.Texture0);
-            normal2.SetupATexture(bathroomTiles+"NRM_3K.jpg", "Normal", TextureUnit.Texture1);
-            normal2.SetupATexture(bathroomTiles+"GLOSS_3K.jpg", "Gloss", TextureUnit.Texture2);
-            #endregion
-            
-            var dirt1 = new Material("normal_mat2", new ShaderProgram("normal_map", "lighting"));
-            var dirt1Attrib = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
-            dirt1.FeedBuffersAndCreateVAO(null, dirt1Attrib);
-            
-            normal2.SetupATexture(bathroomTiles+"COL_VAR2_3K.jpg", "Color", TextureUnit.Texture0);
-            normal2.SetupATexture(bathroomTiles+"NRM_3K.jpg", "Normal", TextureUnit.Texture1);
-            normal2.SetupATexture(bathroomTiles+"GLOSS_3K.jpg", "Gloss", TextureUnit.Texture2);
-            
             
             #region solid_color
             var solidColor = new Material("solidColor_mat", new ShaderProgram("textureless"));
@@ -61,7 +61,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 shaded,
                 normal,
                 solidColor,
-                normal2
+                dirt,
+                tile
             };
         }
     }

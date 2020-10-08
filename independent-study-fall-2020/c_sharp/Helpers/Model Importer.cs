@@ -7,7 +7,7 @@ namespace Indpendent_Study_Fall_2020.Helpers
     public class ModelImporter
     {
         private const int POINTS_IN_TRIANGLE = 3;
-        public static AttributeBuffer[] GetAttribBuffersFromObjFile(string fileName, bool in_position, bool in_uv, bool in_normal) //TODO collaspe indices' specefic attribs into one
+        public static AttributeBuffer[] GetAttribBuffersFromObjFile(string fileName, bool in_position=true, bool in_uv=true, bool in_normal=true) //TODO collaspe indices' specefic attribs into one
         {
             var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.MeshPath + "\\" + fileName + ".obj");
             

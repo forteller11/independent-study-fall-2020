@@ -7,7 +7,11 @@ using Indpendent_Study_Fall_2020.Helpers;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
-    public class Material //todo add uniforms, modify them,,,
+    
+    /// <summary>
+    /// Responsible for setting up a shader, it's textures, it's vertex attributes and setting its uniforms
+    /// </summary>
+    public class Material 
     {
         public readonly string Name;
         public ShaderProgram Shader { get; private set; }
@@ -22,7 +26,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Name = name;
             Shader = shaderProgram;
             
-            //todo check it's of same type?
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
             Debug.Log(Name);
@@ -86,6 +89,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void PrepareBatchForDrawing()
         {
             Shader.Use();
+            UseAllAttachedTextures();
             GL.BindVertexArray(VAO.VAOHandle);
         }
 

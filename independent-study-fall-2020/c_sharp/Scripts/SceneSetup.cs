@@ -17,7 +17,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             gameObjects.Add(new Sphere("dirt_mat", new Vector3(-1,0,0)));
             gameObjects.Add(new Sphere("dirt_mat", new Vector3(0,0,0)));
-            gameObjects.Add(new Sphere("floor_mat", new Vector3(1,0,0)));
+            gameObjects.Add(new Sphere("tile_mat", new Vector3(1,0,0)));
 
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
