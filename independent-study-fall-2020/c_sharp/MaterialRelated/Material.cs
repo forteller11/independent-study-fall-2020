@@ -68,7 +68,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum)
         {
             Shader.Use();
-            var newTexture = new Texture(fileName, samplerName, textureUnitEnum);
+            var newTexture = Texture.FromFile(fileName, textureUnitEnum);
             _textures.Add(newTexture);
             Shader.SetUniformInt(samplerName, textureUnitEnum.ToIndex());
             newTexture.UploadToShader();
