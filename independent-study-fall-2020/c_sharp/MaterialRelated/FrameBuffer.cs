@@ -6,24 +6,25 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class FrameBuffer
     {
         private readonly int Handle;
+        public Texture Texture { get; private set; }
 
-        public FrameBuffer(int width, int height)
+        public FrameBuffer(int width, int height, TextureUnit textureUnit)
         {
             Handle = GL.GenFramebuffer();
             Use();
-
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, width, height, 0, PixelFormat.Rgba,PixelType.UnsignedByte, IntPtr.Zero);
-            ApplyTextureSettings();
+            AssignTexture(Texture.Empty(width, height, textureUnit));
         }
 
         public void Use()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
         }
-        public void ApplyTextureSettings()
+        
+        public void AssignTexture(Texture texture)
         {
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling up, tex interp
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling down
-        }
+            Texture = texture;
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.Color, TextureTarget.Texture2D, texture.Handle, 0);
+        } 
+
     }
 }
