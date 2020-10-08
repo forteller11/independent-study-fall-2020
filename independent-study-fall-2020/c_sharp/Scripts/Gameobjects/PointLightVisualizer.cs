@@ -23,7 +23,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         }
 
 
-        public override void SendUniformsAndBindTexturesPerObject()
+        public override void SendUniformsPerObject()
         {
             UniformSender.SendTransformMatrices(this);
             UniformSender.SetVector4(Material, "Color", new Vector4(Globals.PointLights[Index].Color,1), false);

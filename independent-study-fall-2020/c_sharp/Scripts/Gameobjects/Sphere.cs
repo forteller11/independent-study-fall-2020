@@ -29,13 +29,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             
         }
 
-        public override void SendUniformsAndBindTexturesPerMaterial()
+        public override void SendUniformsPerMaterial()
         {
             UniformSender.SetFloat(Material, "NormalMapStrength", 2);
             UniformSender.SetFloat(Material, "SpecularRoughness", 16);
         }
 
-        public override void SendUniformsAndBindTexturesPerObject()
+        public override void SendUniformsPerObject()
         {
             UniformSender.SendTransformMatrices(this);
             UniformSender.SendLights(this);

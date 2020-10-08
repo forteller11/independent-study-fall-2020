@@ -47,8 +47,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 //                }
 //            }
         }
-        public virtual void SendUniformsAndBindTexturesPerObject() { }
-        public virtual void SendUniformsAndBindTexturesPerMaterial() { }
+        public virtual void SendUniformsPerObject() { }
+        public virtual void SendUniformsPerMaterial() { }
         public virtual void OnClose() { }
 
         #region dictionary performance stuff

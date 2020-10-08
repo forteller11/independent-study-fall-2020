@@ -10,9 +10,11 @@ namespace Indpendent_Study_Fall_2020.Scripts
     {
         public static Material[] Create()
         {
+            var normalShader = new ShaderProgram("normal_map", "lighting");
+            
             var dirt = new NormalMaterial(
                 "dirt_mat",
-                 new ShaderProgram("normal_map", "lighting"),
+                normalShader,
                 ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
                 "GroundClay002_COL_VAR1_3K.jpg",
                 "GroundClay002_NRM_3K.jpg",
@@ -22,7 +24,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             var tile = new NormalMaterial(
                 "tile_mat",
-                 new ShaderProgram("normal_map", "lighting"),
+                normalShader,
                 ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
                 bathroomTiles+"COL_VAR2_3K.jpg",
                 bathroomTiles+"NRM_3K.jpg",
