@@ -13,7 +13,12 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public Dictionary<string, Material> Materials;
         public Dictionary<string, List<GameObject>> Batches { get; private set; }
         private string[] _materialKeys;
-        //todo loop through everything 
+        
+        public Dictionary<string, List<FBO>> FBOs { get; private set; }
+        
+        //TODO sort by.... framebuffers (/passes?)
+        //then like materials
+        
 
         public void SetupAllMaterials(params Material[] materials)
         {
@@ -30,9 +35,21 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 Batches.Add(materials[i].Name, new List<GameObject>());
                 _materialKeys[i] = materials[i].Name;
             }
+        }
+        
+        public void SetupAllFrameBuffers(params FBO[] frameBuffers)
+        {
+            FBOs = new Dictionary<string, List<FBO>>(frameBuffers.Length);
 
-            
-            
+            for (int i = 0; i < frameBuffers.Length; i++)
+            {
+                if (FBOs.ContainsKey(frameBuffers[i].Name))
+                    throw new Exception($"There are multiple frameBuffers with the name \"{frameBuffers[i].Name}\"");
+                
+                Materials.Add(materials[i].Name, materials[i]);
+                Batches.Add(materials[i].Name, new List<GameObject>());
+                _materialKeys[i] = materials[i].Name;
+            }
         }
         
         public void UseMaterial(GameObject gameObject, string materialName)

@@ -21,6 +21,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 "GroundClay002_GLOSS_3K.jpg"
                 );
             
+            
+            
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             var tile = new NormalMaterial(
                 "tile_mat",

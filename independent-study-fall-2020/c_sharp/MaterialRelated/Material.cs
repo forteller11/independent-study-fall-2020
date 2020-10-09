@@ -14,6 +14,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class Material 
     {
         public readonly string Name;
+        public readonly string FrameBufferName;
         public ShaderProgram Shader { get; private set; }
         public readonly Dictionary<string, int> UniformLocations;
         public readonly Dictionary<string, int> VertexAttribLocations;
@@ -21,15 +22,16 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public VAOAndBuffers VAO;
 
 
-        public Material(string name, ShaderProgram shaderProgram)
+        public Material(string name, ShaderProgram shaderProgram, string frameBufferName = "default")
         {
             Name = name;
             Shader = shaderProgram;
+            FrameBufferName = frameBufferName;
             
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
             Debug.Log(Name);
-            for (int i = 0; i < uniformCount; i++) 
+            for (int i = 0; i < uniformCount; i++)  
             {
                 var uniformName = GL.GetActiveUniform(Shader.Handle, i, out int size, out var type);
                 Debug.Log(uniformName);
@@ -69,6 +71,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             Shader.Use();
             var newTexture = Texture.FromFile(fileName, textureUnitEnum);
+            _textures.Add(newTexture);
+            Shader.SetUniformInt(samplerName, textureUnitEnum.ToIndex());
+            newTexture.UploadToShader();
+        }
+        
+        public void SetupAFrameBuffer(string samplerName, TextureUnit textureUnitEnum, int width, int height)
+        {
+            Shader.Use();
+            var newTexture = Texture.Empty(width, height, textureUnitEnum);
             _textures.Add(newTexture);
             Shader.SetUniformInt(samplerName, textureUnitEnum.ToIndex());
             newTexture.UploadToShader();

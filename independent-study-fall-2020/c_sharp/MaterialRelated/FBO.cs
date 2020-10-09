@@ -1,16 +1,21 @@
 ﻿using System;
 using OpenTK.Graphics.OpenGL4;
 
+//watch thinmatrix videos
+//how to draw to buffer in shaders?
+//setup test shader
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
-    public class FrameBuffer
+    public class FBO
     {
-        private readonly int Handle;
+        public readonly int Handle;
+        public readonly string Name;
         public Texture Texture { get; private set; }
 
-        public FrameBuffer(int width, int height, TextureUnit textureUnit)
+        public FBO(string name, int width, int height, TextureUnit textureUnit)
         {
             Handle = GL.GenFramebuffer();
+            Name = name;
             Use();
             AssignTexture(Texture.Empty(width, height, textureUnit));
         }
