@@ -2,6 +2,7 @@
 using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
 using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.Scripts;
+using Indpendent_Study_Fall_2020.Scripts.Materials;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
@@ -63,7 +64,7 @@ namespace Indpendent_Study_Fall_2020
             SceneSetup.CreateGlobals();
             
             #region materials
-            Globals.DrawManager.SetupAllMaterials(CreateMaterials.Create());
+            Globals.DrawManager.Setup(CreateFBOs.Create(), CreateMaterials.Create());
             #endregion
             
             _gameObjectManager = new GameObjectManager();
