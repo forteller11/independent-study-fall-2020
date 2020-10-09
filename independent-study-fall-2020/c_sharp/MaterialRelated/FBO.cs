@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL4;
 //setup test shader
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
-    public class FBO 
+    public class FBO : IUniqueName
     {
         public readonly int Handle;
         public readonly string Name;
@@ -32,5 +32,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.Color, TextureTarget.Texture2D, texture.Handle, 0);
         }
 
+        public string GetUniqueName() => Name;
     }
 }

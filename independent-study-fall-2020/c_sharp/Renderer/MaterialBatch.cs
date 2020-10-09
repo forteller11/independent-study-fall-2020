@@ -8,9 +8,14 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
     public class MaterialBatch : IUniqueName
     {
         public readonly Material Material;
-        public List<GameObject> GameObjects;
+        public List<GameObject> GameObjects = new List<GameObject>();
         
         public MaterialBatch(Material material) => Material = material;
         public string GetUniqueName() => Material.Name;
+
+        public void SetState()
+        {
+            //todo bind opengl to material, assign unfiroms etc.... 
+        }
     }
 }

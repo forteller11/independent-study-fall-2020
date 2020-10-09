@@ -11,10 +11,10 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     /// <summary>
     /// Responsible for setting up a shader, it's textures, it's vertex attributes and setting its uniforms
     /// </summary>
-    public class Material 
+    public class Material : IUniqueName
     {
         public readonly string Name;
-        public readonly string FrameBufferName;
+        public readonly string FBOName;
         public ShaderProgram Shader { get; private set; }
         public readonly Dictionary<string, int> UniformLocations;
         public readonly Dictionary<string, int> VertexAttribLocations;
@@ -22,11 +22,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public VAOAndBuffers VAO;
 
 
-        public Material(string name, ShaderProgram shaderProgram, string frameBufferName = "default")
+        public Material(string name, ShaderProgram shaderProgram, string fboName = "default")
         {
             Name = name;
             Shader = shaderProgram;
-            FrameBufferName = frameBufferName;
+            FBOName = fboName;
             
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
@@ -103,6 +103,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             UseAllAttachedTextures();
             GL.BindVertexArray(VAO.VAOHandle);
         }
+
+        public string GetUniqueName() => Name;
 
         public void Draw()
         {
