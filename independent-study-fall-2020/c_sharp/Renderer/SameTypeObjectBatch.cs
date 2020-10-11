@@ -1,11 +1,18 @@
-﻿namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
+﻿using System;
+using System.Collections.Generic;
+using Indpendent_Study_Fall_2020.EntitySystem;
+
+namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
-    public class SameTypeObjectBatch : RenderBatch
+    public class SameTypeEntityBatch
     {
-        public override void SetDrawStatesAndCallInnerLoops()
+        public Type EntityType;
+        public List<Entity> Entities;
+        public void SetGLStates()
         {
-            //todo set fbo
-            base.SetDrawStatesAndCallInnerLoops();
+            if (Entities.Count > 0)
+                Entities[0].SendUniformsPerEntityType();
+
         }
     }
 }

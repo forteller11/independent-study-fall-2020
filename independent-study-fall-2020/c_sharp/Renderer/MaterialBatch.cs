@@ -8,7 +8,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
     public class MaterialBatch : RenderBatch, IUniqueName
     {
         public readonly Material Material;
-        public List<Entity> GameObjects = new List<Entity>();
+        public List<SameTypeEntityBatch> SameTypeEntities = new List<SameTypeEntityBatch>();
         
         public MaterialBatch(Material material) => Material = material;
         public string GetUniqueName() => Material.Name;

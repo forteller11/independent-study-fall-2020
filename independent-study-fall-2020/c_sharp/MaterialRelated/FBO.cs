@@ -9,7 +9,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
     public class FBO : IUniqueName
     {
-        public readonly int Handle;
+        public readonly int Handle = 0;
         public readonly string Name;
         public Texture Texture { get; private set; }
 
@@ -21,7 +21,22 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             AssignTexture(Texture.Empty(width, height, textureUnit), attachment);
         }
 
+        /// <summary>
+        /// Creates default fbo
+        /// </summary>
+        public FBO()
+        {
+            Name = "default";
+            Handle = 0;
+            Texture = null;
+        }
+
         public void Use()
+        {
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
+        }
+
+        public void PrepareForDrawing()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
         }

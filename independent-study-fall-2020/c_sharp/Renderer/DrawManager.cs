@@ -5,7 +5,8 @@ using System.Security.Cryptography.X509Certificates;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
-using OpenTK.Graphics.ES10;
+using OpenTK.Graphics.OpenGL4;
+
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
@@ -14,46 +15,49 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         //deals with batching renders of gameobjects with same materials together
 
 
-        public List<RenderBatch> RenderBatches { get; private set; }
         
+        public List<FBOBatch> RootBatches { get; private set; }
+
         //sort by
         //fbos
         //-->materials
         //---->gameobjects
 
-        public void SetupDrawHierarchy(FBO[] fbos, Material[] materials) //todo setup so creation is oop and done within classes?
+        public void
+            SetupDrawHierarchy(FBO[] fbos,
+                Material[] materials) //todo setup so creation is oop and done within classes?
         {
             ThrowIfDuplicateNames(fbos);
             ThrowIfDuplicateNames<IUniqueName>(materials);
-            
+
             RenderBatches
             SetupAllFrameBuffers(fbos);
             SetupAllMaterials(materials);
         }
-        
+
         public void SetupAllFrameBuffers(params FBO[] frameBuffers)
         {
             ThrowIfDuplicateNames(frameBuffers);
-            
+
             FBOBatches = new List<FBOBatch>(frameBuffers.Length);
             for (int i = 0; i < frameBuffers.Length; i++)
                 FBOBatches.Add(new FBOBatch(frameBuffers[i]));
         }
-        
+
         public void SetupAllMaterials(params Material[] materials)
         {
             ThrowIfDuplicateNames<IUniqueName>(materials);
-            
+
             //todo 
             for (int i = 0; i < FBOBatches.Count; i++)
             for (int j = 0; j < materials.Length; j++)
             {
-                if (materials[j].FBOName == FBOBatches[i].GetUniqueName()) 
+                if (materials[j].FBOName == FBOBatches[i].GetUniqueName())
                 {
-                        FBOBatches[i].MaterialBatches.Add(new MaterialBatch(materials[j]));
+                    FBOBatches[i].MaterialBatches.Add(new MaterialBatch(materials[j]));
                 }
             }
-            
+
         }
 
         public void AddEntity()
@@ -63,10 +67,10 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         public void AddFbo()
         {
-            
+
         }
-        
-        public void ThrowIfDuplicateNames<T>(T [] uniqueNames) where T : IUniqueName
+
+        public void ThrowIfDuplicateNames<T>(T[] uniqueNames) where T : IUniqueName
         {
             for (int i = 0; i < uniqueNames.Length; i++)
             {
@@ -76,13 +80,14 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     if (uniqueNames[i].GetUniqueName() == uniqueNames[j].GetUniqueName())
                         identicalNames++;
                 }
+
                 if (identicalNames != 1)
                     throw new DataException($"There are multiple {uniqueNames[i].GetType().Name} with the same name!");
             }
         }
 
 
-        
+
         public void UseMaterial(Entity entity, string materialName)
         {
             if (materialName == String.Empty)
@@ -92,14 +97,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             for (int j = 0; j < FBOBatches[i].MaterialBatches.Count; j++)
             {
                 MaterialBatch materialBatch = FBOBatches[i].MaterialBatches[j];
-                if (materialName == materialBatch.Material.Name){
-                    materialBatch.GameObjects.Add(entity);
+                if (materialName == materialBatch.Material.Name)
+                {
+                    materialBatch.SameTypeEntities.Add(entity);
                     entity.Material = materialBatch.Material;
                     return;
                 }
             }
 
-            throw new Exception($"You're trying to render a GameObject with \"{materialName}\" but it hasn't been setup/doesn't exist in the DrawManager! Is there a typo?");
+            throw new Exception(
+                $"You're trying to render a GameObject with \"{materialName}\" but it hasn't been setup/doesn't exist in the DrawManager! Is there a typo?");
 
         }
 
@@ -122,38 +129,53 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         //     
         //     Debug.LogWarning($"You're trying to remove a GameObject from \"{material.Name}\" material batch but it was never added!");
         // }
+
+
         public void RenderFrame()
         {
-            //todo set state of fbobatch, then materialbatch, then draw.
-            //how to setup frame buffer as render target?
-            for (int i = 0; i < FBOBatches.Count; i++)
+            for (int fboIndex = 0; fboIndex < RootBatches.Count; fboIndex++)
             {
-                FBOBatches[i].SetDrawStatesAndCallInnerLoop();
-                for (int j = 0; j < FBOBatches[i].MaterialBatches.Count; j++)
-                {
-                    FBOBatches[i].MaterialBatches[j].SetState();
-                    for (int k = 0; k < FBOBatches[i].MaterialBatches[j].GameObjects.Count; k++)
-                    {
-                        FBOBatches[i].MaterialBatches[j].GameObjects[k].SendUniformsPerObject();
-                    }
-                }
-                List<Entity> batchObjects = Batches[_materialKeys[i]];
+                FBOBatch currentFboBatch = RootBatches[fboIndex];
+                currentFboBatch.FBO.PrepareForDrawing();
                 
-                Material materialForBatch = Materials[_materialKeys[i]];
-                materialForBatch.PrepareBatchForDrawing();
-
-                if (batchObjects.Count > 0)
+                for (int matIndex = 0; matIndex < currentFboBatch.MaterialBatches.Count; matIndex++)
                 {
-                    batchObjects[0].SendUniformsPerMaterial(); //todo this should really be like a static method
-
-                    for (int j = 0; j < batchObjects.Count; j++)
+                    MaterialBatch materialBatch = currentFboBatch.MaterialBatches[matIndex];
+                    materialBatch.Material.PrepareBatchForDrawing();
+                    
+                    for (int sameEntityIndex = 0; sameEntityIndex < materialBatch.SameTypeEntities.Count; sameEntityIndex++)
                     {
-                        batchObjects[j].SendUniformsPerObject();
-                        materialForBatch.Draw();
+                        SameTypeEntityBatch sameTypeEntityBatch = materialBatch.SameTypeEntities[sameEntityIndex];
+                        sameTypeEntityBatch.SetGLStates();
+                        
+                        for (int entityIndex = 0; entityIndex < sameTypeEntityBatch.Entities.Count; entityIndex++)
+                        {
+                            Entity entity = sameTypeEntityBatch.Entities[entityIndex];
+                            entity.SendUniformsPerEntityType();
+                            
+                            GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
+                        }
                     }
                 }
-
             }
+//             if (VAO.UseIndices == false)
+// //            {
+// ////                Debug.Log("draw arrays");
+                // GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
+//            }
+//            else
+//            {
+//                Debug.Log("draw elements");
+//                GL.DrawElements(PrimitiveType.Triangles, VAO.IndicesBuffer.Length, DrawElementsType.UnsignedInt);
+//                GL.DrawElementsInstanced(PrimitiveType.Triangles,
+//                    0,
+//                    DrawElementsType.UnsignedInt,
+//                    Indices,
+//                    ref VAO.VerticesCount);
+//            }
+
+            //todo
+//            GL.DrawElementsInstanced(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedInt, ref Indices, int 0);
         }
-    }
+}
 }
