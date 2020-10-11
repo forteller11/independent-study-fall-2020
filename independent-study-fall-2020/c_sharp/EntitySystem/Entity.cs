@@ -8,12 +8,10 @@ using Vector3 = OpenTK.Vector3;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
-    public abstract class Entity : IBatchable //todo... make mega object with flags... add physics component?
+    public abstract class Entity //todo... make mega object with flags... add physics component?
     {
         public readonly Guid GUID;
-        public string ParentNameInDrawingManager  = String.Empty; // "" means no material are being used
-        public string UniqueName { get; set; } = "entity"
-        public Material Material; //this is set automatically by drawManager before unLoad is called
+        public string MaterialName  = String.Empty; // "" means no material are being used
         public Behaviors Flags;
         [Flags]
         public enum Behaviors
@@ -34,7 +32,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         public Entity(string materialName)
         {
-            is = materialName;
+            MaterialName = materialName;
             GUID = Guid.NewGuid();
         }
         public virtual void OnLoad() { }
@@ -49,8 +47,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 //                }
 //            }
         }
-        public virtual void SendUniformsPerEntity() { }
-        public virtual void SendUniformsPerEntityType() { }
+        public virtual void SendUniformsPerEntity(Material material) { }
+        public virtual void SendUniformsPerEntityType(Material material) { }
         public virtual void OnClose() { }
 
         #region dictionary performance stuff

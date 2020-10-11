@@ -9,15 +9,14 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public const string DiffuseColorSampler = "Color";
         public const string NormalMapSampler = "Normal";
         public const string SpecularMapSampler = "Gloss";
-        public const string FrameBufferSampler = "Buffer";
+        // public const string FrameBufferSampler = "Buffer";
         
         public NormalMaterial(string name, ShaderProgram shaderProgram, AttributeBuffer[] vaoAndBuffers, string diffuseTexture, string normalMap, string specularMap) : base(name, shaderProgram)
         {
             FeedBuffersAndCreateVAO(null, vaoAndBuffers);
-            SetupATexture(diffuseTexture, DiffuseColorSampler, TextureUnit.Texture0);
-            SetupATexture(normalMap, NormalMapSampler, TextureUnit.Texture1);
-            SetupATexture(specularMap, SpecularMapSampler, TextureUnit.Texture2);
-            SetupAFrameBuffer(FrameBufferSampler, TextureUnit.Texture3);
+            SetupAndAttachTexture(diffuseTexture, DiffuseColorSampler, TextureUnit.Texture0);
+            SetupAndAttachTexture(normalMap, NormalMapSampler, TextureUnit.Texture1);
+            SetupAndAttachTexture(specularMap, SpecularMapSampler, TextureUnit.Texture2);
         }
     }
 }

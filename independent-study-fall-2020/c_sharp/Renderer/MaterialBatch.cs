@@ -5,18 +5,18 @@ using Indpendent_Study_Fall_2020.MaterialRelated;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
-    public class MaterialBatch : RenderBatch, IUniqueName
+    public struct MaterialBatch
     {
         public readonly Material Material;
-        public List<SameTypeEntityBatch> SameTypeEntities = new List<SameTypeEntityBatch>();
-        
-        public MaterialBatch(Material material) => Material = material;
-        public string GetUniqueName() => Material.Name;
+        public List<Entity> Entities;
 
-        public override void SetDrawStatesAndCallInnerLoops()
+        public MaterialBatch(Material material)
         {
-            //todo set fbo
-            base.SetDrawStatesAndCallInnerLoops();
+            Material = material;
+            Entities = new List<Entity>();
         }
+
+
+        
     }
 }

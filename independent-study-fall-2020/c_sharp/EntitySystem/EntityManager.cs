@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using OpenTK;
+using OpenTK.Input;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
     public class EntityManager
     {
         private List<Entity> _gameObjects;
-
+        public EntityUpdateEventArgs UpdateEventArgs;
+        
         public EntityManager()
         {
             _gameObjects = new List<Entity>();
@@ -19,21 +22,30 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public void Add(Entity entity)
         {
             _gameObjects.Add(entity);
-            Globals.DrawManager.UseMaterial(entity, entity.MaterialName);
+            Globals.DrawManager.AddEntity(entity);
         }
-
-        public void Remove(Entity entity) => _gameObjects.Remove(entity);
+        
 
         public void InvokeOnLoad()
         {
             for (int i = 0; i < _gameObjects.Count; i++)
                 _gameObjects[i].OnLoad();
         }
+
+        public void RefreshUpdateEventArgs(FrameEventArgs e)
+        {
+            UpdateEventArgs.DeltaTime = e.Time;
+            UpdateEventArgs.KeyboardState = Keyboard.GetState();
+            UpdateEventArgs.MouseState = Mouse.GetState();
+            UpdateEventArgs.MouseDelta = new Vector2( 
+                UpdateEventArgs.MouseState.X - Globals.MousePositionLastFrame.X,
+                - UpdateEventArgs.MouseState.Y + Globals.MousePositionLastFrame.Y);
+        }
         
-        public void  InvokeOnUpdate(EntityUpdateEventArgs eventArgs)
+        public void  InvokeOnUpdate()
         {
             for (int i = 0; i < _gameObjects.Count; i++)
-                _gameObjects[i].OnUpdate(eventArgs);
+                _gameObjects[i].OnUpdate(UpdateEventArgs);
         }
         
 

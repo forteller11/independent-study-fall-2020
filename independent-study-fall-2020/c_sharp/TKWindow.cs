@@ -62,13 +62,13 @@ namespace Indpendent_Study_Fall_2020
             
             Globals.Init();
             SceneSetup.CreateGlobals();
-            
-            #region materials
-            Globals.DrawManager.SetupDrawHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
-            #endregion
-            
+
             _entityManager = new EntityManager();
+            var entities = SceneSetup.CreateGameObjects();
             _entityManager.AddRange(SceneSetup.CreateGameObjects());
+            
+            Globals.DrawManager.SetupDrawHierarchy(CreateFBOs.Create(), CreateMaterials.Create(), entities);
+            
             _entityManager.InvokeOnLoad();
         }
 
@@ -84,20 +84,12 @@ namespace Indpendent_Study_Fall_2020
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
 
-            var  m = Mouse.GetState();
-            
-            //todo cache this object allocation so not creating objects everyframe
-            var eventArgs = new EntityUpdateEventArgs(
-                e.Time,
-                Keyboard.GetState(),
-                m,
-                new Vector2(m.X-Globals.MousePositionLastFrame.X,-m.Y+Globals.MousePositionLastFrame.Y)
-            );
+            _entityManager.RefreshUpdateEventArgs(e);
       
-            Globals.Update(eventArgs);
-            _entityManager.InvokeOnUpdate(eventArgs);
+            Globals.Update(_entityManager.UpdateEventArgs);
+            _entityManager.InvokeOnUpdate();
             
-            if (eventArgs.KeyboardState.IsKeyDown(Key.Escape))
+            if (_entityManager.UpdateEventArgs.KeyboardState.IsKeyDown(Key.Escape))
                 Exit();
             
             base.OnUpdateFrame(e);

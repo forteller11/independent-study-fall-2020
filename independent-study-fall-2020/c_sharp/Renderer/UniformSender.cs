@@ -14,7 +14,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// <summary>
         /// Sends "ModelToWorld" and "WorldToView" uniform matrices to shader
         /// </summary>
-        public static void SendTransformMatrices(Entity entity)
+        public static void SendTransformMatrices(Entity entity, Material material)
         {
             var modelToWorldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(entity.Rotation));
             var worldToViewTranslation = Matrix4.CreateTranslation(-Globals.CameraPosition);
@@ -28,12 +28,11 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             var worldToView = worldToViewTranslation * worldToViewRotation * Globals.CameraPerspective;
             var modelToView = modelToWorld * worldToView;
             
-            SetMatrix4(entity.Material, "ModelToView", modelToView, false);
-            SetMatrix4(entity.Material, "WorldToView", worldToView, false);
-            SetMatrix4(entity.Material, "ModelRotation", modelToWorldRotation, false);
-            SetMatrix4(entity.Material, "ModelToWorld", modelToWorld, false);
-            
-            SetVector3(entity.Material, "CamPosition", Globals.CameraPosition, false); //todo batch with like materials
+            SetMatrix4(material, "ModelToView", modelToView, false);
+            SetMatrix4(material, "WorldToView", worldToView, false);
+            SetMatrix4(material, "ModelRotation", modelToWorldRotation, false);
+            SetMatrix4(material, "ModelToWorld", modelToWorld, false);
+            SetVector3(material, "CamPosition", Globals.CameraPosition, false); //todo batch with like materials
         }
 
         /// <summary>
@@ -43,27 +42,27 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// </summary>
         //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
         //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
-        public static void SendLights(Entity entity)
+        public static void SendLights(Entity entity, Material material)
         {
-            SetInt(entity.Material, $"{DIR_LIGHT}Length", Globals.DirectionLights.Count);
+            SetInt(material, $"{DIR_LIGHT}Length", Globals.DirectionLights.Count);
             for (int i = 0; i < Globals.DirectionLights.Count; i++)
             {
-                SetVector3(entity.Material, $"{DIR_LIGHT}[{i}].Color",     Globals.DirectionLights[i].Color, false);
-                SetVector3(entity.Material, $"{DIR_LIGHT}[{i}].Direction", Globals.DirectionLights[i].Direction, false);
+                SetVector3(material, $"{DIR_LIGHT}[{i}].Color",     Globals.DirectionLights[i].Color, false);
+                SetVector3(material, $"{DIR_LIGHT}[{i}].Direction", Globals.DirectionLights[i].Direction, false);
             }
             
-            SetInt(entity.Material,$"{POINT_LIGHT}Length", Globals.PointLights.Count);
+            SetInt(material,$"{POINT_LIGHT}Length", Globals.PointLights.Count);
             for (int i = 0; i < Globals.PointLights.Count; i++)
             {
-                SetVector3(entity.Material, $"{POINT_LIGHT}[{i}].Color",    Globals.PointLights[i].Color, false);
-                SetVector3(entity.Material, $"{POINT_LIGHT}[{i}].Position", Globals.PointLights[i].Position, false);
+                SetVector3(material, $"{POINT_LIGHT}[{i}].Color",    Globals.PointLights[i].Color, false);
+                SetVector3(material, $"{POINT_LIGHT}[{i}].Position", Globals.PointLights[i].Position, false);
             }
         }
 
         //todo set element vec
-        public static void SendTime(Entity entity)
+        public static void SendTime(Entity entity, Material material)
         {
-            SetVector4(entity.Material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
+            SetVector4(material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
 //            gameObject.Material.set 
 //            Globals.AbsoluteTime
         }

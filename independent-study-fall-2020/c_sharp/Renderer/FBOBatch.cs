@@ -4,18 +4,15 @@ using Indpendent_Study_Fall_2020.MaterialRelated;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
-    public class FBOBatch
+    public struct FBOBatch
     {
         public readonly FBO FBO;
-        public List<MaterialBatch> MaterialBatches = new List<MaterialBatch>();
-        
-        public FBOBatch(FBO fbo) => FBO = fbo;
+        public List<MaterialBatch> MaterialBatches;
 
-        public void SetDrawStatesActivateChildren()
+        public FBOBatch(FBO fbo)
         {
-            FBO.Use();
-            //todo set fbo
-            
+            FBO = fbo;
+            MaterialBatches = new List<MaterialBatch>();
         }
     }
 }

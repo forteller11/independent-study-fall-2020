@@ -1,5 +1,6 @@
 ﻿using System;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
+using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
@@ -23,10 +24,10 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         }
 
 
-        public override void SendUniformsPerEntity()
+        public override void SendUniformsPerEntity(Material material)
         {
-            UniformSender.SendTransformMatrices(this);
-            UniformSender.SetVector4(Material, "Color", new Vector4(Globals.PointLights[Index].Color,1), false);
+            UniformSender.SendTransformMatrices(this, material);
+            UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color,1), false);
 //            UniformSender.SendLights(this);
         }
     }

@@ -2,6 +2,7 @@
 
 using System;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
+using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
@@ -29,16 +30,19 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             
         }
 
-        public override void SendUniformsPerEntityType()
-        {
-            UniformSender.SetFloat(Material, "NormalMapStrength", 2);
-            UniformSender.SetFloat(Material, "SpecularRoughness", 16);
-        }
+        // public override void SendUniformsPerEntityType()
+        // {
+        //     UniformSender.SetFloat(Material, "NormalMapStrength", 2);
+        //     UniformSender.SetFloat(Material, "SpecularRoughness", 16);
+        // }
 
-        public override void SendUniformsPerEntity()
+        public override void SendUniformsPerEntity(Material material)
         {
-            UniformSender.SendTransformMatrices(this);
-            UniformSender.SendLights(this);
+            UniformSender.SetFloat(material, "NormalMapStrength", 2);
+            UniformSender.SetFloat(material, "SpecularRoughness", 16);
+            
+            UniformSender.SendTransformMatrices(this, material);
+            UniformSender.SendLights(this, material);
         }
         
     }

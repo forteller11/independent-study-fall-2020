@@ -30,12 +30,14 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             ThrowIfDuplicateNames<IUniqueName>(materials);
 
             for (int i = 0; i < fbos.Length; i++)
-            {
-                AddFBO(fbos[i])
-            }
+                AddFBO(fbos[i]);
+
+            for (int i = 0; i < materials.Length; i++)
+                AddMaterial(materials[i]);
+
+            for (int i = 0; i < entities.Length; i++)
+                AddEntity(entities[i]);
             
-            SetupAllFrameBuffers(fbos);
-            SetupAllMaterials(materials);
         }
 
         public void AddFBO(FBO fbo)
@@ -54,42 +56,25 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             
             throw new DataException($"There are no FBO's which match the intended material fbo of {material.FBOName}. Check for typos.");
         }
-        
-        public void AddEntity
-        public void SetupAllFrameBuffers(params FBO[] frameBuffers)
+
+        public void AddEntity(Entity entity)
         {
-            ThrowIfDuplicateNames(frameBuffers);
-
-            FBOBatches = new List<FBOBatch>(frameBuffers.Length);
-            for (int i = 0; i < frameBuffers.Length; i++)
-                FBOBatches.Add(new FBOBatch(frameBuffers[i]));
-        }
-
-        public void SetupAllMaterials(params Material[] materials)
-        {
-            ThrowIfDuplicateNames<IUniqueName>(materials);
-
-            //todo 
-            for (int i = 0; i < FBOBatches.Count; i++)
-            for (int j = 0; j < materials.Length; j++)
+            for (int i = 0; i < RootBatches.Count; i++)
             {
-                if (materials[j].FBOName == FBOBatches[i].GetUniqueName())
+                for (int j = 0; j < RootBatches[i].MaterialBatches.Count; j++)
                 {
-                    FBOBatches[i].MaterialBatches.Add(new MaterialBatch(materials[j]));
+                    var materialBatch = RootBatches[i].MaterialBatches[j];
+                    if (entity.MaterialName == materialBatch.Material.Name)
+                    {
+                        materialBatch.Entities.Add(entity);
+                        return;
+                    }
                 }
             }
-
+            
+            throw new DataException($"Entity is trying to use material {entity.MaterialName} but it doesn't exist! Check for typos.");
         }
-
-        public void AddEntity()
-        {
-            //todo go through all mats and add appropriate
-        }
-
-        public void AddFbo()
-        {
-
-        }
+        
 
         public void ThrowIfDuplicateNames<T>(T[] uniqueNames) where T : IUniqueName
         {
@@ -108,50 +93,6 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         }
 
 
-
-        public void UseMaterial(Entity entity, string materialName)
-        {
-            if (materialName == String.Empty)
-                return;
-
-            for (int i = 0; i < FBOBatches.Count; i++)
-            for (int j = 0; j < FBOBatches[i].MaterialBatches.Count; j++)
-            {
-                MaterialBatch materialBatch = FBOBatches[i].MaterialBatches[j];
-                if (materialName == materialBatch.Material.Name)
-                {
-                    materialBatch.SameTypeEntities.Add(entity);
-                    entity.Material = materialBatch.Material;
-                    return;
-                }
-            }
-
-            throw new Exception(
-                $"You're trying to render a GameObject with \"{materialName}\" but it hasn't been setup/doesn't exist in the DrawManager! Is there a typo?");
-
-        }
-
-        // public void StopUsingMaterial(GameObject gameObject, Material material)
-        // {
-        //     if (!Batches.ContainsKey(material.Name))
-        //         throw new Exception($"You're trying to render a GameObject with \"{material.Name}\" but it hasn't been setup in the DrawManager!");
-        //     
-        //     gameObject.Material = null;
-        //     var batch = Batches[material.Name];
-        //     
-        //     for (int i = 0; i < batch.Count; i++)
-        //     {
-        //         if (batch[i] == gameObject)
-        //         {
-        //             batch.RemoveAt(i);
-        //             return;
-        //         }
-        //     }
-        //     
-        //     Debug.LogWarning($"You're trying to remove a GameObject from \"{material.Name}\" material batch but it was never added!");
-        // }
-
-
         public void RenderFrame()
         {
             for (int fboIndex = 0; fboIndex < RootBatches.Count; fboIndex++)
@@ -164,19 +105,19 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     MaterialBatch materialBatch = currentFboBatch.MaterialBatches[matIndex];
                     materialBatch.Material.PrepareBatchForDrawing();
                     
-                    for (int sameEntityIndex = 0; sameEntityIndex < materialBatch.SameTypeEntities.Count; sameEntityIndex++)
-                    {
-                        SameTypeEntityBatch sameTypeEntityBatch = materialBatch.SameTypeEntities[sameEntityIndex];
-                        sameTypeEntityBatch.SetGLStates();
+                    // for (int sameEntityIndex = 0; sameEntityIndex < materialBatch.SameTypeEntities.Count; sameEntityIndex++)
+                    // {
+                    //     SameTypeEntityBatch sameTypeEntityBatch = materialBatch.SameTypeEntities[sameEntityIndex];
+                    //     sameTypeEntityBatch.SetGLStates();
                         
-                        for (int entityIndex = 0; entityIndex < sameTypeEntityBatch.Entities.Count; entityIndex++)
+                        for (int entityIndex = 0; entityIndex < materialBatch.Entities.Count; entityIndex++)
                         {
-                            Entity entity = sameTypeEntityBatch.Entities[entityIndex];
-                            entity.SendUniformsPerEntityType();
+                            Entity entity = materialBatch.Entities[entityIndex];
+                            entity.SendUniformsPerEntityType(materialBatch.Material);
                             
                             GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                         }
-                    }
+                    // }
                 }
             }
 //             if (VAO.UseIndices == false)
