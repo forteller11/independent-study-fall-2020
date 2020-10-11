@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Indpendent_Study_Fall_2020.Helpers;
+using Indpendent_Study_Fall_2020.Scripts;
+using Indpendent_Study_Fall_2020.Scripts.Materials;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
@@ -13,8 +15,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     /// </summary>
     public class Material : IUniqueName
     {
-        public readonly string Name;
-        public readonly string FBOName;
+        public readonly CreateMaterials.MaterialName Name;
+        public readonly CreateFBOs.FBOName FBOName;
         public ShaderProgram Shader { get; private set; }
         public readonly Dictionary<string, int> UniformLocations;
         public readonly Dictionary<string, int> VertexAttribLocations;
@@ -22,7 +24,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public VAOAndBuffers VAO;
 
 
-        public Material(string name, ShaderProgram shaderProgram, string fboName = "default")
+        public Material(CreateMaterials.MaterialName name, ShaderProgram shaderProgram, CreateFBOs.FBOName fboName = CreateFBOs.FBOName.Default)
         {
             Name = name;
             Shader = shaderProgram;
@@ -109,7 +111,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindVertexArray(VAO.VAOHandle);
         }
 
-        public string GetUniqueName() => Name;
+        public string GetUniqueName() => Name.ToString();
 
 
     }

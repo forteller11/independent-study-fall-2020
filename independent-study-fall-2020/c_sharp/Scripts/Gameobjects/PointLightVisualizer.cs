@@ -1,6 +1,7 @@
 ﻿using System;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.MaterialRelated;
+using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
@@ -10,7 +11,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public int Index;
 
-        public PointLightVisualizer(string materialName, int index) : base(materialName)
+        public PointLightVisualizer(CreateMaterials.MaterialName materialName, int index) : base(materialName)
         {
             Index = index;
             Scale *= 0.2f;

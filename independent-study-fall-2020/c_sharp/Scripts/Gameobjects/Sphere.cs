@@ -1,8 +1,6 @@
-﻿
-
-using System;
-using Indpendent_Study_Fall_2020.c_sharp.Renderer;
+﻿using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.MaterialRelated;
+using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
@@ -10,14 +8,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 {
     public class Sphere : Entity
     {
-
-
+        
         public override void OnLoad()
         {
             Scale *= 1f;
         }
 
-        public Sphere(string materialName, Vector3 position) : base(materialName)
+        public Sphere(CreateMaterials.MaterialName materialName, Vector3 position) : base(materialName)
         {
             Position = position;
         }

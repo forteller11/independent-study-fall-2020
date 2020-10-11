@@ -8,12 +8,22 @@ namespace Indpendent_Study_Fall_2020.Scripts
 {
     public static class CreateMaterials
     {
+        public enum MaterialName
+        {
+            None = default,
+            Solid,
+            Shaded,
+            Normal,
+            Dirt,
+            Tile,
+            Buffer
+        }
         public static Material[] Create()
         {
             var normalShader = new ShaderProgram("normal_map", "lighting");
             
             var dirt = new NormalMaterial(
-                "dirt_mat",
+                MaterialName.Dirt,
                 normalShader,
                 ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -25,7 +35,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             var tile = new NormalMaterial(
-                "tile_mat",
+                MaterialName.Tile,
                 normalShader,
                 ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
                 bathroomTiles+"COL_VAR2_3K.jpg",
@@ -34,7 +44,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 );
             
             #region shaded
-            var shaded = new Material("shaded_mat", new ShaderProgram("shaded", "lighting"));
+            var shaded = new Material(MaterialName.Shaded, new ShaderProgram("shaded", "lighting"));
 
             var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             shaded.FeedBuffersAndCreateVAO(null, modelAttribs);
@@ -44,7 +54,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #endregion
             
             #region normal_map
-            var normal = new Material("normal_mat", new ShaderProgram("normal_map", "lighting"));
+            var normal = new Material(MaterialName.Normal, new ShaderProgram("normal_map", "lighting"));
 
             var modelAttribsNormal = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             normal.FeedBuffersAndCreateVAO(null, modelAttribsNormal);
@@ -56,7 +66,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             
             #region solid_color
-            var solidColor = new Material("solidColor_mat", new ShaderProgram("textureless"));
+            var solidColor = new Material(MaterialName.Solid, new ShaderProgram("textureless"));
             solidColor.FeedBuffersAndCreateVAO(null, ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, false, false));
             #endregion
 

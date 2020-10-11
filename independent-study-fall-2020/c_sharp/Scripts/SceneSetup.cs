@@ -13,15 +13,15 @@ namespace Indpendent_Study_Fall_2020.Scripts
         {
             List<Entity> gameObjects = new List<Entity>();
             
-            gameObjects.Add(new CameraControllerSingleton(String.Empty));
+            gameObjects.Add(new CameraControllerSingleton(CreateMaterials.MaterialName.None));
             
-            gameObjects.Add(new Sphere("dirt_mat", new Vector3(-1,0,0)));
-            gameObjects.Add(new Sphere("dirt_mat", new Vector3(0,0,0)));
-            gameObjects.Add(new Sphere("tile_mat", new Vector3(1,0,0)));
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialName.Dirt, new Vector3(-1,0,0)));
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialName.Dirt, new Vector3(0,0,0)));
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialName.Tile, new Vector3(1,0,0)));
 
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                gameObjects.Add(new PointLightVisualizer("solidColor_mat", i));
+                gameObjects.Add(new PointLightVisualizer(CreateMaterials.MaterialName.Solid, i));
 
             return gameObjects.ToArray();
         }

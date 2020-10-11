@@ -1,5 +1,6 @@
 ﻿using System;
 using Indpendent_Study_Fall_2020.Helpers;
+using Indpendent_Study_Fall_2020.Scripts.Materials;
 using OpenTK.Graphics.OpenGL4;
 
 //watch thinmatrix videos
@@ -10,10 +11,10 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class FBO : IUniqueName
     {
         public readonly int Handle = 0;
-        public readonly string Name;
+        public readonly CreateFBOs.FBOName Name;
         public Texture Texture { get; private set; }
 
-        public FBO(string name, int width, int height, FramebufferAttachment attachment, TextureUnit textureUnit)
+        public FBO(CreateFBOs.FBOName name, int width, int height, FramebufferAttachment attachment, TextureUnit textureUnit)
         {
             Handle = GL.GenFramebuffer();
             Name = name;
@@ -26,7 +27,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         /// </summary>
         public FBO()
         {
-            Name = "default";
+            Name = CreateFBOs.FBOName.Default;
             Handle = 0;
             Texture = null;
         }
@@ -53,6 +54,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
         }
 
-        public string GetUniqueName() => Name;
+        public string GetUniqueName() => Name.ToString();
     }
 }

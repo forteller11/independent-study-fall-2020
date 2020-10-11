@@ -1,5 +1,6 @@
 ﻿
 using System;
+using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK;
 using OpenTK.Input;
 
@@ -13,7 +14,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         private float _horziontalMaxVelocity = .05f;
         private float _verticalMaxVelocity = 1f;
 
-        public CameraControllerSingleton(string materialName) : base(materialName) { }
+        public CameraControllerSingleton(CreateMaterials.MaterialName materialName) : base(materialName) { }
         
         public override void OnLoad()
         {

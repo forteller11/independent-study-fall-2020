@@ -2,6 +2,7 @@
 using System.Numerics;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.MaterialRelated;
+using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK.Input;
 using Quaternion = OpenTK.Quaternion;
 using Vector3 = OpenTK.Vector3;
@@ -11,7 +12,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     public abstract class Entity //todo... make mega object with flags... add physics component?
     {
         public readonly Guid GUID;
-        public string MaterialName  = String.Empty; // "" means no material are being used
+        public CreateMaterials.MaterialName MaterialName; // "" means no material are being used
         public Behaviors Flags;
         [Flags]
         public enum Behaviors
@@ -30,7 +31,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public Vector3 VelocityAngular;
         public float Mass;
 
-        public Entity(string materialName)
+        public Entity(CreateMaterials.MaterialName materialName)
         {
             MaterialName = materialName;
             GUID = Guid.NewGuid();
