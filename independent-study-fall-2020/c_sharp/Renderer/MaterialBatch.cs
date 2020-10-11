@@ -5,7 +5,7 @@ using Indpendent_Study_Fall_2020.MaterialRelated;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
-    public class MaterialBatch : IUniqueName
+    public class MaterialBatch : RenderBatch, IUniqueName
     {
         public readonly Material Material;
         public List<GameObject> GameObjects = new List<GameObject>();
@@ -13,9 +13,10 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         public MaterialBatch(Material material) => Material = material;
         public string GetUniqueName() => Material.Name;
 
-        public void SetState()
+        public override void SetDrawStatesAndCallInnerLoops()
         {
-            //todo bind opengl to material, assign unfiroms etc.... 
+            //todo set fbo
+            base.SetDrawStatesAndCallInnerLoops();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             shaded.FeedBuffersAndCreateVAO(null, modelAttribs);
 
-            shaded.SetupATexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0);
+            shaded.SetupAndAttachTexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0);
 //            shaded.SetupATexture("GroundClay002_NRM_3K.jpg", "Texture1", TextureUnit.Texture1, 1);
             #endregion
             
@@ -49,9 +49,9 @@ namespace Indpendent_Study_Fall_2020.Scripts
             var modelAttribsNormal = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             normal.FeedBuffersAndCreateVAO(null, modelAttribsNormal);
 
-            normal.SetupATexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0);
-            normal.SetupATexture("GroundClay002_NRM_3K.jpg", "Normal", TextureUnit.Texture1);
-            normal.SetupATexture("GroundClay002_GLOSS_3K.jpg", "Gloss", TextureUnit.Texture2);
+            normal.SetupAndAttachTexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0);
+            normal.SetupAndAttachTexture("GroundClay002_NRM_3K.jpg", "Normal", TextureUnit.Texture1);
+            normal.SetupAndAttachTexture("GroundClay002_GLOSS_3K.jpg", "Gloss", TextureUnit.Texture2);
             #endregion
             
             

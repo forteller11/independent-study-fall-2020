@@ -14,34 +14,21 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         //deals with batching renders of gameobjects with same materials together
 
 
-        public List<FBOBatch> FBOBatches { get; private set; }
+        public List<RenderBatch> RenderBatches { get; private set; }
         
         //sort by
         //fbos
         //-->materials
         //---->gameobjects
 
-        public void Setup(FBO[] fbos, Material[] materials)
+        public void SetupDrawHierarchy(FBO[] fbos, Material[] materials) //todo setup so creation is oop and done within classes?
         {
-            SetupAllFrameBuffers(fbos);
-            SetupAllMaterials(materials);
-        }
-        public void SetupAllMaterials(params Material[] materials)
-        {
+            ThrowIfDuplicateNames(fbos);
             ThrowIfDuplicateNames<IUniqueName>(materials);
             
-            for (int i = 0; i < FBOBatches.Count; i++)
-            {
-                for (int j = 0; j < materials.Length; j++)
-                {
-                    if (materials[j].FBOName == FBOBatches[i].GetUniqueName())
-                    {
-                        FBOBatches[i].MatchBatches.Add(new MaterialBatch(materials[j]));
-                    }
-                }
-                
-            }
-   
+            RenderBatches
+            SetupAllFrameBuffers(fbos);
+            SetupAllMaterials(materials);
         }
         
         public void SetupAllFrameBuffers(params FBO[] frameBuffers)
@@ -51,10 +38,23 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             FBOBatches = new List<FBOBatch>(frameBuffers.Length);
             for (int i = 0; i < frameBuffers.Length; i++)
                 FBOBatches.Add(new FBOBatch(frameBuffers[i]));
+        }
+        
+        public void SetupAllMaterials(params Material[] materials)
+        {
+            ThrowIfDuplicateNames<IUniqueName>(materials);
             
+            for (int i = 0; i < FBOBatches.Count; i++)
+            for (int j = 0; j < materials.Length; j++)
+            {
+                if (materials[j].FBOName == FBOBatches[i].GetUniqueName()) 
+                {
+                        FBOBatches[i].MaterialBatches.Add(new MaterialBatch(materials[j]));
+                }
+            }
             
         }
-
+        
         public void ThrowIfDuplicateNames<T>(T [] uniqueNames) where T : IUniqueName
         {
             for (int i = 0; i < uniqueNames.Length; i++)
@@ -78,9 +78,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 return;
 
             for (int i = 0; i < FBOBatches.Count; i++)
-            for (int j = 0; j < FBOBatches[i].MatchBatches.Count; j++)
+            for (int j = 0; j < FBOBatches[i].MaterialBatches.Count; j++)
             {
-                MaterialBatch materialBatch = FBOBatches[i].MatchBatches[j];
+                MaterialBatch materialBatch = FBOBatches[i].MaterialBatches[j];
                 if (materialName == materialBatch.Material.Name){
                     materialBatch.GameObjects.Add(gameObject);
                     gameObject.Material = materialBatch.Material;
@@ -114,8 +114,18 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public void RenderFrame()
         {
             //todo set state of fbobatch, then materialbatch, then draw.
-            for (int i = 0; i < _materialKeys.Length; i++)
+            //how to setup frame buffer as render target?
+            for (int i = 0; i < FBOBatches.Count; i++)
             {
+                FBOBatches[i].SetDrawStatesAndCallInnerLoop();
+                for (int j = 0; j < FBOBatches[i].MaterialBatches.Count; j++)
+                {
+                    FBOBatches[i].MaterialBatches[j].SetState();
+                    for (int k = 0; k < FBOBatches[i].MaterialBatches[j].GameObjects.Count; k++)
+                    {
+                        FBOBatches[i].MaterialBatches[j].GameObjects[k].SendUniformsPerObject();
+                    }
+                }
                 List<GameObject> batchObjects = Batches[_materialKeys[i]];
                 
                 Material materialForBatch = Materials[_materialKeys[i]];

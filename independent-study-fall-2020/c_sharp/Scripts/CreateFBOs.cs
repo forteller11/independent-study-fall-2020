@@ -5,12 +5,13 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
 {
     public class CreateFBOs
     {
+        public static FBO ShadowBuffer = new FBO("Shadow", 680, 680, FramebufferAttachment.Color, TextureUnit.Texture3);
         public static FBO[] Create()
         {
-            var shadowBuffer = new FBO("Shadow", 680, 680, TextureUnit.Texture3);
+
             return new[]
             {
-                shadowBuffer
+                ShadowBuffer
             };
         }
     }

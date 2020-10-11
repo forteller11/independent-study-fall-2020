@@ -13,23 +13,29 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public readonly string Name;
         public Texture Texture { get; private set; }
 
-        public FBO(string name, int width, int height, TextureUnit textureUnit)
+        public FBO(string name, int width, int height, FramebufferAttachment attachment, TextureUnit textureUnit)
         {
             Handle = GL.GenFramebuffer();
             Name = name;
             Use();
-            AssignTexture(Texture.Empty(width, height, textureUnit));
+            AssignTexture(Texture.Empty(width, height, textureUnit), attachment);
         }
 
         public void Use()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
         }
+
+        public static void UseDefaultBuffer()
+        {
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+        }
+    
         
-        public void AssignTexture(Texture texture)
+        public void AssignTexture(Texture texture, FramebufferAttachment attachment)
         {
             Texture = texture;
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.Color, TextureTarget.Texture2D, texture.Handle, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
         }
 
         public string GetUniqueName() => Name;

@@ -4,17 +4,20 @@ using Indpendent_Study_Fall_2020.MaterialRelated;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
 {
-    public class FBOBatch : IUniqueName
+    public class FBOBatch : RenderBatch, IUniqueName
     {
         public readonly FBO FBO;
-        public List<MaterialBatch> MatchBatches = new List<MaterialBatch>();
+        public List<MaterialBatch> MaterialBatches = new List<MaterialBatch>();
         
         public FBOBatch(FBO fbo) => FBO = fbo;
         public string GetUniqueName() => FBO.Name;
 
-        public void SetState()
+
+
+        public override void SetDrawStatesAndCallInnerLoops()
         {
-            //todo bind FBO to rendering buffer
+            //todo set fbo
+            base.SetDrawStatesAndCallInnerLoops();
         }
     }
 }

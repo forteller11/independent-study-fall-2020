@@ -64,7 +64,7 @@ namespace Indpendent_Study_Fall_2020
             SceneSetup.CreateGlobals();
             
             #region materials
-            Globals.DrawManager.Setup(CreateFBOs.Create(), CreateMaterials.Create());
+            Globals.DrawManager.SetupDrawHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
             #endregion
             
             _gameObjectManager = new GameObjectManager();

@@ -67,22 +67,32 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         }
 
         
-        public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum)
+        public void SetupAndAttachTexture(string fileName, string samplerName, TextureUnit textureUnit)
         {
+            var newTexture = Texture.FromFile(fileName, textureUnit);
+            AttachTexture(newTexture, samplerName, textureUnit);
+        }
+
+        public void AttachTexture(Texture texture, string samplerName, TextureUnit textureUnit)
+        {
+            if (texture.TextureUnit != textureUnit)
+                throw new ArgumentException($"TextureUnit setup in {Name} does not match TextureUnit set in Texture... must be identical!");
+            
             Shader.Use();
-            var newTexture = Texture.FromFile(fileName, textureUnitEnum);
-            _textures.Add(newTexture);
-            Shader.SetUniformInt(samplerName, textureUnitEnum.ToIndex());
-            newTexture.UploadToShader();
+            _textures.Add(texture);
+            Shader.SetUniformInt(samplerName, textureUnit.ToIndex());
+            texture.UploadToShader();
         }
         
-        public void SetupAFrameBuffer(string samplerName, TextureUnit textureUnitEnum, int width, int height)
+        public void AttachFrameBuffer(FBO fbo, string samplerName, TextureUnit textureUnit)
         {
+            if (fbo.Texture.TextureUnit != textureUnit)
+                throw new ArgumentException($"TextureUnit setup in {Name} does not match TextureUnit set in FrameBuffer's texture... must be identical!");
+            
             Shader.Use();
-            var newTexture = Texture.Empty(width, height, textureUnitEnum);
-            _textures.Add(newTexture);
-            Shader.SetUniformInt(samplerName, textureUnitEnum.ToIndex());
-            newTexture.UploadToShader();
+            _textures.Add(fbo.Texture);
+            Shader.SetUniformInt(samplerName, textureUnit.ToIndex());
+            fbo.Texture.UploadToShader();
         }
 
         public void UseAllAttachedTextures()
