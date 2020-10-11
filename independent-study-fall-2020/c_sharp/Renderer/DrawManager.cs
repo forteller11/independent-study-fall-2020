@@ -24,17 +24,38 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         //---->gameobjects
 
         public void
-            SetupDrawHierarchy(FBO[] fbos,
-                Material[] materials) //todo setup so creation is oop and done within classes?
+            SetupDrawHierarchy(FBO[] fbos, Material[] materials, Entity[] entities)
         {
             ThrowIfDuplicateNames(fbos);
             ThrowIfDuplicateNames<IUniqueName>(materials);
 
-            RenderBatches
+            for (int i = 0; i < fbos.Length; i++)
+            {
+                AddFBO(fbos[i])
+            }
+            
             SetupAllFrameBuffers(fbos);
             SetupAllMaterials(materials);
         }
 
+        public void AddFBO(FBO fbo)
+        {
+            RootBatches.Add(new FBOBatch(fbo));
+        }
+
+
+        public void AddMaterial(Material material)
+        {
+            for (int i = 0; i < RootBatches.Count; i++)
+            {
+                if (material.FBOName == RootBatches[i].FBO.Name)
+                    RootBatches[i].MaterialBatches.Add(new MaterialBatch(material));
+            }
+            
+            throw new DataException($"There are no FBO's which match the intended material fbo of {material.FBOName}. Check for typos.");
+        }
+        
+        public void AddEntity
         public void SetupAllFrameBuffers(params FBO[] frameBuffers)
         {
             ThrowIfDuplicateNames(frameBuffers);
