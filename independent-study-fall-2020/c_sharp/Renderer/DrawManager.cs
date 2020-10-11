@@ -44,6 +44,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         {
             ThrowIfDuplicateNames<IUniqueName>(materials);
             
+            //todo 
             for (int i = 0; i < FBOBatches.Count; i++)
             for (int j = 0; j < materials.Length; j++)
             {
@@ -52,6 +53,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                         FBOBatches[i].MaterialBatches.Add(new MaterialBatch(materials[j]));
                 }
             }
+            
+        }
+
+        public void AddEntity()
+        {
+            //todo go through all mats and add appropriate
+        }
+
+        public void AddFbo()
+        {
             
         }
         
@@ -72,7 +83,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
 
         
-        public void UseMaterial(GameObject gameObject, string materialName)
+        public void UseMaterial(Entity entity, string materialName)
         {
             if (materialName == String.Empty)
                 return;
@@ -82,8 +93,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             {
                 MaterialBatch materialBatch = FBOBatches[i].MaterialBatches[j];
                 if (materialName == materialBatch.Material.Name){
-                    materialBatch.GameObjects.Add(gameObject);
-                    gameObject.Material = materialBatch.Material;
+                    materialBatch.GameObjects.Add(entity);
+                    entity.Material = materialBatch.Material;
                     return;
                 }
             }
@@ -126,7 +137,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                         FBOBatches[i].MaterialBatches[j].GameObjects[k].SendUniformsPerObject();
                     }
                 }
-                List<GameObject> batchObjects = Batches[_materialKeys[i]];
+                List<Entity> batchObjects = Batches[_materialKeys[i]];
                 
                 Material materialForBatch = Materials[_materialKeys[i]];
                 materialForBatch.PrepareBatchForDrawing();

@@ -13,7 +13,7 @@ namespace Indpendent_Study_Fall_2020
     public class TKWindow : GameWindow
     {
 
-        private GameObjectManager _gameObjectManager;
+        private EntityManager _entityManager;
         
         #region initialise
         public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
@@ -67,9 +67,9 @@ namespace Indpendent_Study_Fall_2020
             Globals.DrawManager.SetupDrawHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
             #endregion
             
-            _gameObjectManager = new GameObjectManager();
-            _gameObjectManager.AddRange(SceneSetup.CreateGameObjects());
-            _gameObjectManager.InvokeOnLoad();
+            _entityManager = new EntityManager();
+            _entityManager.AddRange(SceneSetup.CreateGameObjects());
+            _entityManager.InvokeOnLoad();
         }
 
         protected override void OnUnload(EventArgs e)
@@ -87,7 +87,7 @@ namespace Indpendent_Study_Fall_2020
             var  m = Mouse.GetState();
             
             //todo cache this object allocation so not creating objects everyframe
-            var eventArgs = new GameObjectUpdateEventArgs(
+            var eventArgs = new EntityUpdateEventArgs(
                 e.Time,
                 Keyboard.GetState(),
                 m,
@@ -95,7 +95,7 @@ namespace Indpendent_Study_Fall_2020
             );
       
             Globals.Update(eventArgs);
-            _gameObjectManager.InvokeOnUpdate(eventArgs);
+            _entityManager.InvokeOnUpdate(eventArgs);
             
             if (eventArgs.KeyboardState.IsKeyDown(Key.Escape))
                 Exit();

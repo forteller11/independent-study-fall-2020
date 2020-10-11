@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 {
-    public class Sphere : GameObject
+    public class Sphere : Entity
     {
 
 
@@ -21,7 +21,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             Position = position;
         }
 
-        public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
+        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
 //            Rotation = Quaternion.FromEulerAngles(MathF.Sin(Globals.AbsTimeF/8)*3,MathF.Cos(Globals.AbsTimeF/30)*9,Globals.AbsTimeF/20);
 //            Position =  new Vector3(MathF.Sin(Globals.AbsTimeF/20)*1,0,0);

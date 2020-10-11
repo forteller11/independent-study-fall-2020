@@ -2,27 +2,27 @@
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
-    public class GameObjectManager
+    public class EntityManager
     {
-        private List<GameObject> _gameObjects;
+        private List<Entity> _gameObjects;
 
-        public GameObjectManager()
+        public EntityManager()
         {
-            _gameObjects = new List<GameObject>();
+            _gameObjects = new List<Entity>();
         }
-        public void AddRange(params GameObject[] gameObjects)
+        public void AddRange(params Entity[] gameObjects)
         {
             for (int i = 0; i < gameObjects.Length; i++)
                 Add(gameObjects[i]);
         }
 
-        public void Add(GameObject gameObject)
+        public void Add(Entity entity)
         {
-            _gameObjects.Add(gameObject);
-            Globals.DrawManager.UseMaterial(gameObject, gameObject.MaterialName);
+            _gameObjects.Add(entity);
+            Globals.DrawManager.UseMaterial(entity, entity.MaterialName);
         }
 
-        public void Remove(GameObject gameObject) => _gameObjects.Remove(gameObject);
+        public void Remove(Entity entity) => _gameObjects.Remove(entity);
 
         public void InvokeOnLoad()
         {
@@ -30,7 +30,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 _gameObjects[i].OnLoad();
         }
         
-        public void  InvokeOnUpdate(GameObjectUpdateEventArgs eventArgs)
+        public void  InvokeOnUpdate(EntityUpdateEventArgs eventArgs)
         {
             for (int i = 0; i < _gameObjects.Count; i++)
                 _gameObjects[i].OnUpdate(eventArgs);

@@ -9,9 +9,9 @@ namespace Indpendent_Study_Fall_2020.Scripts
 {
     public class SceneSetup
     {
-        public static GameObject[] CreateGameObjects()
+        public static Entity[] CreateGameObjects()
         {
-            List<GameObject> gameObjects = new List<GameObject>();
+            List<Entity> gameObjects = new List<Entity>();
             
             gameObjects.Add(new CameraControllerSingleton(String.Empty));
             

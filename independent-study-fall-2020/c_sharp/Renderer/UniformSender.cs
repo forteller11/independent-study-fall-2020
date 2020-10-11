@@ -14,13 +14,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// <summary>
         /// Sends "ModelToWorld" and "WorldToView" uniform matrices to shader
         /// </summary>
-        public static void SendTransformMatrices(GameObject gameObject)
+        public static void SendTransformMatrices(Entity entity)
         {
-            var modelToWorldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(gameObject.Rotation));
+            var modelToWorldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(entity.Rotation));
             var worldToViewTranslation = Matrix4.CreateTranslation(-Globals.CameraPosition);
-            var modelToWorldTranslation = Matrix4.CreateTranslation(gameObject.Position);
+            var modelToWorldTranslation = Matrix4.CreateTranslation(entity.Position);
             var worldToViewRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(Globals.CameraRotation));
-            var modelToWorldScale = Matrix4.CreateScale(gameObject.Scale); //transponse?
+            var modelToWorldScale = Matrix4.CreateScale(entity.Scale); //transponse?
             
             //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
             //todo consolidate matrices and refactor.... then go bk into shader
@@ -28,12 +28,12 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             var worldToView = worldToViewTranslation * worldToViewRotation * Globals.CameraPerspective;
             var modelToView = modelToWorld * worldToView;
             
-            SetMatrix4(gameObject.Material, "ModelToView", modelToView, false);
-            SetMatrix4(gameObject.Material, "WorldToView", worldToView, false);
-            SetMatrix4(gameObject.Material, "ModelRotation", modelToWorldRotation, false);
-            SetMatrix4(gameObject.Material, "ModelToWorld", modelToWorld, false);
+            SetMatrix4(entity.Material, "ModelToView", modelToView, false);
+            SetMatrix4(entity.Material, "WorldToView", worldToView, false);
+            SetMatrix4(entity.Material, "ModelRotation", modelToWorldRotation, false);
+            SetMatrix4(entity.Material, "ModelToWorld", modelToWorld, false);
             
-            SetVector3(gameObject.Material, "CamPosition", Globals.CameraPosition, false); //todo batch with like materials
+            SetVector3(entity.Material, "CamPosition", Globals.CameraPosition, false); //todo batch with like materials
         }
 
         /// <summary>
@@ -43,27 +43,27 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// </summary>
         //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
         //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
-        public static void SendLights(GameObject gameObject)
+        public static void SendLights(Entity entity)
         {
-            SetInt(gameObject.Material, $"{DIR_LIGHT}Length", Globals.DirectionLights.Count);
+            SetInt(entity.Material, $"{DIR_LIGHT}Length", Globals.DirectionLights.Count);
             for (int i = 0; i < Globals.DirectionLights.Count; i++)
             {
-                SetVector3(gameObject.Material, $"{DIR_LIGHT}[{i}].Color",     Globals.DirectionLights[i].Color, false);
-                SetVector3(gameObject.Material, $"{DIR_LIGHT}[{i}].Direction", Globals.DirectionLights[i].Direction, false);
+                SetVector3(entity.Material, $"{DIR_LIGHT}[{i}].Color",     Globals.DirectionLights[i].Color, false);
+                SetVector3(entity.Material, $"{DIR_LIGHT}[{i}].Direction", Globals.DirectionLights[i].Direction, false);
             }
             
-            SetInt(gameObject.Material,$"{POINT_LIGHT}Length", Globals.PointLights.Count);
+            SetInt(entity.Material,$"{POINT_LIGHT}Length", Globals.PointLights.Count);
             for (int i = 0; i < Globals.PointLights.Count; i++)
             {
-                SetVector3(gameObject.Material, $"{POINT_LIGHT}[{i}].Color",    Globals.PointLights[i].Color, false);
-                SetVector3(gameObject.Material, $"{POINT_LIGHT}[{i}].Position", Globals.PointLights[i].Position, false);
+                SetVector3(entity.Material, $"{POINT_LIGHT}[{i}].Color",    Globals.PointLights[i].Color, false);
+                SetVector3(entity.Material, $"{POINT_LIGHT}[{i}].Position", Globals.PointLights[i].Position, false);
             }
         }
 
         //todo set element vec
-        public static void SendTime(GameObject gameObject)
+        public static void SendTime(Entity entity)
         {
-            SetVector4(gameObject.Material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
+            SetVector4(entity.Material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
 //            gameObject.Material.set 
 //            Globals.AbsoluteTime
         }

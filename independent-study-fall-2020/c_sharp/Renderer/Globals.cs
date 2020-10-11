@@ -31,7 +31,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             MousePositionLastFrame = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
         }
 
-        public static void Update(GameObjectUpdateEventArgs args)
+        public static void Update(EntityUpdateEventArgs args)
         {
             AbsTime += args.DeltaTime;
             AbsTimeF = (float) AbsTime;

@@ -5,7 +5,7 @@ using OpenTK.Input;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 {
-    public class CameraControllerSingleton : GameObject
+    public class CameraControllerSingleton : Entity
     {
         private float acceleration = 1f;
         private float angularAcceleration = 0.2f;
@@ -21,13 +21,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             Globals.CameraRotation = Quaternion.Identity;
         }
 
-        public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
+        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {  
             Rotate(eventArgs);
             Move(eventArgs);
         }
 
-        void Rotate(GameObjectUpdateEventArgs eventArgs) //todo can't rotate around
+        void Rotate(EntityUpdateEventArgs eventArgs) //todo can't rotate around
         {
             var keyboardState = eventArgs.KeyboardState;
             float angularAccelerationThisFrame = (float) eventArgs.DeltaTime * angularAcceleration;
@@ -42,7 +42,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             Globals.CameraRotation =  rotationHorz * Globals.CameraRotation * rotationVert;
             // todo dont allow rotations past 90 degrees DOWN
         }
-        void Move(GameObjectUpdateEventArgs eventArgs)
+        void Move(EntityUpdateEventArgs eventArgs)
         {
             var keyboardState = eventArgs.KeyboardState;
             float accelerationThisFrame = acceleration * (float) eventArgs.DeltaTime;

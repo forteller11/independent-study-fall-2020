@@ -4,7 +4,7 @@ using OpenTK;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 {
-    public class PointLightVisualizer : GameObject
+    public class PointLightVisualizer : Entity
     {
 
         public int Index;
@@ -15,7 +15,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             Scale *= 0.2f;
         }
 
-        public override void OnUpdate(GameObjectUpdateEventArgs eventArgs)
+        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             var light = Globals.PointLights[Index];
             light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);

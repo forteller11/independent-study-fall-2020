@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK.Input;
 using Quaternion = OpenTK.Quaternion;
@@ -7,10 +8,11 @@ using Vector3 = OpenTK.Vector3;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
-    public abstract class GameObject //todo... make mega object with flags... add physics component?
+    public abstract class Entity : IBatchable //todo... make mega object with flags... add physics component?
     {
         public readonly Guid GUID;
-        public readonly string MaterialName  = String.Empty; // "" means no material are being used
+        public string ParentNameInDrawingManager  = String.Empty; // "" means no material are being used
+        public string UniqueName { get; set; } = "entity"
         public Material Material; //this is set automatically by drawManager before unLoad is called
         public Behaviors Flags;
         [Flags]
@@ -30,14 +32,14 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public Vector3 VelocityAngular;
         public float Mass;
 
-        public GameObject(string materialName)
+        public Entity(string materialName)
         {
-            MaterialName = materialName;
+            is = materialName;
             GUID = Guid.NewGuid();
         }
         public virtual void OnLoad() { }
 
-        public virtual void OnUpdate(GameObjectUpdateEventArgs eventArgs)
+        public virtual void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
 //            if (Flags.HasFlag(Behaviors.Physics) && Flags.HasFlag(Behaviors.Transform))
 //            {
@@ -54,7 +56,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         #region dictionary performance stuff
         public override bool Equals(object obj)
         {
-            var otherGameObject = obj as GameObject;
+            var otherGameObject = obj as Entity;
             if (otherGameObject != null)
                 return otherGameObject.GUID == this.GUID;
             else
