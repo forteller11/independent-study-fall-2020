@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
+using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK.Graphics.OpenGL4;
 
 
@@ -16,7 +17,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
 
         
-        public List<FBOBatch> RootBatches { get; private set; }
+        public List<FBOBatch> RootBatches { get; private set; } = new List<FBOBatch>();
 
         //sort by
         //fbos
@@ -44,14 +45,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         {
             RootBatches.Add(new FBOBatch(fbo));
         }
-
-
+        
         public void AddMaterial(Material material)
         {
             for (int i = 0; i < RootBatches.Count; i++)
             {
                 if (material.FBOName == RootBatches[i].FBO.Name)
+                {
                     RootBatches[i].MaterialBatches.Add(new MaterialBatch(material));
+                    return;
+                }
             }
             
             throw new DataException($"There are no FBO's which match the intended material fbo of {material.FBOName}. Check for typos.");
@@ -59,6 +62,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         public void AddEntity(Entity entity)
         {
+            if (entity.MaterialName == CreateMaterials.MaterialName.None)
+                return;
+            
             for (int i = 0; i < RootBatches.Count; i++)
             {
                 for (int j = 0; j < RootBatches[i].MaterialBatches.Count; j++)

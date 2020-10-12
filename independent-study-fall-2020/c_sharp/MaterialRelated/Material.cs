@@ -83,7 +83,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Shader.Use();
             _textures.Add(texture);
             Shader.SetUniformInt(samplerName, textureUnit.ToIndex());
-            texture.UploadToShader();
+            // texture.UploadToGPU();
         }
         
         public void AttachFrameBuffer(FBO fbo, string samplerName, TextureUnit textureUnit)
@@ -94,7 +94,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Shader.Use();
             _textures.Add(fbo.Texture);
             Shader.SetUniformInt(samplerName, textureUnit.ToIndex());
-            fbo.Texture.UploadToShader();
+            fbo.Texture.UploadToGPUTextureUnit();
         }
 
         public void UseAllAttachedTextures()

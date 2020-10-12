@@ -65,8 +65,7 @@ namespace Indpendent_Study_Fall_2020
 
             _entityManager = new EntityManager();
             var entities = SceneSetup.CreateGameObjects();
-            _entityManager.AddRange(SceneSetup.CreateGameObjects());
-            
+
             Globals.DrawManager.SetupDrawHierarchy(CreateFBOs.Create(), CreateMaterials.Create(), entities);
             
             _entityManager.InvokeOnLoad();

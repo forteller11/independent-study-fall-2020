@@ -20,6 +20,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Name = name;
             Use();
             AssignTexture(Texture.Empty(width, height, textureUnit), attachment);
+            var fboStatus = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+            if (fboStatus != FramebufferErrorCode.FramebufferComplete)
+                throw new Exception($"Frame Buffer Exception! {fboStatus}");
         }
 
         /// <summary>
@@ -51,7 +54,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void AssignTexture(Texture texture, FramebufferAttachment attachment)
         {
             Texture = texture;
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
+             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0); //todo fix assign tex
+            // GL.FramebufferTexture(FramebufferTarget.Framebuffer, attachment, texture.Handle, 0);
         }
 
         public string GetUniqueName() => Name.ToString();

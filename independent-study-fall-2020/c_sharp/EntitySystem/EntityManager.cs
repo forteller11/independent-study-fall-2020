@@ -12,6 +12,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public EntityManager()
         {
             _gameObjects = new List<Entity>();
+            UpdateEventArgs = new EntityUpdateEventArgs();
         }
         public void AddRange(params Entity[] gameObjects)
         {

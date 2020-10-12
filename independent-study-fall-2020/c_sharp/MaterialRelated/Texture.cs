@@ -36,9 +36,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             texture.Use();
             texture.ApplyTextureSettings();
             texture.LoadImage(fileName);
-            
+
             if (cookOnLoad)
+            {
                 texture.CookSixLaborsImageToByteArray();
+                texture.UploadToGPUTextureUnit();
+            }
 
             return texture;
         }
@@ -53,6 +56,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             texture.Width = width;
             texture.Height = height;
             texture.CreateEmptyByteArray();
+            
+            texture.UploadToGPUTextureUnit();
 
             return texture;
         }
@@ -98,7 +103,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindTexture(TextureTarget.Texture2D, Handle);
         }
         
-        public void UploadToShader()
+        public void UploadToGPUTextureUnit()
         {
             Use();
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);

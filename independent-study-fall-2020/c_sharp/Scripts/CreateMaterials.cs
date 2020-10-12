@@ -43,25 +43,12 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 bathroomTiles+"GLOSS_3K.jpg"
                 );
             
-            #region shaded
-            var shaded = new Material(MaterialName.Shaded, new ShaderProgram("shaded", "lighting"));
 
-            var modelAttribs = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
-            shaded.FeedBuffersAndCreateVAO(null, modelAttribs);
-
-            shaded.SetupAndAttachTexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0);
-//            shaded.SetupATexture("GroundClay002_NRM_3K.jpg", "Texture1", TextureUnit.Texture1, 1);
-            #endregion
-            
-            #region normal_map
-            var normal = new Material(MaterialName.Normal, new ShaderProgram("normal_map", "lighting"));
+            #region buffer
+            var buffer = new Material(MaterialName.Normal, new ShaderProgram("buffer", "lighting"), CreateFBOs.FBOName.Shadow);
 
             var modelAttribsNormal = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
-            normal.FeedBuffersAndCreateVAO(null, modelAttribsNormal);
-
-            normal.SetupAndAttachTexture("GroundClay002_COL_VAR1_3K.jpg", "Color", TextureUnit.Texture0);
-            normal.SetupAndAttachTexture("GroundClay002_NRM_3K.jpg", "Normal", TextureUnit.Texture1);
-            normal.SetupAndAttachTexture("GroundClay002_GLOSS_3K.jpg", "Gloss", TextureUnit.Texture2);
+            buffer.FeedBuffersAndCreateVAO(null, modelAttribsNormal);
             #endregion
             
             
@@ -72,11 +59,10 @@ namespace Indpendent_Study_Fall_2020.Scripts
 
             return new[]
             {
-                shaded,
-                normal,
                 solidColor,
                 dirt,
-                tile
+                tile,
+                buffer
             };
         }
     }

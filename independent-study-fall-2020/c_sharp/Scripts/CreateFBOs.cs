@@ -10,7 +10,7 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
             Default = default,
             Shadow
         }
-        public static FBO ShadowBuffer = new FBO(FBOName.Shadow, 680, 680, FramebufferAttachment.Color, TextureUnit.Texture3);
+        public static FBO ShadowBuffer = new FBO(FBOName.Shadow, 680, 680, FramebufferAttachment.ColorAttachment0, TextureUnit.Texture3);
         
         public static FBO DefaultBuffer = new FBO();
         public static FBO[] Create()
