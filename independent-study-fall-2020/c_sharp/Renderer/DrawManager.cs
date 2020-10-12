@@ -51,6 +51,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         {
             RootBatches.Add(new MaterialBatch(material));
             return;
+            if (material.Name == CreateMaterials.MaterialName.None)
+                throw new DataException("Material Name is None which is Invalid!");
             // for (int i = 0; i < RootBatches.Count; i++)
             // {
             //     if (material.FBOName == RootBatches[i].FBO.Name)

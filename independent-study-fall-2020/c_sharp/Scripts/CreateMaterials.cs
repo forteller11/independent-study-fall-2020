@@ -45,7 +45,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
 
             #region buffer
-            var buffer = new Material(MaterialName.Normal, new ShaderProgram("buffer", "lighting"), CreateFBOs.FBOName.Shadow);
+            var buffer = new Material(MaterialName.Buffer, new ShaderProgram("buffer", "lighting"), CreateFBOs.FBOName.Default);
 
             var modelAttribsNormal = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             buffer.FeedBuffersAndCreateVAO(null, modelAttribsNormal);

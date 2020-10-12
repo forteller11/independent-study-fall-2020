@@ -34,7 +34,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             FBOName = fboName;
             
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
-            UniformLocations = new Dictionary<string, int>(uniformCount);
+            UniformLocations = new Dictionary<string, int>(uniformCount); //todo uniforms in shaders prob?
             
             
             Debug.Log($"Material Compilation Complete: {Name}");
