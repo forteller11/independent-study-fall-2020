@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Indpendent_Study_Fall_2020.Helpers;
@@ -22,6 +23,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public readonly Dictionary<string, int> VertexAttribLocations;
         private List<Texture> _textures = new List<Texture>();
         public VAOAndBuffers VAO;
+        
+        const bool DEBUG = false;
 
 
         public Material(CreateMaterials.MaterialName name, ShaderProgram shaderProgram, CreateFBOs.FBOName fboName = CreateFBOs.FBOName.Default)
@@ -32,14 +35,23 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
-            Debug.Log(Name);
+            
+            
+            Debug.Log($"Material Compilation Complete: {Name}");
+            
+            
             for (int i = 0; i < uniformCount; i++)  
             {
                 var uniformName = GL.GetActiveUniform(Shader.Handle, i, out int size, out var type);
-                Debug.Log(uniformName);
-                Debug.Log(type);
-                Debug.Log("size: " + size);
-                Debug.Log('\n');
+                if (DEBUG)
+                {
+                    Debug.Log(uniformName);
+                    Debug.Log(type);
+                    Debug.Log("size: " + size);
+                    Debug.Log('\n');
+                }
+
+
                 int location = GL.GetUniformLocation(Shader.Handle, uniformName);
                 UniformLocations.Add(uniformName, location);
             }
@@ -50,7 +62,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             {
                 var attribName = GL.GetActiveAttrib(Shader.Handle, i, out int size, out var type);
                 int location = GL.GetAttribLocation(Shader.Handle, attribName);
-                VertexAttribLocations.Add(attribName, location);
+                VertexAttribLocations.Add(attribName, location); 
             }
             
         }

@@ -40,14 +40,14 @@ namespace Indpendent_Study_Fall_2020
 
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             
-            newTKWindow.Run(60d);
-            
             Debug.Log($"");
             Debug.Log($"Renderer: {GL.GetString(StringName.Renderer)}");
             Debug.Log($"Version: {GL.GetString(StringName.Version)}");
             Debug.Log($"Vendor: {GL.GetString(StringName.Vendor)}");
             Debug.Log($"");
             
+            newTKWindow.Run(60d);
+
             return newTKWindow;
         }
         #endregion
@@ -55,7 +55,6 @@ namespace Indpendent_Study_Fall_2020
         
         protected override void OnLoad(EventArgs e)
         {
-
             base.OnLoad(e);
             
             GL.ClearColor(0f,0f,0f,1f);
@@ -66,7 +65,7 @@ namespace Indpendent_Study_Fall_2020
             _entityManager = new EntityManager();
             var entities = SceneSetup.CreateGameObjects();
 
-            Globals.DrawManager.SetupDrawHierarchy(CreateFBOs.Create(), CreateMaterials.Create(), entities);
+            Globals.DrawManager.SetupDrawHierarchy(null, CreateMaterials.Create(), entities);
             
             _entityManager.InvokeOnLoad();
         }
@@ -82,7 +81,6 @@ namespace Indpendent_Study_Fall_2020
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-
             _entityManager.RefreshUpdateEventArgs(e);
       
             Globals.Update(_entityManager.UpdateEventArgs);
