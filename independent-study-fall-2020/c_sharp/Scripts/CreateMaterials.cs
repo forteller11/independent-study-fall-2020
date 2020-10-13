@@ -15,7 +15,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
             None = default,
             Solid,
             Dirt,
-            Tile
+            Tile,
+            BufferTest
         }
         public static Material[] Create()
         {
@@ -32,6 +33,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             var dirt = new NormalMaterial(
                 MaterialType.Dirt,
+                CreateFBOs.FBOType.Default,
                 normalShader,
                 ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -43,6 +45,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             var tile = new NormalMaterial(
                 MaterialType.Tile,
+                CreateFBOs.FBOType.Default,
                 normalShader,
                 ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
                 bathroomTiles+"COL_VAR2_3K.jpg",
@@ -54,12 +57,17 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
 
             #region solid_color
-            var solidColor = new Material(MaterialType.Solid, new ShaderProgram("textureless"), null);
+            var solidColor = new Material(MaterialType.Solid, CreateFBOs.FBOType.Default, new ShaderProgram("textureless"), null);
             solidColor.FeedBuffersAndCreateVAO(null, ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, false, false));
             #endregion
+            
+            var bufferTest = new Material(MaterialType.BufferTest, CreateFBOs.FBOType.Default, new ShaderProgram("textured"), null );
+            bufferTest.SetupSampler("MainTexture", CreateFBOs.ShadowBuffer.Texture);
+            bufferTest.FeedBuffersAndCreateVAO(null, ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, false));
 
             return new[]
             {
+                bufferTest,
                 solidColor,
                 dirt,
                 tile

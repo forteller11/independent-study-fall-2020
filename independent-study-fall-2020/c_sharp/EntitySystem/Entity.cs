@@ -12,23 +12,12 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     {
         public readonly Guid GUID;
         public readonly CreateMaterials.MaterialType MaterialType; // "" means no material are being used
-        public Behaviors Flags;
-        [Flags]
-        public enum Behaviors
-        {
-            Transform, //todo declare bits?
-            Physics,
-            Gravity,
-            Collision
-        }
+
         //todo only send pos/rot/scale if the values are dirty
         public Vector3 Position = new Vector3(0,0,0);
         public Quaternion Rotation = Quaternion.Identity;
         public Vector3 Scale = new Vector3(1,1,1);
-
-        public Vector3 Velocity;
-        public Vector3 VelocityAngular;
-        public float Mass;
+        
 
         public Entity(CreateMaterials.MaterialType materialType)
         {

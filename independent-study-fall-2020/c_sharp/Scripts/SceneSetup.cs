@@ -18,6 +18,10 @@ namespace Indpendent_Study_Fall_2020.Scripts
             gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Dirt, new Vector3(-3,0,4)));
             gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Dirt, new Vector3(0,0,0)));
             gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Tile, new Vector3(3,0,4)));
+            
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.BufferTest, new Vector3(0, 2, 1)));
+            
+            
 
 
             for (int i = 0; i < Globals.PointLights.Count; i++)

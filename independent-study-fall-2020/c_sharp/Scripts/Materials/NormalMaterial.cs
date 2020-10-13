@@ -11,7 +11,7 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public const string NormalMapSampler = "Normal";
         public const string SpecularMapSampler = "Gloss";
         
-        public NormalMaterial(CreateMaterials.MaterialType type, ShaderProgram shaderProgram, AttributeBuffer[] vaoAndBuffers, string diffusePath, string normalPath, string specularPath, Action<Material> perMatSender) : base(type, shaderProgram, perMatSender)
+        public NormalMaterial(CreateMaterials.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, AttributeBuffer[] vaoAndBuffers, string diffusePath, string normalPath, string specularPath, Action<Material> perMatSender) : base(type, fboType, shaderProgram, perMatSender)
         {
             FeedBuffersAndCreateVAO(null, vaoAndBuffers);
             SetupSampler(DiffuseColorSampler, Texture.FromFile(diffusePath, TextureUnit.Texture0));

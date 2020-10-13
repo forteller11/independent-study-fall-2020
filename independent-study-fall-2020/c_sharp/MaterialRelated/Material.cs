@@ -25,11 +25,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public Action<Material> PerMaterialAttributeSender;
         private const bool DEBUG = false; 
 
-        public Material(CreateMaterials.MaterialType type, ShaderProgram shaderProgram, Action<Material> perMaterialAttributeSender)
+        public Material(CreateMaterials.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, Action<Material> perMaterialAttributeSender)
         {
             Type = type;
             Shader = shaderProgram;
             PerMaterialAttributeSender = perMaterialAttributeSender;
+            FBOType = fboType;
             
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);

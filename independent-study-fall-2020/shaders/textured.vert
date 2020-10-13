@@ -1,5 +1,4 @@
-﻿#version 330 core
-in vec3 in_position;
+﻿in vec3 in_position;
 in vec2 in_uv;
 
 out vec2 v2f_uv;
