@@ -15,8 +15,16 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public static FBO[] Create()
         {
         
-            ShadowBuffer = new FBO(FBOType.Shadow, 2560,2560, FramebufferAttachment.ColorAttachment0, PixelInternalFormat.Rgba, TextureUnit.Texture3);
-            var defaultBuffer = new FBO();
+            ShadowBuffer = new FBO(FBOType.Shadow, 2560,2560, FramebufferAttachment.ColorAttachment0, PixelInternalFormat.Rgba, TextureUnit.Texture3,
+                () =>
+                {
+                    
+                });
+            
+            var defaultBuffer = new FBO(() => {
+                GL.Enable(EnableCap.Texture2D);
+                GL.Enable(EnableCap.DepthTest);
+                GL.Enable(EnableCap.CullFace);});
             
             return new[]
             {

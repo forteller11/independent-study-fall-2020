@@ -31,13 +31,7 @@ namespace Indpendent_Study_Fall_2020
                 DisplayDevice.Default);
             
             GL.Enable(EnableCap.DebugOutput);
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.DebugOutputSynchronous);
-            // GL.Enable(EnableCap.CullFace);
-//            GL.Enable(EnableCap.Blend);
-////            GL.BlendEquation(BlendEquationMode.FuncAdd);
-//            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
             

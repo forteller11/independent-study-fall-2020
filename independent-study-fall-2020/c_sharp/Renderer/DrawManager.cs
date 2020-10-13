@@ -27,10 +27,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static void CycleFBOBlit()
         {
             _blitOffscreenFBOsIndex++;
-            Debug.Log(_blitOffscreenFBOsIndex);
             if (_blitOffscreenFBOsIndex >= BatchHierachies.Count-1)
                 _blitOffscreenFBOsIndex = -1;
-            Debug.Log(_blitOffscreenFBOsIndex);
         }
 
         public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials)

@@ -14,12 +14,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     {
         public readonly int Handle = 0;
         public readonly CreateFBOs.FBOType Type;
+        private Action _renderCapSettings;
         public Texture Texture { get; private set; }
 
-        public FBO(CreateFBOs.FBOType type, int width, int height, FramebufferAttachment attachment, PixelInternalFormat internalFormat, TextureUnit textureUnit)
+        public FBO(CreateFBOs.FBOType type, int width, int height, FramebufferAttachment attachment, PixelInternalFormat internalFormat, TextureUnit textureUnit, Action renderCapSettings)
         {
             Handle = GL.GenFramebuffer();
             Type = type;
+            _renderCapSettings = renderCapSettings;
+            
             Use();
             AssignTexture(Texture.Empty(width, height, internalFormat, textureUnit), attachment);
             var fboStatus = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -30,11 +33,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         /// <summary>
         /// Creates default fbo
         /// </summary>
-        public FBO()
+        public FBO(Action renderCapSettings)
         {
             Type = CreateFBOs.FBOType.Default;
             Handle = 0;
             Texture = null;
+            _renderCapSettings = renderCapSettings;
         }
 
         public void Use()
@@ -49,6 +53,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 GL.Viewport(DrawManager.TKWindowSize);
             else
                 GL.Viewport(0,0,Texture.Width,Texture.Height);
+            _renderCapSettings?.Invoke();
             
         }
 
