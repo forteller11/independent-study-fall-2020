@@ -18,7 +18,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             Scale *= 1f;
         }
 
-        public Sphere(CreateMaterials.MaterialType materialType, Vector3 position) : base(materialType)
+        public Sphere(CreateMaterials.MaterialType materialType, Vector3 position) : base(materialType, BehaviorFlags.CreateCastShadows)
         {
             Position = position;
         }

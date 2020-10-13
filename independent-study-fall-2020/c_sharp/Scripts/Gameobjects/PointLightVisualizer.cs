@@ -11,7 +11,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public int Index;
 
-        public PointLightVisualizer(CreateMaterials.MaterialType materialType, int index) : base(materialType)
+        public PointLightVisualizer(CreateMaterials.MaterialType materialType, int index) : base(materialType, BehaviorFlags.None)
         {
             Index = index;
             Scale *= 0.2f;

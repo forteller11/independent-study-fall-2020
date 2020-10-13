@@ -51,28 +51,42 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         }
 
-        public void AddEntity(Entity entity)
+        //add entity to appropriate material as sepcefied by material type, and if has createcastshadows flag, add to shadowMap material as well
+        public void AddEntity(Entity entity) 
         {
+            if (entity.MaterialType == CreateMaterials.MaterialType.ShadowMap)
+                throw new DataException("Shadow material should not be set in material set, but instead via the entities BehaviorFlags enum");
+            
             if (entity.MaterialType == CreateMaterials.MaterialType.None)
                 return;
-            
+
+            bool foundMaterial = false;
             for (int fboI = 0; fboI < BatchHierachies.Count; fboI++)
             {
                 FBOBatch fboBatch = BatchHierachies[fboI];
                 for (int matI = 0; matI < fboBatch.MaterialBatches.Count; matI++)
                 {
                     var materialBatch = fboBatch.MaterialBatches[matI];
-                    if (entity.MaterialType == materialBatch.Material.Type)
+                    switch (materialBatch.Material.Type)
                     {
-                        materialBatch.Entities.Add(entity);
-                        return;
+                        case CreateMaterials.MaterialType.ShadowMap:
+                            if (entity.HasFlags(Entity.BehaviorFlags.CreateCastShadows))
+                                materialBatch.Entities.Add(entity);
+                            break;
+                        default:
+                            if (entity.MaterialType == materialBatch.Material.Type)
+                            {
+                                materialBatch.Entities.Add(entity);
+                                foundMaterial = true;
+                            }
+                            break;
                     }
 
                 }
 
             }
-            
-            throw new DataException($"Entity with material {entity.MaterialType} couldn't be found in draw manager!");
+            if (foundMaterial == false)
+                throw new DataException($"Entity with material {entity.MaterialType} couldn't be found in draw manager!");
         }
         
         public void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID

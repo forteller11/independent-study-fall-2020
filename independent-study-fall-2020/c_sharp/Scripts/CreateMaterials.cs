@@ -17,7 +17,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             Solid,
             Dirt,
             Tile,
-            BufferTest
+            ShadowMap
         }
         public static Material[] Create()
         {
@@ -62,13 +62,12 @@ namespace Indpendent_Study_Fall_2020.Scripts
             solidColor.VAOFromMesh(CreateMeshes.IcoSphereHighPoly);
             #endregion
             
-            var bufferTest = new Material(MaterialType.BufferTest, CreateFBOs.FBOType.Default, new ShaderProgram("textured"), null );
-            bufferTest.SetupSampler("MainTexture", CreateFBOs.ShadowBuffer.Texture);
-            bufferTest.VAOFromMesh(CreateMeshes.IcoSphereHighPoly);
+            var shadowMap = new Material(MaterialType.ShadowMap, CreateFBOs.FBOType.Shadow, new ShaderProgram("shadow_map", "lighting"), null );
+            shadowMap.VAOFromMesh(CreateMeshes.IcoSphereHighPoly);
 
             return new[]
             {
-                bufferTest,
+                shadowMap,
                 solidColor,
                 dirt,
                 tile

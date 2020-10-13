@@ -11,17 +11,28 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     public abstract class Entity //todo... make mega object with flags... add physics component?
     {
         public readonly Guid GUID;
-        public readonly CreateMaterials.MaterialType MaterialType; // "" means no material are being used
+        
+        public readonly CreateMaterials.MaterialType MaterialType; //todo make flags?
 
         //todo only send pos/rot/scale if the values are dirty
         public Vector3 Position = new Vector3(0,0,0);
         public Quaternion Rotation = Quaternion.Identity;
         public Vector3 Scale = new Vector3(1,1,1);
+
+        [Flags]
+        public enum BehaviorFlags
+        {
+            None = 0b_0000_0000_0000_0000,
+            CreateCastShadows = 0b_0000_0000_0000_0001
+        }
+
+        public BehaviorFlags Flags;
         
 
-        public Entity(CreateMaterials.MaterialType materialType)
+        public Entity(CreateMaterials.MaterialType materialType, BehaviorFlags flags)
         {
             MaterialType = materialType;
+            Flags = flags;
             GUID = Guid.NewGuid();
         }
         public virtual void OnLoad() { }
@@ -55,5 +66,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             return GUID.GetHashCode();
         }
         #endregion
+
+        /// <summary>
+        /// does entity have at least all the flags toCompare does?
+        /// </summary>
+        /// <param name="toCompare"></param>
+        /// <returns></returns>
+        public bool HasFlags(BehaviorFlags toCompare)
+        {
+            BehaviorFlags likeFlags = toCompare & Flags;
+            return toCompare == likeFlags;
+        }
     }
 }
