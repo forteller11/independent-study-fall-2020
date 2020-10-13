@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
+using Indpendent_Study_Fall_2020.c_sharp.Scripts;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using Indpendent_Study_Fall_2020.Scripts.Materials;
@@ -35,7 +36,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 MaterialType.Dirt,
                 CreateFBOs.FBOType.Default,
                 normalShader,
-                ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
+                CreateMeshes.IcoSphereHighPoly,
                 "GroundClay002_COL_VAR1_3K.jpg",
                 "GroundClay002_NRM_3K.jpg",
                 "GroundClay002_GLOSS_3K.jpg",
@@ -47,7 +48,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 MaterialType.Tile,
                 CreateFBOs.FBOType.Default,
                 normalShader,
-                ModelImporter.GetAttribBuffersFromObjFile("ico_sphere"),
+                CreateMeshes.IcoSphereHighPoly,
                 bathroomTiles+"COL_VAR2_3K.jpg",
                 bathroomTiles+"NRM_3K.jpg",
                 bathroomTiles+"GLOSS_3K.jpg",
@@ -58,12 +59,12 @@ namespace Indpendent_Study_Fall_2020.Scripts
 
             #region solid_color
             var solidColor = new Material(MaterialType.Solid, CreateFBOs.FBOType.Default, new ShaderProgram("textureless"), null);
-            solidColor.FeedBuffersAndCreateVAO(null, ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, false, false));
+            solidColor.VAOFromMesh(CreateMeshes.IcoSphereHighPoly);
             #endregion
             
             var bufferTest = new Material(MaterialType.BufferTest, CreateFBOs.FBOType.Default, new ShaderProgram("textured"), null );
             bufferTest.SetupSampler("MainTexture", CreateFBOs.ShadowBuffer.Texture);
-            bufferTest.FeedBuffersAndCreateVAO(null, ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, false));
+            bufferTest.VAOFromMesh(CreateMeshes.IcoSphereHighPoly);
 
             return new[]
             {

@@ -7,7 +7,7 @@ namespace Indpendent_Study_Fall_2020.Helpers
     public class ModelImporter
     {
         private const int POINTS_IN_TRIANGLE = 3;
-        public static AttributeBuffer[] GetAttribBuffersFromObjFile(string fileName, bool in_position=true, bool in_uv=true, bool in_normal=true) //TODO collaspe indices' specefic attribs into one
+        public static Mesh GetAttribBuffersFromObjFile(string fileName, bool in_position=true, bool in_uv=true, bool in_normal=true) //TODO collaspe indices' specefic attribs into one
         {
             var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.MeshPath + "\\" + fileName + ".obj");
             
@@ -46,23 +46,12 @@ namespace Indpendent_Study_Fall_2020.Helpers
                 }
             }
             
-//            for (int i = 0; i < positionsFlattened.Length; i+=3)
-//                Debug.Log($"{positionsFlattened[i]}, {positionsFlattened[i+1]}, {positionsFlattened[i+2]}");
-//            Debug.Log("UVS====================");
-//            for (int i = 0; i < uvsFlattened.Length; i+=3)
-//                Debug.Log($"{uvsFlattened[i]}, {uvsFlattened[i+1]}");
 
+            var positionsBuffer = in_position ? new AttributeBuffer("in_position", positionsStride, positionsFlattened) : null;
+            var uvsBuffer = in_uv ? new AttributeBuffer("in_uv", uvsStride, uvsFlattened) : null;
+            var normalsbuffer = in_normal ?new AttributeBuffer("in_normal", normalsStride, normalsFlattened) : null;
 
-            List<AttributeBuffer> result = new List<AttributeBuffer>(3);
-            
-            if (in_position) 
-                result.Add(new AttributeBuffer("in_position", positionsStride, positionsFlattened));
-            if (in_uv) 
-                result.Add(new AttributeBuffer("in_uv", uvsStride, uvsFlattened));
-            if (in_normal) 
-                result.Add(new AttributeBuffer("in_normal", normalsStride, normalsFlattened));
-
-            return result.ToArray();
+            return new MaterialRelated.Mesh(positionsBuffer, uvsBuffer, normalsbuffer);
         }
     }
 }

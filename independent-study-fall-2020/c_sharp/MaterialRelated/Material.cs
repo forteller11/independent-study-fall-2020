@@ -69,9 +69,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 throw new Exception($"Attribute {name} not found at material {Type}");
         }
         
-        public void FeedBuffersAndCreateVAO(uint[] indices, params AttributeBuffer[] attributeBuffers)
+        public void VAOFromMesh(Mesh mesh)
         {
-            VAO = new VAOAndBuffers(this, indices, attributeBuffers);
+            VAO = new VAOAndBuffers(this, mesh);
         }
 
         

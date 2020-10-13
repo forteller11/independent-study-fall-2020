@@ -19,17 +19,19 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 //        public bool UseIndices = false;
         public Dictionary<string, int> AttributeIndex;
  
-        public VAOAndBuffers(Material material, uint[] indices, params AttributeBuffer [] attributeBuffers)
+        public VAOAndBuffers(Material material,  Mesh mesh)
         {
-            List<AttributeBuffer> attribsInShader = new List<AttributeBuffer>(attributeBuffers.Length);
+            var attributeBuffersInMesh = mesh.ToList();
+            List<AttributeBuffer> attribsInShader = new List<AttributeBuffer>(attributeBuffersInMesh.Count);
 
+            #region debug
             //make sure all attributes in shader have correspondant buffers (in name at least, not necessarily stride)
             foreach (var attribInShader in material.VertexAttribLocations)
             {
                 bool foundAttribInBuffer = false;
-                for (int i = 0; i < attributeBuffers.Length; i++)
+                for (int i = 0; i < attributeBuffersInMesh.Count; i++)
                 {
-                    if (attribInShader.Key == attributeBuffers[i].AttributeName)
+                    if (attribInShader.Key == attributeBuffersInMesh[i].AttributeName)
                         foundAttribInBuffer = true;
                 }
 
@@ -37,13 +39,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                     throw new DataException($"Vertex Attribute with name {attribInShader.Key} has not been found in shader");
             }
 
-            for (int i = 0; i < attributeBuffers.Length; i++) //only include attribs found in the shader program
+            for (int i = 0; i < attributeBuffersInMesh.Count; i++) //only include attribs found in the shader program
             {
-                if (material.VertexAttribLocations.ContainsKey(attributeBuffers[i].AttributeName))
-                    attribsInShader.Add(attributeBuffers[i]);
+                if (material.VertexAttribLocations.ContainsKey(attributeBuffersInMesh[i].AttributeName))
+                    attribsInShader.Add(attributeBuffersInMesh[i]);
                 else
-                    Debug.LogWarning($"Vertex Attribute {attributeBuffers[i].AttributeName} has not been found in shader {material.Shader.FileName}, it will automatically be removed from the program.");
+                    Debug.LogWarning($"Vertex Attribute {attributeBuffersInMesh[i].AttributeName} has not been found in shader {material.Shader.FileName}, it will automatically be removed from the program.");
             }
+            
+            #endregion
 
             var attribsInShaderArray = attribsInShader.ToArray();
             

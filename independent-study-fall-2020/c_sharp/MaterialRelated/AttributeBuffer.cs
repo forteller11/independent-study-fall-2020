@@ -1,6 +1,6 @@
 ﻿namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
-    public struct AttributeBuffer
+    public class AttributeBuffer
     {
         public readonly string AttributeName;
         public readonly int Stride;
@@ -14,5 +14,7 @@
             Stride = stride;
             Buffer = buffer;
         }
+
+       
     }
 }

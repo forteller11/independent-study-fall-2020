@@ -1,5 +1,6 @@
 ﻿using System;
 using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
+using Indpendent_Study_Fall_2020.c_sharp.Scripts;
 using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.Scripts;
 using Indpendent_Study_Fall_2020.Scripts.Materials;
@@ -61,10 +62,10 @@ namespace Indpendent_Study_Fall_2020
             Globals.Init();
             SceneSetup.CreateGlobals();
             
-            #region materials
-            Globals.DrawManager.SetupStaticRenderingHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
-            #endregion
+            CreateMeshes.Create();
             
+            Globals.DrawManager.SetupStaticRenderingHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
+
             EntityManager.AddRangeToWorldAndRenderer(SceneSetup.CreateGameObjects());
             EntityManager.InvokeOnLoad();
         }
