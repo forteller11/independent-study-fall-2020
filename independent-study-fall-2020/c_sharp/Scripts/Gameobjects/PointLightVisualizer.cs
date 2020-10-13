@@ -11,7 +11,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public int Index;
 
-        public PointLightVisualizer(CreateMaterials.MaterialName materialName, int index) : base(materialName)
+        public PointLightVisualizer(CreateMaterials.MaterialType materialType, int index) : base(materialType)
         {
             Index = index;
             Scale *= 0.2f;
@@ -25,7 +25,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         }
 
 
-        public override void SendUniformsPerEntity(Material material)
+        public override void SendUniformsPerObject(Material material)
         {
             UniformSender.SendTransformMatrices(this, material);
             UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color,1), false);

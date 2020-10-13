@@ -1,4 +1,5 @@
-﻿using Indpendent_Study_Fall_2020.Helpers;
+﻿using System;
+using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using OpenTK.Graphics.OpenGL4;
 
@@ -9,14 +10,13 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public const string DiffuseColorSampler = "Color";
         public const string NormalMapSampler = "Normal";
         public const string SpecularMapSampler = "Gloss";
-        // public const string FrameBufferSampler = "Buffer";
         
-        public NormalMaterial(CreateMaterials.MaterialName name, ShaderProgram shaderProgram, AttributeBuffer[] vaoAndBuffers, string diffuseTexture, string normalMap, string specularMap) : base(name, shaderProgram)
+        public NormalMaterial(CreateMaterials.MaterialType type, ShaderProgram shaderProgram, AttributeBuffer[] vaoAndBuffers, string diffusePath, string normalPath, string specularPath, Action<Material> perMatSender) : base(type, shaderProgram, perMatSender)
         {
             FeedBuffersAndCreateVAO(null, vaoAndBuffers);
-            SetupAndAttachTexture(diffuseTexture, DiffuseColorSampler, TextureUnit.Texture0);
-            SetupAndAttachTexture(normalMap, NormalMapSampler, TextureUnit.Texture1);
-            SetupAndAttachTexture(specularMap, SpecularMapSampler, TextureUnit.Texture2);
+            SetupSampler(DiffuseColorSampler, Texture.FromFile(diffusePath, TextureUnit.Texture0));
+            SetupSampler(NormalMapSampler, Texture.FromFile(normalPath, TextureUnit.Texture1));
+            SetupSampler(SpecularMapSampler, Texture.FromFile(specularPath, TextureUnit.Texture2));
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Indpendent_Study_Fall_2020
     public class TKWindow : GameWindow
     {
 
-        private EntityManager _entityManager;
-        
         #region initialise
         public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
         public TKWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device) : base(width, height, mode, title, options, device) { }
@@ -55,19 +53,20 @@ namespace Indpendent_Study_Fall_2020
         
         protected override void OnLoad(EventArgs e)
         {
+
             base.OnLoad(e);
             
             GL.ClearColor(0f,0f,0f,1f);
             
             Globals.Init();
             SceneSetup.CreateGlobals();
-
-            _entityManager = new EntityManager();
-            var entities = SceneSetup.CreateGameObjects();
-
-            Globals.DrawManager.SetupDrawHierarchy(null, CreateMaterials.Create(), entities);
             
-            _entityManager.InvokeOnLoad();
+            #region materials
+            Globals.DrawManager.SetupStaticRenderingHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
+            #endregion
+            
+            EntityManager.AddRangeToWorldAndRenderer(SceneSetup.CreateGameObjects());
+            EntityManager.InvokeOnLoad();
         }
 
         protected override void OnUnload(EventArgs e)
@@ -81,12 +80,13 @@ namespace Indpendent_Study_Fall_2020
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            _entityManager.RefreshUpdateEventArgs(e);
+
+            EntityManager.RefreshUpdateEventArgs(e);
       
-            Globals.Update(_entityManager.UpdateEventArgs);
-            _entityManager.InvokeOnUpdate();
+            Globals.Update(EntityManager.EntityUpdateEventArgs);
+            EntityManager.InvokeOnUpdate();
             
-            if (_entityManager.UpdateEventArgs.KeyboardState.IsKeyDown(Key.Escape))
+            if (EntityManager.EntityUpdateEventArgs.KeyboardState.IsKeyDown(Key.Escape))
                 Exit();
             
             base.OnUpdateFrame(e);

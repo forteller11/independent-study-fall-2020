@@ -11,19 +11,19 @@ namespace Indpendent_Study_Fall_2020.Scripts
     {
         public static Entity[] CreateGameObjects()
         {
-            List<Entity> entities = new List<Entity>();
+            List<Entity> gameObjects = new List<Entity>();
             
-            entities.Add(new CameraControllerSingleton(CreateMaterials.MaterialName.None));
+            gameObjects.Add(new CameraControllerSingleton(CreateMaterials.MaterialType.None));
             
-            entities.Add(new Sphere(CreateMaterials.MaterialName.Dirt, new Vector3(-1,0,0)));
-            entities.Add(new Sphere(CreateMaterials.MaterialName.Dirt, new Vector3(0,0,0)));
-            entities.Add(new Sphere(CreateMaterials.MaterialName.Tile, new Vector3(1,0,0)));
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Dirt, new Vector3(-3,0,4)));
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Dirt, new Vector3(0,0,0)));
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Tile, new Vector3(3,0,4)));
 
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                entities.Add(new PointLightVisualizer(CreateMaterials.MaterialName.Solid, i));
+                gameObjects.Add(new PointLightVisualizer(CreateMaterials.MaterialType.Solid, i));
 
-            return entities.ToArray();
+            return gameObjects.ToArray();
         }
 
         public static void CreateGlobals()

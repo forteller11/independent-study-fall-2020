@@ -28,7 +28,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         /// <summary>
         /// loads file using sixlabors library... turn cookOnLoad off if you're going to manipulate image on cpu before uploading to openGL
         /// </summary>
-        public static Texture FromFile(string fileName, TextureUnit textureUnit, bool cookOnLoad = true) //turn cookOnLoad off if you're going to manipulate image on cpu before uploading to openGL
+        public static Texture FromFile(string fileName, TextureUnit textureUnit) //turn cookOnLoad off if you're going to manipulate image on cpu before uploading to openGL
         {
             var texture = new Texture();
 
@@ -36,12 +36,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             texture.Use();
             texture.ApplyTextureSettings();
             texture.LoadImage(fileName);
-
-            if (cookOnLoad)
-            {
-                texture.CookSixLaborsImageToByteArray();
-                texture.UploadToGPUTextureUnit();
-            }
+            texture.CookSixLaborsImageToByteArray();
+            
+            texture.UploadToShader();
 
             return texture;
         }
@@ -56,9 +53,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             texture.Width = width;
             texture.Height = height;
             texture.CreateEmptyByteArray();
-            
-            texture.UploadToGPUTextureUnit();
 
+            texture.UploadToShader();
+            
             return texture;
         }
         
@@ -103,7 +100,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindTexture(TextureTarget.Texture2D, Handle);
         }
         
-        public void UploadToGPUTextureUnit()
+        public void UploadToShader()
         {
             Use();
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);

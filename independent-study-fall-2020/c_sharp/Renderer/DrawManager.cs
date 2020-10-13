@@ -6,8 +6,9 @@ using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using Indpendent_Study_Fall_2020.Scripts;
+using OpenTK.Graphics.ES10;
 using OpenTK.Graphics.OpenGL4;
-
+using GL = OpenTK.Graphics.OpenGL4.GL;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
@@ -15,98 +16,73 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     {
         //deals with batching renders of gameobjects with same materials together
 
+        public List<FBOBatch> BatchHierachies = new List<FBOBatch>();
+        //todo loop through everything 
 
-        
-        public List<MaterialBatch> RootBatches { get; private set; } = new List<MaterialBatch>();
-
-        //sort by
-        //fbos
-        //-->materials
-        //---->gameobjects
-
-        public void
-            SetupDrawHierarchy(FBO[] fbos, Material[] materials, Entity[] entities)
+        public void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials)
         {
-            // ThrowIfDuplicateNames(fbos);
-            ThrowIfDuplicateNames<IUniqueName>(materials);
-
-            // for (int i = 0; i < fbos.Length; i++)
-            //     AddFBO(fbos[i]);
-
+            ThrowIfDuplicateTypeIDs(materials);
+            ThrowIfDuplicateTypeIDs(fbos);
+            
+            for (int i = 0; i < fbos.Length; i++) 
+                AddFBO(fbos[i]);
+            
             for (int i = 0; i < materials.Length; i++)
                 AddMaterial(materials[i]);
-
-            for (int i = 0; i < entities.Length; i++)
-                AddEntity(entities[i]);
             
         }
 
-        public void AddFBO(FBO fbo)
+        private void AddFBO(FBO fbo)
         {
-            throw new NotImplementedException();
-            // RootBatches.Add(new FBOBatch(fbo));
+            BatchHierachies.Add(new FBOBatch(fbo));
         }
-        
-        public void AddMaterial(Material material)
+        private void AddMaterial(Material material)
         {
-            RootBatches.Add(new MaterialBatch(material));
-            return;
-            if (material.Name == CreateMaterials.MaterialName.None)
-                throw new DataException("Material Name is None which is Invalid!");
-            // for (int i = 0; i < RootBatches.Count; i++)
-            // {
-            //     if (material.FBOName == RootBatches[i].FBO.Name)
-            //     {
-            //         RootBatches[i].MaterialBatches.Add(new MaterialBatch(material));
-            //         return;
-            //     }
-            // }
-            
-            throw new DataException($"There are no FBO's which match the intended material fbo of {material.FBOName}. Check for typos.");
+            for (int i = 0; i < BatchHierachies.Count; i++)
+            {
+                FBOBatch fboBatch = BatchHierachies[i];
+                if (fboBatch.FBO.Type == material.FBOType)
+                {
+                    fboBatch.MaterialBatches.Add(new MaterialBatch(material));
+                    return;
+                }
+
+            }
+
         }
 
         public void AddEntity(Entity entity)
         {
-            if (entity.MaterialName == CreateMaterials.MaterialName.None)
+            if (entity.MaterialType == CreateMaterials.MaterialType.None)
                 return;
             
-            
-            for (int i = 0; i < RootBatches.Count; i++)
+            for (int fboI = 0; fboI < BatchHierachies.Count; fboI++)
             {
-                var materialBatch = RootBatches[i];
-                    if (entity.MaterialName == materialBatch.Material.Name)
+                FBOBatch fboBatch = BatchHierachies[fboI];
+                for (int matI = 0; matI < fboBatch.MaterialBatches.Count; matI++)
+                {
+                    var materialBatch = fboBatch.MaterialBatches[matI];
+                    if (entity.MaterialType == materialBatch.Material.Type)
                     {
                         materialBatch.Entities.Add(entity);
                         return;
                     }
-                
+
+                }
+
             }
             
-            // for (int i = 0; i < RootBatches.Count; i++)
-            // {
-            //     for (int j = 0; j < RootBatches[i].MaterialBatches.Count; j++)
-            //     {
-            //         var materialBatch = RootBatches[i].MaterialBatches[j];
-            //         if (entity.MaterialName == materialBatch.Material.Name)
-            //         {
-            //             materialBatch.Entities.Add(entity);
-            //             return;
-            //         }
-            //     }
-            // }
-            
-            throw new DataException($"Entity is trying to use material {entity.MaterialName} but it doesn't exist! Check for typos.");
+            throw new DataException($"Entity with material {entity.MaterialType} couldn't be found in draw manager!");
         }
         
-
-        public void ThrowIfDuplicateNames<T>(T[] uniqueNames) where T : IUniqueName
+        public void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID
         {
             for (int i = 0; i < uniqueNames.Length; i++)
             {
                 int identicalNames = 0;
                 for (int j = 0; j < uniqueNames.Length; j++)
                 {
-                    if (uniqueNames[i].GetUniqueName() == uniqueNames[j].GetUniqueName())
+                    if (uniqueNames[i].GetTypeID() == uniqueNames[j].GetTypeID())
                         identicalNames++;
                 }
 
@@ -114,73 +90,31 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     throw new DataException($"There are multiple {uniqueNames[i].GetType().Name} with the same name!");
             }
         }
+        
 
 
         public void RenderFrame()
         {
-            for (int materialIndex = 0; materialIndex < RootBatches.Count; materialIndex++)
+            for (int fboIndex = 0; fboIndex < BatchHierachies.Count; fboIndex++)
             {
+                FBOBatch fboBatch = BatchHierachies[fboIndex];
+                fboBatch.FBO.SetDrawingStates();
+                
+                for (int materialIndex = 0; materialIndex < fboBatch.MaterialBatches.Count; materialIndex++)
+                {
+                    MaterialBatch materialBatch = fboBatch.MaterialBatches[materialIndex];
+                    materialBatch.Material.SetDrawingStates();
 
-                    MaterialBatch materialBatch = RootBatches[materialIndex];
-                    materialBatch.Material.PrepareBatchForDrawing();
-                    
                     for (int entityIndex = 0; entityIndex < materialBatch.Entities.Count; entityIndex++)
                     {
                         Entity entity = materialBatch.Entities[entityIndex];
-                        entity.SendUniformsPerEntityType(materialBatch.Material);
-                            
+                        entity.SendUniformsPerObject(materialBatch.Material);
+
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                     }
-
-                
+                }
             }
-
-            return;
-            // for (int fboIndex = 0; fboIndex < RootBatches.Count; fboIndex++)
-            // {
-            //     FBOBatch currentFboBatch = RootBatches[fboIndex];
-            //     // currentFboBatch.FBO.PrepareForDrawing();
-            //     FBO.UseDefaultBuffer();
-            //     
-            //     for (int matIndex = 0; matIndex < currentFboBatch.MaterialBatches.Count; matIndex++)
-            //     {
-            //         MaterialBatch materialBatch = currentFboBatch.MaterialBatches[matIndex];
-            //         materialBatch.Material.PrepareBatchForDrawing();
-            //         
-            //         // for (int sameEntityIndex = 0; sameEntityIndex < materialBatch.SameTypeEntities.Count; sameEntityIndex++)
-            //         // {
-            //         //     SameTypeEntityBatch sameTypeEntityBatch = materialBatch.SameTypeEntities[sameEntityIndex];
-            //         //     sameTypeEntityBatch.SetGLStates();
-            //             
-            //             for (int entityIndex = 0; entityIndex < materialBatch.Entities.Count; entityIndex++)
-            //             {
-            //                 Entity entity = materialBatch.Entities[entityIndex];
-            //                 entity.SendUniformsPerEntityType(materialBatch.Material);
-            //                 
-            //                 GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
-            //             }
-            //         // }
-            //     }
-            // }
-
-//             if (VAO.UseIndices == false)
-// //            {
-// ////                Debug.Log("draw arrays");
-            // GL.DrawArrays(PrimitiveType.Triangles, 0, VAO.VerticesCount);
-//            }
-//            else
-//            {
-//                Debug.Log("draw elements");
-//                GL.DrawElements(PrimitiveType.Triangles, VAO.IndicesBuffer.Length, DrawElementsType.UnsignedInt);
-//                GL.DrawElementsInstanced(PrimitiveType.Triangles,
-//                    0,
-//                    DrawElementsType.UnsignedInt,
-//                    Indices,
-//                    ref VAO.VerticesCount);
-//            }
-
-            //todo
-//            GL.DrawElementsInstanced(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedInt, ref Indices, int 0);
+            
         }
-}
+    }
 }

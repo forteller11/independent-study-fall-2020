@@ -8,16 +8,16 @@ using OpenTK.Graphics.OpenGL4;
 //setup test shader
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
-    public class FBO : IUniqueName
+    public class FBO : ITypeID
     {
         public readonly int Handle = 0;
-        public readonly CreateFBOs.FBOName Name;
+        public readonly CreateFBOs.FBOType Type;
         public Texture Texture { get; private set; }
 
-        public FBO(CreateFBOs.FBOName name, int width, int height, FramebufferAttachment attachment, TextureUnit textureUnit)
+        public FBO(CreateFBOs.FBOType type, int width, int height, FramebufferAttachment attachment, TextureUnit textureUnit)
         {
             Handle = GL.GenFramebuffer();
-            Name = name;
+            Type = type;
             Use();
             AssignTexture(Texture.Empty(width, height, textureUnit), attachment);
             var fboStatus = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -30,7 +30,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         /// </summary>
         public FBO()
         {
-            Name = CreateFBOs.FBOName.Default;
+            Type = CreateFBOs.FBOType.Default;
             Handle = 0;
             Texture = null;
         }
@@ -40,7 +40,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
         }
 
-        public void PrepareForDrawing()
+        public void SetDrawingStates()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
         }
@@ -58,6 +58,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             // GL.FramebufferTexture(FramebufferTarget.Framebuffer, attachment, texture.Handle, 0);
         }
 
-        public string GetUniqueName() => Name.ToString();
+        public int GetTypeID() => (int) Type;
     }
 }

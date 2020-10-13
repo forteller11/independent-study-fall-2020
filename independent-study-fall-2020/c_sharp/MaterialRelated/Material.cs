@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Indpendent_Study_Fall_2020.Helpers;
@@ -14,35 +13,30 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     /// <summary>
     /// Responsible for setting up a shader, it's textures, it's vertex attributes and setting its uniforms
     /// </summary>
-    public class Material : IUniqueName
+    public class Material : ITypeID
     {
-        public readonly CreateMaterials.MaterialName Name;
-        public readonly CreateFBOs.FBOName FBOName;
+        public readonly CreateMaterials.MaterialType Type;
+        public readonly CreateFBOs.FBOType FBOType;
         public ShaderProgram Shader { get; private set; }
         public readonly Dictionary<string, int> UniformLocations;
         public readonly Dictionary<string, int> VertexAttribLocations;
         private List<Texture> _textures = new List<Texture>();
         public VAOAndBuffers VAO;
-        
-        const bool DEBUG = false;
+        public Action<Material> PerMaterialAttributeSender;
+        private const bool DEBUG = false; 
 
-
-        public Material(CreateMaterials.MaterialName name, ShaderProgram shaderProgram, CreateFBOs.FBOName fboName = CreateFBOs.FBOName.Default)
+        public Material(CreateMaterials.MaterialType type, ShaderProgram shaderProgram, Action<Material> perMaterialAttributeSender)
         {
-            Name = name;
+            Type = type;
             Shader = shaderProgram;
-            FBOName = fboName;
+            PerMaterialAttributeSender = perMaterialAttributeSender;
             
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
-            UniformLocations = new Dictionary<string, int>(uniformCount); //todo uniforms in shaders prob?
-            
-            
-            Debug.Log($"Material Compilation Complete: {Name}");
-            
-            
-            for (int i = 0; i < uniformCount; i++)  
+            UniformLocations = new Dictionary<string, int>(uniformCount);
+            Debug.Log(Type);
+            for (int i = 0; i < uniformCount; i++) 
             {
-                var uniformName = GL.GetActiveUniform(Shader.Handle, i, out int size, out var type);
+                var uniformName = GL.GetActiveUniform(Shader.Handle, i, out int size, out var uniformType);
                 if (DEBUG)
                 {
                     Debug.Log(uniformName);
@@ -50,7 +44,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                     Debug.Log("size: " + size);
                     Debug.Log('\n');
                 }
-
 
                 int location = GL.GetUniformLocation(Shader.Handle, uniformName);
                 UniformLocations.Add(uniformName, location);
@@ -60,9 +53,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             VertexAttribLocations = new Dictionary<string, int>(attribCount);
             for (int i = 0; i < attribCount; i++)
             {
-                var attribName = GL.GetActiveAttrib(Shader.Handle, i, out int size, out var type);
+                var attribName = GL.GetActiveAttrib(Shader.Handle, i, out int size, out var uniformType);
                 int location = GL.GetAttribLocation(Shader.Handle, attribName);
-                VertexAttribLocations.Add(attribName, location); 
+                VertexAttribLocations.Add(attribName, location);
             }
             
         }
@@ -72,7 +65,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             if (VertexAttribLocations.TryGetValue(name, out int location))
                 return location;
             else
-                throw new Exception($"Attribute {name} not found at material {Name}");
+                throw new Exception($"Attribute {name} not found at material {Type}");
         }
         
         public void FeedBuffersAndCreateVAO(uint[] indices, params AttributeBuffer[] attributeBuffers)
@@ -81,32 +74,19 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         }
 
         
-        public void SetupAndAttachTexture(string fileName, string samplerName, TextureUnit textureUnit)
-        {
-            var newTexture = Texture.FromFile(fileName, textureUnit);
-            AttachTexture(newTexture, samplerName, textureUnit);
-        }
+        // public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum)
+        // {
+        //     Shader.Use();
+        //     var newTexture = Texture.FromFile(fileName, textureUnitEnum);
+        //     _textures.Add(newTexture);
+        //     Shader.SetUniformInt(samplerName, textureUnitEnum.ToIndex());
+        // }
 
-        public void AttachTexture(Texture texture, string samplerName, TextureUnit textureUnit)
+        public void SetupSampler(string samplerName, Texture texture)
         {
-            if (texture.TextureUnit != textureUnit)
-                throw new ArgumentException($"TextureUnit setup in {Name} does not match TextureUnit set in Texture... must be identical!");
-            
             Shader.Use();
             _textures.Add(texture);
-            Shader.SetUniformInt(samplerName, textureUnit.ToIndex());
-            // texture.UploadToGPU();
-        }
-        
-        public void AttachFrameBuffer(FBO fbo, string samplerName, TextureUnit textureUnit)
-        {
-            if (fbo.Texture.TextureUnit != textureUnit)
-                throw new ArgumentException($"TextureUnit setup in {Name} does not match TextureUnit set in FrameBuffer's texture... must be identical!");
-            
-            Shader.Use();
-            _textures.Add(fbo.Texture);
-            Shader.SetUniformInt(samplerName, textureUnit.ToIndex());
-            fbo.Texture.UploadToGPUTextureUnit();
+            Shader.SetUniformInt(samplerName, texture.TextureUnit.ToIndex());
         }
 
         public void UseAllAttachedTextures()
@@ -114,17 +94,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             for (int i = 0; i < _textures.Count; i++)
                 _textures[i].Use();
         }
-        
 
-        public void PrepareBatchForDrawing()
+        public void SetDrawingStates()
         {
             Shader.Use();
             UseAllAttachedTextures();
+            PerMaterialAttributeSender?.Invoke(this);
             GL.BindVertexArray(VAO.VAOHandle);
         }
 
-        public string GetUniqueName() => Name.ToString();
-
-
+        public int GetTypeID() => (int) Type;
     }
 }

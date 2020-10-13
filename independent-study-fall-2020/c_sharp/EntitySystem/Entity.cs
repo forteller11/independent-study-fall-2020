@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Numerics;
-using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK.Input;
@@ -12,7 +11,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     public abstract class Entity //todo... make mega object with flags... add physics component?
     {
         public readonly Guid GUID;
-        public CreateMaterials.MaterialName MaterialName; // "" means no material are being used
+        public readonly CreateMaterials.MaterialType MaterialType; // "" means no material are being used
         public Behaviors Flags;
         [Flags]
         public enum Behaviors
@@ -31,9 +30,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public Vector3 VelocityAngular;
         public float Mass;
 
-        public Entity(CreateMaterials.MaterialName materialName)
+        public Entity(CreateMaterials.MaterialType materialType)
         {
-            MaterialName = materialName;
+            MaterialType = materialType;
             GUID = Guid.NewGuid();
         }
         public virtual void OnLoad() { }
@@ -48,8 +47,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 //                }
 //            }
         }
-        public virtual void SendUniformsPerEntity(Material material) { }
-        public virtual void SendUniformsPerEntityType(Material material) { }
+        public virtual void SendUniformsPerObject(Material material) { }
+
         public virtual void OnClose() { }
 
         #region dictionary performance stuff
