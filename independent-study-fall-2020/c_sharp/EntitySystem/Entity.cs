@@ -12,7 +12,6 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     {
         public readonly Guid GUID;
         public readonly CreateMaterials.MaterialType MaterialType; // "" means no material are being used
-        public readonly CreateMaterials.MaterialType MeshType; // "" means no material are being used
 
         //todo only send pos/rot/scale if the values are dirty
         public Vector3 Position = new Vector3(0,0,0);

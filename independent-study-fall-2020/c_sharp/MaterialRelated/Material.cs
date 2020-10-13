@@ -21,7 +21,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public readonly Dictionary<string, int> UniformLocations;
         public readonly Dictionary<string, int> VertexAttribLocations;
         private List<Texture> _textures = new List<Texture>();
-        
+        public VAOAndBuffers VAO;
         public Action<Material> PerMaterialAttributeSender;
         private const bool DEBUG = false; 
 
