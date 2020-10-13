@@ -122,7 +122,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     for (int entityIndex = 0; entityIndex < materialBatch.Entities.Count; entityIndex++)
                     {
                         Entity entity = materialBatch.Entities[entityIndex];
-                        entity.SendUniformsPerObject(materialBatch.Material);
+                        
+                         if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
+                            entity.SendUniformsPerObject(materialBatch.Material);
+                         else 
+                             UniformSender.SendTransformMatrices(entity, materialBatch.Material);
 
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                     }
