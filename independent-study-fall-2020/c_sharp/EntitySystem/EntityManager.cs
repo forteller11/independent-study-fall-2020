@@ -22,7 +22,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static void AddToWorldAndRenderer(Entity entity)
         {
             _gameObjects.Add(entity);
-            Globals.DrawManager.AddEntity(entity);
+            DrawManager.AddEntity(entity);
         }
 
         // public void Remove(Entity entity) => _gameObjects.Remove(entity);

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.Scripts.Materials;
 using OpenTK.Graphics.OpenGL4;
@@ -14,12 +16,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public readonly CreateFBOs.FBOType Type;
         public Texture Texture { get; private set; }
 
-        public FBO(CreateFBOs.FBOType type, int width, int height, FramebufferAttachment attachment, TextureUnit textureUnit)
+        public FBO(CreateFBOs.FBOType type, int width, int height, FramebufferAttachment attachment, PixelInternalFormat internalFormat, TextureUnit textureUnit)
         {
             Handle = GL.GenFramebuffer();
             Type = type;
             Use();
-            AssignTexture(Texture.Empty(width, height, textureUnit), attachment);
+            AssignTexture(Texture.Empty(width, height, internalFormat, textureUnit), attachment);
             var fboStatus = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (fboStatus != FramebufferErrorCode.FramebufferComplete)
                 throw new Exception($"Frame Buffer Exception! {fboStatus}");
@@ -43,6 +45,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void SetDrawingStates()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
+            if (Type == CreateFBOs.FBOType.Default)
+                GL.Viewport(DrawManager.TKWindowSize);
+            else
+                GL.Viewport(0,0,Texture.Width,Texture.Height);
+            
         }
 
         public static void UseDefaultBuffer()
@@ -55,7 +62,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             Texture = texture;
              GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0); //todo fix assign tex
-            // GL.FramebufferTexture(FramebufferTarget.Framebuffer, attachment, texture.Handle, 0);
         }
 
         public int GetTypeID() => (int) Type;

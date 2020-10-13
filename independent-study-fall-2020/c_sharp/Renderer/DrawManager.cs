@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using Indpendent_Study_Fall_2020.Scripts;
+using Indpendent_Study_Fall_2020.Scripts.Materials;
+using OpenTK;
 using OpenTK.Graphics.ES10;
 using OpenTK.Graphics.OpenGL4;
 using GL = OpenTK.Graphics.OpenGL4.GL;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
-    public class DrawManager
+    public static class DrawManager
     {
-        //deals with batching renders of gameobjects with same materials together
+        public static Size TKWindowSize;
+        
+        public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
+ 
 
-        public List<FBOBatch> BatchHierachies = new List<FBOBatch>();
-        //todo loop through everything 
-
-        public void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials)
+        public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials)
         {
             ThrowIfDuplicateTypeIDs(materials);
             ThrowIfDuplicateTypeIDs(fbos);
@@ -32,11 +35,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             
         }
 
-        private void AddFBO(FBO fbo)
+        private static void AddFBO(FBO fbo)
         {
             BatchHierachies.Add(new FBOBatch(fbo));
         }
-        private void AddMaterial(Material material)
+        private static void AddMaterial(Material material)
         {
             for (int i = 0; i < BatchHierachies.Count; i++)
             {
@@ -52,7 +55,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         }
 
         //add entity to appropriate material as sepcefied by material type, and if has createcastshadows flag, add to shadowMap material as well
-        public void AddEntity(Entity entity) 
+        public static void AddEntity(Entity entity) 
         {
             if (entity.MaterialType == CreateMaterials.MaterialType.ShadowMap)
                 throw new DataException("Shadow material should not be set in material set, but instead via the entities BehaviorFlags enum");
@@ -88,8 +91,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             if (foundMaterial == false)
                 throw new DataException($"Entity with material {entity.MaterialType} couldn't be found in draw manager!");
         }
-        
-        public void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID
+
+        public static void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID
         {
             for (int i = 0; i < uniqueNames.Length; i++)
             {
@@ -107,7 +110,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         
 
 
-        public void RenderFrame()
+        public static void RenderFrame()
         {
             for (int fboIndex = 0; fboIndex < BatchHierachies.Count; fboIndex++)
             {
@@ -123,13 +126,21 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     {
                         Entity entity = materialBatch.Entities[entityIndex];
                         
-                         if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
-                            entity.SendUniformsPerObject(materialBatch.Material);
-                         else 
-                             UniformSender.SendTransformMatrices(entity, materialBatch.Material);
+                         // if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
+                         //    entity.SendUniformsPerObject(materialBatch.Material);
+                         // else 
+                         //     UniformSender.SendTransformMatrices(entity, materialBatch.Material);
+                         //
+                         entity.SendUniformsPerObject(materialBatch.Material);
 
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                     }
+                }
+
+                if (fboBatch.FBO.Type != CreateFBOs.FBOType.Default)
+                {
+                    GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.Texture.Handle);
+                    GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
                 }
             }
             

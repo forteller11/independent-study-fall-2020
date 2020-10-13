@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
 using Indpendent_Study_Fall_2020.c_sharp.Scripts;
 using Indpendent_Study_Fall_2020.EntitySystem;
@@ -64,8 +65,9 @@ namespace Indpendent_Study_Fall_2020
             
             CreateMeshes.Create();
             
-            Globals.DrawManager.SetupStaticRenderingHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
-
+            DrawManager.SetupStaticRenderingHierarchy(CreateFBOs.Create(), CreateMaterials.Create());
+            DrawManager.TKWindowSize = new Size(Width, Height);
+            
             EntityManager.AddRangeToWorldAndRenderer(SceneSetup.CreateGameObjects());
             EntityManager.InvokeOnLoad();
         }
@@ -98,7 +100,7 @@ namespace Indpendent_Study_Fall_2020
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
 
-            Globals.DrawManager.RenderFrame();
+            DrawManager.RenderFrame();
 
             base.OnRenderFrame(e);
             SwapBuffers();
@@ -108,7 +110,8 @@ namespace Indpendent_Study_Fall_2020
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            GL.Viewport(0,0, Width, Height);
+            DrawManager.TKWindowSize = new Size(Width, Height);
+            GL.Viewport(DrawManager.TKWindowSize);
         }
         
     }

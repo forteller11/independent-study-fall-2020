@@ -10,7 +10,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class Texture
     {
 
-        public TextureUnit TextureUnit;
+        public TextureUnit TextureUnit { get; private set; }
+        public PixelInternalFormat InternalPixelFormat { get; private set; }
         
         public readonly int Handle;
         
@@ -31,22 +32,23 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public static Texture FromFile(string fileName, TextureUnit textureUnit) //turn cookOnLoad off if you're going to manipulate image on cpu before uploading to openGL
         {
             var texture = new Texture();
-
+            texture.InternalPixelFormat = PixelInternalFormat.Rgba;
             texture.TextureUnit = textureUnit;
             texture.Use();
             texture.ApplyTextureSettings();
             texture.LoadImage(fileName);
             texture.CookSixLaborsImageToByteArray();
-            
+
             texture.UploadToShader();
 
             return texture;
         }
         
-        public static Texture Empty(int width, int height, TextureUnit textureUnit)
+        public static Texture Empty(int width, int height, PixelInternalFormat internalFormat, TextureUnit textureUnit)
         {
             var texture = new Texture();
 
+            texture.InternalPixelFormat = internalFormat;
             texture.TextureUnit = textureUnit;
             texture.Use();
             texture.ApplyTextureSettings();
@@ -103,7 +105,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void UploadToShader()
         {
             Use();
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalPixelFormat, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
@@ -113,7 +115,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat); //tex wrap mode
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling up, tex interp
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling down
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.NearestMipmapLinear); //scaling down
         }
 
 
