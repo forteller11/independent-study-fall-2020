@@ -11,6 +11,7 @@ using Indpendent_Study_Fall_2020.Scripts.Materials;
 using OpenTK;
 using OpenTK.Graphics.ES10;
 using OpenTK.Graphics.OpenGL4;
+using ClearBufferMask = OpenTK.Graphics.OpenGL4.ClearBufferMask;
 using GL = OpenTK.Graphics.OpenGL4.GL;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
@@ -20,7 +21,17 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static Size TKWindowSize;
         
         public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
- 
+
+        private static int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
+
+        public static void CycleFBOBlit()
+        {
+            _blitOffscreenFBOsIndex++;
+            Debug.Log(_blitOffscreenFBOsIndex);
+            if (_blitOffscreenFBOsIndex >= BatchHierachies.Count-1)
+                _blitOffscreenFBOsIndex = -1;
+            Debug.Log(_blitOffscreenFBOsIndex);
+        }
 
         public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials)
         {
@@ -126,22 +137,43 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     {
                         Entity entity = materialBatch.Entities[entityIndex];
                         
-                         // if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
-                         //    entity.SendUniformsPerObject(materialBatch.Material);
-                         // else 
-                         //     UniformSender.SendTransformMatrices(entity, materialBatch.Material);
-                         //
-                         entity.SendUniformsPerObject(materialBatch.Material);
+                         if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
+                            entity.SendUniformsPerObject(materialBatch.Material);
+                         else 
+                             UniformSender.SendTransformMatrices(entity, materialBatch.Material);
+                         
+                         // entity.SendUniformsPerObject(materialBatch.Material);
 
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                     }
                 }
 
-                if (fboBatch.FBO.Type != CreateFBOs.FBOType.Default)
+                if (fboBatch.FBO.Type != CreateFBOs.FBOType.Default) //todo do i have to do this?
                 {
                     GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.Texture.Handle);
                     GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
                 }
+            }
+            
+            DebugFBODrawing();
+        }
+
+        private static void DebugFBODrawing()
+        {
+            if (_blitOffscreenFBOsIndex == -1)
+                return;
+
+            for (int i = 0; i < BatchHierachies.Count-1; i++) //assuming last fbo is always default
+            {
+                var fbo = BatchHierachies[i].FBO;
+
+                GL.BindFramebuffer(FramebufferTarget.ReadFramebuffer, BatchHierachies[i].FBO.Handle);
+                GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
+                GL.BlitFramebuffer(
+                        0, 0, fbo.Texture.Width, fbo.Texture.Height,
+                        0, 0, TKWindowSize.Width, TKWindowSize.Height,
+                        ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+                
             }
             
         }
