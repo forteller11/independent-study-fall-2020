@@ -49,6 +49,14 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             
             return texture;
         }
+        
+        public static Texture EmptyLuminance(int width, int height, TextureUnit textureUnit)
+        {
+            var texture = EmptyFormatless(width, height, textureUnit, 1);
+            texture.UploadToShader(PixelInternalFormat.Luminance, PixelFormat.Luminance, PixelType.UnsignedByte);
+            
+            return texture;
+        }
 
         private static Texture EmptyFormatless(int width, int height, TextureUnit textureUnit, int channels)
         {
