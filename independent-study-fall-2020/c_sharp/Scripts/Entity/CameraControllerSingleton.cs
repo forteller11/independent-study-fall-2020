@@ -18,8 +18,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         
         public override void OnLoad()
         {
-            Globals.CameraPosition = new Vector3(0,0,2);
-            Globals.CameraRotation = Quaternion.Identity;
+            Globals.MainCamera.Position = new Vector3(0,0,2);
+            Globals.MainCamera.Rotation = Quaternion.Identity;
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
@@ -40,7 +40,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
 
-            Globals.CameraRotation =  rotationHorz * Globals.CameraRotation * rotationVert;
+            Globals.MainCamera.Rotation =  rotationHorz * Globals.MainCamera.Rotation * rotationVert;
             // todo dont allow rotations past 90 degrees DOWN
         }
         void Move(EntityUpdateEventArgs eventArgs)
@@ -58,7 +58,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             if (keyboardState.IsKeyDown(Key.Space))  input += Vector3.UnitY;
 
             Vector3 movementAbsolute = input * accelerationThisFrame;
-            Vector3 movementRelative = Globals.CameraRotation * movementAbsolute;
+            Vector3 movementRelative = Globals.MainCamera.Rotation * movementAbsolute;
 
 
             Vector2 movementHorzontal = Vector2.Zero; //make horizontal speed consistent no matter the rotation of the camera
@@ -73,7 +73,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
        
 ;
             
-            Globals.CameraPosition += new Vector3(movementHorzontal.X, movementAbsolute.Y, movementHorzontal.Y);
+            Globals.MainCamera.Position += new Vector3(movementHorzontal.X, movementAbsolute.Y, movementHorzontal.Y);
         }
 
         
