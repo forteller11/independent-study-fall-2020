@@ -33,8 +33,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public override void SendUniformsPerObject(Material material)
         {
-            UniformSender.SendTransformMatrices(this, material);
-            UniformSender.SendLights(this, material);
+            UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
+            UniformSender.SendLights(material);
         }
         
     }
