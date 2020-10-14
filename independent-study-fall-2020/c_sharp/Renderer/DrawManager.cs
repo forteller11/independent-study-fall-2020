@@ -138,7 +138,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                          if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
                             entity.SendUniformsPerObject(materialBatch.Material);
                          else 
-                             UniformSender.SendTransformMatrices(entity, materialBatch.Material, Globals.ShadowCastingLight);
+                             UniformSender.SendTransformMatrices(entity, materialBatch.Material);
                          
                          // entity.SendUniformsPerObject(materialBatch.Material);
 

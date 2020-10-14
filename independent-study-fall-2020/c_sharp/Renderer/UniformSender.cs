@@ -14,25 +14,25 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// <summary>
         /// Sends "ModelToWorld" and "WorldToView" uniform matrices to shader
         /// </summary>
-        public static void SendTransformMatrices(Entity entity, Material material, Camera camera)
+        public static void SendTransformMatrices(Entity entity, Material material)
         {
             var modelToWorldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(entity.Rotation));
-            var worldToViewTranslation = Matrix4.CreateTranslation(-camera.Position);
+            var worldToViewTranslation = Matrix4.CreateTranslation(-Globals.CameraPosition);
             var modelToWorldTranslation = Matrix4.CreateTranslation(entity.Position);
-            var worldToViewRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(camera.Rotation));
+            var worldToViewRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(Globals.CameraRotation));
             var modelToWorldScale = Matrix4.CreateScale(entity.Scale); //transponse?
             
             //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
             //todo consolidate matrices and refactor.... then go bk into shader
             var modelToWorld = modelToWorldRotation * modelToWorldScale  * modelToWorldTranslation ;
-            var worldToView = worldToViewTranslation * worldToViewRotation * camera.Projection;
+            var worldToView = worldToViewTranslation * worldToViewRotation * Globals.CameraPerspective;
             var modelToView = modelToWorld * worldToView;
             
             SetMatrix4(material, "ModelToView", modelToView, false);
             SetMatrix4(material, "WorldToView", worldToView, false);
             SetMatrix4(material, "ModelRotation", modelToWorldRotation, false);
             SetMatrix4(material, "ModelToWorld", modelToWorld, false);
-            SetVector3(material, "CamPosition", camera.Position, false); //todo batch with like materials
+            SetVector3(material, "CamPosition", Globals.CameraPosition, false); //todo batch with like materials
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
         /// </summary>
         //todo optimise uniforms which should only be changed once per frame, not per object... also don't flatten every time you call SendLights...
         //todo send via uniform buffer object? https://learnopengl.com/Advanced-OpenGL/Advanced-GLSL
-        public static void SendLights(Material material)
+        public static void SendLights(Entity entity, Material material)
         {
             SetInt(material, $"{DIR_LIGHT}Length", Globals.DirectionLights.Count);
             for (int i = 0; i < Globals.DirectionLights.Count; i++)
@@ -57,11 +57,6 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
                 SetVector3(material, $"{POINT_LIGHT}[{i}].Color",    Globals.PointLights[i].Color, false);
                 SetVector3(material, $"{POINT_LIGHT}[{i}].Position", Globals.PointLights[i].Position, false);
             }
-        }
-
-        public static void SendShadowMapInfo()
-        {
-            
         }
 
         //todo set element vec
