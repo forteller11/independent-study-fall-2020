@@ -11,8 +11,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     {
 
         public TextureUnit TextureUnit { get; private set; }
-        public PixelInternalFormat InternalPixelFormat { get; private set; }
-        
+
         public readonly int Handle;
         
         public byte[] Colors; //todo make array for perf
@@ -32,32 +31,34 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public static Texture FromFile(string fileName, TextureUnit textureUnit) //turn cookOnLoad off if you're going to manipulate image on cpu before uploading to openGL
         {
             var texture = new Texture();
-            texture.InternalPixelFormat = PixelInternalFormat.Rgba;
             texture.TextureUnit = textureUnit;
             texture.Use();
             texture.ApplyTextureSettings();
             texture.LoadImage(fileName);
             texture.CookSixLaborsImageToByteArray();
 
-            texture.UploadToShader();
+            texture.UploadToShader(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte);
 
             return texture;
         }
         
-        public static Texture Empty(int width, int height, PixelInternalFormat internalFormat, TextureUnit textureUnit)
+        public static Texture EmptyRGBA(int width, int height, TextureUnit textureUnit)
+        {
+            var texture = EmptyFormatless(width, height, textureUnit, 4);
+            texture.UploadToShader(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte);
+            
+            return texture;
+        }
+
+        private static Texture EmptyFormatless(int width, int height, TextureUnit textureUnit, int channels)
         {
             var texture = new Texture();
-
-            texture.InternalPixelFormat = internalFormat;
             texture.TextureUnit = textureUnit;
             texture.Use();
             texture.ApplyTextureSettings();
             texture.Width = width;
             texture.Height = height;
-            texture.CreateEmptyByteArray();
-
-            texture.UploadToShader();
-            
+            texture.CreateEmptyByteArray(channels);
             return texture;
         }
         
@@ -71,10 +72,10 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Height = LaborsImage.Height;
         }
 
-        public void CreateEmptyByteArray()
+        public void CreateEmptyByteArray(int channels)
         {
             int area = Width * Height;
-            Colors = new byte[area * 4];
+            Colors = new byte[area * channels];
         }
         
         public void CookSixLaborsImageToByteArray()
@@ -102,10 +103,10 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindTexture(TextureTarget.Texture2D, Handle);
         }
         
-        public void UploadToShader()
+        public void UploadToShader(PixelInternalFormat pixelInternalFormat, PixelFormat pixelFormat, PixelType pixelType)
         {
             Use();
-            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalPixelFormat, Width, Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, Colors);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, Width, Height, 0, pixelFormat, pixelType, Colors);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 

@@ -17,17 +17,20 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         private Action _renderCapSettings;
         public Texture Texture { get; private set; }
 
-        public FBO(CreateFBOs.FBOType type, int width, int height, FramebufferAttachment attachment, PixelInternalFormat internalFormat, TextureUnit textureUnit, Action renderCapSettings)
+        public FBO(CreateFBOs.FBOType type, FramebufferAttachment attachment, Texture texture, Action renderCapSettings)
         {
             Handle = GL.GenFramebuffer();
             Type = type;
             _renderCapSettings = renderCapSettings;
             
             Use();
-            AssignTexture(Texture.Empty(width, height, internalFormat, textureUnit), attachment);
+            AssignTexture(texture, attachment);
+            
             var fboStatus = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (fboStatus != FramebufferErrorCode.FramebufferComplete)
                 throw new Exception($"Frame Buffer Exception! {fboStatus}");
+
+
         }
 
         /// <summary>

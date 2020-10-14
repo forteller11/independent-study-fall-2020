@@ -15,12 +15,13 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public static FBO[] Create()
         {
         
-            ShadowBuffer = new FBO(FBOType.Shadow, 2560,2560, FramebufferAttachment.ColorAttachment0, PixelInternalFormat.Rgba, TextureUnit.Texture3,
+            ShadowBuffer = new FBO(FBOType.Shadow, FramebufferAttachment.ColorAttachment0, Texture.EmptyRGBA(2560, 2560, TextureUnit.Texture3),
                 () =>
                 {
                     
                 });
             
+            //todo only call relevant enable caps at initialization, not every frame
             var defaultBuffer = new FBO(() => {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
