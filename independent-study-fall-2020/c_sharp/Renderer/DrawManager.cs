@@ -135,12 +135,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     {
                         Entity entity = materialBatch.Entities[entityIndex];
                         
-                         if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
-                            entity.SendUniformsPerObject(materialBatch.Material);
-                         else 
-                             UniformSender.SendTransformMatrices(entity, materialBatch.Material, Globals.ShadowCastingLight);
-                         
-                         // entity.SendUniformsPerObject(materialBatch.Material);
+                          if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
+                             entity.SendUniformsPerObject(materialBatch.Material);
+                          else 
+                              UniformSender.SendTransformMatrices(entity, materialBatch.Material, Globals.ShadowCastingLight);
+
 
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                     }

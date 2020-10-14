@@ -22,6 +22,12 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         {
             Position = position;
         }
+        
+        public Sphere(CreateMaterials.MaterialType materialType, Vector3 position, Vector3 scale) : base(materialType, BehaviorFlags.CreateCastShadows)
+        {
+            Position = position;
+            Scale = scale;
+        }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {

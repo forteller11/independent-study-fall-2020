@@ -15,6 +15,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         {
             Index = index;
             Scale *= 0.2f;
+            Flags = BehaviorFlags.CreateCastShadows;
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

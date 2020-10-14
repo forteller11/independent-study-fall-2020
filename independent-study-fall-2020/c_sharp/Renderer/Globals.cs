@@ -25,8 +25,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, .1f, 100f, out var mainCamPerspective);
             MainCamera = new Camera(Vector3.Zero, Quaternion.Identity, mainCamPerspective);
             
-            Matrix4.CreateOrthographic(20, 20, .1f, 100f, out var shadowLightPerspective);
-            ShadowCastingLight = new Camera(new Vector3(0,0,10), Quaternion.FromEulerAngles(90,0,0), shadowLightPerspective);
+            Matrix4.CreateOrthographic(25, 25, .1f, 100f, out var shadowLightPerspective);
+            ShadowCastingLight = new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective);
             
             DirectionLights = new List<DirectionLight>();
             PointLights = new List<PointLight>();
@@ -39,6 +39,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             AbsTime += args.DeltaTime;
             AbsTimeF = (float) AbsTime;
             MousePositionLastFrame = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            // ShadowCastingLight.Rotation = Quaternion.FromEulerAngles(MathF.PI,0,0)
 
         }
 

@@ -8,11 +8,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 {
     public class CameraControllerSingleton : Entity
     {
-        private float acceleration = 1f;
+        private float acceleration = 1.5f;
         private float angularAcceleration = 0.2f;
         
         private float _horziontalMaxVelocity = .05f;
-        private float _verticalMaxVelocity = 1f;
+
 
         public CameraControllerSingleton(CreateMaterials.MaterialType materialType) : base(materialType, BehaviorFlags.None) { }
         
@@ -46,7 +46,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         void Move(EntityUpdateEventArgs eventArgs)
         {
             var keyboardState = eventArgs.KeyboardState;
-            float accelerationThisFrame = acceleration * (float) eventArgs.DeltaTime;
+            float sprintMultiplier = eventArgs.KeyboardState.IsKeyDown(Key.AltLeft) ? 6 : 1;
+            float accelerationThisFrame = acceleration * (float) eventArgs.DeltaTime * sprintMultiplier;
+
+            if (eventArgs.KeyboardState.IsKeyDown(Key.AltLeft))
+                accelerationThisFrame *= 5;
 
             Vector3 input = Vector3.Zero;
             
@@ -67,7 +71,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             {
                 movementHorzontal = new Vector2(movementRelative.X, movementRelative.Z);
                 movementHorzontal = Vector2.Normalize(movementHorzontal);
-                movementHorzontal *= _horziontalMaxVelocity;
+                movementHorzontal *= _horziontalMaxVelocity * sprintMultiplier;
 
             }
        

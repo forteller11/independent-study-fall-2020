@@ -20,6 +20,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
             gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Tile, new Vector3(3,0,4)));
             
             gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Tile, new Vector3(0, 2, 1)));
+            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.DirtPlane, new Vector3(0, -10, 0), new Vector3(10,10,10)));
+            
             gameObjects.Add(new DebugTriggerer());
             
             

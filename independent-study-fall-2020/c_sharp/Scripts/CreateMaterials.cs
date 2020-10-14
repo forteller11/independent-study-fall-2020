@@ -16,6 +16,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             None = default,
             Solid,
             Dirt,
+            DirtPlane,
             Tile,
             ShadowMap
         }
@@ -43,6 +44,17 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 normaMaterialUniformSender
                 );
             
+            var dirtPlane = new NormalMaterial(
+                MaterialType.DirtPlane,
+                CreateFBOs.FBOType.Default,
+                normalShader,
+                CreateMeshes.Plane,
+                "GroundClay002_COL_VAR1_3K.jpg",
+                "GroundClay002_NRM_3K.jpg",
+                "GroundClay002_GLOSS_3K.jpg",
+                normaMaterialUniformSender
+                );
+            
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             var tile = new NormalMaterial(
                 MaterialType.Tile,
@@ -63,13 +75,14 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #endregion
             
             var shadowMap = new Material(MaterialType.ShadowMap, CreateFBOs.FBOType.Shadow, new ShaderProgram("shadow_map", "lighting"), null );
-            shadowMap.VAOFromMesh(CreateMeshes.IcoSphereHighPoly);
+            shadowMap.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
 
             return new[]
             {
                 shadowMap,
                 solidColor,
                 dirt,
+                dirtPlane,
                 tile
             };
         }
