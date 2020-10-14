@@ -13,14 +13,13 @@ namespace Indpendent_Study_Fall_2020.Scripts
         {
             List<Entity> gameObjects = new List<Entity>();
             
-            gameObjects.Add(new CameraControllerSingleton(CreateMaterials.MaterialType.None));
+            gameObjects.Add(new CameraControllerSingleton());
             
-            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Dirt, new Vector3(-3,0,4)));
-            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Dirt, new Vector3(0,0,0)));
-            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Tile, new Vector3(3,0,4)));
-            
-            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.Tile, new Vector3(0, 2, 1)));
-            gameObjects.Add(new Sphere(CreateMaterials.MaterialType.DirtPlane, new Vector3(0, -10, 0), new Vector3(10,10,10)));
+            gameObjects.Add(new Sphere(new Vector3(-3,0,4),CreateMaterials.MaterialType.Dirt, CreateMaterials.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere(new Vector3(0,0,0),CreateMaterials.MaterialType.Dirt, CreateMaterials.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere(new Vector3(3,0,4),CreateMaterials.MaterialType.Tile, CreateMaterials.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere(new Vector3(0, 2, 1),CreateMaterials.MaterialType.DirtPlane, CreateMaterials.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere( new Vector3(0, -10, 0), CreateMaterials.MaterialType.DirtPlane, CreateMaterials.MaterialType.ShadowMap));
             
             gameObjects.Add(new DebugTriggerer());
             
@@ -28,7 +27,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
 
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                gameObjects.Add(new PointLightVisualizer(CreateMaterials.MaterialType.Solid, i));
+                gameObjects.Add(new PointLightVisualizer(i,CreateMaterials.MaterialType.Solid, CreateMaterials.MaterialType.ShadowMap));
 
             return gameObjects.ToArray();
         }

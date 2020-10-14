@@ -18,16 +18,12 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             Scale *= 1f;
         }
 
-        public Sphere(CreateMaterials.MaterialType materialType, Vector3 position) : base(materialType, BehaviorFlags.CreateCastShadows)
+        public Sphere(Vector3 position, params CreateMaterials.MaterialType [] materialTypes)
         {
             Position = position;
+            SetupMaterials(materialTypes);
         }
         
-        public Sphere(CreateMaterials.MaterialType materialType, Vector3 position, Vector3 scale) : base(materialType, BehaviorFlags.CreateCastShadows)
-        {
-            Position = position;
-            Scale = scale;
-        }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
@@ -39,8 +35,15 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public override void SendUniformsPerObject(Material material)
         {
-            UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
-            UniformSender.SendLights(material);
+            if (material.Type != CreateMaterials.MaterialType.ShadowMap)
+            {
+                UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
+                UniformSender.SendLights(material);
+            }
+            else
+            {
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight);
+            }
         }
         
     }

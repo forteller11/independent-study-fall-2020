@@ -14,7 +14,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
         private float _horziontalMaxVelocity = .05f;
 
 
-        public CameraControllerSingleton(CreateMaterials.MaterialType materialType) : base(materialType, BehaviorFlags.None) { }
+        public CameraControllerSingleton() : base(BehaviorFlags.None, null) { }
         
         public override void OnLoad()
         {

@@ -11,11 +11,10 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public int Index;
 
-        public PointLightVisualizer(CreateMaterials.MaterialType materialType, int index) : base(materialType, BehaviorFlags.None)
+        public PointLightVisualizer(int index, params CreateMaterials.MaterialType [] materialTypes) : base(BehaviorFlags.None, materialTypes)
         {
             Index = index;
             Scale *= 0.2f;
-            Flags = BehaviorFlags.CreateCastShadows;
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
@@ -28,8 +27,17 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public override void SendUniformsPerObject(Material material)
         {
-            UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
-            UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color,1), false);
+            if (material.Type == CreateMaterials.MaterialType.ShadowMap)
+            {
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight);
+            }
+            else
+            {
+
+                UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
+                UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color, 1), false);
+            }
+
 //            UniformSender.SendLights(this);
         }
     }

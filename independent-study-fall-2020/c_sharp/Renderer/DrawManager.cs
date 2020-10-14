@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.Helpers;
@@ -66,39 +67,30 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         //add entity to appropriate material as sepcefied by material type, and if has createcastshadows flag, add to shadowMap material as well
         public static void AddEntity(Entity entity) 
         {
-            if (entity.MaterialType == CreateMaterials.MaterialType.ShadowMap)
-                throw new DataException("Shadow material should not be set in material set, but instead via the entities BehaviorFlags enum");
-            
-            if (entity.MaterialType == CreateMaterials.MaterialType.None)
+
+            if (entity.MaterialTypes == null)
                 return;
 
-            bool foundMaterial = false;
+            int expectedFoundMaterials = entity.MaterialTypes.Length;
+            int foundMaterials = 0;
+            
             for (int fboI = 0; fboI < BatchHierachies.Count; fboI++)
             {
                 FBOBatch fboBatch = BatchHierachies[fboI];
                 for (int matI = 0; matI < fboBatch.MaterialBatches.Count; matI++)
                 {
                     var materialBatch = fboBatch.MaterialBatches[matI];
-                    switch (materialBatch.Material.Type)
-                    {
-                        case CreateMaterials.MaterialType.ShadowMap:
-                            if (entity.HasFlags(Entity.BehaviorFlags.CreateCastShadows))
-                                materialBatch.Entities.Add(entity);
-                            break;
-                        default:
-                            if (entity.MaterialType == materialBatch.Material.Type)
-                            {
-                                materialBatch.Entities.Add(entity);
-                                foundMaterial = true;
-                            }
-                            break;
+
+                    if (entity.ContainsMaterial(materialBatch.Material.Type))
+                    { 
+                        materialBatch.Entities.Add(entity);
+                        foundMaterials++;
                     }
-
                 }
-
             }
-            if (foundMaterial == false)
-                throw new DataException($"Entity with material {entity.MaterialType} couldn't be found in draw manager!");
+            
+            if (foundMaterials != expectedFoundMaterials)
+                throw new DataException($"Entity with materials {Debug.GraphList(new List<CreateMaterials.MaterialType>())} couldn't be found in draw manager!");
         }
 
         public static void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID
@@ -135,11 +127,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     {
                         Entity entity = materialBatch.Entities[entityIndex];
                         
-                          if (materialBatch.Material.Type != CreateMaterials.MaterialType.ShadowMap)
-                             entity.SendUniformsPerObject(materialBatch.Material);
-                          else 
-                              UniformSender.SendTransformMatrices(entity, materialBatch.Material, Globals.ShadowCastingLight);
-
+                        entity.SendUniformsPerObject(materialBatch.Material);
 
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                     }

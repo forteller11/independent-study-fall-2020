@@ -11,6 +11,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
 {
     public static class CreateMaterials
     {
+        [Flags]
         public enum MaterialType
         {
             None = default,

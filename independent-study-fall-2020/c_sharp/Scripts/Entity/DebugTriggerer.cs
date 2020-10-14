@@ -7,7 +7,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
     {
         private bool _keyDownLastFrame = false;
 
-        public DebugTriggerer(CreateMaterials.MaterialType materialType=CreateMaterials.MaterialType.None, BehaviorFlags flags=BehaviorFlags.None) : base(materialType, flags)
+        public DebugTriggerer(CreateMaterials.MaterialType [] materialTypes=null, BehaviorFlags flags=BehaviorFlags.None) : base(flags, materialTypes)
         {
         }
         

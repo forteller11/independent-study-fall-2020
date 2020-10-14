@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
 
@@ -72,6 +74,14 @@ namespace Indpendent_Study_Fall_2020
             Log(enumerable.GetType().Name +": ");
             foreach (var thing in enumerable)
                 Log(thing.ToString());
+        }
+
+        public static string GraphList<T>(List<T> enumerable)
+        {
+            var s = new StringBuilder(enumerable.GetType().Name +": ");
+            for (int i = 0; i < enumerable.Count; i++)
+                s.Append("\n" + enumerable[i].ToString());
+            return s.ToString();
         }
 
 

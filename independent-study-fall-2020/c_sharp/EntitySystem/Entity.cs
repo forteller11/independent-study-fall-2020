@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Numerics;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using Indpendent_Study_Fall_2020.Scripts;
@@ -11,10 +12,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     public abstract class Entity //todo... make mega object with flags... add physics component?
     {
         public readonly Guid GUID;
+        public CreateMaterials.MaterialType [] MaterialTypes { get; private set; }
         
-        public readonly CreateMaterials.MaterialType MaterialType; //todo make flags?
-
-        //todo only send pos/rot/scale if the values are dirty
         public Vector3 Position = new Vector3(0,0,0);
         public Quaternion Rotation = Quaternion.Identity;
         public Vector3 Scale = new Vector3(1,1,1);
@@ -23,17 +22,26 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public enum BehaviorFlags
         {
             None = 0b_0000_0000_0000_0000,
-            CreateCastShadows = 0b_0000_0000_0000_0001
         }
 
         public BehaviorFlags Flags;
         
 
-        public Entity(CreateMaterials.MaterialType materialType, BehaviorFlags flags)
+        public Entity(BehaviorFlags flags, params CreateMaterials.MaterialType [] materialTypes)
         {
-            MaterialType = materialType;
+            MaterialTypes = materialTypes;
             Flags = flags;
             GUID = Guid.NewGuid();
+        }
+
+        public Entity()
+        {
+            GUID = Guid.NewGuid();
+        }
+
+        public void SetupMaterials(params CreateMaterials.MaterialType[] materialTypes)
+        {
+            MaterialTypes = materialTypes;
         }
         public virtual void OnLoad() { }
 
@@ -50,6 +58,19 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public virtual void SendUniformsPerObject(Material material) { }
 
         public virtual void OnClose() { }
+
+        public bool ContainsMaterial(CreateMaterials.MaterialType materialType)
+        {
+            for (int i = 0; i < MaterialTypes.Length; i++)
+            {
+                if (materialType == MaterialTypes[i])
+                    return true;
+            }
+
+            return false;
+        }
+
+        public bool HasAnyMaterial() => MaterialTypes != null;
 
         #region dictionary performance stuff
         public override bool Equals(object obj)
