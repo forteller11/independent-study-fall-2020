@@ -4,6 +4,7 @@ using OpenTK.Graphics.OpenGL4;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using TextureCompareMode = OpenTK.Graphics.OpenGL.TextureCompareMode;
 
 namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
@@ -15,6 +16,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public readonly int Handle;
         
         public byte[] Colors; //todo make array for perf
+        public int[] Depth;
         
         public Image<Rgba32> LaborsImage;
         public int Width { get; private set; }
@@ -33,40 +35,48 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             var texture = new Texture();
             texture.TextureUnit = textureUnit;
             texture.Use();
-            texture.ApplyTextureSettings();
+            StandardTextureSettings();
             texture.LoadImage(fileName);
             texture.CookSixLaborsImageToByteArray();
 
-            texture.UploadToShader(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte);
+            texture.UploadToShader(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte, false);
 
             return texture;
         }
         
         public static Texture EmptyRGBA(int width, int height, TextureUnit textureUnit)
         {
-            var texture = EmptyFormatless(width, height, textureUnit, 4);
-            texture.UploadToShader(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte);
+            var texture = EmptyFormatless(width, height, textureUnit, 4, StandardTextureSettings, false);
+            texture.UploadToShader(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte, false);
             
             return texture;
         }
         
         public static Texture EmptyLuminance(int width, int height, TextureUnit textureUnit)
         {
-            var texture = EmptyFormatless(width, height, textureUnit, 1);
-            texture.UploadToShader(PixelInternalFormat.Luminance, PixelFormat.Luminance, PixelType.UnsignedByte);
+            var texture = EmptyFormatless(width, height, textureUnit, 1, StandardTextureSettings, false);
+            texture.UploadToShader(PixelInternalFormat.Luminance, PixelFormat.Luminance, PixelType.UnsignedByte, false);
+            
+            return texture;
+        }
+        
+        public static Texture EmptyDepth(int width, int height, TextureUnit textureUnit)
+        {
+            var texture = EmptyFormatless(width, height, textureUnit, 1, DepthTextureSettings, true);
+            texture.UploadToShader(PixelInternalFormat.DepthComponent, PixelFormat.DepthComponent, PixelType.Float, true);
             
             return texture;
         }
 
-        private static Texture EmptyFormatless(int width, int height, TextureUnit textureUnit, int channels)
+        private static Texture EmptyFormatless(int width, int height, TextureUnit textureUnit, int channels, Action textureSettings, bool int32)
         {
             var texture = new Texture();
             texture.TextureUnit = textureUnit;
             texture.Use();
-            texture.ApplyTextureSettings();
+            textureSettings.Invoke();
             texture.Width = width;
             texture.Height = height;
-            texture.CreateEmptyByteArray(channels);
+            texture.CreateEmptyByteArray(channels, int32);
             return texture;
         }
         
@@ -80,10 +90,13 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Height = LaborsImage.Height;
         }
 
-        public void CreateEmptyByteArray(int channels)
+        public void CreateEmptyByteArray(int channels, bool int32)
         {
             int area = Width * Height;
-            Colors = new byte[area * channels];
+            if (int32)
+                Depth = new int[area * channels];
+            else
+                Colors = new byte[area * channels];
         }
         
         public void CookSixLaborsImageToByteArray()
@@ -111,20 +124,42 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindTexture(TextureTarget.Texture2D, Handle);
         }
         
-        public void UploadToShader(PixelInternalFormat pixelInternalFormat, PixelFormat pixelFormat, PixelType pixelType)
+        public void UploadToShader(PixelInternalFormat pixelInternalFormat, PixelFormat pixelFormat, PixelType pixelType, bool depth)
         {
+
+            
             Use();
-            GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, Width, Height, 0, pixelFormat, pixelType, Colors);
-            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+            if (depth == false)
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, Width, Height, 0, pixelFormat, pixelType, Colors);
+                GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+            }
+            else
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, Width, Height, 0, pixelFormat, pixelType, Depth);
+            }
         }
 
-        private void ApplyTextureSettings() //todo make it so doesn't always have to be rgba image
+        private static void StandardTextureSettings() //todo make it so doesn't always have to be rgba image
         {
-            Use();
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat); //tex wrap mode
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.Repeat);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear); //scaling up, tex interp
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.NearestMipmapLinear); //scaling down
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.NearestMipmapLinear);
+        }
+
+        private static void DepthTextureSettings()
+        {
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.Repeat);
+            
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureCompareMode, (int) TextureCompareMode.CompareRToTexture );
+            // GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureCompareFunc,TextureCompareFunc.None );
+            // glTexParameteri( GL_TEXTURE2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB );
+            // glTexParameteri( GL_TEXTURE2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL );
+
         }
 
 

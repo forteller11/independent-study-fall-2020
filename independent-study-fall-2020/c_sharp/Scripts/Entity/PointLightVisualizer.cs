@@ -33,7 +33,6 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             }
             else
             {
-
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
                 UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color, 1), false);
             }

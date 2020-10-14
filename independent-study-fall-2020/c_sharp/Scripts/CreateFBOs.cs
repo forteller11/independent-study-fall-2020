@@ -15,7 +15,7 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public static FBO[] Create()
         {
         
-            ShadowBuffer = new FBO(FBOType.Shadow, FramebufferAttachment.ColorAttachment0, Texture.EmptyLuminance(2560, 2560, TextureUnit.Texture3),
+            ShadowBuffer = new FBO(FBOType.Shadow, FramebufferAttachment.DepthAttachment, Texture.EmptyDepth(2560, 2560, TextureUnit.Texture3),
                 () =>
                 {
                     

@@ -69,7 +69,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void AssignTexture(Texture texture, FramebufferAttachment attachment)
         {
             Texture = texture;
-             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0); //todo fix assign tex
+             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
         }
 
         public int GetTypeID() => (int) Type;
