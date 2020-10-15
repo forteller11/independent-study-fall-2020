@@ -17,13 +17,16 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     {
         public readonly CreateMaterials.MaterialType Type;
         public readonly CreateFBOs.FBOType FBOType;
-        public ShaderProgram Shader { get; private set; }
-        public readonly Dictionary<string, int> UniformLocations;
-        public readonly Dictionary<string, int> VertexAttribLocations;
+        public readonly bool IsPostProcessing = false;
+        public readonly ShaderProgram Shader;
+        
+        public Dictionary<string, int> UniformLocations { get; private set; }
+        public Dictionary<string, int> VertexAttribLocations { get; private set; }
         private List<Texture> _textures = new List<Texture>();
         public VAOAndBuffers VAO;
         public Action<Material> PerMaterialAttributeSender;
-        private const bool DEBUG = false; 
+        private const bool DEBUG = false;
+       
 
         public Material(CreateMaterials.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, Action<Material> perMaterialAttributeSender)
         {
@@ -31,7 +34,18 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Shader = shaderProgram;
             PerMaterialAttributeSender = perMaterialAttributeSender;
             FBOType = fboType;
-            
+
+            GetUniformAndAttribLocations();
+
+        }
+
+        public Material PostProcessing()
+        {
+            typeof 
+        }
+
+        private void GetUniformAndAttribLocations()
+        {
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
             Debug.Log(Type);
@@ -58,7 +72,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 int location = GL.GetAttribLocation(Shader.Handle, attribName);
                 VertexAttribLocations.Add(attribName, location);
             }
-            
         }
 
         public int GetAttribLocation(string name)
