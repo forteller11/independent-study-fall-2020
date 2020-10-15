@@ -19,7 +19,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
             Dirt,
             DirtPlane,
             Tile,
-            ShadowMap
+            ShadowMap,
+            VisualizeDepthTexture
         }
         public static Material[] Create()
         {
@@ -68,7 +69,6 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 normaMaterialUniformSender
                 );
             #endregion
-            
 
             #region solid_color
             var solidColor = new Material(MaterialType.Solid, CreateFBOs.FBOType.Default, new ShaderProgram("textureless"), null);
@@ -77,6 +77,10 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             var shadowMap = new Material(MaterialType.ShadowMap, CreateFBOs.FBOType.Shadow, new ShaderProgram("shadow_map", "lighting"), null );
             shadowMap.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
+            
+            
+            var visualizeDepth = new Material(MaterialType.VisualizeDepthTexture, CreateFBOs.FBOType.Default, new ShaderProgram("visualize_depth_map", "lighting"), null );
+            visualizeDepth.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
 
             return new[]
             {
@@ -84,7 +88,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 solidColor,
                 dirt,
                 dirtPlane,
-                tile
+                tile,
+                visualizeDepth
             };
         }
     }
