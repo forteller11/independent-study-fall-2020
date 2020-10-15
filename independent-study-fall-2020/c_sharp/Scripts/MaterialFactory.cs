@@ -28,7 +28,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
         
         
             #region normal materials
-            var normalShader = new ShaderProgram("normal_map", "lighting");
+            var normalShader = ShaderProgram.Standard("normal_map", "lighting");
 
             Action<Material> normaMaterialUniformSender = (mat) =>
             {
@@ -72,13 +72,13 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #endregion
 
             #region solid_color
-            var solidColor = Material.EntityBased(MaterialType.Solid, CreateFBOs.FBOType.Default, new ShaderProgram("textureless"), CreateMeshes.IcoSphereHighPoly, null);
+            var solidColor = Material.EntityBased(MaterialType.Solid, CreateFBOs.FBOType.Default, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
             #endregion
 
             var shadowMap = Material.EntityBased(
                 MaterialType.ShadowMap,
                 CreateFBOs.FBOType.Shadow,
-                new ShaderProgram("shadow_map", "lighting"),
+                ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.IcoSphereHighPoly,
                 null);
 
@@ -99,9 +99,9 @@ namespace Indpendent_Study_Fall_2020.Scripts
 
         public static Material[] CreatePostProcessing()
         {
-            return new[]
+            return new Material[]
             {
-                Material.PostProcessing(new ShaderProgram("post_processing")),
+                 Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test")),
             };
         }
         

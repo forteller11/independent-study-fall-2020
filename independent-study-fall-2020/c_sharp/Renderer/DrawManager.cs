@@ -26,7 +26,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static Material[] PostProcessingMaterials;
 
         private static FBO _postProcessingFBO = FBO.Custom(CreateFBOs.FBOType.PostProcessing, FramebufferAttachment.ColorAttachment0,
-            Texture.EmptyRGBA(TKWindowSize.Width, TKWindowSize.Width, TextureUnit.Texture3), 
+            Texture.EmptyRGBA(1000, 1000, TextureUnit.Texture3), 
             null);
 
         private static int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit

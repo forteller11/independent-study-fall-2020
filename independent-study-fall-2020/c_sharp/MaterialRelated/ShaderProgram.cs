@@ -10,19 +10,33 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     {
         public int Handle { get; }
         public Dictionary<string, int> UniformLocations = new Dictionary<string, int>();
-        public readonly string FileName;
-        
+        public string FileName { get; private set; }
+
         private const string VERTEX_FILE_EXT = ".vert";
         private const string FRAG_FILE_EXT = ".frag";
         private const string LIBRARY_FILE_EXT = ".glsl";
         private static string SHADER_VERSION_DIR = "#version 330 core"+ Environment.NewLine;
+        private const string POST_FX_VERTEX_SHADER = "position_pass_through";
 
-        public ShaderProgram(string shadeFileNames, params string[] shaderLibraryFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
+        public static ShaderProgram Standard(string shadeFileNames, params string[] shaderLibraryFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
-            FileName = shadeFileNames;
-            
-            int vertexHandle = CompileShaderAndDebug(shadeFileNames + VERTEX_FILE_EXT, shaderLibraryFileNames, ShaderType.VertexShader);
-            int fragmentHandle = CompileShaderAndDebug(shadeFileNames + FRAG_FILE_EXT, shaderLibraryFileNames, ShaderType.FragmentShader);
+            var shader = new ShaderProgram(shadeFileNames,shadeFileNames, shaderLibraryFileNames);
+            shader.FileName = shadeFileNames;
+            return shader;
+        }
+        
+        public static ShaderProgram PostProcessing(string fragmentFileName, params string[] shaderLibraryFileNames)
+        {
+            var shader = new ShaderProgram(POST_FX_VERTEX_SHADER,fragmentFileName, shaderLibraryFileNames);
+            shader.FileName = fragmentFileName;
+            return shader;
+        }
+
+        private ShaderProgram(string vertFileName, string fragmentFileName,  string[] shaderLibraryFileNames)
+        {
+
+            int vertexHandle = CompileShaderAndDebug(vertFileName + VERTEX_FILE_EXT, shaderLibraryFileNames, ShaderType.VertexShader);
+            int fragmentHandle = CompileShaderAndDebug(fragmentFileName + FRAG_FILE_EXT, shaderLibraryFileNames, ShaderType.FragmentShader);
 
             Handle = GL.CreateProgram();
             GL.AttachShader(Handle, vertexHandle);
@@ -33,8 +47,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.DetachShader(Handle, fragmentHandle);
             GL.DeleteShader(vertexHandle);
             GL.DeleteShader(fragmentHandle);
-
         }
+
+        
 
         private int CompileShaderAndDebug(string shaderFileName, string[] libraryFileNames, ShaderType shaderType)
         {
