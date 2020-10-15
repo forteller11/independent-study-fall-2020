@@ -13,43 +13,62 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class FBO : ITypeID
     {
         public int Handle { get; private set; }
-        public CreateFBOs.FBOType Type { get; private set; }
-        private Action _renderCapSettings;
+        public CreateFBOs.FBOID ID { get; private set; }
+        public Size Size { get; private set; }
 
-        public int Width => ColorTexture?.Width ?? DrawManager.TKWindowSize.Width;
-        public int Height => ColorTexture?.Height ?? DrawManager.TKWindowSize.Height;
+        public Action RenderCapSettings;
+
+
         public int TextureHandle => ColorTexture.Handle;
         private Texture ColorTexture { get; set; }
         private Texture DepthTexture { get; set; }
 
-        private FBO()
-        {
-            
-        }
-        public static FBO Custom(CreateFBOs.FBOType type, FramebufferAttachment attachment, Texture texture, Action renderCapSettings)
+        private FBO(){}
+        public static FBO Custom(CreateFBOs.FBOID id, Size size, bool colorAttachment, bool depthAttachment, Action renderCapSettings)
         {
             var fbo = new FBO();
-            fbo.Handle = GL.GenFramebuffer();
-            fbo.Type = type;
-            fbo._renderCapSettings = renderCapSettings;
+            fbo.ID = id;
+            fbo.Size = size;
+            fbo.RenderCapSettings = renderCapSettings;
             
-            fbo.Use();
-            fbo.AssignTexture(texture, attachment);
+            if (colorAttachment)
+                fbo.AddColorAttachment();
             
+            if (depthAttachment)
+                fbo.AddDepthAttachment();
+            return fbo;
+        }
+
+
+        private static void ValidateAttachments()
+        {
             var fboStatus = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (fboStatus != FramebufferErrorCode.FramebufferComplete)
                 throw new Exception($"Frame Buffer Exception! {fboStatus}");
+        }
 
-            return fbo;
+        public void AddColorAttachment()
+        {
+            Use();
+            ColorTexture = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture3);
+            LinkTexture(ColorTexture, FramebufferAttachment.ColorAttachment0);
+            ValidateAttachments();
+        }
+        
+        public void AddDepthAttachment()
+        {
+            Use();
+            DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, TextureUnit.Texture4);
+            LinkTexture(DepthTexture, FramebufferAttachment.DepthAttachment);
+            ValidateAttachments();
         }
         
         public static FBO Default(Action renderCapSettings) //texture is main viewport
         {
             var fbo = new FBO();
-            fbo.Type = CreateFBOs.FBOType.Default;
+            fbo.ID = CreateFBOs.FBOID.Default;
             fbo.Handle = 0;
-            fbo.ColorTexture = null;
-            fbo._renderCapSettings = renderCapSettings;
+            fbo.RenderCapSettings = renderCapSettings;
             return fbo;
         }
 
@@ -61,11 +80,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void SetDrawingStates()
         {
             Use();
-            if (Type == CreateFBOs.FBOType.Default)
+            if (ID == CreateFBOs.FBOID.Default)
                 GL.Viewport(DrawManager.TKWindowSize);
             else
                 GL.Viewport(0,0,ColorTexture.Width,ColorTexture.Height);
-            _renderCapSettings?.Invoke();
+            RenderCapSettings?.Invoke();
         }
 
         public static void UseDefaultBuffer()
@@ -74,10 +93,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         }
     
         
-        public void AssignTexture(Texture texture, FramebufferAttachment attachment)
+        public void LinkTexture(Texture texture, FramebufferAttachment attachment)
         {
-            ColorTexture = texture;
-             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
         }
         
         public static void Blit(FBO source, FBO dest, ClearBufferMask clearBufferMask, BlitFramebufferFilter blitFramebufferFilter)
@@ -85,11 +103,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindFramebuffer(FramebufferTarget.ReadFramebuffer, source.Handle);
             GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, dest.Handle);
             GL.BlitFramebuffer(
-                0, 0, source.Width, source.Height,
-                0, 0, dest.Width, dest.Height,
+                0, 0, source.Size.Width, source.Size.Height,
+                0, 0, dest.Size.Width, dest.Size.Height,
                 clearBufferMask, blitFramebufferFilter);
         }
 
-        public int GetTypeID() => (int) Type;
+        public int GetTypeID() => (int) ID;
     }
 }

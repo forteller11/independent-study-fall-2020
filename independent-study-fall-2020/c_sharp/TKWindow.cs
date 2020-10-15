@@ -54,6 +54,7 @@ namespace Indpendent_Study_Fall_2020
             base.OnLoad(e);
             
             GL.ClearColor(0f,0f,0f,1f);
+            DrawManager.Init(this);
             
             Globals.Init();
             SceneSetup.CreateGlobals();

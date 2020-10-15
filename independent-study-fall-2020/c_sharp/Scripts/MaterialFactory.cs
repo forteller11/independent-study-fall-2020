@@ -38,7 +38,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             var dirt  = MaterialPreconfigs.Normal(
                 MaterialType.Dirt,
-                CreateFBOs.FBOType.Default,
+                CreateFBOs.FBOID.Default,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -49,7 +49,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             var dirtPlane  = MaterialPreconfigs.Normal(
                 MaterialType.DirtPlane,
-                CreateFBOs.FBOType.Default,
+                CreateFBOs.FBOID.Default,
                 normalShader,
                 CreateMeshes.Plane,
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -61,7 +61,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             var tile = MaterialPreconfigs.Normal(
                 MaterialType.Tile,
-                CreateFBOs.FBOType.Default,
+                CreateFBOs.FBOID.Default,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
                 bathroomTiles+"COL_VAR2_3K.jpg",
@@ -72,12 +72,12 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #endregion
 
             #region solid_color
-            var solidColor = Material.EntityBased(MaterialType.Solid, CreateFBOs.FBOType.Default, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
+            var solidColor = Material.EntityBased(MaterialType.Solid, CreateFBOs.FBOID.Default, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
             #endregion
 
             var shadowMap = Material.EntityBased(
                 MaterialType.ShadowMap,
-                CreateFBOs.FBOType.Shadow,
+                CreateFBOs.FBOID.Shadow,
                 ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.IcoSphereHighPoly,
                 null);

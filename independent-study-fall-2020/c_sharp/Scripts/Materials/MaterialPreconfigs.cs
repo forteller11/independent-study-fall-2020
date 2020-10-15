@@ -13,7 +13,7 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         
         public static Material Normal(
             MaterialFactory.MaterialType type, 
-            CreateFBOs.FBOType fboType, 
+            CreateFBOs.FBOID fboid, 
             ShaderProgram shaderProgram, 
             Mesh mesh, 
             string diffusePath, 
@@ -21,7 +21,7 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
             string specularPath, 
             Action<Material> perMatSender)
         {
-            var mat = Material.EntityBased(type, fboType, shaderProgram, mesh, perMatSender);
+            var mat = Material.EntityBased(type, fboid, shaderProgram, mesh, perMatSender);
 
             mat.SetupSampler(DiffuseColorSampler, Texture.FromFile(diffusePath, TextureUnit.Texture0));
             mat.SetupSampler(NormalMapSampler, Texture.FromFile(normalPath, TextureUnit.Texture1));

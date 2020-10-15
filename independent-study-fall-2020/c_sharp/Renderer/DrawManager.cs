@@ -25,9 +25,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
         public static Material[] PostProcessingMaterials;
 
-        private static FBO _postProcessingFBO = FBO.Custom(CreateFBOs.FBOType.PostProcessing, FramebufferAttachment.ColorAttachment0,
-            Texture.EmptyRGBA(1000, 1000, TextureUnit.Texture3), 
-            null);
+        public static FBO PostProcessingFbo { get; private set; }
 
         private static int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
 
@@ -38,13 +36,24 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 _blitOffscreenFBOsIndex = -1;
         }
 
+        public static void Init(TKWindow window)
+        {
+            TKWindowSize = window.Size;
+            PostProcessingFbo = FBO.Custom(CreateFBOs.FBOID.PostProcessing, TKWindowSize, true, true, null);
+        }
+
         public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials, Material[] postProcessingMaterials)
         {
+            #region error checking
             ThrowIfDuplicateTypeIDs(materials);
             ThrowIfDuplicateTypeIDs(fbos);
+            for (int i = 0; i < fbos.Length; i++)
+                if (fbos[i].ID == CreateFBOs.FBOID.PostProcessing)
+                    throw new DataException("fbos can't be of type post-processing!");
             for (int i = 0; i < postProcessingMaterials.Length; i++)
                 if (postProcessingMaterials[i].Type != MaterialFactory.MaterialType.PostProcessing)
                     throw new DataException("Material must be of type post-processing!");
+            #endregion
             
             for (int i = 0; i < fbos.Length; i++) 
                 AddFBO(fbos[i]);
@@ -68,7 +77,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             for (int i = 0; i < BatchHierachies.Count; i++)
             {
                 FBOBatch fboBatch = BatchHierachies[i];
-                if (fboBatch.FBO.Type == material.FBOType)
+                if (fboBatch.FBO.ID == material.Fboid)
                 {
                     fboBatch.MaterialBatches.Add(new MaterialBatch(material));
                     return;
@@ -149,7 +158,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 }
 
                 //gen mipmaps for fbo textures if needed
-                if (fboBatch.FBO.Type != CreateFBOs.FBOType.Default) //todo do i have to do this?
+                if (fboBatch.FBO.ID != CreateFBOs.FBOID.Default) //todo do i have to do this?
                 {
                     GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.TextureHandle);
                     GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
@@ -162,7 +171,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         static void RenderPostProcessingEffects()
         {
-            FBO.Blit(CreateFBOs.Default, _postProcessingFBO, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(CreateFBOs.Default, PostProcessingFbo, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
             
             for (int i = 0; i < PostProcessingMaterials.Length; i++)
             {
@@ -170,7 +179,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
             
-            FBO.Blit(_postProcessingFBO, CreateFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(PostProcessingFbo, CreateFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
         }
 
         

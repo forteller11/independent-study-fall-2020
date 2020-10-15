@@ -17,7 +17,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class Material : ITypeID
     {
         public MaterialFactory.MaterialType Type { get; private set; }
-        public CreateFBOs.FBOType FBOType { get; private set; }
+        public CreateFBOs.FBOID Fboid { get; private set; }
         public bool IsPostProcessing { get; private set; }
         // public int PostFXOrder { get; private set; } //where -1 is invalid, 0 is first, and pos-infinity is last
         public ShaderProgram Shader { get; private set; }
@@ -48,13 +48,13 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         //     return mat;
         // }
         
-        public static Material EntityBased(MaterialFactory.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material EntityBased(MaterialFactory.MaterialType type, CreateFBOs.FBOID fboid, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
             var mat = new Material();
             mat.Type = type;
             mat.Shader = shaderProgram;
             mat.PerMaterialUniformSender = perMaterialUniformSender;
-            mat.FBOType = fboType;
+            mat.Fboid = fboid;
             mat.GetUniformAndAttribLocations();
             mat.VAO = new VAOAndBuffers(mat, mesh);
             return mat;
@@ -63,7 +63,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
          {
              var mat = new Material();
              mat.Shader = shaderProgram;
-             mat.FBOType = CreateFBOs.FBOType.Default;
+             mat.Fboid = CreateFBOs.FBOID.Default;
              mat.Type = MaterialFactory.MaterialType.PostProcessing;
              // mat.PostFXOrder = order;
              mat.GetUniformAndAttribLocations();
