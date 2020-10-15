@@ -39,10 +39,10 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
         }
 
-        public Material PostProcessing()
-        {
-            typeof 
-        }
+        // public Material PostProcessing()
+        // {
+        //     typeof 
+        // }
 
         private void GetUniformAndAttribLocations()
         {
@@ -55,7 +55,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 if (DEBUG)
                 {
                     Debug.Log(uniformName);
-                    Debug.Log(type);
+                    Debug.Log(uniformType);
                     Debug.Log("size: " + size);
                     Debug.Log('\n');
                 }

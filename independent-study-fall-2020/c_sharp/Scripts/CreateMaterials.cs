@@ -20,7 +20,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             DirtPlane,
             Tile,
             ShadowMap,
-            VisualizeDepthTexture
+            // VisualizeDepthTexture
         }
         public static Material[] Create()
         {
@@ -79,8 +79,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
             shadowMap.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
             
             
-            var visualizeDepth = new Material(MaterialType.VisualizeDepthTexture, CreateFBOs.FBOType.Default, new ShaderProgram("visualize_depth_map", "lighting"), null );
-            visualizeDepth.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
+            // var visualizeDepth = new Material(MaterialType.VisualizeDepthTexture, CreateFBOs.FBOType.Default, new ShaderProgram("visualize_depth_map", "lighting"), null );
+            // visualizeDepth.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
 
             return new[]
             {
@@ -89,7 +89,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 dirt,
                 dirtPlane,
                 tile,
-                visualizeDepth
+                // visualizeDepth
             };
         }
     }

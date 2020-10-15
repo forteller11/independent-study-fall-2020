@@ -22,10 +22,6 @@ namespace Indpendent_Study_Fall_2020.Scripts
             gameObjects.Add(new Sphere( new Vector3(0, -10, 0), CreateMaterials.MaterialType.DirtPlane, CreateMaterials.MaterialType.ShadowMap));
             
             gameObjects.Add(new DebugTriggerer());
-            // gameObjects.Add();
-            
-            
-
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
                 gameObjects.Add(new PointLightVisualizer(i,CreateMaterials.MaterialType.Solid, CreateMaterials.MaterialType.ShadowMap));
