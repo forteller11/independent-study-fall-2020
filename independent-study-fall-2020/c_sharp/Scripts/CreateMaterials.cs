@@ -20,6 +20,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             DirtPlane,
             Tile,
             ShadowMap,
+            PostProcessing
             // VisualizeDepthTexture
         }
         public static Material[] Create()
@@ -35,7 +36,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 UniformSender.SetFloat(mat, "SpecularRoughness", 16);
             };
             
-            var dirt = new NormalMaterial(
+            var dirt  = MaterialPreconfigs.Normal(
                 MaterialType.Dirt,
                 CreateFBOs.FBOType.Default,
                 normalShader,
@@ -46,7 +47,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 normaMaterialUniformSender
                 );
             
-            var dirtPlane = new NormalMaterial(
+            var dirtPlane  = MaterialPreconfigs.Normal(
                 MaterialType.DirtPlane,
                 CreateFBOs.FBOType.Default,
                 normalShader,
@@ -58,7 +59,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 );
             
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
-            var tile = new NormalMaterial(
+            var tile = MaterialPreconfigs.Normal(
                 MaterialType.Tile,
                 CreateFBOs.FBOType.Default,
                 normalShader,
@@ -71,14 +72,17 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #endregion
 
             #region solid_color
-            var solidColor = new Material(MaterialType.Solid, CreateFBOs.FBOType.Default, new ShaderProgram("textureless"), null);
-            solidColor.VAOFromMesh(CreateMeshes.IcoSphereHighPoly);
+            var solidColor = Material.EntityBased(MaterialType.Solid, CreateFBOs.FBOType.Default, new ShaderProgram("textureless"), CreateMeshes.IcoSphereHighPoly, null);
             #endregion
-            
-            var shadowMap = new Material(MaterialType.ShadowMap, CreateFBOs.FBOType.Shadow, new ShaderProgram("shadow_map", "lighting"), null );
-            shadowMap.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
-            
-            
+
+            var shadowMap = Material.EntityBased(
+                MaterialType.ShadowMap,
+                CreateFBOs.FBOType.Shadow,
+                new ShaderProgram("shadow_map", "lighting"),
+                CreateMeshes.IcoSphereHighPoly,
+                null);
+
+
             // var visualizeDepth = new Material(MaterialType.VisualizeDepthTexture, CreateFBOs.FBOType.Default, new ShaderProgram("visualize_depth_map", "lighting"), null );
             // visualizeDepth.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
 
@@ -92,5 +96,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 // visualizeDepth
             };
         }
+        
+        
+        
     }
 }

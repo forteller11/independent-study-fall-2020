@@ -100,14 +100,18 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 
             }
         }
-        private void GenerateVAOFromBuffer(Material mat, AttributeBuffer[] attributeBuffers)
+        
+        /// <summary>
+        /// requires a shaderProgram to be associated with the material
+        /// </summary>
+        private void GenerateVAOFromBuffer(Material material, AttributeBuffer[] attributeBuffers)
         {
             VAOHandle = GL.GenVertexArray();
             GL.BindVertexArray(VAOHandle);
             int offset = 0;
             for (int i = 0; i < attributeBuffers.Length; i++)
             {
-                int attribLocation = mat.GetAttribLocation(attributeBuffers[i].AttributeName);
+                int attribLocation = material.GetAttribLocation(attributeBuffers[i].AttributeName);
                 GL.VertexAttribPointer(
                     attribLocation,
                     attributeBuffers[i].Stride,
@@ -121,6 +125,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 offset += attributeBuffers[i].Stride * sizeof(float);
             }
         }
+        
         
 //        private void SetupIndices(uint[] indices)
 //        {

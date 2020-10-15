@@ -70,6 +70,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
             if (entity.MaterialTypes == null)
                 return;
+            
+            if (entity.ContainsMaterial(CreateMaterials.MaterialType.PostProcessing))
+                throw new DataException($"Entity ${entity.GetType().Name} has material type {CreateMaterials.MaterialType.PostProcessing}, which is invalid!");
 
             int expectedFoundMaterials = entity.MaterialTypes.Length;
             int foundMaterials = 0;

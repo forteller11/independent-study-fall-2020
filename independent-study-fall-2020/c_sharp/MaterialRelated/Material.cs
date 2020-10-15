@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Indpendent_Study_Fall_2020.c_sharp.Scripts;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Indpendent_Study_Fall_2020.Helpers;
@@ -15,36 +16,63 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     /// </summary>
     public class Material : ITypeID
     {
-        public readonly CreateMaterials.MaterialType Type;
-        public readonly CreateFBOs.FBOType FBOType;
-        public readonly bool IsPostProcessing = false;
-        public readonly ShaderProgram Shader;
+        public CreateMaterials.MaterialType Type { get; private set; }
+        public CreateFBOs.FBOType FBOType { get; private set; }
+        public bool IsPostProcessing { get; private set; }
+        public int PostFXOrder { get; private set; } //where -1 is invalid, 0 is first, and pos-infinity is last
+        public ShaderProgram Shader { get; private set; }
         
         public Dictionary<string, int> UniformLocations { get; private set; }
         public Dictionary<string, int> VertexAttribLocations { get; private set; }
+        public VAOAndBuffers VAO { get; private set; }
+        
         private List<Texture> _textures = new List<Texture>();
-        public VAOAndBuffers VAO;
-        public Action<Material> PerMaterialAttributeSender;
+        
+        public Action<Material> PerMaterialUniformSender;
+        
         private const bool DEBUG = false;
-       
 
-        public Material(CreateMaterials.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, Action<Material> perMaterialAttributeSender)
-        {
-            Type = type;
-            Shader = shaderProgram;
-            PerMaterialAttributeSender = perMaterialAttributeSender;
-            FBOType = fboType;
+        private Material() { }
 
-            GetUniformAndAttribLocations();
+    
 
-        }
-
-        // public Material PostProcessing()
+        // public static Material EntityBased(CreateMaterials.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, VAOAndBuffers vaoAndBuffers, Action<Material> perMaterialUniformSender)
         // {
-        //     typeof 
+        //     var mat = new Material();
+        //     mat.Type = type;
+        //     mat.Shader = shaderProgram;
+        //     mat.PerMaterialUniformSender = perMaterialUniformSender;
+        //     mat.FBOType = fboType;
+        //     mat.VAO = vaoAndBuffers;
+        //     mat.GetUniformAndAttribLocations();
+        //     return mat;
         // }
+        
+        public static Material EntityBased(CreateMaterials.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        {
+            var mat = new Material();
+            mat.Type = type;
+            mat.Shader = shaderProgram;
+            mat.PerMaterialUniformSender = perMaterialUniformSender;
+            mat.FBOType = fboType;
+            mat.VAO = new VAOAndBuffers(mat, mesh);
+            mat.GetUniformAndAttribLocations();
+            return mat;
+        }
+         public static Material PostProcessing(ShaderProgram shaderProgram, int order)
+         {
+             var mat = new Material();
+             mat.Shader = shaderProgram;
+             mat.FBOType = CreateFBOs.FBOType.Default;
+             mat.Type = CreateMaterials.MaterialType.PostProcessing;
+             mat.PostFXOrder = order;
+             mat.VAO= new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
+       
+             mat.GetUniformAndAttribLocations();
+             return mat;
+         }
 
-        private void GetUniformAndAttribLocations()
+        public void GetUniformAndAttribLocations()
         {
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
@@ -81,13 +109,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             else
                 throw new Exception($"Attribute {name} not found at material {Type}");
         }
-        
-        public void VAOFromMesh(Mesh mesh)
-        {
-            VAO = new VAOAndBuffers(this, mesh);
-        }
 
-        
         // public void SetupATexture(string fileName, string samplerName, TextureUnit textureUnitEnum)
         // {
         //     Shader.Use();
@@ -113,7 +135,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             Shader.Use();
             UseAllAttachedTextures();
-            PerMaterialAttributeSender?.Invoke(this);
+            PerMaterialUniformSender?.Invoke(this);
             GL.BindVertexArray(VAO.VAOHandle);
         }
 

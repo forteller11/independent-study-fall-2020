@@ -5,13 +5,13 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.Scripts.Materials
 {
-    public class NormalMaterial : Material
+    public class MaterialPreconfigs
     {
         public const string DiffuseColorSampler = "Color";
         public const string NormalMapSampler = "Normal";
         public const string SpecularMapSampler = "Gloss";
         
-        public NormalMaterial(
+        public static Material Normal(
             CreateMaterials.MaterialType type, 
             CreateFBOs.FBOType fboType, 
             ShaderProgram shaderProgram, 
@@ -19,12 +19,15 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
             string diffusePath, 
             string normalPath, 
             string specularPath, 
-            Action<Material> perMatSender) : base(type, fboType, shaderProgram, perMatSender)
+            Action<Material> perMatSender)
         {
-            VAOFromMesh(mesh);
-            SetupSampler(DiffuseColorSampler, Texture.FromFile(diffusePath, TextureUnit.Texture0));
-            SetupSampler(NormalMapSampler, Texture.FromFile(normalPath, TextureUnit.Texture1));
-            SetupSampler(SpecularMapSampler, Texture.FromFile(specularPath, TextureUnit.Texture2));
+            var mat = Material.EntityBased(type, fboType, shaderProgram, mesh, perMatSender);
+
+            mat.SetupSampler(DiffuseColorSampler, Texture.FromFile(diffusePath, TextureUnit.Texture0));
+            mat.SetupSampler(NormalMapSampler, Texture.FromFile(normalPath, TextureUnit.Texture1));
+            mat.SetupSampler(SpecularMapSampler, Texture.FromFile(specularPath, TextureUnit.Texture2));
+            
+            return mat;
         }
     }
 }
