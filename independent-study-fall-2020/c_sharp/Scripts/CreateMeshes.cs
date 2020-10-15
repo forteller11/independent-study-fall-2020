@@ -21,12 +21,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts
 
             var quadPositions = new []
             {
-                new Vector3(1, 1, 0), //upper left tri
-                new Vector3(-1, 1, 0), 
-                new Vector3(-1, -1, 0), 
-                new Vector3(1,1,0), //lower righ tri
-                new Vector3(1,-1,0), 
+                new Vector3(1,1,0), //upper right
+                new Vector3(-1,1,0), 
                 new Vector3(-1,-1,0), 
+                
+                new Vector3(1,1,0),
+                new Vector3(-1,-1,0), 
+                new Vector3(1,-1,0), //lower right
             };
             ViewSpaceQuad =  new Mesh(AttributeBuffer.PositionAttribute(quadPositions), null, null );
         }

@@ -16,10 +16,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public CreateFBOs.FBOType Type { get; private set; }
         private Action _renderCapSettings;
 
-        public int Width => Texture?.Width ?? DrawManager.TKWindowSize.Width;
-        public int Height => Texture?.Height ?? DrawManager.TKWindowSize.Height;
-        public int TextureHandle => Texture.Handle;
-        private Texture Texture { get; set; }
+        public int Width => ColorTexture?.Width ?? DrawManager.TKWindowSize.Width;
+        public int Height => ColorTexture?.Height ?? DrawManager.TKWindowSize.Height;
+        public int TextureHandle => ColorTexture.Handle;
+        private Texture ColorTexture { get; set; }
+        private Texture DepthTexture { get; set; }
 
         private FBO()
         {
@@ -47,7 +48,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             var fbo = new FBO();
             fbo.Type = CreateFBOs.FBOType.Default;
             fbo.Handle = 0;
-            fbo.Texture = null;
+            fbo.ColorTexture = null;
             fbo._renderCapSettings = renderCapSettings;
             return fbo;
         }
@@ -63,7 +64,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             if (Type == CreateFBOs.FBOType.Default)
                 GL.Viewport(DrawManager.TKWindowSize);
             else
-                GL.Viewport(0,0,Texture.Width,Texture.Height);
+                GL.Viewport(0,0,ColorTexture.Width,ColorTexture.Height);
             _renderCapSettings?.Invoke();
         }
 
@@ -75,7 +76,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         
         public void AssignTexture(Texture texture, FramebufferAttachment attachment)
         {
-            Texture = texture;
+            ColorTexture = texture;
              GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
         }
         

@@ -26,9 +26,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Buffer = new float[buffer.Length*Stride];
             for (int i = 0; i < buffer.Length; i++)
             {
-                Buffer[i + 0] = buffer[i].X;
-                Buffer[i + 1] = buffer[i].Y;
-                Buffer[i + 2] = buffer[i].Z;
+                Buffer[i*Stride + 0] = buffer[i].X;
+                Buffer[i*Stride + 1] = buffer[i].Y;
+                Buffer[i*Stride + 2] = buffer[i].Z;
             }
         }
         
@@ -40,8 +40,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             Buffer = new float[buffer.Length*Stride];
             for (int i = 0; i < buffer.Length; i++)
             {
-                Buffer[i + 0] = buffer[i].X;
-                Buffer[i + 1] = buffer[i].Y;
+                Buffer[i*Stride + 0] = buffer[i].X;
+                Buffer[i*Stride + 1] = buffer[i].Y;
             }
         }
 
