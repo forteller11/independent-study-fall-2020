@@ -15,9 +15,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public int StrideLength { get; private set; }
         public int VBOHandle { get; private set; }
         public int VAOHandle { get; private set; }
-//        public int IndicesHandle { get; private set; }
-//        public bool UseIndices = false;
-        public Dictionary<string, int> AttributeIndex;
+
+
  
         public VAOAndBuffers(Material material,  Mesh mesh)
         {
@@ -67,8 +66,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             int totalAttributesCount = 0;
             StrideLength = 0;
             VerticesCount = attributeBuffers[0].VerticesCount;
-            AttributeIndex = new Dictionary<string, int>(attributeBuffers.Length);
-            
+
             for (int i = 0; i < attributeBuffers.Length; i++)
             {
                 if (attributeBuffers[i].VerticesCount != attributeBuffers[0].VerticesCount) //error checking
@@ -102,7 +100,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         }
         
         /// <summary>
-        /// requires a shaderProgram to be associated with the material
+        /// requires a shaderProgram and its vertex/uniform locations to be associated with the material
         /// </summary>
         private void GenerateVAOFromBuffer(Material material, AttributeBuffer[] attributeBuffers)
         {
@@ -127,25 +125,5 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         }
         
         
-//        private void SetupIndices(uint[] indices)
-//        {
-//            UseIndices = indices != null;
-//            if (UseIndices)
-//            {
-//                for (int i = 0; i < indices.Length; i++)
-//                    if (indices[i] > VerticesCount - 1)
-//                        throw new DataException($"Indices reference a vertex which don't not exist in the VAO");
-//
-//                IndicesBuffer = indices;
-//                
-//                IndicesHandle = GL.GenBuffer();
-//                GL.BindBuffer(BufferTarget.ElementArrayBuffer, IndicesHandle);
-//                GL.BufferData(
-//                    BufferTarget.ArrayBuffer, 
-//                    IndicesBuffer.Length * sizeof(uint),
-//                    IndicesBuffer,
-//                    BufferUsageHint.StaticDraw);
-//            }
-//        }
     }
 }

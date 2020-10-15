@@ -55,8 +55,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             mat.Shader = shaderProgram;
             mat.PerMaterialUniformSender = perMaterialUniformSender;
             mat.FBOType = fboType;
-            mat.VAO = new VAOAndBuffers(mat, mesh);
             mat.GetUniformAndAttribLocations();
+            mat.VAO = new VAOAndBuffers(mat, mesh);
             return mat;
         }
          public static Material PostProcessing(ShaderProgram shaderProgram, int order)
@@ -66,12 +66,14 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
              mat.FBOType = CreateFBOs.FBOType.Default;
              mat.Type = CreateMaterials.MaterialType.PostProcessing;
              mat.PostFXOrder = order;
-             mat.VAO= new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
-       
              mat.GetUniformAndAttribLocations();
+             mat.VAO= new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
              return mat;
          }
 
+         /// <summary>
+         /// must be called before setting up vao
+         /// </summary>
         public void GetUniformAndAttribLocations()
         {
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
