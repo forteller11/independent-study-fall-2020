@@ -27,6 +27,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public static FBO Custom(CreateFBOs.FBOID id, Size size, bool colorAttachment, bool depthAttachment, Action renderCapSettings)
         {
             var fbo = new FBO();
+            fbo.Handle = GL.GenFramebuffer();
             fbo.ID = id;
             fbo.Size = size;
             fbo.RenderCapSettings = renderCapSettings;
@@ -39,6 +40,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             return fbo;
         }
 
+        public static FBO Default(Action renderCapSettings) //texture is main viewport
+        {
+            var fbo = new FBO();
+            fbo.ID = CreateFBOs.FBOID.Default;
+            fbo.Handle = 0;
+            fbo.RenderCapSettings = renderCapSettings;
+            fbo.Size = DrawManager.TKWindowSize;
+            return fbo;
+        }
 
         private static void ValidateAttachments()
         {
@@ -63,14 +73,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             ValidateAttachments();
         }
         
-        public static FBO Default(Action renderCapSettings) //texture is main viewport
-        {
-            var fbo = new FBO();
-            fbo.ID = CreateFBOs.FBOID.Default;
-            fbo.Handle = 0;
-            fbo.RenderCapSettings = renderCapSettings;
-            return fbo;
-        }
 
         public void Use()
         {

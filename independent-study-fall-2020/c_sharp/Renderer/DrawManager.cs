@@ -20,7 +20,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 {
     public static class DrawManager
     {
-        public static Size TKWindowSize;
+        public static Size TKWindowSize = new Size(100, 2000);
         
         public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
         public static Material[] PostProcessingMaterials;
