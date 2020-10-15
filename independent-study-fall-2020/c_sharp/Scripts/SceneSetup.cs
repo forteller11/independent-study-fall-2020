@@ -15,16 +15,16 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             gameObjects.Add(new CameraControllerSingleton());
             
-            gameObjects.Add(new Sphere(new Vector3(-3,0,4),CreateMaterials.MaterialType.Dirt, CreateMaterials.MaterialType.ShadowMap));
-            gameObjects.Add(new Sphere(new Vector3(0,0,0),CreateMaterials.MaterialType.Dirt, CreateMaterials.MaterialType.ShadowMap));
-            gameObjects.Add(new Sphere(new Vector3(3,0,4),CreateMaterials.MaterialType.Tile, CreateMaterials.MaterialType.ShadowMap));
-            gameObjects.Add(new Sphere(new Vector3(0, 2, 1),CreateMaterials.MaterialType.DirtPlane, CreateMaterials.MaterialType.ShadowMap));
-            gameObjects.Add(new Sphere( new Vector3(0, -10, 0), CreateMaterials.MaterialType.DirtPlane, CreateMaterials.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere(new Vector3(-3,0,4),MaterialFactory.MaterialType.Dirt, MaterialFactory.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere(new Vector3(0,0,0),MaterialFactory.MaterialType.Dirt, MaterialFactory.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere(new Vector3(3,0,4),MaterialFactory.MaterialType.Tile, MaterialFactory.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere(new Vector3(0, 2, 1),MaterialFactory.MaterialType.DirtPlane, MaterialFactory.MaterialType.ShadowMap));
+            gameObjects.Add(new Sphere( new Vector3(0, -10, 0), MaterialFactory.MaterialType.DirtPlane, MaterialFactory.MaterialType.ShadowMap));
             
             gameObjects.Add(new DebugTriggerer());
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                gameObjects.Add(new PointLightVisualizer(i,CreateMaterials.MaterialType.Solid, CreateMaterials.MaterialType.ShadowMap));
+                gameObjects.Add(new PointLightVisualizer(i,MaterialFactory.MaterialType.Solid, MaterialFactory.MaterialType.ShadowMap));
 
             return gameObjects.ToArray();
         }

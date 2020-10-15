@@ -4,7 +4,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 {
     public class Behaviorless : Entity
     {
-        public Behaviorless(CreateMaterials.MaterialType [] type)
+        public Behaviorless(MaterialFactory.MaterialType [] type)
         {
             SetupMaterials(type);
         }

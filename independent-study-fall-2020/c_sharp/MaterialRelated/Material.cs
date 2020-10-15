@@ -16,10 +16,10 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     /// </summary>
     public class Material : ITypeID
     {
-        public CreateMaterials.MaterialType Type { get; private set; }
+        public MaterialFactory.MaterialType Type { get; private set; }
         public CreateFBOs.FBOType FBOType { get; private set; }
         public bool IsPostProcessing { get; private set; }
-        public int PostFXOrder { get; private set; } //where -1 is invalid, 0 is first, and pos-infinity is last
+        // public int PostFXOrder { get; private set; } //where -1 is invalid, 0 is first, and pos-infinity is last
         public ShaderProgram Shader { get; private set; }
         
         public Dictionary<string, int> UniformLocations { get; private set; }
@@ -48,7 +48,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         //     return mat;
         // }
         
-        public static Material EntityBased(CreateMaterials.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material EntityBased(MaterialFactory.MaterialType type, CreateFBOs.FBOType fboType, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
             var mat = new Material();
             mat.Type = type;
@@ -59,13 +59,13 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             mat.VAO = new VAOAndBuffers(mat, mesh);
             return mat;
         }
-         public static Material PostProcessing(ShaderProgram shaderProgram, int order)
+         public static Material PostProcessing(ShaderProgram shaderProgram)
          {
              var mat = new Material();
              mat.Shader = shaderProgram;
              mat.FBOType = CreateFBOs.FBOType.Default;
-             mat.Type = CreateMaterials.MaterialType.PostProcessing;
-             mat.PostFXOrder = order;
+             mat.Type = MaterialFactory.MaterialType.PostProcessing;
+             // mat.PostFXOrder = order;
              mat.GetUniformAndAttribLocations();
              mat.VAO= new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
              return mat;

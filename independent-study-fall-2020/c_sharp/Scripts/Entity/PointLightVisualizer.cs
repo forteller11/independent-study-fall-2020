@@ -11,7 +11,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public int Index;
 
-        public PointLightVisualizer(int index, params CreateMaterials.MaterialType [] materialTypes) : base(BehaviorFlags.None, materialTypes)
+        public PointLightVisualizer(int index, params MaterialFactory.MaterialType [] materialTypes) : base(BehaviorFlags.None, materialTypes)
         {
             Index = index;
             Scale *= 0.2f;
@@ -27,7 +27,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public override void SendUniformsPerObject(Material material)
         {
-            if (material.Type == CreateMaterials.MaterialType.ShadowMap)
+            if (material.Type == MaterialFactory.MaterialType.ShadowMap)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight);
             }

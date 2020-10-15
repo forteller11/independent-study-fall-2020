@@ -14,6 +14,7 @@ using OpenTK.Graphics.ES10;
 using OpenTK.Graphics.OpenGL4;
 using ClearBufferMask = OpenTK.Graphics.OpenGL4.ClearBufferMask;
 using GL = OpenTK.Graphics.OpenGL4.GL;
+using TextureUnit = OpenTK.Graphics.OpenGL4.TextureUnit;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem
 {
@@ -22,6 +23,11 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static Size TKWindowSize;
         
         public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
+        public static Material[] PostProcessingMaterials;
+
+        private static FBO _postProcessingFBO = FBO.Custom(CreateFBOs.FBOType.PostProcessing, FramebufferAttachment.ColorAttachment0,
+            Texture.EmptyRGBA(TKWindowSize.Width, TKWindowSize.Width, TextureUnit.Texture3), 
+            null);
 
         private static int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
 
@@ -32,16 +38,21 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 _blitOffscreenFBOsIndex = -1;
         }
 
-        public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials)
+        public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials, Material[] postProcessingMaterials)
         {
             ThrowIfDuplicateTypeIDs(materials);
             ThrowIfDuplicateTypeIDs(fbos);
+            for (int i = 0; i < postProcessingMaterials.Length; i++)
+                if (postProcessingMaterials[i].Type != MaterialFactory.MaterialType.PostProcessing)
+                    throw new DataException("Material must be of type post-processing!");
             
             for (int i = 0; i < fbos.Length; i++) 
                 AddFBO(fbos[i]);
             
             for (int i = 0; i < materials.Length; i++)
                 AddMaterial(materials[i]);
+            
+            PostProcessingMaterials = postProcessingMaterials;
             
         }
 
@@ -51,6 +62,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         }
         private static void AddMaterial(Material material)
         {
+            if (material.Type == MaterialFactory.MaterialType.PostProcessing)
+                throw new DataException("Cannot add a post processing material to rendering hierarchy!");
+            
             for (int i = 0; i < BatchHierachies.Count; i++)
             {
                 FBOBatch fboBatch = BatchHierachies[i];
@@ -59,9 +73,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     fboBatch.MaterialBatches.Add(new MaterialBatch(material));
                     return;
                 }
-
             }
-
         }
 
         //add entity to appropriate material as sepcefied by material type, and if has createcastshadows flag, add to shadowMap material as well
@@ -71,8 +83,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             if (entity.MaterialTypes == null)
                 return;
             
-            if (entity.ContainsMaterial(CreateMaterials.MaterialType.PostProcessing))
-                throw new DataException($"Entity ${entity.GetType().Name} has material type {CreateMaterials.MaterialType.PostProcessing}, which is invalid!");
+            if (entity.ContainsMaterial(MaterialFactory.MaterialType.PostProcessing))
+                throw new DataException($"Entity ${entity.GetType().Name} has material type {MaterialFactory.MaterialType.PostProcessing}, which is invalid!");
 
             int expectedFoundMaterials = entity.MaterialTypes.Length;
             int foundMaterials = 0;
@@ -93,7 +105,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             }
             
             if (foundMaterials != expectedFoundMaterials)
-                throw new DataException($"Entity with materials {Debug.GraphList(new List<CreateMaterials.MaterialType>())} couldn't be found in draw manager!");
+                throw new DataException($"Entity with materials {Debug.GraphList(new List<MaterialFactory.MaterialType>())} couldn't be found in draw manager!");
         }
 
         public static void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID
@@ -136,16 +148,32 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     }
                 }
 
+                //gen mipmaps for fbo textures if needed
                 if (fboBatch.FBO.Type != CreateFBOs.FBOType.Default) //todo do i have to do this?
                 {
-                    GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.Texture.Handle);
+                    GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.TextureHandle);
                     GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
                 }
             }
-            
+
+            RenderPostProcessingEffects();
             DebugFBODrawing();
         }
 
+        static void RenderPostProcessingEffects()
+        {
+            FBO.Blit(CreateFBOs.Default, _postProcessingFBO, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            
+            for (int i = 0; i < PostProcessingMaterials.Length; i++)
+            {
+                PostProcessingMaterials[i].SetDrawingStates();
+                GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
+            }   
+            
+            FBO.Blit(_postProcessingFBO, CreateFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+        }
+
+        
         private static void DebugFBODrawing()
         {
             if (_blitOffscreenFBOsIndex == -1)
@@ -153,15 +181,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
             for (int i = 0; i < BatchHierachies.Count-1; i++) //assuming last fbo is always default
             {
-                var fbo = BatchHierachies[i].FBO;
-
-                GL.BindFramebuffer(FramebufferTarget.ReadFramebuffer, BatchHierachies[i].FBO.Handle);
-                GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
-                GL.BlitFramebuffer(
-                        0, 0, fbo.Texture.Width, fbo.Texture.Height,
-                        0, 0, TKWindowSize.Width, TKWindowSize.Height,
-                        ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
-                
+                FBO.Blit(BatchHierachies[i].FBO, CreateFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
             }
             
         }

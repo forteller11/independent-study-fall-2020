@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.Scripts
 {
-    public static class CreateMaterials
+    public static class MaterialFactory
     {
         [Flags]
         public enum MaterialType
@@ -23,7 +23,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             PostProcessing
             // VisualizeDepthTexture
         }
-        public static Material[] Create()
+        public static Material[] CreateEntityBased()
         {
         
         
@@ -94,6 +94,14 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 dirtPlane,
                 tile,
                 // visualizeDepth
+            };
+        }
+
+        public static Material[] CreatePostProcessing()
+        {
+            return new[]
+            {
+                Material.PostProcessing(new ShaderProgram("post_processing")),
             };
         }
         

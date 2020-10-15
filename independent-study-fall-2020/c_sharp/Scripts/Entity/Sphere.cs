@@ -18,7 +18,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
             Scale *= 1f;
         }
 
-        public Sphere(Vector3 position, params CreateMaterials.MaterialType [] materialTypes)
+        public Sphere(Vector3 position, params MaterialFactory.MaterialType [] materialTypes)
         {
             Position = position;
             SetupMaterials(materialTypes);
@@ -35,7 +35,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
 
         public override void SendUniformsPerObject(Material material)
         {
-            if (material.Type != CreateMaterials.MaterialType.ShadowMap)
+            if (material.Type != MaterialFactory.MaterialType.ShadowMap)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
                 UniformSender.SendLights(material);

@@ -12,36 +12,44 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 {
     public class FBO : ITypeID
     {
-        public readonly int Handle = 0;
-        public readonly CreateFBOs.FBOType Type;
+        public int Handle { get; private set; }
+        public CreateFBOs.FBOType Type { get; private set; }
         private Action _renderCapSettings;
-        public Texture Texture { get; private set; }
 
-        public FBO(CreateFBOs.FBOType type, FramebufferAttachment attachment, Texture texture, Action renderCapSettings)
+        public int Width => Texture?.Width ?? DrawManager.TKWindowSize.Width;
+        public int Height => Texture?.Height ?? DrawManager.TKWindowSize.Height;
+        public int TextureHandle => Texture.Handle;
+        private Texture Texture { get; set; }
+
+        private FBO()
         {
-            Handle = GL.GenFramebuffer();
-            Type = type;
-            _renderCapSettings = renderCapSettings;
             
-            Use();
-            AssignTexture(texture, attachment);
+        }
+        public static FBO Custom(CreateFBOs.FBOType type, FramebufferAttachment attachment, Texture texture, Action renderCapSettings)
+        {
+            var fbo = new FBO();
+            fbo.Handle = GL.GenFramebuffer();
+            fbo.Type = type;
+            fbo._renderCapSettings = renderCapSettings;
+            
+            fbo.Use();
+            fbo.AssignTexture(texture, attachment);
             
             var fboStatus = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
             if (fboStatus != FramebufferErrorCode.FramebufferComplete)
                 throw new Exception($"Frame Buffer Exception! {fboStatus}");
 
-
+            return fbo;
         }
-
-        /// <summary>
-        /// Creates default fbo
-        /// </summary>
-        public FBO(Action renderCapSettings)
+        
+        public static FBO Default(Action renderCapSettings) //texture is main viewport
         {
-            Type = CreateFBOs.FBOType.Default;
-            Handle = 0;
-            Texture = null;
-            _renderCapSettings = renderCapSettings;
+            var fbo = new FBO();
+            fbo.Type = CreateFBOs.FBOType.Default;
+            fbo.Handle = 0;
+            fbo.Texture = null;
+            fbo._renderCapSettings = renderCapSettings;
+            return fbo;
         }
 
         public void Use()
@@ -51,13 +59,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
         public void SetDrawingStates()
         {
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
+            Use();
             if (Type == CreateFBOs.FBOType.Default)
                 GL.Viewport(DrawManager.TKWindowSize);
             else
                 GL.Viewport(0,0,Texture.Width,Texture.Height);
             _renderCapSettings?.Invoke();
-            
         }
 
         public static void UseDefaultBuffer()
@@ -70,6 +77,16 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             Texture = texture;
              GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
+        }
+        
+        public static void Blit(FBO source, FBO dest, ClearBufferMask clearBufferMask, BlitFramebufferFilter blitFramebufferFilter)
+        {
+            GL.BindFramebuffer(FramebufferTarget.ReadFramebuffer, source.Handle);
+            GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, dest.Handle);
+            GL.BlitFramebuffer(
+                0, 0, source.Width, source.Height,
+                0, 0, dest.Width, dest.Height,
+                clearBufferMask, blitFramebufferFilter);
         }
 
         public int GetTypeID() => (int) Type;

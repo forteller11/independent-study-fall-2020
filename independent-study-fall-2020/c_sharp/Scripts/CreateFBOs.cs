@@ -8,16 +8,16 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public enum FBOType
         {
             Default = default,
-            Primary,
-            Shadow
+            Shadow,
+            PostProcessing
         };
         
-        public static FBO ShadowBuffer; 
-        public static FBO PrimaryBuffer; 
+        public static FBO Shadow; 
+        public static FBO Default;
         public static FBO[] Create()
         {
         
-            ShadowBuffer = new FBO(FBOType.Shadow, FramebufferAttachment.DepthAttachment, Texture.EmptyDepth(2560, 2560, TextureUnit.Texture3),
+            Shadow = FBO.Custom(FBOType.Shadow, FramebufferAttachment.DepthAttachment, Texture.EmptyDepth(2560, 2560, TextureUnit.Texture3),
                 () =>
                 {
                     
@@ -29,16 +29,16 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
             //         
             //     });
             
-            //todo only call relevant enable caps at initialization, not every frame
-            var defaultBuffer = new FBO(() => {
+            
+            Default = FBO.Default(() => {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);});
             
             return new[]
             {
-                ShadowBuffer,
-                defaultBuffer
+                Shadow,
+                Default
             };
         }
     }
