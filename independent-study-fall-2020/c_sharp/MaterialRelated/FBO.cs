@@ -20,8 +20,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
 
         public int TextureHandle => ColorTexture.Handle;
-        private Texture ColorTexture { get; set; }
-        private Texture DepthTexture { get; set; }
+        public Texture ColorTexture { get; set; }
+        public Texture DepthTexture { get; set; }
 
         private FBO(){}
         public static FBO Custom(CreateFBOs.FBOID id, Size size, bool colorAttachment, bool depthAttachment, Action renderCapSettings)
@@ -82,11 +82,14 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void SetDrawingStates()
         {
             Use();
-            if (ID == CreateFBOs.FBOID.Default)
-                GL.Viewport(DrawManager.TKWindowSize);
-            else
-                GL.Viewport(0,0,ColorTexture.Width,ColorTexture.Height);
+            GL.Viewport(0,0,Size.Width,Size.Height);
             RenderCapSettings?.Invoke();
+        }
+
+        public void UseTextures()
+        {
+            ColorTexture?.Use();
+            DepthTexture?.Use();
         }
 
         public static void UseDefaultBuffer()

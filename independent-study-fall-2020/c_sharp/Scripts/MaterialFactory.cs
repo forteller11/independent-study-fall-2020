@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.c_sharp.Scripts;
+using Indpendent_Study_Fall_2020.EntitySystem;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
 using Indpendent_Study_Fall_2020.Scripts.Materials;
@@ -99,9 +100,13 @@ namespace Indpendent_Study_Fall_2020.Scripts
 
         public static Material[] CreatePostProcessing()
         {
+            var depthVisualizer = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
+                depthVisualizer.SetupSampler("MainColor", DrawManager.PostProcessingFbo.ColorTexture);
+                depthVisualizer.SetupSampler("MainDepth", DrawManager.PostProcessingFbo.DepthTexture);
+                
             return new Material[]
             {
-                 Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test")),
+                 depthVisualizer
             };
         }
         

@@ -19,6 +19,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts
             IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane", true, true, true);
 
+            #region ViewQuad
             var quadPositions = new []
             {
                 new Vector3(1,1,0), //upper right
@@ -29,7 +30,19 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts
                 new Vector3(-1,-1,0), 
                 new Vector3(1,-1,0), //lower right
             };
-            ViewSpaceQuad =  new Mesh(AttributeBuffer.PositionAttribute(quadPositions), null, null );
+            
+            var quadUvs = new []
+            {
+                new Vector2(1,1), //upper right
+                new Vector2(0,1), 
+                new Vector2(0,0),
+                
+                new Vector2(1,1), 
+                new Vector2(0,0), 
+                new Vector2(1,0),  //lower right
+            };
+            ViewSpaceQuad =  new Mesh(AttributeBuffer.PositionAttribute(quadPositions), AttributeBuffer.UVAttribute(quadUvs), null );
+            #endregion
         }
     }
 }
