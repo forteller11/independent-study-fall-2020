@@ -33,7 +33,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static void CycleFBOBlit()
         {
             _blitOffscreenFBOsIndex++;
-            if (_blitOffscreenFBOsIndex >= BatchHierachies.Count-1)
+            if (_blitOffscreenFBOsIndex >= BatchHierachies.Count)
                 _blitOffscreenFBOsIndex = -1;
         }
 
@@ -192,12 +192,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         {
             if (_blitOffscreenFBOsIndex == -1)
                 return;
-
-            for (int i = 0; i < BatchHierachies.Count-1; i++) //assuming last fbo is always default
-            {
-                FBO.Blit(BatchHierachies[i].FBO, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
-            }
             
+            FBO.Blit(BatchHierachies[_blitOffscreenFBOsIndex].FBO, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+
         }
     }
 }
