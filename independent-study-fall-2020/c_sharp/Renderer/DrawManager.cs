@@ -26,7 +26,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
         public static Material[] PostProcessingMaterials;
 
-        public static FBO PostProcessingFbo { get; private set; }
+        
 
         private static int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
 
@@ -43,9 +43,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.BlendEquation(BlendEquationMode.FuncAdd);
-            PostProcessingFbo = FBO.Custom(FboSetup.FBOID.PostProcessing, TKWindowSize, true, true,true,
-                ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
-                GL.ClearColor(0f,0f,0f,1f);
+            GL.ClearColor(0f,0f,0f,1f);
         }
 
         public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials, Material[] postProcessingMaterials)
@@ -183,14 +181,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         static void RenderPostProcessingEffects()
         {
-            FBO.Blit(FboSetup.Main, PostProcessingFbo, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
+            // FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
             
+            FboSetup.PostProcessing.SetDrawingStates();
             for (int i = 0; i < PostProcessingMaterials.Length; i++)
             {
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
-            FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
+            // FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
+            FBO.Blit(FboSetup.PostProcessing, FboSetup.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
         }
 
         

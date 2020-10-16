@@ -17,6 +17,7 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public static FBO Shadow; 
         public static FBO Main;
         public static FBO Default;
+        public static FBO PostProcessing { get; private set; }
         public static FBO[] Create()
         {
         
@@ -32,6 +33,13 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);});
+            
+            PostProcessing  = FBO.Custom(FboSetup.FBOID.PostProcessing, DrawManager.TKWindowSize, true, true,true,
+                ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () =>
+                {
+                    Main.UseTextures();
+                    // GL.Disable(EnableCap.DepthTest);
+                });
             
             return new[]
             {
