@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-MAINREPO\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
+    "projectUniqueName": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\IndStudyOct16\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
     "projectName": "independent-study-fall-2020",
-    "projectPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-MAINREPO\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
-    "outputPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-MAINREPO\\independent-study-fall-2020\\independent-study-fall-2020\\obj\\",
+    "projectPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\IndStudyOct16\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
+    "outputPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\IndStudyOct16\\independent-study-fall-2020\\independent-study-fall-2020\\obj\\",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.1"

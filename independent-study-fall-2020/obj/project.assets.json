@@ -436,11 +436,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-MAINREPO\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
+      "projectUniqueName": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\IndStudyOct16\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
       "projectName": "independent-study-fall-2020",
-      "projectPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-MAINREPO\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
+      "projectPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\IndStudyOct16\\independent-study-fall-2020\\independent-study-fall-2020\\independent-study-fall-2020.csproj",
       "packagesPath": "C:\\Users\\Charly\\.nuget\\packages\\",
-      "outputPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\independent-study-MAINREPO\\independent-study-fall-2020\\independent-study-fall-2020\\obj\\",
+      "outputPath": "D:\\MOVE\\Homework\\Concordia_Year_03\\Independent_Study\\Repos\\IndStudyOct16\\independent-study-fall-2020\\independent-study-fall-2020\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Charly\\AppData\\Roaming\\NuGet\\NuGet.Config"

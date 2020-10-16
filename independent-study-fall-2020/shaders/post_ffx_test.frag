@@ -4,12 +4,14 @@ out vec4 frag_color;
 in vec2 v2f_uv;
 
 uniform sampler2D MainColor;
-uniform sampler2DShadow MainDepth;
+uniform sampler2D MainDepth;
 
 void main(){
-    
-    //float depth = texture(MainDepth, v2f_uv); //am i going get values between 1 and 0??????... i dont want that... i want depth values..... REDO
-    vec4 color = texture(MainColor, v2f_uv);
-    frag_color = vec4(v2f_uv.xy, 0, 1);
-    frag_color = color;
+
+    //float depth = texture(MainDepth, vec3(v2f_uv,1), 0.01);
+    //vec4 depthColor = texture(MainDepth, v2f_uv);
+    //vec4 color = texture(MainColor, v2f_uv);
+    //frag_color = vec4(vec3(depth), 1);
+    frag_color = vec4(1,0,0,.2);
+
 }
