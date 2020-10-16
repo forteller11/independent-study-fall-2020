@@ -12,7 +12,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
     public abstract class Entity //todo... make mega object with flags... add physics component?
     {
         public readonly Guid GUID;
-        public MaterialFactory.MaterialType [] MaterialTypes { get; private set; }
+        public MaterialSetup.MaterialType [] MaterialTypes { get; private set; }
         
         public Vector3 Position = new Vector3(0,0,0);
         public Quaternion Rotation = Quaternion.Identity;
@@ -27,7 +27,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public BehaviorFlags Flags;
         
 
-        public Entity(BehaviorFlags flags, params MaterialFactory.MaterialType [] materialTypes)
+        public Entity(BehaviorFlags flags, params MaterialSetup.MaterialType [] materialTypes)
         {
             MaterialTypes = materialTypes;
             Flags = flags;
@@ -39,7 +39,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             GUID = Guid.NewGuid();
         }
 
-        public void SetupMaterials(params MaterialFactory.MaterialType[] materialTypes)
+        public void SetupMaterials(params MaterialSetup.MaterialType[] materialTypes)
         {
             MaterialTypes = materialTypes;
         }
@@ -59,7 +59,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         public virtual void OnClose() { }
 
-        public bool ContainsMaterial(MaterialFactory.MaterialType materialType)
+        public bool ContainsMaterial(MaterialSetup.MaterialType materialType)
         {
             for (int i = 0; i < MaterialTypes.Length; i++)
             {

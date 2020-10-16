@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Indpendent_Study_Fall_2020.Scripts
 {
-    public static class MaterialFactory
+    public static class MaterialSetup
     {
         [Flags]
         public enum MaterialType
@@ -39,7 +39,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             var dirt  = MaterialPreconfigs.Normal(
                 MaterialType.Dirt,
-                CreateFBOs.FBOID.Default,
+                FboSetup.FBOID.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -50,7 +50,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             
             var dirtPlane  = MaterialPreconfigs.Normal(
                 MaterialType.DirtPlane,
-                CreateFBOs.FBOID.Default,
+                FboSetup.FBOID.Main,
                 normalShader,
                 CreateMeshes.Plane,
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -62,7 +62,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             var tile = MaterialPreconfigs.Normal(
                 MaterialType.Tile,
-                CreateFBOs.FBOID.Default,
+                FboSetup.FBOID.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
                 bathroomTiles+"COL_VAR2_3K.jpg",
@@ -73,12 +73,12 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #endregion
 
             #region solid_color
-            var solidColor = Material.EntityBased(MaterialType.Solid, CreateFBOs.FBOID.Default, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
+            var solidColor = Material.EntityBased(MaterialType.Solid, FboSetup.FBOID.Main, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
             #endregion
 
             var shadowMap = Material.EntityBased(
                 MaterialType.ShadowMap,
-                CreateFBOs.FBOID.Shadow,
+                FboSetup.FBOID.Shadow,
                 ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.IcoSphereHighPoly,
                 null);
@@ -101,8 +101,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
         public static Material[] CreatePostProcessing()
         {
             var depthVisualizer = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
-                depthVisualizer.SetupSampler("MainColor", DrawManager.PostProcessingFbo.ColorTexture);
-                depthVisualizer.SetupSampler("MainDepth", DrawManager.PostProcessingFbo.DepthTexture);
+                depthVisualizer.SetupSampler("MainColor", FboSetup.Main.ColorTexture);
+                depthVisualizer.SetupSampler("MainDepth", FboSetup.Main.DepthTexture);
                 
             return new Material[]
             {

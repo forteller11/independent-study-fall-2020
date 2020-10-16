@@ -16,8 +16,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     /// </summary>
     public class Material : ITypeID
     {
-        public MaterialFactory.MaterialType Type { get; private set; }
-        public CreateFBOs.FBOID Fboid { get; private set; }
+        public MaterialSetup.MaterialType Type { get; private set; }
+        public FboSetup.FBOID Fboid { get; private set; }
         public bool IsPostProcessing { get; private set; }
         // public int PostFXOrder { get; private set; } //where -1 is invalid, 0 is first, and pos-infinity is last
         public ShaderProgram Shader { get; private set; }
@@ -48,7 +48,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         //     return mat;
         // }
         
-        public static Material EntityBased(MaterialFactory.MaterialType type, CreateFBOs.FBOID fboid, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material EntityBased(MaterialSetup.MaterialType type, FboSetup.FBOID fboid, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
             var mat = new Material();
             mat.Type = type;
@@ -63,11 +63,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
          {
              var mat = new Material();
              mat.Shader = shaderProgram;
-             mat.Fboid = CreateFBOs.FBOID.Default;
-             mat.Type = MaterialFactory.MaterialType.PostProcessing;
-             // mat.PostFXOrder = order;
+             mat.Fboid = FboSetup.FBOID.PostProcessing;
+             mat.Type = MaterialSetup.MaterialType.PostProcessing;
              mat.GetUniformAndAttribLocations();
-             mat.VAO= new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
+             mat.VAO = new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
+             mat.PerMaterialUniformSender = _ => FboSetup.Main.UseTextures();
              return mat;
          }
 

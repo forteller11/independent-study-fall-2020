@@ -61,7 +61,7 @@ namespace Indpendent_Study_Fall_2020
             
             CreateMeshes.Create();
             
-            DrawManager.SetupStaticRenderingHierarchy(CreateFBOs.Create(), MaterialFactory.CreateEntityBased(), MaterialFactory.CreatePostProcessing());
+            DrawManager.SetupStaticRenderingHierarchy(FboSetup.Create(), MaterialSetup.CreateEntityBased(), MaterialSetup.CreatePostProcessing());
             DrawManager.TKWindowSize = new Size(Width, Height);
             
             EntityManager.AddRangeToWorldAndRenderer(SceneSetup.CreateGameObjects());

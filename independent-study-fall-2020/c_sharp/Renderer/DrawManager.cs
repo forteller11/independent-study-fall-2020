@@ -39,7 +39,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static void Init(TKWindow window)
         {
             TKWindowSize = window.Size;
-            PostProcessingFbo = FBO.Custom(CreateFBOs.FBOID.PostProcessing, TKWindowSize, true, true, null);
+            PostProcessingFbo = FBO.Custom(FboSetup.FBOID.PostProcessing, TKWindowSize, true, true, null);
         }
 
         public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials, Material[] postProcessingMaterials)
@@ -48,10 +48,10 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             ThrowIfDuplicateTypeIDs(materials);
             ThrowIfDuplicateTypeIDs(fbos);
             for (int i = 0; i < fbos.Length; i++)
-                if (fbos[i].ID == CreateFBOs.FBOID.PostProcessing)
+                if (fbos[i].ID == FboSetup.FBOID.PostProcessing)
                     throw new DataException("fbos can't be of type post-processing!");
             for (int i = 0; i < postProcessingMaterials.Length; i++)
-                if (postProcessingMaterials[i].Type != MaterialFactory.MaterialType.PostProcessing)
+                if (postProcessingMaterials[i].Type != MaterialSetup.MaterialType.PostProcessing)
                     throw new DataException("Material must be of type post-processing!");
             #endregion
             
@@ -67,12 +67,18 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         private static void AddFBO(FBO fbo)
         {
-            BatchHierachies.Add(new FBOBatch(fbo));
+            BatchHierachies.Insert(0, new FBOBatch(fbo));
         }
         private static void AddMaterial(Material material)
         {
-            if (material.Type == MaterialFactory.MaterialType.PostProcessing)
+            if (material.Type == MaterialSetup.MaterialType.PostProcessing)
                 throw new DataException("Cannot add a post processing material to rendering hierarchy!");
+            
+            if (material.Fboid == FboSetup.FBOID.PostProcessing)
+                throw new DataException("Cannot add a post processing material to rendering hierarchy!");
+            
+            if (material.Fboid == FboSetup.FBOID.Default)
+                throw new DataException("Cannot render directly to default frame buffer!");
             
             for (int i = 0; i < BatchHierachies.Count; i++)
             {
@@ -92,8 +98,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             if (entity.MaterialTypes == null)
                 return;
             
-            if (entity.ContainsMaterial(MaterialFactory.MaterialType.PostProcessing))
-                throw new DataException($"Entity ${entity.GetType().Name} has material type {MaterialFactory.MaterialType.PostProcessing}, which is invalid!");
+            if (entity.ContainsMaterial(MaterialSetup.MaterialType.PostProcessing))
+                throw new DataException($"Entity ${entity.GetType().Name} has material type {MaterialSetup.MaterialType.PostProcessing}, which is invalid!");
 
             int expectedFoundMaterials = entity.MaterialTypes.Length;
             int foundMaterials = 0;
@@ -114,7 +120,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             }
             
             if (foundMaterials != expectedFoundMaterials)
-                throw new DataException($"Entity with materials {Debug.GraphList(new List<MaterialFactory.MaterialType>())} couldn't be found in draw manager!");
+                throw new DataException($"Entity with materials {Debug.GraphList(new List<MaterialSetup.MaterialType>())} couldn't be found in draw manager!");
         }
 
         public static void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID
@@ -158,7 +164,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 }
 
                 //gen mipmaps for fbo textures if needed
-                if (fboBatch.FBO.ID != CreateFBOs.FBOID.Default) //todo do i have to do this?
+                if (fboBatch.FBO.ID != FboSetup.FBOID.Default) //todo do i have to do this?
                 {
                     GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.TextureHandle);
                     GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
@@ -171,15 +177,15 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         static void RenderPostProcessingEffects()
         {
-            FBO.Blit(CreateFBOs.Default, PostProcessingFbo, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(FboSetup.Main, PostProcessingFbo, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Linear);
             
             for (int i = 0; i < PostProcessingMaterials.Length; i++)
             {
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
-            
-            FBO.Blit(PostProcessingFbo, CreateFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(PostProcessingFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Linear);
         }
 
         
@@ -190,7 +196,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
             for (int i = 0; i < BatchHierachies.Count-1; i++) //assuming last fbo is always default
             {
-                FBO.Blit(BatchHierachies[i].FBO, CreateFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+                FBO.Blit(BatchHierachies[i].FBO, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
             }
             
         }

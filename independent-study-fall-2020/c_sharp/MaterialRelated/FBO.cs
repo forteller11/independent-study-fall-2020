@@ -13,7 +13,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     public class FBO : ITypeID
     {
         public int Handle { get; private set; }
-        public CreateFBOs.FBOID ID { get; private set; }
+        public FboSetup.FBOID ID { get; private set; }
         public Size Size { get; private set; }
 
         public Action RenderCapSettings;
@@ -24,7 +24,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public Texture DepthTexture { get; set; }
 
         private FBO(){}
-        public static FBO Custom(CreateFBOs.FBOID id, Size size, bool colorAttachment, bool depthAttachment, Action renderCapSettings)
+        public static FBO Custom(FboSetup.FBOID id, Size size, bool colorAttachment, bool depthAttachment, Action renderCapSettings)
         {
             var fbo = new FBO();
             fbo.Handle = GL.GenFramebuffer();
@@ -43,7 +43,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public static FBO Default(Action renderCapSettings) //texture is main viewport
         {
             var fbo = new FBO();
-            fbo.ID = CreateFBOs.FBOID.Default;
+            fbo.ID = FboSetup.FBOID.Default;
             fbo.Handle = 0;
             fbo.RenderCapSettings = renderCapSettings;
             fbo.Size = DrawManager.TKWindowSize;

@@ -12,8 +12,8 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public const string SpecularMapSampler = "Gloss";
         
         public static Material Normal(
-            MaterialFactory.MaterialType type, 
-            CreateFBOs.FBOID fboid, 
+            MaterialSetup.MaterialType type, 
+            FboSetup.FBOID fboid, 
             ShaderProgram shaderProgram, 
             Mesh mesh, 
             string diffusePath, 
