@@ -25,17 +25,9 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         
         public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
         public static Material[] PostProcessingMaterials;
-
         
-
-        private static int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
-
-        public static void CycleFBOBlit()
-        {
-            _blitOffscreenFBOsIndex++;
-            if (_blitOffscreenFBOsIndex >= BatchHierachies.Count)
-                _blitOffscreenFBOsIndex = -1;
-        }
+        public static FBO FBOToDebugDraw; //where -1 == default buffer no blit
+        
 
         public static void Init(TKWindow window)
         {
@@ -190,10 +182,10 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         
         private static void DebugFBODrawing()
         {
-            if (_blitOffscreenFBOsIndex == -1)
+            if (FBOToDebugDraw == null)
                 return;
             
-            FBO.Blit(BatchHierachies[_blitOffscreenFBOsIndex].FBO, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(FBOToDebugDraw, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
 
         }
     }
