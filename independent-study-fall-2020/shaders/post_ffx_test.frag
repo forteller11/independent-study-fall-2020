@@ -9,5 +9,7 @@ uniform sampler2DShadow MainDepth;
 void main(){
     
     //float depth = texture(MainDepth, v2f_uv); //am i going get values between 1 and 0??????... i dont want that... i want depth values..... REDO
+    vec4 color = texture(MainColor, v2f_uv);
     frag_color = vec4(v2f_uv.xy, 0, 1);
+    frag_color = color;
 }

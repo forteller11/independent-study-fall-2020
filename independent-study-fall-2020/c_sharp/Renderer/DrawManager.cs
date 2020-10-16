@@ -177,15 +177,15 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
 
         static void RenderPostProcessingEffects()
         {
-            FBO.Blit(FboSetup.Main, PostProcessingFbo, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(FboSetup.Main, PostProcessingFbo, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
             
             for (int i = 0; i < PostProcessingMaterials.Length; i++)
             {
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
-            FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Linear);
-            FBO.Blit(PostProcessingFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
+            FBO.Blit(PostProcessingFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
         }
 
         

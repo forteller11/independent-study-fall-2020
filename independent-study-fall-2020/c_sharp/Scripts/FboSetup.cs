@@ -20,9 +20,9 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
         public static FBO[] Create()
         {
         
-            Shadow = FBO.Custom(FBOID.Main, DrawManager.TKWindowSize, true, true, null);
+            Shadow = FBO.Custom(FBOID.Shadow, DrawManager.TKWindowSize, true, true, null);
             
-            Main = FBO.Custom(FBOID.Shadow, DrawManager.TKWindowSize, true, true, () => {
+            Main = FBO.Custom(FBOID.Main, DrawManager.TKWindowSize, true, true, () => {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);});
