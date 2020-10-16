@@ -166,13 +166,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);
                     }
                 }
-
-                // //gen mipmaps for fbo textures if needed
-                // if (fboBatch.FBO.ID != FboSetup.FBOID.Default) //todo do i have to do this?
-                // {
-                //     GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.TextureHandle);
-                //     GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-                // }
+                
             }
 
             RenderPostProcessingEffects();

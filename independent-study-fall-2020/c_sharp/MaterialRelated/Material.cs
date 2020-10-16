@@ -67,7 +67,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
              mat.Type = MaterialSetup.MaterialType.PostProcessing;
              mat.GetUniformAndAttribLocations();
              mat.VAO = new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
-             mat.PerMaterialUniformSender = _ => FboSetup.Main.UseTextures();
+             mat.PerMaterialUniformSender = _ => FboSetup.Main.UseTexturesAndGenerateMipMaps();
              return mat;
          }
 

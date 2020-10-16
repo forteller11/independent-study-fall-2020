@@ -43,7 +43,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         
         public static Texture EmptyRGBA(int width, int height, TextureUnit textureUnit)
         {
-            var texture = EmptyFormatless(width, height, textureUnit, 4, StandardTextureSettings);
+            var texture = EmptyFormatless(width, height, textureUnit, 4, FrameBufferTextureSettings);
             texture.GenerateStorageOnGPU(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte);
             
             return texture;
@@ -51,11 +51,12 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         
         public static Texture EmptyLuminance(int width, int height, TextureUnit textureUnit)
         {
-            var texture = EmptyFormatless(width, height, textureUnit, 1, StandardTextureSettings);
+            var texture = EmptyFormatless(width, height, textureUnit, 1, FrameBufferTextureSettings);
             texture.GenerateStorageOnGPU(PixelInternalFormat.Luminance, PixelFormat.Luminance, PixelType.UnsignedByte);
             
             return texture;
         }
+        
         
         public static Texture EmptyDepth(int width, int height, TextureUnit textureUnit)
         {
@@ -117,6 +118,13 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.BindTexture(TextureTarget.Texture2D, Handle);
         }
 
+        public void UseAndGenerateMipMaps()
+        {
+            GL.ActiveTexture(TextureUnit);
+            GL.BindTexture(TextureTarget.Texture2D, Handle);
+            GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+        }
+
         private void UploadPixelArrayToGPU(PixelInternalFormat pixelInternalFormat, PixelFormat pixelFormat, PixelType pixelType)
         {
             Use();
@@ -138,12 +146,20 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.NearestMipmapLinear);
         }
 
+        private static void FrameBufferTextureSettings()
+        {
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.ClampToBorder);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.ClampToBorder);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.NearestMipmapLinear);
+        }
+
         private static void DepthTextureSettings()
         {
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.Repeat);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToBorder);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToBorder);
             
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureCompareMode, (int) TextureCompareMode.CompareRToTexture );
             // GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureCompareFunc,TextureCompareFunc.None );

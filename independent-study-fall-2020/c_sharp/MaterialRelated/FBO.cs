@@ -104,11 +104,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             RenderCapSettings?.Invoke();
         }
 
-        public void UseTextures()
+        public void UseTexturesAndGenerateMipMaps() //todo cache gen mip maps with dirty-pattern
         {
-            ColorTexture1?.Use();
-            ColorTexture2?.Use();
-            DepthTexture?.Use();
+            ColorTexture1?.UseAndGenerateMipMaps();
+            ColorTexture2?.UseAndGenerateMipMaps();
+            DepthTexture?.UseAndGenerateMipMaps();
         }
 
         public void GenerateMipMaps()

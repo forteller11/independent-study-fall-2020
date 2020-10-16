@@ -37,7 +37,6 @@ namespace Indpendent_Study_Fall_2020.Scripts.Materials
             PostProcessing  = FBO.Custom(FboSetup.FBOID.PostProcessing, DrawManager.TKWindowSize, true, true,true,
                 ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () =>
                 {
-                    Main.UseTextures();
                     // GL.Disable(EnableCap.DepthTest);
                 });
             
