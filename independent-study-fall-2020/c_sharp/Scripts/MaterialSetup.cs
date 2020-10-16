@@ -101,7 +101,8 @@ namespace Indpendent_Study_Fall_2020.Scripts
         public static Material[] CreatePostProcessing()
         {
             var depthVisualizer = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
-                depthVisualizer.SetupSampler("MainColor", FboSetup.Main.ColorTexture);
+                depthVisualizer.SetupSampler("MainColor1", FboSetup.Main.ColorTexture1);
+                depthVisualizer.SetupSampler("MainColor2", FboSetup.Main.ColorTexture2);
                 depthVisualizer.SetupSampler("MainDepth", FboSetup.Main.DepthTexture);
                 
             return new Material[]

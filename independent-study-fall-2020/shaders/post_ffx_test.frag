@@ -3,7 +3,8 @@
 out vec4 frag_color;
 in vec2 v2f_uv;
 
-uniform sampler2D MainColor;
+uniform sampler2D MainColor1;
+uniform sampler2D MainColor2;
 uniform sampler2D MainDepth;
 
 void main(){

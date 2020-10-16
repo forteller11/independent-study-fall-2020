@@ -43,7 +43,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.BlendEquation(BlendEquationMode.FuncAdd);
-            PostProcessingFbo = FBO.Custom(FboSetup.FBOID.PostProcessing, TKWindowSize, true, true,
+            PostProcessingFbo = FBO.Custom(FboSetup.FBOID.PostProcessing, TKWindowSize, true, true,true,
                 ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
                 GL.ClearColor(0f,0f,0f,1f);
         }
@@ -169,12 +169,12 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     }
                 }
 
-                //gen mipmaps for fbo textures if needed
-                if (fboBatch.FBO.ID != FboSetup.FBOID.Default) //todo do i have to do this?
-                {
-                    GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.TextureHandle);
-                    GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-                }
+                // //gen mipmaps for fbo textures if needed
+                // if (fboBatch.FBO.ID != FboSetup.FBOID.Default) //todo do i have to do this?
+                // {
+                //     GL.BindTexture(TextureTarget.Texture2D, fboBatch.FBO.TextureHandle);
+                //     GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+                // }
             }
 
             RenderPostProcessingEffects();
@@ -191,7 +191,6 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
             FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
-            FBO.Blit(PostProcessingFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
         }
 
         

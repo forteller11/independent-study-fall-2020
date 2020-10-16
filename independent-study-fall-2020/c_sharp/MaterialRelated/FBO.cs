@@ -17,16 +17,14 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public Size Size { get; private set; }
 
         public Action RenderCapSettings;
-
-
-        public int TextureHandle => ColorTexture.Handle;
-        public Texture ColorTexture { get; set; }
-        public Texture DepthTexture { get; set; }
+        public Texture ColorTexture1 { get; private set; }
+        public Texture ColorTexture2 { get; private set; }
+        public Texture DepthTexture { get; private set; }
 
         public ClearBufferMask ClearBufferBit;
 
         private FBO(){}
-        public static FBO Custom(FboSetup.FBOID id, Size size, bool colorAttachment, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
+        public static FBO Custom(FboSetup.FBOID id, Size size, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
             fbo.Handle = GL.GenFramebuffer();
@@ -35,8 +33,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             fbo.RenderCapSettings = renderCapSettings;
             fbo.ClearBufferBit = clearBufferBit;
             
-            if (colorAttachment)
-                fbo.AddColorAttachment();
+            if (colorAttachment1)
+                fbo.AddColorAttachment1();
+            
+            if (colorAttachment2)
+                fbo.AddColorAttachment2();
             
             if (depthAttachment)
                 fbo.AddDepthAttachment();
@@ -65,18 +66,26 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 throw new Exception($"Frame Buffer Exception! {fboStatus}");
         }
 
-        public void AddColorAttachment()
+        public void AddColorAttachment1()
         {
             Use();
-            ColorTexture = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture3);
-            LinkTexture(ColorTexture, FramebufferAttachment.ColorAttachment0);
+            ColorTexture1 = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture3);
+            LinkTexture(ColorTexture1, FramebufferAttachment.ColorAttachment0);
+            ValidateAttachments();
+        }
+        
+        public void AddColorAttachment2()
+        {
+            Use();
+            ColorTexture2 = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture4);
+            LinkTexture(ColorTexture2, FramebufferAttachment.ColorAttachment1);
             ValidateAttachments();
         }
         
         public void AddDepthAttachment()
         {
             Use();
-            DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, TextureUnit.Texture4);
+            DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, TextureUnit.Texture5);
             LinkTexture(DepthTexture, FramebufferAttachment.DepthAttachment);
             ValidateAttachments();
         }
@@ -97,15 +106,15 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
         public void UseTextures()
         {
-            ColorTexture?.Use();
+            ColorTexture1?.Use();
+            ColorTexture2?.Use();
             DepthTexture?.Use();
         }
 
-        public static void UseDefaultBuffer()
+        public void GenerateMipMaps()
         {
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            
         }
-    
         
         public void LinkTexture(Texture texture, FramebufferAttachment attachment)
         {
