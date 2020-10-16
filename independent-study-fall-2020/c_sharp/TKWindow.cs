@@ -53,7 +53,6 @@ namespace Indpendent_Study_Fall_2020
 
             base.OnLoad(e);
             
-            GL.ClearColor(0f,0f,0f,1f);
             DrawManager.Init(this);
             
             Globals.Init();
@@ -93,9 +92,6 @@ namespace Indpendent_Study_Fall_2020
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit); //I think this clears main color texture (buffer) AND depth texture (buffer)
-
             DrawManager.RenderFrame();
 
             base.OnRenderFrame(e);

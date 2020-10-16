@@ -39,7 +39,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static void Init(TKWindow window)
         {
             TKWindowSize = window.Size;
-            PostProcessingFbo = FBO.Custom(FboSetup.FBOID.PostProcessing, TKWindowSize, true, true, null);
+            PostProcessingFbo = FBO.Custom(FboSetup.FBOID.PostProcessing, TKWindowSize, true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
+            GL.ClearColor(0f,0f,0f,1f);
         }
 
         public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials, Material[] postProcessingMaterials)
@@ -184,8 +185,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
-            FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
-            FBO.Blit(PostProcessingFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
+            FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
+            FBO.Blit(PostProcessingFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
         }
 
         

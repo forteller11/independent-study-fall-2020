@@ -23,14 +23,17 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public Texture ColorTexture { get; set; }
         public Texture DepthTexture { get; set; }
 
+        public ClearBufferMask ClearBufferBit;
+
         private FBO(){}
-        public static FBO Custom(FboSetup.FBOID id, Size size, bool colorAttachment, bool depthAttachment, Action renderCapSettings)
+        public static FBO Custom(FboSetup.FBOID id, Size size, bool colorAttachment, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
             fbo.Handle = GL.GenFramebuffer();
             fbo.ID = id;
             fbo.Size = size;
             fbo.RenderCapSettings = renderCapSettings;
+            fbo.ClearBufferBit = clearBufferBit;
             
             if (colorAttachment)
                 fbo.AddColorAttachment();
@@ -48,6 +51,11 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             fbo.RenderCapSettings = renderCapSettings;
             fbo.Size = DrawManager.TKWindowSize;
             return fbo;
+        }
+
+        public void Clear()
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         private static void ValidateAttachments()
@@ -82,6 +90,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         public void SetDrawingStates()
         {
             Use();
+            Clear();
             GL.Viewport(0,0,Size.Width,Size.Height);
             RenderCapSettings?.Invoke();
         }
