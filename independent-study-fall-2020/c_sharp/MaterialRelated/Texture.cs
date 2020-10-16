@@ -33,7 +33,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             texture.TextureUnit = textureUnit;
             texture.Use();
             StandardTextureSettings();
-            texture.LoadImage(fileName);
+            texture.LoadImage("\\"+fileName);
             texture.CookSixLaborsImageToByteArray();
 
             texture.UploadPixelArrayToGPU(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte);

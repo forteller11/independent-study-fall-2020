@@ -52,7 +52,6 @@ namespace Indpendent_Study_Fall_2020
         {
 
             base.OnLoad(e);
-            
             DrawManager.Init(this);
             
             Globals.Init();

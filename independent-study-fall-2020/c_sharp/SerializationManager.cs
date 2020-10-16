@@ -1,11 +1,24 @@
-﻿namespace Indpendent_Study_Fall_2020
+﻿using System.IO;
+
+namespace Indpendent_Study_Fall_2020
 {
     public static class SerializationManager
     {
-        public static string ProjectPath = @"D:\MOVE\Homework\Concordia_Year_03\Independent_Study\Repos\IndStudyOct16\independent-study-fall-2020\independent-study-fall-2020";
-        public static string AssetPath = @"D:\MOVE\Homework\Concordia_Year_03\Independent_Study\Repos\IndStudyOct16\independent-study-fall-2020\assets\";
-        public static string MeshPath = AssetPath + "meshes\\";
-        public static string TexturePath = AssetPath + "textures\\";
-        public static string ShaderPath = ProjectPath + "\\Shaders";
+        public static string ProjectPath;
+        public static string AssetPath;
+        public static string MeshPath;
+        public static string TexturePath;
+        public static string ShaderPath;
+
+        static SerializationManager()
+        {
+            var dllPath = Directory.GetCurrentDirectory();
+            ProjectPath = Path.GetFullPath(Path.Combine(dllPath, @"..\..\..\..\"));
+            AssetPath = ProjectPath + @"\assets";
+            MeshPath = AssetPath + @"\meshes";
+            TexturePath = AssetPath + @"\textures";
+            ShaderPath = ProjectPath + @"\independent-study-fall-2020\shaders";
+        }
+
     }
 }
