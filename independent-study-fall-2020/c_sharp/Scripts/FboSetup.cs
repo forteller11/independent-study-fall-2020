@@ -16,20 +16,20 @@ namespace CART_457.Scripts
         static FboSetup ()
         {
         
-            Shadow = FBO.Custom(DrawManager.TKWindowSize, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
+            Shadow = FBO.Custom("Shadow", DrawManager.TKWindowSize, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
             
-            Main = FBO.Custom(DrawManager.TKWindowSize, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+            Main = FBO.Custom("Main", DrawManager.TKWindowSize, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);});
 
 
-            Default = FBO.Default(() => {
+            Default = FBO.Default("Default",() => {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);});
             
-            PostProcessing  = FBO.Custom(DrawManager.TKWindowSize, true, true,true,
+            PostProcessing  = FBO.Custom("Post-FX", DrawManager.TKWindowSize, true, true,true,
                 ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () =>
                 {
                     // GL.Disable(EnableCap.DepthTest);

@@ -138,7 +138,7 @@ namespace CART_457.MaterialRelated
         {
             int location = GL.GetUniformLocation(Handle, name);
             if (location == -1)
-                Debug.LogWarning($"Uniform Location \"{name}\" cannot be found (are you using it in the shader? Is there inconsistency in the uniforms's naming?)");
+                Debug.LogWarning($"Uniform Location \"{name}\" cannot be found at shader {FileName}(are you using it in the shader? Is there inconsistency in the uniforms's naming?)");
             return location;
         }
 

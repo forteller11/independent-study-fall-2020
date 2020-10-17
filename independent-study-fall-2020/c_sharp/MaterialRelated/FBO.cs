@@ -14,6 +14,7 @@ namespace CART_457.MaterialRelated
     public class FBO 
     {
         public int Handle { get; private set; }
+        public string Name;
         public Size Size { get; private set; }
 
         public Action RenderCapSettings;
@@ -24,9 +25,10 @@ namespace CART_457.MaterialRelated
         public ClearBufferMask ClearBufferBit;
 
         private FBO() { }
-        public static FBO Custom( Size size, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
+        public static FBO Custom( string name, Size size, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
+            fbo.Name = name;
             fbo.Handle = GL.GenFramebuffer();
             fbo.Size = size;
             fbo.RenderCapSettings = renderCapSettings;
@@ -43,19 +45,16 @@ namespace CART_457.MaterialRelated
             return fbo;
         }
 
-        public static FBO Default(Action renderCapSettings) //texture is main viewport
+        public static FBO Default(string name, Action renderCapSettings) //texture is main viewport
         {
             var fbo = new FBO();
+            fbo.Name = name;
             fbo.Handle = 0;
             fbo.RenderCapSettings = renderCapSettings;
             fbo.Size = DrawManager.TKWindowSize;
             return fbo;
         }
-
-        public void Clear()
-        {
-            GL.Clear(ClearBufferBit);
-        }
+        
 
         private static void ValidateAttachments()
         {
@@ -93,20 +92,34 @@ namespace CART_457.MaterialRelated
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
         }
+        
+        public void Clear()
+        {
+            GL.Clear(ClearBufferBit);
+        }
+        
+        private void SetDrawBuffers()
+        {
+            if (Handle == 0)
+                return;
+            var drawBufferEnums = new List<DrawBuffersEnum>();
+            if (ColorTexture1!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment0);
+            if (ColorTexture2!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment1);
+            GL.DrawBuffers(drawBufferEnums.Count, drawBufferEnums.ToArray());
+        }
 
         public void SetDrawingStates()
         {
             Bind();
             Clear();
-            
-            // var drawBufferEnums = new List<DrawBuffersEnum>();
-            // if (ColorTexture1!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment0);
-            // if (ColorTexture2!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment1);
-            // GL.DrawBuffers(drawBufferEnums.Count, drawBufferEnums.ToArray());
+
+            SetDrawBuffers();
             
             GL.Viewport(0,0,Size.Width,Size.Height);
             RenderCapSettings?.Invoke();
         }
+
+        
 
         public void UseTexturesAndGenerateMipMaps() //todo cache gen mip maps with dirty-pattern
         {
@@ -115,10 +128,7 @@ namespace CART_457.MaterialRelated
             DepthTexture?.UseAndGenerateMipMaps();
         }
 
-        public void GenerateMipMaps()
-        {
-            
-        }
+
         
         public void LinkTexture(Texture texture, FramebufferAttachment attachment)
         {

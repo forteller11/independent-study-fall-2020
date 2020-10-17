@@ -31,7 +31,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
                 else
                 {
                     DrawManager.FBOToDebugDraw = DrawManager.BatchHierachies[_blitOffscreenFBOsIndex].FBO;
-                    Debug.Log("Showing FBO: " + DrawManager.FBOToDebugDraw.GetType().Name);
+                    Debug.Log("Showing FBO: " + DrawManager.FBOToDebugDraw.Name);
                 }
 
             }
