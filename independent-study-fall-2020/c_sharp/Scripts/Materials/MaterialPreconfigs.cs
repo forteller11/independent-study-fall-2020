@@ -13,7 +13,7 @@ namespace CART_457.Scripts
         public const string ShadowMapSampler = Material.SHADOW_MAP_SAMPLER;
         
         public static Material Normal(
-            FboSetup.FBOID fboid, 
+            FBO fbo, 
             ShaderProgram shaderProgram, 
             Mesh mesh, 
             string diffusePath, 
@@ -21,7 +21,7 @@ namespace CART_457.Scripts
             string specularPath, 
             Action<Material> perMatSender)
         {
-            var mat = Material.EntityBased(fboid, shaderProgram, mesh, perMatSender);
+            var mat = Material.EntityBased(fbo, shaderProgram, mesh, perMatSender);
 
             mat.SetupSampler(DiffuseColorSampler, Texture.FromFile(diffusePath, TextureUnit.Texture0));
             mat.SetupSampler(NormalMapSampler, Texture.FromFile(normalPath, TextureUnit.Texture1));

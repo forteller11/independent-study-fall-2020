@@ -1,5 +1,4 @@
 ﻿using CART_457.Attributes;
-using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
 using CART_457.Renderer;
 using OpenTK.Graphics.OpenGL4;
@@ -8,14 +7,7 @@ namespace CART_457.Scripts
 {
     public class FboSetup
     {
-        public enum FBOID
-        {
-            Default = default,
-            Shadow,
-            Main,
-            PostProcessing
-        };
-        
+
         [IncludeInDrawLoop] public static FBO Shadow; 
         [IncludeInDrawLoop] public static FBO Main;
         [IncludeInDrawLoop] public static FBO Default;
@@ -24,9 +16,9 @@ namespace CART_457.Scripts
         static FboSetup ()
         {
         
-            Shadow = FBO.Custom(FBOID.Shadow, DrawManager.TKWindowSize, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
+            Shadow = FBO.Custom(DrawManager.TKWindowSize, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
             
-            Main = FBO.Custom(FBOID.Main, DrawManager.TKWindowSize, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+            Main = FBO.Custom(DrawManager.TKWindowSize, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);});
@@ -37,7 +29,7 @@ namespace CART_457.Scripts
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);});
             
-            PostProcessing  = FBO.Custom(FboSetup.FBOID.PostProcessing, DrawManager.TKWindowSize, true, true,true,
+            PostProcessing  = FBO.Custom(DrawManager.TKWindowSize, true, true,true,
                 ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () =>
                 {
                     // GL.Disable(EnableCap.DepthTest);

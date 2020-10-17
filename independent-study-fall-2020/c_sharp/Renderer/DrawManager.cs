@@ -112,16 +112,16 @@ namespace CART_457.Renderer
         private static void AddMaterialToMainDrawLoop(Material material)
         {
 
-            if (material.FBOTARGET == FboSetup.FBOID.PostProcessing)
+            if (material.RenderTarget == FboSetup.PostProcessing)
                 throw new DataException("Cannot add a post processing material to rendering hierarchy!");
             
-            if (material.FBOTARGET == FboSetup.FBOID.Default)
+            if (material.RenderTarget == FboSetup.Default)
                 throw new DataException("Cannot render directly to default frame buffer!");
             
             for (int i = 0; i < BatchHierachies.Count; i++)
             {
                 FBOBatch fboBatch = BatchHierachies[i];
-                if (fboBatch.FBO.ID == material.FBOTARGET)
+                if (fboBatch.FBO == material.RenderTarget)
                 {
                     fboBatch.MaterialBatches.Add(new MaterialBatch(material));
                     return;
@@ -218,14 +218,14 @@ namespace CART_457.Renderer
         {
             // FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
             
-            FboSetup.PostProcessing.SetDrawingStates();
+            PostFXFbo.SetDrawingStates();
             for (int i = 0; i < PostProcessingMaterials.Count; i++)
             {
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
             // FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
-            FBO.Blit(FboSetup.PostProcessing, FboSetup.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
+            FBO.Blit(PostFXFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
         }
 
         

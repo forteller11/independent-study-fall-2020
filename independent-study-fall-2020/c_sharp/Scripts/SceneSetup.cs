@@ -22,7 +22,7 @@ namespace CART_457.Scripts
             s.Scale = new Vector3(5);
             gameObjects.Add(s);
             
-            gameObjects.Add(new DebugTriggerer());
+            gameObjects.Add(new FBOVisualizationInput());
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
                 gameObjects.Add(new PointLightVisualizer(i,MaterialSetup.SolidSphere, MaterialSetup.ShadowMap));

@@ -10,10 +10,9 @@ using OpenTK.Graphics.OpenGL4;
 //setup test shader
 namespace CART_457.MaterialRelated
 {
-    public class FBO : ITypeID
+    public class FBO 
     {
         public int Handle { get; private set; }
-        public FboSetup.FBOID ID { get; private set; }
         public Size Size { get; private set; }
 
         public Action RenderCapSettings;
@@ -24,11 +23,10 @@ namespace CART_457.MaterialRelated
         public ClearBufferMask ClearBufferBit;
 
         private FBO(){}
-        public static FBO Custom(FboSetup.FBOID id, Size size, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
+        public static FBO Custom( Size size, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
             fbo.Handle = GL.GenFramebuffer();
-            fbo.ID = id;
             fbo.Size = size;
             fbo.RenderCapSettings = renderCapSettings;
             fbo.ClearBufferBit = clearBufferBit;
@@ -47,7 +45,6 @@ namespace CART_457.MaterialRelated
         public static FBO Default(Action renderCapSettings) //texture is main viewport
         {
             var fbo = new FBO();
-            fbo.ID = FboSetup.FBOID.Default;
             fbo.Handle = 0;
             fbo.RenderCapSettings = renderCapSettings;
             fbo.Size = DrawManager.TKWindowSize;
@@ -130,7 +127,6 @@ namespace CART_457.MaterialRelated
                 0, 0, dest.Size.Width, dest.Size.Height,
                 clearBufferMask, blitFramebufferFilter);
         }
-
-        public int GetTypeID() => (int) ID;
+        
     }
 }

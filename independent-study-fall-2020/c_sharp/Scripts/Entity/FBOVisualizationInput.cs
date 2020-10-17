@@ -4,7 +4,7 @@ using OpenTK.Input;
 
 namespace CART_457.EntitySystem.Scripts.Entity
 {
-    public class DebugTriggerer : EntitySystem.Entity
+    public class FBOVisualizationInput : EntitySystem.Entity
     {
         private bool _keyDownLastFrame = false;
         private int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
@@ -31,7 +31,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
                 else
                 {
                     DrawManager.FBOToDebugDraw = DrawManager.BatchHierachies[_blitOffscreenFBOsIndex].FBO;
-                    Debug.Log("Showing FBO: " + DrawManager.FBOToDebugDraw.ID);
+                    Debug.Log("Showing FBO: " + DrawManager.FBOToDebugDraw.GetType().Name);
                 }
 
             }

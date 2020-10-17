@@ -13,7 +13,7 @@ namespace CART_457.MaterialRelated
     /// </summary>
     public class Material
     {
-        public FboSetup.FBOID FBOTARGET { get; private set; }
+        public FBO RenderTarget { get; private set; }
         public ShaderProgram Shader { get; private set; }
         
         public Dictionary<string, int> UniformLocations { get; private set; }
@@ -46,12 +46,12 @@ namespace CART_457.MaterialRelated
         private Material() { }
         
         
-        public static Material EntityBased(FboSetup.FBOID fboid, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material EntityBased(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
             var mat = new Material();
             mat.Shader = shaderProgram;
             mat.PerMaterialUniformSender = perMaterialUniformSender;
-            mat.FBOTARGET = fboid;
+            mat.RenderTarget = fbo;
             mat.GetUniformAndAttribLocations();
             mat.VAO = new VAOAndBuffers(mat, mesh);
             return mat;
@@ -60,7 +60,7 @@ namespace CART_457.MaterialRelated
          {
              var mat = new Material();
              mat.Shader = shaderProgram;
-             mat.FBOTARGET = FboSetup.FBOID.PostProcessing;
+             mat.RenderTarget = FboSetup.PostProcessing;
              mat.GetUniformAndAttribLocations();
              mat.VAO = new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
              mat.PerMaterialUniformSender = _ => FboSetup.Main.UseTexturesAndGenerateMipMaps();

@@ -29,7 +29,7 @@ namespace CART_457.Scripts
             };
             
             DirtSphere  = MaterialPreconfigs.Normal(
-                FboSetup.FBOID.Main,
+                FboSetup.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -39,7 +39,7 @@ namespace CART_457.Scripts
                 );
             
             DirtPlane  = MaterialPreconfigs.Normal(
-                FboSetup.FBOID.Main,
+                FboSetup.Main,
                 normalShader,
                 CreateMeshes.Plane,
                 "GroundClay002_COL_VAR1_3K.jpg",
@@ -50,7 +50,7 @@ namespace CART_457.Scripts
             
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
             TileSphere = MaterialPreconfigs.Normal(
-                FboSetup.FBOID.Main,
+                FboSetup.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
                 bathroomTiles+"COL_VAR2_3K.jpg",
@@ -61,11 +61,11 @@ namespace CART_457.Scripts
             #endregion
 
             #region solid_color
-            SolidSphere = Material.EntityBased(FboSetup.FBOID.Main, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
+            SolidSphere = Material.EntityBased(FboSetup.Main, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
             #endregion
 
             ShadowMap = Material.EntityBased(
-                FboSetup.FBOID.Shadow,
+                FboSetup.Shadow,
                 ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.IcoSphereHighPoly,
                 null);
