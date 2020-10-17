@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 
-namespace Indpendent_Study_Fall_2020.MaterialRelated
+namespace CART_457.MaterialRelated
 {
     public class Mesh
     {

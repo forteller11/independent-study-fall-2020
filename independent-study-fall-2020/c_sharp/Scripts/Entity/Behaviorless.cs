@@ -1,9 +1,8 @@
-﻿using Indpendent_Study_Fall_2020.MaterialRelated;
-using Indpendent_Study_Fall_2020.Scripts;
+﻿using CART_457.MaterialRelated;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
+namespace CART_457.EntitySystem.Scripts.Entity
 {
-    public class Behaviorless : Entity
+    public class Behaviorless : EntitySystem.Entity
     {
         public Behaviorless(Material [] mat)
         {

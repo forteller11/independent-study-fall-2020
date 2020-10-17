@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Indpendent_Study_Fall_2020.MaterialRelated
+namespace CART_457.MaterialRelated
 {
     public class AttributeBuffer
     {

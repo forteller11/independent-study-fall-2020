@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK;
 
-namespace Indpendent_Study_Fall_2020
+namespace CART_457
 {
     public static class ExtensionMethods
     {

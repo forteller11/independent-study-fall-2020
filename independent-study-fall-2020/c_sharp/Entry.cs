@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 // alot of code is taken from the openTK tutorials here: https://opentk.net/learn
 
-namespace Indpendent_Study_Fall_2020
+namespace CART_457
 {
     static class Entry
     {

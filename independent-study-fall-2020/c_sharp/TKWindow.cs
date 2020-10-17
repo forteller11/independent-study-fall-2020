@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Drawing;
-using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
-using Indpendent_Study_Fall_2020.c_sharp.Scripts;
-using Indpendent_Study_Fall_2020.EntitySystem;
-using Indpendent_Study_Fall_2020.Scripts;
-using Indpendent_Study_Fall_2020.Scripts.Materials;
+using CART_457.EntitySystem;
+using CART_457.Scripts;
+using CART_457.Renderer;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
 
-namespace Indpendent_Study_Fall_2020
+namespace CART_457
 {
     public class TKWindow : GameWindow
     {

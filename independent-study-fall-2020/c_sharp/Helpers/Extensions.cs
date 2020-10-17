@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Indpendent_Study_Fall_2020.Helpers
+namespace CART_457.Helpers
 {
     public static class Extensions
     {

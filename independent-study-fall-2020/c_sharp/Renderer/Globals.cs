@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
-using Indpendent_Study_Fall_2020.c_sharp.Renderer;
+using CART_457.EntitySystem;
 using OpenTK;
 using OpenTK.Input;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem
+namespace CART_457.Renderer
 {
     public static class Globals
     {

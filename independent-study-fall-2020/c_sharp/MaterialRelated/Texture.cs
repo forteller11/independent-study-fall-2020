@@ -1,12 +1,10 @@
 ﻿using System;
-using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using TextureCompareMode = OpenTK.Graphics.OpenGL.TextureCompareMode;
 
-namespace Indpendent_Study_Fall_2020.MaterialRelated
+namespace CART_457.MaterialRelated
 {
     public class Texture
     {

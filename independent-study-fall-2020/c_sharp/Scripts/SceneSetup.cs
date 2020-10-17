@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Indpendent_Study_Fall_2020.c_sharp.EntitySystem.Renderer;
-using Indpendent_Study_Fall_2020.EntitySystem;
-using Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects;
+using CART_457.EntitySystem;
+using CART_457.EntitySystem.Scripts.Entity;
+using CART_457.Renderer;
 using OpenTK;
 
-namespace Indpendent_Study_Fall_2020.Scripts
+namespace CART_457.Scripts
 {
     public class SceneSetup
     {

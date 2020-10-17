@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Indpendent_Study_Fall_2020.c_sharp.Attributes;
-using Indpendent_Study_Fall_2020.c_sharp.Renderer;
-using Indpendent_Study_Fall_2020.c_sharp.Scripts;
-using Indpendent_Study_Fall_2020.EntitySystem;
-using Indpendent_Study_Fall_2020.Helpers;
-using Indpendent_Study_Fall_2020.MaterialRelated;
-using Indpendent_Study_Fall_2020.Scripts.Materials;
-using OpenTK.Graphics.OpenGL4;
+using CART_457.Attributes;
+using CART_457.c_sharp.Renderer;
+using CART_457.MaterialRelated;
 
-namespace Indpendent_Study_Fall_2020.Scripts
+namespace CART_457.Scripts
 {
     public static class MaterialSetup
     {

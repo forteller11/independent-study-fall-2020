@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Indpendent_Study_Fall_2020.EntitySystem;
-using Indpendent_Study_Fall_2020.Helpers;
-using Indpendent_Study_Fall_2020.MaterialRelated;
+using CART_457.EntitySystem;
+using CART_457.MaterialRelated;
 
-namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
+namespace CART_457.Renderer
 {
     public struct MaterialBatch
     {

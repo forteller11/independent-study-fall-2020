@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Numerics;
-using Indpendent_Study_Fall_2020.MaterialRelated;
-using Indpendent_Study_Fall_2020.Scripts;
-using OpenTK.Input;
-using Quaternion = OpenTK.Quaternion;
-using Vector3 = OpenTK.Vector3;
+using CART_457.MaterialRelated;
+using OpenTK;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem
+
+namespace CART_457.EntitySystem
 {
     public abstract class Entity //todo... make mega object with flags... add physics component?
     {

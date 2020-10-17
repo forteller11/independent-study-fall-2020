@@ -1,12 +1,13 @@
 ﻿using System;
-using Indpendent_Study_Fall_2020.c_sharp.Renderer;
-using Indpendent_Study_Fall_2020.MaterialRelated;
-using Indpendent_Study_Fall_2020.Scripts;
+using CART_457.c_sharp.Renderer;
+using CART_457.MaterialRelated;
+using CART_457.Renderer;
+using CART_457.Scripts;
 using OpenTK;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
+namespace CART_457.EntitySystem.Scripts.Entity
 {
-    public class PointLightVisualizer : Entity
+    public class PointLightVisualizer : EntitySystem.Entity
     {
 
         public int Index;

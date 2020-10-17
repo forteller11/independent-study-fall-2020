@@ -1,12 +1,13 @@
 ﻿
 using System;
-using Indpendent_Study_Fall_2020.Scripts;
+using CART_457.Renderer;
+using CART_457.Scripts;
 using OpenTK;
 using OpenTK.Input;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
+namespace CART_457.EntitySystem.Scripts.Entity
 {
-    public class CameraControllerSingleton : Entity
+    public class CameraControllerSingleton : EntitySystem.Entity
     {
         private float acceleration = 1.5f;
         private float angularAcceleration = 0.2f;

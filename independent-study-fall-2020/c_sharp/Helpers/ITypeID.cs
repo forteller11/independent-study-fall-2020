@@ -1,4 +1,4 @@
-﻿namespace Indpendent_Study_Fall_2020.Helpers
+﻿namespace CART_457.Helpers
 {
     public interface ITypeID
     {

@@ -2,25 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using Indpendent_Study_Fall_2020.c_sharp.Attributes;
-using Indpendent_Study_Fall_2020.c_sharp.Renderer;
-using Indpendent_Study_Fall_2020.Helpers;
-using Indpendent_Study_Fall_2020.MaterialRelated;
-using Indpendent_Study_Fall_2020.Scripts;
-using Indpendent_Study_Fall_2020.Scripts.Materials;
-using OpenTK;
-using OpenTK.Graphics.ES10;
+using CART_457.Attributes;
+using CART_457.EntitySystem;
+using CART_457.Helpers;
+using CART_457.MaterialRelated;
+using CART_457.Scripts;
 using OpenTK.Graphics.OpenGL4;
-using ClearBufferMask = OpenTK.Graphics.OpenGL4.ClearBufferMask;
-using EnableCap = OpenTK.Graphics.OpenGL4.EnableCap;
-using GL = OpenTK.Graphics.OpenGL4.GL;
-using TextureUnit = OpenTK.Graphics.OpenGL4.TextureUnit;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem
+
+namespace CART_457.Renderer
 {
     public static class DrawManager
     {

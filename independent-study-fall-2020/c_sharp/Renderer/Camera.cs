@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
+namespace CART_457.Renderer
 {
     public class Camera
     {

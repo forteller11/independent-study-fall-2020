@@ -1,14 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using Indpendent_Study_Fall_2020.c_sharp.Scripts;
-using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Indpendent_Study_Fall_2020.Helpers;
-using Indpendent_Study_Fall_2020.Scripts;
-using Indpendent_Study_Fall_2020.Scripts.Materials;
+using CART_457.Helpers;
+using CART_457.Scripts;
 
-namespace Indpendent_Study_Fall_2020.MaterialRelated
+namespace CART_457.MaterialRelated
 {
     
     /// <summary>

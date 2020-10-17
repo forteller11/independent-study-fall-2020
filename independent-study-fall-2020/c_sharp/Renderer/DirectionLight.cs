@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace Indpendent_Study_Fall_2020
+namespace CART_457.Renderer
 {
     public class DirectionLight
     {

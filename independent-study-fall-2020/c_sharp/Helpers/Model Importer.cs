@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using Indpendent_Study_Fall_2020.MaterialRelated;
+using CART_457.MaterialRelated;
 
-namespace Indpendent_Study_Fall_2020.Helpers
+namespace CART_457.Helpers
 {
     public class ModelImporter
     {

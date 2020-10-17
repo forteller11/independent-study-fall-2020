@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
-using Indpendent_Study_Fall_2020.EntitySystem;
-using Indpendent_Study_Fall_2020.Helpers;
-using Indpendent_Study_Fall_2020.Scripts.Materials;
+using CART_457.Helpers;
+using CART_457.Renderer;
+using CART_457.Scripts;
 using OpenTK.Graphics.OpenGL4;
 
 //watch thinmatrix videos
 //how to draw to buffer in shaders?
 //setup test shader
-namespace Indpendent_Study_Fall_2020.MaterialRelated
+namespace CART_457.MaterialRelated
 {
     public class FBO : ITypeID
     {

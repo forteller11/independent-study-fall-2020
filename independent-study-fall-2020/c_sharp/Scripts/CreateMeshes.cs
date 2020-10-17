@@ -1,9 +1,9 @@
 ﻿
-using Indpendent_Study_Fall_2020.Helpers;
-using Indpendent_Study_Fall_2020.MaterialRelated;
+using CART_457.Helpers;
+using CART_457.MaterialRelated;
 using OpenTK;
 
-namespace Indpendent_Study_Fall_2020.c_sharp.Scripts
+namespace CART_457.Scripts
 {
     /// <summary>
     /// Must be called BEFORE create materials

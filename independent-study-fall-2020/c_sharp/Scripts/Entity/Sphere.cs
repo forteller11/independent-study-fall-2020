@@ -1,15 +1,14 @@
-﻿
-
-using System;
-using Indpendent_Study_Fall_2020.c_sharp.Renderer;
-using Indpendent_Study_Fall_2020.MaterialRelated;
-using Indpendent_Study_Fall_2020.Scripts;
+﻿using System;
+using CART_457.c_sharp.Renderer;
+using CART_457.MaterialRelated;
+using CART_457.Renderer;
+using CART_457.Scripts;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
+namespace CART_457.EntitySystem.Scripts.Entity
 {
-    public class Sphere : Entity
+    public class Sphere : EntitySystem.Entity
     {
 
 

@@ -1,10 +1,10 @@
-﻿using Indpendent_Study_Fall_2020.MaterialRelated;
-using Indpendent_Study_Fall_2020.Scripts;
+﻿
+using CART_457.Renderer;
 using OpenTK.Input;
 
-namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
+namespace CART_457.EntitySystem.Scripts.Entity
 {
-    public class DebugTriggerer : Entity
+    public class DebugTriggerer : EntitySystem.Entity
     {
         private bool _keyDownLastFrame = false;
         private int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
