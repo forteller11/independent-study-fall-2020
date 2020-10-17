@@ -1,4 +1,5 @@
-﻿using Indpendent_Study_Fall_2020.Scripts;
+﻿using Indpendent_Study_Fall_2020.MaterialRelated;
+using Indpendent_Study_Fall_2020.Scripts;
 using OpenTK.Input;
 
 namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
@@ -15,10 +16,6 @@ namespace Indpendent_Study_Fall_2020.EntitySystem.Scripts.Gameobjects
                 _blitOffscreenFBOsIndex = -1;
         }
 
-        public DebugTriggerer(MaterialSetup.MaterialType [] materialTypes=null, BehaviorFlags flags=BehaviorFlags.None) : base(flags, materialTypes)
-        {
-        }
-        
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {

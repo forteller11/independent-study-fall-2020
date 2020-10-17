@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using Indpendent_Study_Fall_2020.c_sharp.Attributes;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.Helpers;
 using Indpendent_Study_Fall_2020.MaterialRelated;
@@ -24,7 +26,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static Size TKWindowSize = new Size(100, 2000);
         
         public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
-        public static Material[] PostProcessingMaterials;
+        public static List<Material> PostProcessingMaterials;
         
         public static FBO FBOToDebugDraw; //where -1 == default buffer no blit
         
@@ -38,38 +40,57 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             GL.ClearColor(0f,0f,0f,1f);
         }
 
-        public static void SetupStaticRenderingHierarchy(FBO [] fbos, Material[] materials, Material[] postProcessingMaterials)
+        public static void SetupStaticRenderingHierarchy(FBO [] fbos)
         {
             #region error checking
-            ThrowIfDuplicateTypeIDs(materials);
             ThrowIfDuplicateTypeIDs(fbos);
             for (int i = 0; i < fbos.Length; i++)
                 if (fbos[i].ID == FboSetup.FBOID.PostProcessing)
                     throw new DataException("fbos can't be of type post-processing!");
-            for (int i = 0; i < postProcessingMaterials.Length; i++)
-                if (postProcessingMaterials[i].Type != MaterialSetup.MaterialType.PostProcessing)
-                    throw new DataException("Material must be of type post-processing!");
+
             #endregion
             
             for (int i = 0; i < fbos.Length; i++) 
                 AddFBO(fbos[i]);
-            
-            for (int i = 0; i < materials.Length; i++)
-                AddMaterial(materials[i]);
-            
-            PostProcessingMaterials = postProcessingMaterials;
-            
+
+            SetupMaterialsUsingReflection();
+        }
+        
+        public static void SetupMaterialsUsingReflection()
+        {
+            var materials = typeof(MaterialSetup).GetFields();
+            foreach (FieldInfo fieldInfo in materials)
+            {
+                if (fieldInfo.GetValue(null) is Material == false)
+                    continue;
+                
+                Material material  = (Material) fieldInfo.GetValue(null);
+
+                bool atLeastOneIncludeAttribute = false;
+                if (Attribute.IsDefined(fieldInfo, typeof(IncludeInDrawLoop)))
+                {
+                    AddMaterialToMainDrawLoop(material);
+                    atLeastOneIncludeAttribute = true;
+                }
+
+                if (Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX)))
+                {
+                    PostProcessingMaterials.Insert(0, material);
+                    atLeastOneIncludeAttribute = true;
+                }
+                
+                if (atLeastOneIncludeAttribute == false)
+                    throw new Exception(fieldInfo.Name + $"has no include attributes, will not be included in render loop and will therefore have no effect on the game!");
+            }
         }
 
         private static void AddFBO(FBO fbo)
         {
             BatchHierachies.Insert(0, new FBOBatch(fbo));
         }
-        private static void AddMaterial(Material material)
+        private static void AddMaterialToMainDrawLoop(Material material)
         {
-            if (material.Type == MaterialSetup.MaterialType.PostProcessing)
-                throw new DataException("Cannot add a post processing material to rendering hierarchy!");
-            
+
             if (material.FBOTARGET == FboSetup.FBOID.PostProcessing)
                 throw new DataException("Cannot add a post processing material to rendering hierarchy!");
             
@@ -91,13 +112,13 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         public static void AddEntity(Entity entity) 
         {
 
-            if (entity.MaterialTypes == null)
+            if (entity.Materials == null)
                 return;
             
-            if (entity.ContainsMaterial(MaterialSetup.MaterialType.PostProcessing))
-                throw new DataException($"Entity ${entity.GetType().Name} has material type {MaterialSetup.MaterialType.PostProcessing}, which is invalid!");
+            if (entity.ContainsMaterial(MaterialSetup.PostProcessing))
+                throw new DataException($"Entity ${entity.GetType().Name} has material type {MaterialSetup.PostProcessing}, which is invalid!");
 
-            int expectedFoundMaterials = entity.MaterialTypes.Length;
+            int expectedFoundMaterials = entity.Materials.Length;
             int foundMaterials = 0;
             
             for (int fboI = 0; fboI < BatchHierachies.Count; fboI++)
@@ -107,7 +128,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                 {
                     var materialBatch = fboBatch.MaterialBatches[matI];
 
-                    if (entity.ContainsMaterial(materialBatch.Material.Type))
+                    if (entity.ContainsMaterial(materialBatch.Material))
                     { 
                         materialBatch.Entities.Add(entity);
                         foundMaterials++;
@@ -116,7 +137,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             }
             
             if (foundMaterials != expectedFoundMaterials)
-                throw new DataException($"Entity with materials {Debug.GraphList(new List<MaterialSetup.MaterialType>())} couldn't be found in draw manager!");
+                throw new DataException($"Entity with materials {Debug.GraphList(new List<Material>())} couldn't be found in draw manager!");
         }
 
         public static void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID
@@ -170,7 +191,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             // FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, BlitFramebufferFilter.Nearest);
             
             FboSetup.PostProcessing.SetDrawingStates();
-            for (int i = 0; i < PostProcessingMaterials.Length; i++)
+            for (int i = 0; i < PostProcessingMaterials.Count; i++)
             {
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);

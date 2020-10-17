@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Indpendent_Study_Fall_2020.c_sharp.Attributes;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.c_sharp.Scripts;
 using Indpendent_Study_Fall_2020.EntitySystem;
@@ -12,19 +14,14 @@ namespace Indpendent_Study_Fall_2020.Scripts
 {
     public static class MaterialSetup
     {
-        [Flags]
-        public enum MaterialType
-        {
-            None = default,
-            Solid,
-            Dirt,
-            DirtPlane,
-            Tile,
-            ShadowMap,
-            PostProcessing
-            // VisualizeDepthTexture
-        }
-        public static Material[] CreateEntityBased()
+
+        [IncludeInDrawLoop] public static Material SolidSphere;
+        [IncludeInDrawLoop] public static Material DirtSphere;
+        [IncludeInDrawLoop] public static Material DirtPlane;
+        [IncludeInDrawLoop] public static Material TileSphere;
+        [IncludeInDrawLoop] public static Material ShadowMap;
+        [IncludeInPostFX] public static Material PostProcessing;
+        public static void SetupMaterials()
         {
         
         
@@ -38,8 +35,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 FboSetup.Shadow.UseTexturesAndGenerateMipMaps();
             };
             
-            var dirt  = MaterialPreconfigs.Normal(
-                MaterialType.Dirt,
+            DirtSphere  = MaterialPreconfigs.Normal(
                 FboSetup.FBOID.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
@@ -49,8 +45,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 normaMaterialUniformSender
                 );
             
-            var dirtPlane  = MaterialPreconfigs.Normal(
-                MaterialType.DirtPlane,
+            DirtPlane  = MaterialPreconfigs.Normal(
                 FboSetup.FBOID.Main,
                 normalShader,
                 CreateMeshes.Plane,
@@ -61,8 +56,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 );
             
             const string bathroomTiles = "InteriorDesignRugStarryNight/";
-            var tile = MaterialPreconfigs.Normal(
-                MaterialType.Tile,
+            TileSphere = MaterialPreconfigs.Normal(
                 FboSetup.FBOID.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
@@ -74,11 +68,10 @@ namespace Indpendent_Study_Fall_2020.Scripts
             #endregion
 
             #region solid_color
-            var solidColor = Material.EntityBased(MaterialType.Solid, FboSetup.FBOID.Main, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
+            SolidSphere = Material.EntityBased(FboSetup.FBOID.Main, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
             #endregion
 
-            var shadowMap = Material.EntityBased(
-                MaterialType.ShadowMap,
+            ShadowMap = Material.EntityBased(
                 FboSetup.FBOID.Shadow,
                 ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.IcoSphereHighPoly,
@@ -88,15 +81,6 @@ namespace Indpendent_Study_Fall_2020.Scripts
             // var visualizeDepth = new Material(MaterialType.VisualizeDepthTexture, CreateFBOs.FBOType.Default, new ShaderProgram("visualize_depth_map", "lighting"), null );
             // visualizeDepth.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
 
-            return new[]
-            {
-                shadowMap,
-                solidColor,
-                dirt,
-                dirtPlane,
-                tile,
-                // visualizeDepth
-            };
         }
 
         public static Material[] CreatePostProcessing()

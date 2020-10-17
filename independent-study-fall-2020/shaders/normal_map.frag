@@ -12,7 +12,6 @@ uniform sampler2D Gloss;
 uniform sampler2D ShadowMap;
 
 uniform float NormalMapStrength;
-
 uniform float SpecularRoughness;
 
 void main()

@@ -14,9 +14,8 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
     /// <summary>
     /// Responsible for setting up a shader, it's textures, it's vertex attributes and setting its uniforms
     /// </summary>
-    public class Material : ITypeID
+    public class Material
     {
-        public MaterialSetup.MaterialType Type { get; private set; }
         public FboSetup.FBOID FBOTARGET { get; private set; }
         public ShaderProgram Shader { get; private set; }
         
@@ -50,10 +49,9 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         private Material() { }
         
         
-        public static Material EntityBased(MaterialSetup.MaterialType type, FboSetup.FBOID fboid, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material EntityBased(FboSetup.FBOID fboid, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
             var mat = new Material();
-            mat.Type = type;
             mat.Shader = shaderProgram;
             mat.PerMaterialUniformSender = perMaterialUniformSender;
             mat.FBOTARGET = fboid;
@@ -66,7 +64,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
              var mat = new Material();
              mat.Shader = shaderProgram;
              mat.FBOTARGET = FboSetup.FBOID.PostProcessing;
-             mat.Type = MaterialSetup.MaterialType.PostProcessing;
              mat.GetUniformAndAttribLocations();
              mat.VAO = new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
              mat.PerMaterialUniformSender = _ => FboSetup.Main.UseTexturesAndGenerateMipMaps();
@@ -80,7 +77,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         {
             GL.GetProgram(Shader.Handle, GetProgramParameterName.ActiveUniforms, out int uniformCount);
             UniformLocations = new Dictionary<string, int>(uniformCount);
-            Debug.Log(Type);
+            Debug.Log(GetType().Name);
             for (int i = 0; i < uniformCount; i++) 
             {
                 var uniformName = GL.GetActiveUniform(Shader.Handle, i, out int size, out var uniformType);
@@ -111,7 +108,7 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             if (VertexAttribLocations.TryGetValue(name, out int location))
                 return location;
             else
-                throw new Exception($"Attribute {name} not found at material {Type}");
+                throw new Exception($"Attribute {name} not found at material {this.GetType().Name}");
         }
 
         public void SetupSampler(string samplerName, Texture texture)
@@ -134,7 +131,6 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
             PerMaterialUniformSender?.Invoke(this);
             GL.BindVertexArray(VAO.VAOHandle);
         }
-
-        public int GetTypeID() => (int) Type;
+        
     }
 }
