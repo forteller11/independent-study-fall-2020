@@ -1,7 +1,9 @@
-﻿out vec4 fragColor;
+﻿out vec4 MainFragColor;
+out vec4 SecondaryFragColor;
 
 uniform vec4 Color;
 void main()
 {
-    fragColor = Color;
+    MainFragColor = Color;
+    SecondaryFragColor = vec4(1,0,0,1);
 }

@@ -17,6 +17,9 @@ namespace CART_457.MaterialRelated
         private const string LIBRARY_FILE_EXT = ".glsl";
         private static string SHADER_VERSION_DIR = "#version 330 core"+ Environment.NewLine;
         private const string POST_FX_VERTEX_SHADER = "position_pass_through";
+        
+        public const string MAIN_FRAG_COLOR = "MainFragColor";
+        public const string SECONDARY_FRAG_COLOR = "SecondaryFragColor";
 
         public static ShaderProgram Standard(string shadeFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
@@ -39,8 +42,13 @@ namespace CART_457.MaterialRelated
             int fragmentHandle = CompileShaderAndDebug(fragmentFileName + FRAG_FILE_EXT, ShaderType.FragmentShader);
 
             Handle = GL.CreateProgram();
+            
+            GL.BindFragDataLocation(Handle, 0, MAIN_FRAG_COLOR);
+            GL.BindFragDataLocation(Handle, 1, SECONDARY_FRAG_COLOR);
+            
             GL.AttachShader(Handle, vertexHandle);
             GL.AttachShader(Handle, fragmentHandle);
+            
             GL.LinkProgram(Handle);
             
             GL.DetachShader(Handle, vertexHandle);

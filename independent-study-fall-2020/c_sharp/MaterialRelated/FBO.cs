@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using CART_457.Helpers;
 using CART_457.Renderer;
@@ -22,7 +23,7 @@ namespace CART_457.MaterialRelated
 
         public ClearBufferMask ClearBufferBit;
 
-        private FBO(){}
+        private FBO() { }
         public static FBO Custom( Size size, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
@@ -53,7 +54,7 @@ namespace CART_457.MaterialRelated
 
         public void Clear()
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(ClearBufferBit);
         }
 
         private static void ValidateAttachments()
@@ -65,7 +66,7 @@ namespace CART_457.MaterialRelated
 
         public void AddColorAttachment1()
         {
-            Use();
+            Bind();
             ColorTexture1 = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture3);
             LinkTexture(ColorTexture1, FramebufferAttachment.ColorAttachment0);
             ValidateAttachments();
@@ -73,7 +74,7 @@ namespace CART_457.MaterialRelated
         
         public void AddColorAttachment2()
         {
-            Use();
+            Bind();
             ColorTexture2 = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture4);
             LinkTexture(ColorTexture2, FramebufferAttachment.ColorAttachment1);
             ValidateAttachments();
@@ -81,22 +82,28 @@ namespace CART_457.MaterialRelated
         
         public void AddDepthAttachment()
         {
-            Use();
+            Bind();
             DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, TextureUnit.Texture5);
             LinkTexture(DepthTexture, FramebufferAttachment.DepthAttachment);
             ValidateAttachments();
         }
         
 
-        public void Use()
+        public void Bind()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
         }
 
         public void SetDrawingStates()
         {
-            Use();
+            Bind();
             Clear();
+            
+            var drawBufferEnums = new List<DrawBuffersEnum>();
+            if (ColorTexture1!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment0);
+            if (ColorTexture2!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment1);
+            GL.DrawBuffers(drawBufferEnums.Count, drawBufferEnums.ToArray());
+            
             GL.Viewport(0,0,Size.Width,Size.Height);
             RenderCapSettings?.Invoke();
         }

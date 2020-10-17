@@ -1,4 +1,5 @@
-﻿out vec4 fragColor;
+﻿out vec4 MainFragColor;
+out vec4 SecondaryFragColor;
 
 in vec2 v2f_uv;
 in vec3 v2f_diffuse;
@@ -19,5 +20,6 @@ void main()
     
     vec3 texColorShaded = diffuseColor.xyz * (v2f_diffuse + specular);
 
-    fragColor = vec4(texColorShaded, 1);
+    MainFragColor = vec4(texColorShaded, 1);
+    SecondaryFragColor = vec4(1,0,0,1);
 }

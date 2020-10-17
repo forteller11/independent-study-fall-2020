@@ -1,8 +1,10 @@
-﻿out vec4 fragColor;
+﻿out vec4 MainFragColor;
+out vec4 SecondaryFragColor;
 
 uniform sampler2D MainTexture;
 
 void main()
 {
-    fragColor = texture(MainTexture, v2f_uv);
+    MainFragColor = texture(MainTexture, v2f_uv);
+    SecondaryFragColor = vec4(1,0,0,1);
 }

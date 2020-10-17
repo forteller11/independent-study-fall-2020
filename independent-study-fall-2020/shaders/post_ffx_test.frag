@@ -1,6 +1,6 @@
-﻿//If a texture has a depth or depth-stencil image format and has the depth comparison activated, it cannot be used with a normal sampler. Attempting to do so results in undefined behavior. Such textures must be used with a shadow sampler. This type changes the texture lookup functions (see below), adding an additional component to the textures' usual texture coordinate vector. This extra value is used to compare against the value sampled from the texture.
+﻿out vec4 MainFragColor;
+out vec4 SecondaryFragColor;
 
-out vec4 frag_color;
 in vec2 v2f_uv;
 const float offset = 0.01;
 
@@ -18,6 +18,6 @@ void main(){
 //    float r = 1;
 //    float g = 0;
 //    float b = 1;
-    frag_color = vec4(r,g,b,1);
-
+    MainFragColor = vec4(r,g,b,1);
+    SecondaryFragColor = vec4(1,0,0,1);
 }
