@@ -99,10 +99,10 @@ namespace CART_457.MaterialRelated
             Bind();
             Clear();
             
-            var drawBufferEnums = new List<DrawBuffersEnum>();
-            if (ColorTexture1!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment0);
-            if (ColorTexture2!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment1);
-            GL.DrawBuffers(drawBufferEnums.Count, drawBufferEnums.ToArray());
+            // var drawBufferEnums = new List<DrawBuffersEnum>();
+            // if (ColorTexture1!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment0);
+            // if (ColorTexture2!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment1);
+            // GL.DrawBuffers(drawBufferEnums.Count, drawBufferEnums.ToArray());
             
             GL.Viewport(0,0,Size.Width,Size.Height);
             RenderCapSettings?.Invoke();
