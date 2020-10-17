@@ -1,4 +1,5 @@
-﻿using CART_457.EntitySystem;
+﻿using CART_457.Attributes;
+using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
 using CART_457.Renderer;
 using OpenTK.Graphics.OpenGL4;
@@ -15,11 +16,12 @@ namespace CART_457.Scripts
             PostProcessing
         };
         
-        public static FBO Shadow; 
-        public static FBO Main;
-        public static FBO Default;
-        public static FBO PostProcessing { get; private set; }
-        public static FBO[] Create()
+        [IncludeInDrawLoop] public static FBO Shadow; 
+        [IncludeInDrawLoop] public static FBO Main;
+        [IncludeInDrawLoop] public static FBO Default;
+        
+        [IncludeInPostFX] public static FBO PostProcessing;
+        static FboSetup ()
         {
         
             Shadow = FBO.Custom(FBOID.Shadow, DrawManager.TKWindowSize, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
@@ -41,11 +43,6 @@ namespace CART_457.Scripts
                     // GL.Disable(EnableCap.DepthTest);
                 });
             
-            return new[]
-            {
-                Shadow,
-                Main
-            };
         }
     }
 }

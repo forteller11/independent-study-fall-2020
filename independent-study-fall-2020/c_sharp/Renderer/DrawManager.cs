@@ -17,10 +17,11 @@ namespace CART_457.Renderer
     {
         public static Size TKWindowSize = new Size(100, 2000);
         
-        public static List<FBOBatch> BatchHierachies = new List<FBOBatch>();
+        public static List<FBOBatch> BatchHierachies;
         public static List<Material> PostProcessingMaterials;
         
         public static FBO FBOToDebugDraw; //where -1 == default buffer no blit
+        public static FBO PostFXFbo;
         
 
         public static void Init(TKWindow window)
@@ -32,35 +33,61 @@ namespace CART_457.Renderer
             GL.ClearColor(0f,0f,0f,1f);
         }
 
-        public static void SetupStaticRenderingHierarchy(FBO [] fbos)
+        public static void SetupStaticRenderingHierarchy()
         {
-            #region error checking
-            ThrowIfDuplicateTypeIDs(fbos);
-            for (int i = 0; i < fbos.Length; i++)
-                if (fbos[i].ID == FboSetup.FBOID.PostProcessing)
-                    throw new DataException("fbos can't be of type post-processing!");
-
-            #endregion
-            
-            for (int i = 0; i < fbos.Length; i++) 
-                AddFBO(fbos[i]);
-
+            SetupFBOsUsingReflection();
             SetupMaterialsUsingReflection();
         }
-        
+
+        public static void SetupFBOsUsingReflection()
+        {
+            int numberOfPostFXFbos = 0;
+            
+            var fboFieldInfos = typeof(FboSetup).GetFields();
+            BatchHierachies = new List<FBOBatch>(fboFieldInfos.Length);
+            
+            foreach (var fboFieldInfo in fboFieldInfos)
+            {
+                if (fboFieldInfo.GetValue(null) is FBO == false)
+                    continue;
+                
+                var fbo = (FBO) fboFieldInfo.GetValue(null);
+                bool atLeastOneIncludeAttribute = false;
+                
+                if (Attribute.IsDefined(fboFieldInfo, typeof(IncludeInDrawLoop)))
+                {
+                    AddFBOToDrawLoop(fbo);
+                    atLeastOneIncludeAttribute = true;
+                }
+
+                if (Attribute.IsDefined(fboFieldInfo, typeof(IncludeInPostFX)))
+                {
+                    PostFXFbo = fbo;
+                    numberOfPostFXFbos++;
+                    atLeastOneIncludeAttribute = true;
+                }
+
+                if (atLeastOneIncludeAttribute == false)
+                    throw new Exception($"An FBO in {typeof(FboSetup).Name} does not have an include attribute and will therefore never be drawn to and will be useless.");
+            }
+            
+            if (numberOfPostFXFbos != 1)
+                throw new Exception($"In {typeof(FboSetup).Name} there are {numberOfPostFXFbos} FBOs with the {typeof(IncludeInPostFX).Name} when there can only be one.");
+        }
         public static void SetupMaterialsUsingReflection()
         {
-            PostProcessingMaterials = new List<Material>()
-                ;
+            
             var materials = typeof(MaterialSetup).GetFields();
+            PostProcessingMaterials = new List<Material>(materials.Length);
+            
             foreach (FieldInfo fieldInfo in materials)
             {
                 if (fieldInfo.GetValue(null) is Material == false)
                     continue;
                 
                 Material material  = (Material) fieldInfo.GetValue(null);
-
                 bool atLeastOneIncludeAttribute = false;
+                
                 if (Attribute.IsDefined(fieldInfo, typeof(IncludeInDrawLoop)))
                 {
                     AddMaterialToMainDrawLoop(material);
@@ -78,7 +105,7 @@ namespace CART_457.Renderer
             }
         }
 
-        private static void AddFBO(FBO fbo)
+        private static void AddFBOToDrawLoop(FBO fbo)
         {
             BatchHierachies.Insert(0, new FBOBatch(fbo));
         }

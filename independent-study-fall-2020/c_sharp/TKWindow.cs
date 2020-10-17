@@ -57,7 +57,7 @@ namespace CART_457
             
             CreateMeshes.Create();
             
-            DrawManager.SetupStaticRenderingHierarchy(FboSetup.Create());
+            DrawManager.SetupStaticRenderingHierarchy();
             DrawManager.TKWindowSize = new Size(Width, Height);
             
             EntityManager.AddRangeToWorldAndRenderer(SceneSetup.CreateGameObjects());
