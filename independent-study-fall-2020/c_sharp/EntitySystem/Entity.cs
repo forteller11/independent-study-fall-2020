@@ -54,7 +54,7 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         {
             for (int i = 0; i < Materials.Length; i++)
             {
-                if (material == Materials[i])
+                if (material == Materials[i] && material != null)
                     return true;
             }
 

@@ -80,7 +80,7 @@ namespace Indpendent_Study_Fall_2020
         {
             var s = new StringBuilder(enumerable.GetType().Name +": ");
             for (int i = 0; i < enumerable.Count; i++)
-                s.Append("\n" + enumerable[i].ToString());
+                s.Append("\n" + enumerable[i].GetType().Name.ToString());
             return s.ToString();
         }
 

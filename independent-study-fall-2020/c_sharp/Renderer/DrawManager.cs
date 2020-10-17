@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using Indpendent_Study_Fall_2020.c_sharp.Attributes;
 using Indpendent_Study_Fall_2020.c_sharp.Renderer;
 using Indpendent_Study_Fall_2020.Helpers;
@@ -58,6 +59,8 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
         
         public static void SetupMaterialsUsingReflection()
         {
+            PostProcessingMaterials = new List<Material>()
+                ;
             var materials = typeof(MaterialSetup).GetFields();
             foreach (FieldInfo fieldInfo in materials)
             {
@@ -135,9 +138,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
                     }
                 }
             }
-            
+
             if (foundMaterials != expectedFoundMaterials)
-                throw new DataException($"Entity with materials {Debug.GraphList(new List<Material>())} couldn't be found in draw manager!");
+            {
+                string materials = String.Empty;
+                foreach (var m in entity.Materials)
+                {
+                    materials += m.GetType().Name;
+                }
+                throw new DataException($"Entity with materials {materials} couldn't be found in draw manager!");
+            }
         }
 
         public static void ThrowIfDuplicateTypeIDs<T>(T[] uniqueNames) where T : ITypeID

@@ -21,7 +21,7 @@ namespace Indpendent_Study_Fall_2020.Scripts
         [IncludeInDrawLoop] public static Material TileSphere;
         [IncludeInDrawLoop] public static Material ShadowMap;
         [IncludeInPostFX] public static Material PostProcessing;
-        public static void SetupMaterials()
+        static MaterialSetup()
         {
         
         
@@ -76,27 +76,16 @@ namespace Indpendent_Study_Fall_2020.Scripts
                 ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.IcoSphereHighPoly,
                 null);
-
-
-            // var visualizeDepth = new Material(MaterialType.VisualizeDepthTexture, CreateFBOs.FBOType.Default, new ShaderProgram("visualize_depth_map", "lighting"), null );
-            // visualizeDepth.VAOFromMesh(CreateMeshes.IcoSphereHighPoly); 
-
+            
+            
+            PostProcessing = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
+            PostProcessing.SetupSampler(Material.MAIN_COLOR_SAMPLER, FboSetup.Main.ColorTexture1);
+            PostProcessing.SetupSampler(Material.SECONDARY_COLOR_SAMPLER, FboSetup.Main.ColorTexture2);
+            PostProcessing.SetupSampler(Material.MAIN_DEPTH_SAMPLER, FboSetup.Main.DepthTexture);
+            
         }
 
-        public static Material[] CreatePostProcessing()
-        {
-            var depthVisualizer = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
-                depthVisualizer.SetupSampler(Material.MAIN_COLOR_SAMPLER, FboSetup.Main.ColorTexture1);
-                depthVisualizer.SetupSampler(Material.SECONDARY_COLOR_SAMPLER, FboSetup.Main.ColorTexture2);
-                depthVisualizer.SetupSampler(Material.MAIN_DEPTH_SAMPLER, FboSetup.Main.DepthTexture);
-                
-            return new Material[]
-            {
-                 depthVisualizer
-            };
-        }
-        
-        
-        
+
+
     }
 }
