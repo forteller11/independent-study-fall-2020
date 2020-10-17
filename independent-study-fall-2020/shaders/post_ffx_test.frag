@@ -1,5 +1,5 @@
-﻿out vec4 MainFragColor;
-out vec4 SecondaryFragColor;
+﻿layout (location = 0) out vec4 MainFragColor;
+layout (location = 1) out vec4 SecondaryFragColor;
 
 in vec2 v2f_uv;
 const float offset = 0.01;

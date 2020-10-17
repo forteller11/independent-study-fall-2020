@@ -9,7 +9,7 @@ namespace CART_457.MaterialRelated
     public class ShaderProgram
     {
         public int Handle { get; }
-        public Dictionary<string, int> UniformLocations = new Dictionary<string, int>();
+        // public Dictionary<string, int> UniformLocations = new Dictionary<string, int>();
         public string FileName { get; private set; }
 
         private const string VERTEX_FILE_EXT = ".vert";
@@ -42,10 +42,7 @@ namespace CART_457.MaterialRelated
             int fragmentHandle = CompileShaderAndDebug(fragmentFileName + FRAG_FILE_EXT, ShaderType.FragmentShader);
 
             Handle = GL.CreateProgram();
-            
-            GL.BindFragDataLocation(Handle, 0, MAIN_FRAG_COLOR);
-            GL.BindFragDataLocation(Handle, 1, SECONDARY_FRAG_COLOR);
-            
+
             GL.AttachShader(Handle, vertexHandle);
             GL.AttachShader(Handle, fragmentHandle);
             
