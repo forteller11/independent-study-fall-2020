@@ -1,13 +1,4 @@
-﻿in vec3 in_position;
-in vec3 in_normal;
-
-out vec3 v2f_normal;
-
-uniform mat4 ModelToWorld;
-uniform mat4 WorldToView;
-uniform mat4 ModelToView;
-uniform mat3 ModelRotation;
-
+﻿out vec3 v2f_normal;
 
 void main()
 {

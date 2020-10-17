@@ -4,10 +4,6 @@ out vec4 frag_color;
 in vec2 v2f_uv;
 const float offset = 0.01;
 
-uniform sampler2D MainColor1;
-uniform sampler2D MainColor2;
-uniform sampler2D MainDepth;
-
 void main(){
 
     //float depth = texture(MainDepth, vec3(v2f_uv,1), 0.01);
@@ -15,9 +11,9 @@ void main(){
     //vec4 color = texture(MainColor, v2f_uv);
     //frag_color = vec4(vec3(depth), 1);
     
-   float r = texture(MainColor1, v2f_uv + vec2(offset, offset)).r;
-    float g = texture(MainColor1, v2f_uv ).g;
-    float b = texture(MainColor1, v2f_uv + vec2(-offset, -offset)).b;
+   float r = texture(MainColor, v2f_uv + vec2(offset, offset)).r;
+    float g = texture(MainColor, v2f_uv ).g;
+    float b = texture(MainColor, v2f_uv + vec2(-offset, -offset)).b;
 
 //    float r = 1;
 //    float g = 0;

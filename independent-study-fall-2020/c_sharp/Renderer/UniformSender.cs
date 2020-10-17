@@ -28,11 +28,11 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Renderer
             var worldToView = worldToViewTranslation * worldToViewRotation * camera.Projection;
             var modelToView = modelToWorld * worldToView;
             
-            SetMatrix4(material, "ModelToView", modelToView, false);
-            SetMatrix4(material, "WorldToView", worldToView, false);
-            SetMatrix4(material, "ModelRotation", modelToWorldRotation, false);
-            SetMatrix4(material, "ModelToWorld", modelToWorld, false);
-            SetVector3(material, "CamPosition", camera.Position, false); //todo batch with like materials
+            SetMatrix4(material, Material.MODEL_TO_VIEW_UNIFORM, modelToView, false);
+            SetMatrix4(material, Material.WORLD_TO_VIEW_UNIFORM, worldToView, false);
+            SetMatrix4(material, Material.MODEL_ROTATION_UNIFORM, modelToWorldRotation, false);
+            SetMatrix4(material, Material.MODEL_TO_WORLD_UNIFORM, modelToWorld, false);
+            SetVector3(material, Material.CAM_POSITION_UNIFORM, camera.Position, false); //todo batch with like materials
         }
 
         /// <summary>

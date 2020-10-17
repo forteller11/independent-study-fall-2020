@@ -18,25 +18,25 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
         private static string SHADER_VERSION_DIR = "#version 330 core"+ Environment.NewLine;
         private const string POST_FX_VERTEX_SHADER = "position_pass_through";
 
-        public static ShaderProgram Standard(string shadeFileNames, params string[] shaderLibraryFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
+        public static ShaderProgram Standard(string shadeFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
-            var shader = new ShaderProgram(shadeFileNames,shadeFileNames, shaderLibraryFileNames);
+            var shader = new ShaderProgram(shadeFileNames,shadeFileNames);
             shader.FileName = shadeFileNames;
             return shader;
         }
         
         public static ShaderProgram PostProcessing(string fragmentFileName, params string[] shaderLibraryFileNames)
         {
-            var shader = new ShaderProgram(POST_FX_VERTEX_SHADER,fragmentFileName, shaderLibraryFileNames);
+            var shader = new ShaderProgram(POST_FX_VERTEX_SHADER,fragmentFileName);
             shader.FileName = fragmentFileName;
             return shader;
         }
 
-        private ShaderProgram(string vertFileName, string fragmentFileName,  string[] shaderLibraryFileNames)
+        private ShaderProgram(string vertFileName, string fragmentFileName)
         {
 
-            int vertexHandle = CompileShaderAndDebug(vertFileName + VERTEX_FILE_EXT, shaderLibraryFileNames, ShaderType.VertexShader);
-            int fragmentHandle = CompileShaderAndDebug(fragmentFileName + FRAG_FILE_EXT, shaderLibraryFileNames, ShaderType.FragmentShader);
+            int vertexHandle = CompileShaderAndDebug(vertFileName + VERTEX_FILE_EXT, ShaderType.VertexShader);
+            int fragmentHandle = CompileShaderAndDebug(fragmentFileName + FRAG_FILE_EXT, ShaderType.FragmentShader);
 
             Handle = GL.CreateProgram();
             GL.AttachShader(Handle, vertexHandle);
@@ -51,30 +51,14 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
 
         
 
-        private int CompileShaderAndDebug(string shaderFileName, string[] libraryFileNames, ShaderType shaderType)
+        private int CompileShaderAndDebug(string shaderFileName, ShaderType shaderType)
         {
             string shaderCodeText;
             using (var streamReader = new StreamReader(SerializationManager.ShaderPath + "\\" + shaderFileName))
                 shaderCodeText = streamReader.ReadToEnd();
 
-            #region add all shader libraries
-            string shaderCodeAndLibraries = shaderCodeText;
-            if (libraryFileNames != null)
-            {
-                for (int i = 0; i < libraryFileNames.Length; i++)
-                {
-                    string shaderLibraryCodeText;
-                    using (var streamReader =
-                        new StreamReader(
-                            SerializationManager.ShaderPath + "\\" + libraryFileNames[i] + LIBRARY_FILE_EXT))
-                        shaderLibraryCodeText = streamReader.ReadToEnd();
-                    shaderCodeAndLibraries = shaderLibraryCodeText + Environment.NewLine + shaderCodeAndLibraries;
-                }
-            }
-
-            #endregion
-
-            shaderCodeAndLibraries = SHADER_VERSION_DIR + shaderCodeAndLibraries;
+            string shaderLibrariesCodeText = GetAllShaderLibraries();
+            string shaderCodeAndLibraries = SHADER_VERSION_DIR + shaderLibrariesCodeText + shaderCodeText;
 
             int shaderHandle = GL.CreateShader(shaderType);
             
@@ -95,12 +79,33 @@ namespace Indpendent_Study_Fall_2020.MaterialRelated
                 }
                
                 Debug.LogWarning(shaderWithLineNumbers.ToString());
-                throw new Exception("Shader Compilation Error: " + infoLogVert);
+                throw new Exception($"Shader Compilation Error \"{shaderFileName}\": " + infoLogVert);
             }
 
             #endregion
             return shaderHandle;
         }
+
+        private string GetAllShaderLibraries()
+        {
+            DirectoryInfo dir = new DirectoryInfo(SerializationManager.ShaderLibraryPath);
+            FileInfo[] files = dir.GetFiles("*"+LIBRARY_FILE_EXT);
+
+            StringBuilder shaderLibrariesText = new StringBuilder();
+            for (int i = 0; i < files.Length; i++)
+            {
+                using
+                    var streamReader =
+                        new StreamReader(
+                            files[i].FullName);
+                var shaderLibraryFileText = streamReader.ReadToEnd();
+                shaderLibrariesText.Append(shaderLibraryFileText);
+                shaderLibrariesText.Append(Environment.NewLine);
+            }
+
+            return shaderLibrariesText.ToString();
+        }
+        
 
         public void Use()
         {

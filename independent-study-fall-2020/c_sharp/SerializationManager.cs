@@ -9,6 +9,7 @@ namespace Indpendent_Study_Fall_2020
         public static string MeshPath;
         public static string TexturePath;
         public static string ShaderPath;
+        public static string ShaderLibraryPath;
 
         static SerializationManager()
         {
@@ -18,6 +19,7 @@ namespace Indpendent_Study_Fall_2020
             MeshPath = AssetPath + @"\meshes";
             TexturePath = AssetPath + @"\textures";
             ShaderPath = ProjectPath + @"\independent-study-fall-2020\shaders";
+            ShaderLibraryPath = ShaderPath + @"\standard_libraries";
         }
 
     }

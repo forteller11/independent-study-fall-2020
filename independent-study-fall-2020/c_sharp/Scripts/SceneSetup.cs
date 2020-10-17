@@ -18,8 +18,9 @@ namespace Indpendent_Study_Fall_2020.Scripts
             gameObjects.Add(new Sphere(new Vector3(-3,0,4),MaterialSetup.MaterialType.Dirt, MaterialSetup.MaterialType.ShadowMap));
             gameObjects.Add(new Sphere(new Vector3(0,0,0),MaterialSetup.MaterialType.Dirt, MaterialSetup.MaterialType.ShadowMap));
             gameObjects.Add(new Sphere(new Vector3(3,0,4),MaterialSetup.MaterialType.Tile, MaterialSetup.MaterialType.ShadowMap));
-            gameObjects.Add(new Sphere(new Vector3(0, 2, 1),MaterialSetup.MaterialType.DirtPlane, MaterialSetup.MaterialType.ShadowMap));
-            gameObjects.Add(new Sphere( new Vector3(0, -10, 0), MaterialSetup.MaterialType.DirtPlane, MaterialSetup.MaterialType.ShadowMap));
+            var s = new Sphere(new Vector3(0, -5, 0), MaterialSetup.MaterialType.DirtPlane);
+            s.Scale = new Vector3(5);
+            gameObjects.Add(s);
             
             gameObjects.Add(new DebugTriggerer());
 

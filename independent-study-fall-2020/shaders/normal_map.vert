@@ -1,6 +1,4 @@
-﻿in vec3 in_position;
-in vec2 in_uv;
-in vec3 in_normal;
+﻿
 
 out vec2 v2f_uv;
 out vec3 v2f_diffuse;
@@ -9,12 +7,6 @@ out vec3 v2f_worldNorm;
 out vec3 v2f_norm;
 out vec3 v2f_worldPos;
 out mat3 v2f_tangentToModelSpace;
-
-uniform mat4 ModelToWorld;
-uniform mat4 WorldToView;
-uniform mat4 ModelToView;
-uniform mat3 ModelRotation;
-
 
 void main()
 {

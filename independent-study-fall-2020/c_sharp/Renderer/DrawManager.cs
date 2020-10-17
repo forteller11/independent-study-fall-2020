@@ -70,16 +70,16 @@ namespace Indpendent_Study_Fall_2020.EntitySystem
             if (material.Type == MaterialSetup.MaterialType.PostProcessing)
                 throw new DataException("Cannot add a post processing material to rendering hierarchy!");
             
-            if (material.Fboid == FboSetup.FBOID.PostProcessing)
+            if (material.FBOTARGET == FboSetup.FBOID.PostProcessing)
                 throw new DataException("Cannot add a post processing material to rendering hierarchy!");
             
-            if (material.Fboid == FboSetup.FBOID.Default)
+            if (material.FBOTARGET == FboSetup.FBOID.Default)
                 throw new DataException("Cannot render directly to default frame buffer!");
             
             for (int i = 0; i < BatchHierachies.Count; i++)
             {
                 FBOBatch fboBatch = BatchHierachies[i];
-                if (fboBatch.FBO.ID == material.Fboid)
+                if (fboBatch.FBO.ID == material.FBOTARGET)
                 {
                     fboBatch.MaterialBatches.Add(new MaterialBatch(material));
                     return;

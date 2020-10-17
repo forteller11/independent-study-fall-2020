@@ -1,6 +1,4 @@
-﻿in vec3 in_position;
-
-uniform mat4 ModelToView;
+﻿
 
 void main()
 {

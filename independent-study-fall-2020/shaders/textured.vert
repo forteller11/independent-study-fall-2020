@@ -1,11 +1,5 @@
-﻿in vec3 in_position;
-in vec2 in_uv;
-
+﻿
 out vec2 v2f_uv;
-
-uniform mat4 ModelToWorld;
-uniform mat4 WorldToView;
-
 
 void main()
 {

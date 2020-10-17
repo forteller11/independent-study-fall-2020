@@ -29,12 +29,13 @@ namespace Indpendent_Study_Fall_2020.Scripts
         
         
             #region normal materials
-            var normalShader = ShaderProgram.Standard("normal_map", "lighting");
+            var normalShader = ShaderProgram.Standard("normal_map");
 
             Action<Material> normaMaterialUniformSender = (mat) =>
             {
                 UniformSender.SetFloat(mat, "NormalMapStrength", 2);
                 UniformSender.SetFloat(mat, "SpecularRoughness", 16);
+                FboSetup.Shadow.UseTexturesAndGenerateMipMaps();
             };
             
             var dirt  = MaterialPreconfigs.Normal(
@@ -101,9 +102,9 @@ namespace Indpendent_Study_Fall_2020.Scripts
         public static Material[] CreatePostProcessing()
         {
             var depthVisualizer = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
-                depthVisualizer.SetupSampler("MainColor1", FboSetup.Main.ColorTexture1);
-                depthVisualizer.SetupSampler("MainColor2", FboSetup.Main.ColorTexture2);
-                depthVisualizer.SetupSampler("MainDepth", FboSetup.Main.DepthTexture);
+                depthVisualizer.SetupSampler(Material.MAIN_COLOR_SAMPLER, FboSetup.Main.ColorTexture1);
+                depthVisualizer.SetupSampler(Material.SECONDARY_COLOR_SAMPLER, FboSetup.Main.ColorTexture2);
+                depthVisualizer.SetupSampler(Material.MAIN_DEPTH_SAMPLER, FboSetup.Main.DepthTexture);
                 
             return new Material[]
             {
