@@ -2,7 +2,7 @@
 layout (location = 1) out vec4 SecondaryFragColor;
 
 in vec2 v2f_uv;
-const float offset = 0.01;
+const float MAX_OFFSET = 0.02;
 
 void main(){
 
@@ -10,10 +10,12 @@ void main(){
     //vec4 depthColor = texture(MainDepth, v2f_uv);
     //vec4 color = texture(MainColor, v2f_uv);
     //frag_color = vec4(vec3(depth), 1);
+    float depth = texture(SecondaryColor, v2f_uv).r;
+    float offsetDynamic = mix(0, MAX_OFFSET, 1-depth);
     
-   float r = texture(MainColor, v2f_uv + vec2(offset, offset)).r;
+   float r = texture(MainColor, v2f_uv + vec2(offsetDynamic, offsetDynamic)).r;
     float g = texture(MainColor, v2f_uv ).g;
-    float b = texture(MainColor, v2f_uv + vec2(-offset, -offset)).b;
+    float b = texture(MainColor, v2f_uv + vec2(-offsetDynamic, offsetDynamic)).b;
 
 //    float r = 1;
 //    float g = 0;

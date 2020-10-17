@@ -30,10 +30,13 @@ namespace CART_457.Scripts
                 GL.Enable(EnableCap.CullFace);});
             
             PostProcessing  = FBO.Custom("Post-FX", DrawManager.TKWindowSize, true, true,true,
-                ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () =>
+                ClearBufferMask.ColorBufferBit, () =>
                 {
-                    // GL.Disable(EnableCap.DepthTest);
+                     GL.Disable(EnableCap.DepthTest);
+                     GL.Disable(EnableCap.CullFace);
+                     
                 });
+               
             
         }
     }
