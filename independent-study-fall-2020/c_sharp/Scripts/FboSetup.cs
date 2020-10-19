@@ -13,6 +13,7 @@ namespace CART_457.Scripts
         [IncludeInDrawLoop] public static FBO Default;
         
         [IncludeInPostFX] public static FBO PostProcessing;
+        // [IncludeInPostFX] public static FBO PassThroughPostFX;
         static FboSetup ()
         {
         

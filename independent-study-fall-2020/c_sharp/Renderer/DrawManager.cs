@@ -35,46 +35,44 @@ namespace CART_457.Renderer
 
         public static void SetupStaticRenderingHierarchy()
         {
-            SetupFBOsUsingReflection();
-            SetupMaterialsUsingReflection();
+            IncludeFBOsInFBOSetup();
+            IncludeMaterialsInMaterialSetup();
         }
 
-        public static void SetupFBOsUsingReflection()
+        public static void IncludeFBOsInFBOSetup()
         {
             int numberOfPostFXFbos = 0;
             
             var fboFieldInfos = typeof(FboSetup).GetFields();
             BatchHierachies = new List<FBOBatch>(fboFieldInfos.Length);
             
-            foreach (var fboFieldInfo in fboFieldInfos)
+            foreach (FieldInfo fieldInfo in fboFieldInfos)
             {
-                if (fboFieldInfo.GetValue(null) is FBO == false)
-                    continue;
-                
-                var fbo = (FBO) fboFieldInfo.GetValue(null);
-                bool atLeastOneIncludeAttribute = false;
-                
-                if (Attribute.IsDefined(fboFieldInfo, typeof(IncludeInDrawLoop)))
-                {
-                    AddFBOToDrawLoop(fbo);
-                    atLeastOneIncludeAttribute = true;
-                }
+                var fbo = fieldInfo.GetValue(null) as FBO;
+                bool includeInDrawLoopAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInDrawLoop));
+                bool includeInPostFXAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX));
+     
+                if (fbo == null && (includeInDrawLoopAttrib || includeInPostFXAttrib))
+                    throw new Exception($"fbo in {nameof(FboSetup)} is null but still has attributes trying to include it in drawloop/postfx");
 
-                if (Attribute.IsDefined(fboFieldInfo, typeof(IncludeInPostFX)))
+                if (fbo == null)
+                    continue;
+
+                if (includeInDrawLoopAttrib)
+                    AddFBOToDrawLoop(fbo);
+
+                if (includeInPostFXAttrib)
                 {
                     PostFXFbo = fbo;
                     numberOfPostFXFbos++;
-                    atLeastOneIncludeAttribute = true;
                 }
-
-                if (atLeastOneIncludeAttribute == false)
-                    throw new Exception($"An FBO in {typeof(FboSetup).Name} does not have an include attribute and will therefore never be drawn to and will be useless.");
             }
             
             if (numberOfPostFXFbos != 1)
-                throw new Exception($"In {typeof(FboSetup).Name} there are {numberOfPostFXFbos} FBOs with the {typeof(IncludeInPostFX).Name} when there can only be one.");
+                throw new Exception($"In {nameof(FboSetup)} there are {numberOfPostFXFbos} FBOs with the {nameof(IncludeInPostFX)} when there can only be one.");
         }
-        public static void SetupMaterialsUsingReflection()
+        
+        public static void IncludeMaterialsInMaterialSetup()
         {
             
             var materials = typeof(MaterialSetup).GetFields();
@@ -82,26 +80,21 @@ namespace CART_457.Renderer
             
             foreach (FieldInfo fieldInfo in materials)
             {
-                if (fieldInfo.GetValue(null) is Material == false)
-                    continue;
-                
-                Material material  = (Material) fieldInfo.GetValue(null);
-                bool atLeastOneIncludeAttribute = false;
-                
-                if (Attribute.IsDefined(fieldInfo, typeof(IncludeInDrawLoop)))
-                {
-                    AddMaterialToMainDrawLoop(material);
-                    atLeastOneIncludeAttribute = true;
-                }
+                var material = fieldInfo.GetValue(null) as Material;
+                bool includeInDrawLoopAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInDrawLoop));
+                bool includeInPostFXAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX));
+     
+                if (material == null && (includeInDrawLoopAttrib || includeInPostFXAttrib))
+                    throw new Exception($"Material in {nameof(MaterialSetup)} is null but still has attributes trying to include it in drawloop/postfx");
 
-                if (Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX)))
-                {
-                    PostProcessingMaterials.Insert(0, material);
-                    atLeastOneIncludeAttribute = true;
-                }
+                if (material == null)
+                    continue;
+
+                if (includeInDrawLoopAttrib)
+                    AddMaterialToMainDrawLoop(material);
                 
-                if (atLeastOneIncludeAttribute == false)
-                    throw new Exception(fieldInfo.Name + $"has no include attributes, will not be included in render loop and will therefore have no effect on the game!");
+                if (includeInPostFXAttrib)
+                    PostProcessingMaterials.Insert(0, material);
             }
         }
 
