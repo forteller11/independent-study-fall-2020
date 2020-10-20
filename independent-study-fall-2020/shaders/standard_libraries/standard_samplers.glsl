@@ -1,3 +1,3 @@
-﻿uniform sampler2D MainColor;
-uniform sampler2D SecondaryColor;
-uniform sampler2D MainDepth;
+﻿uniform sampler2D MainTexture;
+uniform sampler2D SecondaryTexture;
+uniform sampler2D MainDepthTexture;

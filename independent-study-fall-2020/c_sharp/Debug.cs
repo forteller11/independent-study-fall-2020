@@ -126,8 +126,8 @@ namespace CART_457
             Console.ForegroundColor = DefaultForegroundColor;
             
             if (severity != DebugSeverity.DontCare && //for stack tracing
-                severity != DebugSeverity.DebugSeverityNotification &&
-                severity != DebugSeverity.DebugSeverityMedium)
+                severity != DebugSeverity.DebugSeverityNotification 
+              )
             {
                 throw new Exception("OpenGL Error");
             }

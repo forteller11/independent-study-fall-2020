@@ -35,9 +35,9 @@ namespace CART_457.MaterialRelated
         public const string SPECULAR_MAP_SAMPLER = "Gloss";
         public const string NORMAL_MAP_SAMPLER = "Normal";
         
-        public const string MAIN_COLOR_SAMPLER = "MainColor";
-        public const string SECONDARY_COLOR_SAMPLER = "SecondaryColor";
-        public const string MAIN_DEPTH_SAMPLER = "MainDepth";
+        public const string MAIN_COLOR_FBO_SAMPLER = "MainTexture";
+        public const string SECONDARY_COLOR_FBO_SAMPLER = "SecondaryTexture";
+        public const string MAIN_DEPTH_FBO_SAMPLER = "MainDepthTexture";
 
         public const string SHADOW_MAP_SAMPLER = "ShadowMap";
         

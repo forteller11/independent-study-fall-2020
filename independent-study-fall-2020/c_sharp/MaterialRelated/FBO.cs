@@ -103,8 +103,8 @@ namespace CART_457.MaterialRelated
             if (Handle == 0)
                 return;
             var drawBufferEnums = new List<DrawBuffersEnum>();
-            if (ColorTexture1!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment0);
-            if (ColorTexture2!= null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment1);
+            if (ColorTexture1 != null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment0);
+            if (ColorTexture2 != null) drawBufferEnums.Add(DrawBuffersEnum.ColorAttachment1);
             GL.DrawBuffers(drawBufferEnums.Count, drawBufferEnums.ToArray());
         }
 

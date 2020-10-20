@@ -7,11 +7,7 @@ namespace CART_457.Scripts
 {
     public class MaterialPreconfigs
     {
-        public const string DiffuseColorSampler = Material.DIFFUSE_SAMPLER;
-        public const string NormalMapSampler = Material.NORMAL_MAP_SAMPLER;
-        public const string SpecularMapSampler = Material.SPECULAR_MAP_SAMPLER;
-        public const string ShadowMapSampler = Material.SHADOW_MAP_SAMPLER;
-        
+
         public static Material Normal(
             FBO fbo, 
             ShaderProgram shaderProgram, 
@@ -23,11 +19,11 @@ namespace CART_457.Scripts
         {
             var mat = Material.EntityBased(fbo, shaderProgram, mesh, perMatSender);
 
-            mat.SetupSampler(DiffuseColorSampler, Texture.FromFile(diffusePath, TextureUnit.Texture0));
-            mat.SetupSampler(NormalMapSampler, Texture.FromFile(normalPath, TextureUnit.Texture1));
-            mat.SetupSampler(SpecularMapSampler, Texture.FromFile(specularPath, TextureUnit.Texture2));
-            mat.SetupSampler(ShadowMapSampler, FboSetup.Shadow.ColorTexture1);
-            
+            mat.SetupSampler(Material.DIFFUSE_SAMPLER, Texture.FromFile(diffusePath, TextureUnit.Texture0));
+            mat.SetupSampler(Material.NORMAL_MAP_SAMPLER, Texture.FromFile(normalPath, TextureUnit.Texture1));
+            mat.SetupSampler(Material.SPECULAR_MAP_SAMPLER, Texture.FromFile(specularPath, TextureUnit.Texture2));
+            mat.SetupSampler(Material.SHADOW_MAP_SAMPLER, FboSetup.Shadow.ColorTexture1);
+
             return mat;
         }
     }

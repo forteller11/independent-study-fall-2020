@@ -37,11 +37,12 @@ namespace CART_457.EntitySystem.Scripts.Entity
             if (material != MaterialSetup.ShadowMap)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
                 UniformSender.SendLights(material);
             }
             else
             {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight);
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
             }
         }
         

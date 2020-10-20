@@ -17,10 +17,6 @@ uniform float NormalMapStrength;
 uniform float SpecularRoughness;
 
 
-float map(float value, float min1, float max1, float min2, float max2) {
-    return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
-}
-
 void main()
 {
     vec4 diffuseTex = texture(Color, v2f_uv);
@@ -36,12 +32,8 @@ void main()
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular);
 
     MainFragColor = vec4(texColorShaded.xyz, 1);
-    float depthNormalizedNonLinear = gl_FragCoord.z / gl_FragCoord.w;
+
+
     
-    float depthLinear = map(v2f_viewPosNoProjection.z,
-    .1,
-    10, 
-    0, 1);
-    
-    SecondaryFragColor = vec4(vec3(clamp(depthLinear,0,1)), 1);
+    SecondaryFragColor = vec4(vec3(1), 1);
 }

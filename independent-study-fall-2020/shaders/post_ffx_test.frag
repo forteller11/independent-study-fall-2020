@@ -10,17 +10,19 @@ void main(){
     //vec4 depthColor = texture(MainDepth, v2f_uv);
     //vec4 color = texture(MainColor, v2f_uv);
     //frag_color = vec4(vec3(depth), 1);
-    float depth = texture(SecondaryColor, v2f_uv).r;
+    
+//    float depth = texture(MainDepthTexture, v2f_uv).r;
+    float depth = 1;
     float offsetDynamic = mix(0, MAX_OFFSET, 1-depth);
     
-   float r = texture(MainColor, v2f_uv + vec2(offsetDynamic, offsetDynamic)).r;
-    float g = texture(MainColor, v2f_uv ).g;
-    float b = texture(MainColor, v2f_uv + vec2(-offsetDynamic, offsetDynamic)).b;
+   float r = texture(MainTexture, v2f_uv + vec2(offsetDynamic, offsetDynamic)).r;
+    float g = texture(MainTexture, v2f_uv ).g;
+    float b = texture(MainTexture, v2f_uv + vec2(-offsetDynamic, offsetDynamic)).b;
 
 //    float r = 1;
 //    float g = 0;
 //    float b = 1;
 //    MainFragColor = vec4(r,g,b,1);
-    MainFragColor = vec4(vec3(depth), 1);
+    MainFragColor = vec4(r,g,b, 1);
     SecondaryFragColor = vec4(1,0,0,1);
 }

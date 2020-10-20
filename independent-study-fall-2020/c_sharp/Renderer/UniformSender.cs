@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
 using CART_457.Renderer;
@@ -15,7 +16,7 @@ namespace CART_457.c_sharp.Renderer
         /// <summary>
         /// Sends "ModelToWorld" and "WorldToView" uniform matrices to shader
         /// </summary>
-        public static void SendTransformMatrices(Entity entity, Material material, Camera camera)
+        public static void SendTransformMatrices(Entity entity, Material material, Camera camera, string suffix="")
         {
             var modelToWorldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(entity.Rotation));
             var worldToViewTranslation = Matrix4.CreateTranslation(-camera.Position);
@@ -30,12 +31,12 @@ namespace CART_457.c_sharp.Renderer
             var modelToViewNoProjection = modelToWorld * worldToViewTranslation * worldToViewRotation;
             var modelToView = modelToWorld * worldToView;
             
-            SetMatrix4(material, Material.MODEL_TO_VIEW_UNIFORM, modelToView, false);
-            SetMatrix4(material, Material.WORLD_TO_VIEW_UNIFORM, worldToView, false);
-            SetMatrix4(material, Material.MODEL_ROTATION_UNIFORM, modelToWorldRotation, false);
-            SetMatrix4(material, Material.MODEL_TO_WORLD_UNIFORM, modelToWorld, false);
-            SetMatrix4(material, Material.MODEL_TO_WORLD_NO_PROJECTION_UNIFORM, modelToViewNoProjection, false);
-            SetVector3(material, Material.CAM_POSITION_UNIFORM, camera.Position, false);
+            SetMatrix4(material, Material.MODEL_TO_VIEW_UNIFORM + suffix, modelToView, false);
+            SetMatrix4(material, Material.WORLD_TO_VIEW_UNIFORM + suffix, worldToView, false);
+            SetMatrix4(material, Material.MODEL_ROTATION_UNIFORM + suffix, modelToWorldRotation, false);
+            SetMatrix4(material, Material.MODEL_TO_WORLD_UNIFORM + suffix, modelToWorld, false);
+            SetMatrix4(material, Material.MODEL_TO_WORLD_NO_PROJECTION_UNIFORM + suffix, modelToViewNoProjection, false);
+            SetVector3(material, Material.CAM_POSITION_UNIFORM + suffix, camera.Position, false);
         }
 
         /// <summary>
