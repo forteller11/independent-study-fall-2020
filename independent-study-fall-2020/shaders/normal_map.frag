@@ -32,9 +32,7 @@ void main()
     vec3 specular = calculate_specular(normalsWithMapWorld, v2f_worldPos, CamPosition, glossMapTex.x * NormalMapStrength, SpecularRoughness);
     vec3 diffuse = calculate_diffuse(normalsWithMapWorld, v2f_worldPos);
 
-    vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular);
-
-
+    //NOTE: FOLLOWING CODE FROM: https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
     // perform perspective divide
     vec3 projCoords = v2f_viewPosLightSpace.xyz / v2f_viewPosLightSpace.w;
     // transform to [0,1] range
@@ -44,11 +42,19 @@ void main()
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow
-    float bias = 0.008;
+    vec3 lightDir = vec3(0,-1,0);
+    float bias = max(0.05 *(1.0 - abs(dot(v2f_norm, lightDir))), 0.005);
+//    float bias = 0.005;
     float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+    float shadowMult = max(0.2, 1-shadow);
+    //------------------------------------------------------------------
+    
+    vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular) * shadowMult;
 
 
-    MainFragColor = vec4(texColorShaded.xyz*(1-shadow), 1);
+    
+
+    MainFragColor = vec4(texColorShaded.xyz, 1);
 
 
     
