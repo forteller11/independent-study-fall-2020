@@ -28,15 +28,16 @@ namespace CART_457.EntitySystem.Scripts.Entity
 
         public override void SendUniformsPerObject(Material material)
         {
-            if (material == MaterialSetup.ShadowMap)
+            if (material == MaterialSetup.ShadowMapSphere || material == MaterialSetup.ShadowMapPlane)
             {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight);
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
             }
             else
-            {
+            { 
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
                 UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color, 1), false);
             }
+            
 
 //            UniformSender.SendLights(this);
         }

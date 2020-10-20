@@ -7,6 +7,11 @@ out vec3 v2f_norm;
 out vec3 v2f_worldPos;
 out mat3 v2f_tangentToModelSpace;
 
+out vec4 v2f_viewPos;
+out vec4 v2f_viewPosLightSpace;
+
+uniform mat4 ModelToViewLight;
+
 void main()
 {
     v2f_worldPos =  (vec4(in_position, 1) * ModelToWorld).xyz;
@@ -19,7 +24,13 @@ void main()
     
     v2f_tangentToModelSpace = calculate_tanToModel_space(in_normal);
     
-    gl_Position = viewPos;
+    
+    
     v2f_uv = in_uv;
+
+    gl_Position = viewPos;
+    v2f_viewPos =  viewPos;
+
+    v2f_viewPosLightSpace = vec4(in_position,1) * ModelToViewLight;
 }
 

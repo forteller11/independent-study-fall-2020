@@ -8,6 +8,9 @@ in vec3 v2f_worldPos;
 in mat3 v2f_tangentToModelSpace;
 in vec3 v2f_viewPosNoProjection;
 
+in vec4 v2f_viewPos;
+in vec4 v2f_viewPosLightSpace;
+
 uniform sampler2D Color;
 uniform sampler2D Normal;
 uniform sampler2D Gloss;
@@ -31,7 +34,21 @@ void main()
 
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular);
 
-    MainFragColor = vec4(texColorShaded.xyz, 1);
+
+    // perform perspective divide
+    vec3 projCoords = v2f_viewPosLightSpace.xyz / v2f_viewPosLightSpace.w;
+    // transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+    float closestDepth = texture(ShadowMap, projCoords.xy).r;
+    // get depth of current fragment from light's perspective
+    float currentDepth = projCoords.z;
+    // check whether current frag pos is in shadow
+    float bias = 0.008;
+    float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
+
+
+    MainFragColor = vec4(texColorShaded.xyz*(1-shadow), 1);
 
 
     

@@ -12,7 +12,8 @@ namespace CART_457.Scripts
         [IncludeInDrawLoop] public static Material DirtSphere;
         [IncludeInDrawLoop] public static Material DirtPlane;
         [IncludeInDrawLoop] public static Material TileSphere;
-        [IncludeInDrawLoop] public static Material ShadowMap;
+        [IncludeInDrawLoop] public static Material ShadowMapSphere;
+        [IncludeInDrawLoop] public static Material ShadowMapPlane;
         [IncludeInPostFX] public static Material PostProcessing;
         static MaterialSetup()
         {
@@ -64,10 +65,16 @@ namespace CART_457.Scripts
             SolidSphere = Material.EntityBased(FboSetup.Main, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
             #endregion
 
-            ShadowMap = Material.EntityBased(
+            ShadowMapSphere = Material.EntityBased(
                 FboSetup.Shadow,
                 ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.IcoSphereHighPoly,
+                null);
+            
+            ShadowMapPlane = Material.EntityBased(
+                FboSetup.Shadow,
+                ShaderProgram.Standard("shadow_map"),
+                CreateMeshes.Plane,
                 null);
             
             
