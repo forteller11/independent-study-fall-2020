@@ -17,7 +17,7 @@ namespace CART_457.Scripts
         static FboSetup ()
         {
         
-            Shadow = FBO.Custom("Shadow", DrawManager.TKWindowSize, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
+            Shadow = FBO.Custom("Shadow", DrawManager.TKWindowSize*2, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, null);
             
             Main = FBO.Custom("Main", DrawManager.TKWindowSize, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
                 GL.Enable(EnableCap.Texture2D);

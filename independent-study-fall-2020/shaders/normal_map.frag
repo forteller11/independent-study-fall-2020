@@ -58,5 +58,5 @@ void main()
 
 
     
-    SecondaryFragColor = vec4(vec3(1), 1);
+    SecondaryFragColor = vec4(vec3(gl_FragCoord.z/gl_FragCoord.w), 1);
 }

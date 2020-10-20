@@ -12,7 +12,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
         private float acceleration = 1.5f;
         private float angularAcceleration = 0.2f;
         
-        private float _horziontalMaxVelocity = .05f;
+        private float _horziontalVelocity = .05f;
 
 
         public CameraControllerSingleton() : base(BehaviorFlags.None, null) { }
@@ -53,32 +53,32 @@ namespace CART_457.EntitySystem.Scripts.Entity
             if (eventArgs.KeyboardState.IsKeyDown(Key.AltLeft))
                 accelerationThisFrame *= 5;
 
-            Vector3 input = Vector3.Zero;
-            
-            if (keyboardState.IsKeyDown(Key.W)) input -= Vector3.UnitZ;
-            if (keyboardState.IsKeyDown(Key.S)) input += Vector3.UnitZ;
-            if (keyboardState.IsKeyDown(Key.A)) input -= Vector3.UnitX;
-            if (keyboardState.IsKeyDown(Key.D)) input += Vector3.UnitX;
-            if (keyboardState.IsKeyDown(Key.LShift)) input -= Vector3.UnitY;
-            if (keyboardState.IsKeyDown(Key.Space))  input += Vector3.UnitY;
 
-            Vector3 movementAbsolute = input * accelerationThisFrame;
-            Vector3 movementRelative = Globals.MainCamera.Rotation * movementAbsolute;
+            int horzInput = 0;
+            int depthInput = 0;
+            int verticalInput = 0;
+
+            if (keyboardState.IsKeyDown(Key.W)) depthInput--;
+            if (keyboardState.IsKeyDown(Key.S)) depthInput++;
+            if (keyboardState.IsKeyDown(Key.A)) horzInput--;
+            if (keyboardState.IsKeyDown(Key.D)) horzInput++;
+            if (keyboardState.IsKeyDown(Key.LShift)) verticalInput--;
+            if (keyboardState.IsKeyDown(Key.Space))  verticalInput++;
+
+            Vector3 inputVector = new Vector3(horzInput, 0, depthInput);
+            Vector3 movementAbsolute = inputVector * accelerationThisFrame;
+
+            Vector3 movementRelative = Globals.MainCamera.Rotation * inputVector;
 
 
             Vector2 movementHorzontal = Vector2.Zero; //make horizontal speed consistent no matter the rotation of the camera
-            Vector2 inputHorziontal = new Vector2(input.X, input.Z);
-            if (!inputHorziontal.EqualsAprox(Vector2.Zero))
+            if (horzInput != 0 || depthInput != 0) 
             {
-                movementHorzontal = new Vector2(movementRelative.X, movementRelative.Z);
-                movementHorzontal = Vector2.Normalize(movementHorzontal);
-                movementHorzontal *= _horziontalMaxVelocity * sprintMultiplier;
-
+                Vector2 movementHorzontalInput = new Vector2(movementRelative.X, movementRelative.Z);
+                movementHorzontal = Vector2.Normalize(movementHorzontalInput) * _horziontalVelocity;
             }
-       
-;
-            
-            Globals.MainCamera.Position += new Vector3(movementHorzontal.X, movementAbsolute.Y, movementHorzontal.Y);
+
+            Globals.MainCamera.Position += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
         }
 
         
