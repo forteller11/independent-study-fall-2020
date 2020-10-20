@@ -15,11 +15,13 @@ namespace CART_457.Scripts
             
             gameObjects.Add(new CameraControllerSingleton());
             
-            gameObjects.Add(new Sphere(new Vector3(-3,0,4),MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(0,0,0),MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(3,0,4),MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
-            var s = new Sphere(new Vector3(0, -5, 0), MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
-            s.Scale = new Vector3(5);
+            gameObjects.Add(new Sphere(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(3,0,4),new Vector3(.55f, .1f, .6f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(6,3,4),new Vector3(.1f,-.5f,.456f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(1,1,2),new Vector3(.13f,-.1f,.56f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
+            var s = new Sphere(new Vector3(0, -5, 0), Vector3.Zero, MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
+            s.Scale = new Vector3(20);
             gameObjects.Add(s);
             
             gameObjects.Add(new FBOVisualizationInput());

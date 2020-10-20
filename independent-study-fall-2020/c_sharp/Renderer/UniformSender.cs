@@ -69,9 +69,10 @@ namespace CART_457.c_sharp.Renderer
         }
 
         //todo set element vec
-        public static void SendTime(Entity entity, Material material)
+        public static void SendTime(Material material)
         {
-            SetVector4(material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
+            // SetVector4(material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
+            SetFloat(material, "Time", Globals.AbsTimeF);
 //            gameObject.Material.set 
 //            Globals.AbsoluteTime
         }

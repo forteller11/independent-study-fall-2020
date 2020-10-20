@@ -11,23 +11,26 @@ namespace CART_457.EntitySystem.Scripts.Entity
     public class Sphere : EntitySystem.Entity
     {
 
+        public Vector3 ran;
 
         public override void OnLoad()
         {
             Scale *= 1f;
         }
 
-        public Sphere(Vector3 position, params Material [] material)
+        public Sphere(Vector3 position, Vector3 ran2, params Material [] material)
         {
             Position = position;
             SetupMaterials(material);
+           ran = ran2;
         }
         
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
 //            Rotation = Quaternion.FromEulerAngles(MathF.Sin(Globals.AbsTimeF/8)*3,MathF.Cos(Globals.AbsTimeF/30)*9,Globals.AbsTimeF/20);
-            // Position += new Vector3(0,MathF.Sin(Globals.AbsTimeF/2)*0.1f,0);
+var sin = new Vector3(MathF.Sin(ran.X), MathF.Sin(ran.Y)/2, MathF.Sin(ran.Z))*.01f;
+Position += sin;
 
         }
         
@@ -43,6 +46,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
                 UniformSender.SendLights(material);
+                UniformSender.SendTime(material);
             }
 
         }

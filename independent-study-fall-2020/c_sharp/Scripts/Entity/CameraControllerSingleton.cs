@@ -31,7 +31,6 @@ namespace CART_457.EntitySystem.Scripts.Entity
 
         void Rotate(EntityUpdateEventArgs eventArgs) //todo can't rotate around
         {
-            var keyboardState = eventArgs.KeyboardState;
             float angularAccelerationThisFrame = (float) eventArgs.DeltaTime * angularAcceleration;
             Quaternion rotationVert = Quaternion.Identity;
             Quaternion rotationHorz = Quaternion.Identity;
@@ -47,7 +46,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
         void Move(EntityUpdateEventArgs eventArgs)
         {
             var keyboardState = eventArgs.KeyboardState;
-            float sprintMultiplier = eventArgs.KeyboardState.IsKeyDown(Key.AltLeft) ? 6 : 1;
+            float sprintMultiplier = eventArgs.KeyboardState.IsKeyDown(Key.AltLeft) ? 3 : 1;
             float accelerationThisFrame = acceleration * (float) eventArgs.DeltaTime * sprintMultiplier;
 
             if (eventArgs.KeyboardState.IsKeyDown(Key.AltLeft))
@@ -75,7 +74,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
             if (horzInput != 0 || depthInput != 0) 
             {
                 Vector2 movementHorzontalInput = new Vector2(movementRelative.X, movementRelative.Z);
-                movementHorzontal = Vector2.Normalize(movementHorzontalInput) * _horziontalVelocity;
+                movementHorzontal = Vector2.Normalize(movementHorzontalInput) * _horziontalVelocity * sprintMultiplier;
             }
 
             Globals.MainCamera.Position += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);

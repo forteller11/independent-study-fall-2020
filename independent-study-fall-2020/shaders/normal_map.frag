@@ -18,20 +18,11 @@ uniform sampler2D ShadowMap;
 
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
+uniform float Time;
 
 
 void main()
 {
-    vec4 diffuseTex = texture(Color, v2f_uv);
-    vec4 normalMapTex = texture(Normal, v2f_uv);
-    vec4 glossMapTex = texture(Gloss, v2f_uv);
-    vec4 shadowMapTex = texture(ShadowMap, v2f_uv);
-
-    vec3 normalsWithMapWorld = normal_map_world_space(normalMapTex.xyz, v2f_tangentToModelSpace, mat3(ModelRotation), v2f_norm);
-    
-    vec3 specular = calculate_specular(normalsWithMapWorld, v2f_worldPos, CamPosition, glossMapTex.x * NormalMapStrength, SpecularRoughness);
-    vec3 diffuse = calculate_diffuse(normalsWithMapWorld, v2f_worldPos);
-
     //NOTE: FOLLOWING CODE FROM: https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
     // perform perspective divide
     vec3 projCoords = v2f_viewPosLightSpace.xyz / v2f_viewPosLightSpace.w;
@@ -45,11 +36,31 @@ void main()
     vec3 lightDir = vec3(0,-1,0);
     float bias = max(0.05 *(1.0 - abs(dot(v2f_norm, lightDir))), 0.005);
 //    float bias = 0.005;
-    float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
-    float shadowMult = max(0.2, 1-shadow);
+    float distBetweenShadowAndFragDepth = currentDepth - closestDepth;
+    int shadow = currentDepth - bias > closestDepth  ? 1 : 0;
+    float shadowMult = max(0.2, 1-float(shadow));
+
+    vec4 normalMapNoise = texture(Color, v2f_uv, 4);
+    
+    vec2 uv = shadow == 1 ?
+    v2f_uv + (vec2(normalMapNoise.r * sin(Time/1.47), normalMapNoise.r * cos(Time*1.36)) * .005)
+    : v2f_uv;
+    
+
     //------------------------------------------------------------------
+
+    
+    vec4 diffuseTex = texture(Color, uv);
+    vec4 normalMapTex = texture(Normal, uv);
+    vec4 glossMapTex = texture(Gloss, uv);
+
+    vec3 normalsWithMapWorld = normal_map_world_space(normalMapTex.xyz, v2f_tangentToModelSpace, mat3(ModelRotation), v2f_norm);
+
+    vec3 specular = calculate_specular(normalsWithMapWorld, v2f_worldPos, CamPosition, glossMapTex.x * NormalMapStrength, SpecularRoughness);
+    vec3 diffuse = calculate_diffuse(normalsWithMapWorld, v2f_worldPos);
     
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular) * shadowMult;
+    
 
 
     
