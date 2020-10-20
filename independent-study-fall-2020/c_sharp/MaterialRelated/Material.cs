@@ -28,6 +28,7 @@ namespace CART_457.MaterialRelated
         public const string WORLD_TO_VIEW_UNIFORM = "WorldToView";
         public const string MODEL_TO_WORLD_UNIFORM = "ModelToWorld";
         public const string MODEL_ROTATION_UNIFORM = "ModelRotation";
+        public const string MODEL_TO_WORLD_NO_PROJECTION_UNIFORM = "ModelToWorldNoProjection";
         public const string CAM_POSITION_UNIFORM = "CamPosition";
         
         public const string DIFFUSE_SAMPLER = "Diffuse";

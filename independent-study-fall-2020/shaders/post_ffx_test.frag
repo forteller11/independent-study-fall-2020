@@ -20,6 +20,7 @@ void main(){
 //    float r = 1;
 //    float g = 0;
 //    float b = 1;
-    MainFragColor = vec4(r,g,b,1);
+//    MainFragColor = vec4(r,g,b,1);
+    MainFragColor = vec4(vec3(depth), 1);
     SecondaryFragColor = vec4(1,0,0,1);
 }

@@ -6,6 +6,7 @@ in vec3 v2f_norm;
 in vec3 v2f_worldNorm;
 in vec3 v2f_worldPos;
 in mat3 v2f_tangentToModelSpace;
+in vec3 v2f_viewPosNoProjection;
 
 uniform sampler2D Color;
 uniform sampler2D Normal;
@@ -14,6 +15,11 @@ uniform sampler2D ShadowMap;
 
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
+
+
+float map(float value, float min1, float max1, float min2, float max2) {
+    return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+}
 
 void main()
 {
@@ -30,5 +36,12 @@ void main()
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular);
 
     MainFragColor = vec4(texColorShaded.xyz, 1);
-    SecondaryFragColor = vec4(vec3(.2), 1);
+    float depthNormalizedNonLinear = gl_FragCoord.z / gl_FragCoord.w;
+    
+    float depthLinear = map(v2f_viewPosNoProjection.z,
+    .1,
+    10, 
+    0, 1);
+    
+    SecondaryFragColor = vec4(vec3(clamp(depthLinear,0,1)), 1);
 }

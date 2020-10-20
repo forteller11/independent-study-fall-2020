@@ -27,13 +27,15 @@ namespace CART_457.c_sharp.Renderer
             //todo consolidate matrices and refactor.... then go bk into shader
             var modelToWorld = modelToWorldRotation * modelToWorldScale  * modelToWorldTranslation ;
             var worldToView = worldToViewTranslation * worldToViewRotation * camera.Projection;
+            var modelToViewNoProjection = modelToWorld * worldToViewTranslation * worldToViewRotation;
             var modelToView = modelToWorld * worldToView;
             
             SetMatrix4(material, Material.MODEL_TO_VIEW_UNIFORM, modelToView, false);
             SetMatrix4(material, Material.WORLD_TO_VIEW_UNIFORM, worldToView, false);
             SetMatrix4(material, Material.MODEL_ROTATION_UNIFORM, modelToWorldRotation, false);
             SetMatrix4(material, Material.MODEL_TO_WORLD_UNIFORM, modelToWorld, false);
-            SetVector3(material, Material.CAM_POSITION_UNIFORM, camera.Position, false); //todo batch with like materials
+            SetMatrix4(material, Material.MODEL_TO_WORLD_NO_PROJECTION_UNIFORM, modelToViewNoProjection, false);
+            SetVector3(material, Material.CAM_POSITION_UNIFORM, camera.Position, false);
         }
 
         /// <summary>
