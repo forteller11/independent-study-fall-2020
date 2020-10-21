@@ -14,7 +14,6 @@ in vec4 v2f_viewPosLightSpace;
 uniform sampler2D Color;
 uniform sampler2D Normal;
 uniform sampler2D Gloss;
-uniform sampler2D ShadowMap;
 uniform sampler2D NoiseTexture;
 
 uniform float NormalMapStrength;
@@ -26,7 +25,7 @@ void main()
 {
     vec3 lightDir = vec3(0,-1,0);
     vec2 shadowBias = vec2(0.005,0.05);
-    int inShadow = shadow_map(v2f_viewPosLightSpace, ShadowMap, v2f_worldNorm, lightDir, shadowBias);
+    int inShadow = shadow_map(v2f_viewPosLightSpace, v2f_worldNorm, lightDir, shadowBias);
 
     float shadowMult = max(0.2, 1-float(inShadow)); //todo change intensity based on difference
     

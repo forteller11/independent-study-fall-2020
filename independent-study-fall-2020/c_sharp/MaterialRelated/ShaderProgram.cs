@@ -99,10 +99,7 @@ namespace CART_457.MaterialRelated
             StringBuilder shaderLibrariesText = new StringBuilder();
             for (int i = 0; i < files.Length; i++)
             {
-                using
-                    var streamReader =
-                        new StreamReader(
-                            files[i].FullName);
+                using var streamReader = new StreamReader(files[i].FullName);
                 var shaderLibraryFileText = streamReader.ReadToEnd();
                 shaderLibrariesText.Append(shaderLibraryFileText);
                 shaderLibrariesText.Append(Environment.NewLine);

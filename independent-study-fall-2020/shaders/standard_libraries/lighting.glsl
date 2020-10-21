@@ -1,5 +1,4 @@
-﻿
-struct DirectionLight{
+﻿struct DirectionLight{
     vec3 Color;
     vec3 Direction;
 };
@@ -72,4 +71,3 @@ vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld,
     
     return specSum;
 }
-
