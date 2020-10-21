@@ -24,34 +24,20 @@ uniform float Time;
 
 void main()
 {
-    //NOTE: FOLLOWING CODE FROM: https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
-    // perform perspective divide
-    vec3 projCoords = v2f_viewPosLightSpace.xyz / v2f_viewPosLightSpace.w;
-    // transform to [0,1] range
-    projCoords = projCoords * 0.5 + 0.5;
-    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
-    vec2 uvOffset = texture(NoiseTexture, gl_FragCoord.xy/1440, 0).rg;
-    uvOffset *= 0.005;
-    
-    float closestDepth = texture(ShadowMap, projCoords.xy + uvOffset.xy).r;
-    // get depth of current fragment from light's perspective
-    float currentDepth = projCoords.z;
-    // check whether current frag pos is in shadow
     vec3 lightDir = vec3(0,-1,0);
-    float bias = max(0.05 *(1.0 - abs(dot(v2f_norm, lightDir))), 0.005);
-//    float bias = 0.005;
-    float distBetweenShadowAndFragDepth = currentDepth - closestDepth;
-    int shadow = currentDepth - bias > closestDepth  ? 1 : 0;
-    float shadowMult = max(0.2, 1-float(shadow));
+    vec2 shadowBias = vec2(0.005,0.05);
+    int inShadow = shadow_map(v2f_viewPosLightSpace, ShadowMap, v2f_worldNorm, lightDir, shadowBias);
+
+    float shadowMult = max(0.2, 1-float(inShadow)); //todo change intensity based on difference
+    
 
     vec4 normalMapNoise = texture(Color, v2f_uv, 4);
-    
-    vec2 uv = shadow == 1 ?
+
+    vec2 uv = inShadow == 1 ?
     v2f_uv + (vec2(normalMapNoise.r * sin(Time/1.47), normalMapNoise.r * cos(Time*1.36)) * .005)
     : v2f_uv;
     
 
-    //------------------------------------------------------------------
 
     
     vec4 diffuseTex = texture(Color, uv);
