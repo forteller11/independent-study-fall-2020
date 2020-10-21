@@ -17,19 +17,22 @@ namespace CART_457.Scripts
             
             gameObjects.Add(new Sphere(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(3,0,4),new Vector3(.55f, .1f, .6f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(6,3,4),new Vector3(.1f,-.5f,.456f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(1,1,2),new Vector3(.19f,-.1f,.56f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(1,4,2),new Vector3(.13f,-.1f,.45f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(3,0,4),new Vector3(.55f, .1f, .05f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(6,3,4),new Vector3(.1f,-.5f,.06f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(1,1,2),new Vector3(.19f,-.1f,.06f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
+            gameObjects.Add(new Sphere(new Vector3(1,4,2),new Vector3(.13f,-.1f,.05f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(1,7,2),new Vector3(.1f,-.1f,.50f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
             var s = new Sphere(new Vector3(0, -5, 0), Vector3.Zero, MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
-            s.Scale = new Vector3(15);
+            s.Scale = new Vector3(4);
+            var s2 = new Sphere(new Vector3(3, -7, 2), Vector3.Zero, MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
+            s2.Scale = new Vector3(7);
             gameObjects.Add(s);
+            gameObjects.Add(s2);
             
             gameObjects.Add(new FBOVisualizationInput());
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                gameObjects.Add(new PointLightVisualizer(i,MaterialSetup.SolidSphere, MaterialSetup.ShadowMapSphere));
+                gameObjects.Add(new PointLightVisualizer(i,MaterialSetup.SolidSphere));
 
             return gameObjects.ToArray();
         }

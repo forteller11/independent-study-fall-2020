@@ -21,8 +21,8 @@ namespace CART_457
         {
 
             var newTKWindow = new TKWindow(
-                1000, 
-                1000, 
+                1440, 
+                1440, 
                 GraphicsMode.Default, 
                 $"Independent Study Fall 2020 - Charly Yan Miller ",
                 GameWindowFlags.Default,

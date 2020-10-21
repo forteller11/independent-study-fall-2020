@@ -2,6 +2,7 @@
 using CART_457.Attributes;
 using CART_457.c_sharp.Renderer;
 using CART_457.MaterialRelated;
+using Texture = FbxSharp.Texture;
 
 namespace CART_457.Scripts
 {
@@ -33,30 +34,29 @@ namespace CART_457.Scripts
                 FboSetup.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
-                "GroundClay002_COL_VAR1_3K.jpg",
-                "GroundClay002_NRM_3K.jpg",
-                "GroundClay002_GLOSS_3K.jpg",
-                normaMaterialUniformSender
+                TextureSetup.DirtDiffuse,
+                TextureSetup.DirtNormalMap,
+                TextureSetup.DirtSpecularMap,
+            normaMaterialUniformSender
                 );
             
             DirtPlane  = MaterialPreconfigs.Normal(
                 FboSetup.Main,
                 normalShader,
                 CreateMeshes.Plane,
-                "GroundClay002_COL_VAR1_3K.jpg",
-                "GroundClay002_NRM_3K.jpg",
-                "GroundClay002_GLOSS_3K.jpg",
+                TextureSetup.DirtDiffuse,
+                TextureSetup.DirtNormalMap,
+                TextureSetup.DirtSpecularMap,
                 normaMaterialUniformSender
                 );
             
-            const string bathroomTiles = "InteriorDesignRugStarryNight/";
             TileSphere = MaterialPreconfigs.Normal(
                 FboSetup.Main,
                 normalShader,
                 CreateMeshes.IcoSphereHighPoly,
-                bathroomTiles+"COL_VAR2_3K.jpg",
-                bathroomTiles+"NRM_3K.jpg",
-                bathroomTiles+"GLOSS_3K.jpg",
+                TextureSetup.CarpetDiffuse,
+                TextureSetup.CarpetNormalMap,
+                TextureSetup.CarpetSpecularMap,
                 normaMaterialUniformSender
                 );
             #endregion

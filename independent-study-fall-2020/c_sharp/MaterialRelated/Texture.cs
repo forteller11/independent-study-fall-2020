@@ -25,12 +25,16 @@ namespace CART_457.MaterialRelated
             Handle = GL.GenTexture();
         }
         
-        public static Texture FromFile(string fileName, TextureUnit textureUnit) 
+        public static Texture FromFile(string fileName, TextureUnit textureUnit, Action texSettingsCustom=null) 
         {
             var texture = new Texture();
             texture.TextureUnit = textureUnit;
             texture.Use();
-            StandardTextureSettings();
+            if (texSettingsCustom == null)
+                StandardTextureSettings();
+            else
+                texSettingsCustom.Invoke();
+            
             texture.LoadImage("\\"+fileName);
             texture.CookSixLaborsImageToByteArray();
 
@@ -142,6 +146,14 @@ namespace CART_457.MaterialRelated
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.NearestMipmapLinear);
+        }
+
+        public static void StandardNearestSettings()
+        {
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Nearest);
         }
 
         private static void FrameBufferTextureSettings()

@@ -15,6 +15,7 @@ uniform sampler2D Color;
 uniform sampler2D Normal;
 uniform sampler2D Gloss;
 uniform sampler2D ShadowMap;
+uniform sampler2D NoiseTexture;
 
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
@@ -29,7 +30,10 @@ void main()
     // transform to [0,1] range
     projCoords = projCoords * 0.5 + 0.5;
     // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
-    float closestDepth = texture(ShadowMap, projCoords.xy).r;
+    vec2 uvOffset = texture(NoiseTexture, gl_FragCoord.xy/1440, 0).rg;
+    uvOffset *= 0.005;
+    
+    float closestDepth = texture(ShadowMap, projCoords.xy + uvOffset.xy).r;
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow

@@ -38,6 +38,7 @@ namespace CART_457.MaterialRelated
         public const string MAIN_COLOR_FBO_SAMPLER = "MainTexture";
         public const string SECONDARY_COLOR_FBO_SAMPLER = "SecondaryTexture";
         public const string MAIN_DEPTH_FBO_SAMPLER = "MainDepthTexture";
+        public const string NOISE_TEXTURE = "NoiseTexture";
 
         public const string SHADOW_MAP_SAMPLER = "ShadowMap";
         

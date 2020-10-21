@@ -1,0 +1,10 @@
+﻿/*
+float perlin(){
+    
+}
+
+float rand(){
+
+}
+
+*/
