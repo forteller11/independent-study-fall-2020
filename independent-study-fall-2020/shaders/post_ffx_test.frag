@@ -27,14 +27,14 @@ void main(){
 
     
     vec4 color = texture(MainTexture, v2f_uv);
-   float r = texture(MainTexture, v2f_uv + vec2(offsetDynamic, offsetDynamic)).r;
+    float r = texture(MainTexture, v2f_uv + vec2(offsetDynamic, offsetDynamic)).r;
     float g = texture(MainTexture, v2f_uv ).g;
     float b = texture(MainTexture, v2f_uv + vec2(-offsetDynamic, offsetDynamic)).b;
     
     depth = min(depth*2, 1);
     vec4 colorFog = color * depth;
     MainFragColor = vec4(r,g,b, 1);
-    MainFragColor = vec4(vec3(simplex3d(vec3(normScreenCoord.xy*60, 0))), 1);
+//    MainFragColor = vec4(vec3(simplex3d(vec3(normScreenCoord.xy*60, 0))), 1);
     
     SecondaryFragColor = vec4(1,0,0,1);
 }

@@ -29,8 +29,15 @@ void main()
 
     float shadowMult = max(0.2, 1-float(inShadow)); //todo change intensity based on difference
     vec4 normalMapNoise = texture(Color, v2f_uv, 4);
+    
+    vec3 noiseInput = vec3(v2f_uv.xy*8, Time/5); 
+    vec3 noiseOffset = vec3(0,0,99999);
+    float u = simplex3d(noiseInput);
+    float v = simplex3d(noiseInput+noiseOffset);
+    vec2 uvOffset = vec2(u,v) * 0.005;
+    
     vec2 uv = inShadow == 1 ?
-    v2f_uv + (vec2(normalMapNoise.r * sin(Time/1.47), normalMapNoise.r * cos(Time*1.36)) * .005)
+    v2f_uv + uvOffset 
     : v2f_uv;
     
     vec4 diffuseTex = texture(Color, uv);
