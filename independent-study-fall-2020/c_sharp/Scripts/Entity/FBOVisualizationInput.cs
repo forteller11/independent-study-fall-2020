@@ -6,8 +6,18 @@ namespace CART_457.EntitySystem.Scripts.Entity
 {
     public class FBOVisualizationInput : EntitySystem.Entity
     {
-        private bool _keyDownLastFrame = false;
+        public KeyEvent KeyCycle = new KeyEvent(Key.F);
+        public KeyEvent KeySecondaryToggle = new KeyEvent(Key.CapsLock);
         private int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
+
+        public FBOVisualizationInput()
+        {
+            KeyCycle.OnPressed += ()=>
+            {
+                CycleFBOBlit();
+                SetFBO();
+            };
+        }
 
         private void CycleFBOBlit()
         {
@@ -19,24 +29,22 @@ namespace CART_457.EntitySystem.Scripts.Entity
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            bool keyStateDownThisFrame = eventArgs.KeyboardState.IsKeyDown(Key.F);
-            if (_keyDownLastFrame == false && keyStateDownThisFrame == true)
-            {
-                CycleFBOBlit();
-                if (_blitOffscreenFBOsIndex == -1)
-                {
-                    DrawManager.FBOToDebugDraw = null;
-                    Debug.Log("Showing default fbo");
-                }
-                else
-                {
-                    DrawManager.FBOToDebugDraw = DrawManager.BatchHierachies[_blitOffscreenFBOsIndex].FBO;
-                    Debug.Log("Showing FBO: " + DrawManager.FBOToDebugDraw.Name);
-                }
+            KeyCycle.Update(eventArgs.KeyboardState);
+            KeySecondaryToggle.Update(eventArgs.KeyboardState);
+        }
 
+        public void SetFBO()
+        {
+            if (_blitOffscreenFBOsIndex == -1)
+            {
+                DrawManager.FBOToDebugDraw = null;
+                Debug.Log("Showing default fbo");
             }
-            
-            _keyDownLastFrame = keyStateDownThisFrame;
+            else
+            {
+                DrawManager.FBOToDebugDraw = DrawManager.BatchHierachies[_blitOffscreenFBOsIndex].FBO;
+                Debug.Log("Showing FBO: " + DrawManager.FBOToDebugDraw.Name);
+            }
         }
     }
 }

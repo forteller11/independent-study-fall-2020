@@ -28,16 +28,10 @@ void main()
     int inShadow = shadow_map(v2f_viewPosLightSpace, v2f_worldNorm, lightDir, shadowBias);
 
     float shadowMult = max(0.2, 1-float(inShadow)); //todo change intensity based on difference
-    
-
     vec4 normalMapNoise = texture(Color, v2f_uv, 4);
-
     vec2 uv = inShadow == 1 ?
     v2f_uv + (vec2(normalMapNoise.r * sin(Time/1.47), normalMapNoise.r * cos(Time*1.36)) * .005)
     : v2f_uv;
-    
-
-
     
     vec4 diffuseTex = texture(Color, uv);
     vec4 normalMapTex = texture(Normal, uv);
@@ -48,15 +42,9 @@ void main()
     vec3 specular = calculate_specular(normalsWithMapWorld, v2f_worldPos, CamPosition, glossMapTex.x * NormalMapStrength, SpecularRoughness);
     vec3 diffuse = calculate_diffuse(normalsWithMapWorld, v2f_worldPos);
     
+    
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular) * shadowMult;
     
-
-
-    
-
     MainFragColor = vec4(texColorShaded.xyz, 1);
-
-
-    
     SecondaryFragColor = vec4(vec3(gl_FragCoord.z/gl_FragCoord.w), 1);
 }

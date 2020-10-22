@@ -54,9 +54,7 @@ namespace CART_457
             
             Globals.Init();
             SceneSetup.CreateGlobals();
-            
-            CreateMeshes.Create();
-            
+
             DrawManager.SetupStaticRenderingHierarchy();
             DrawManager.TKWindowSize = new Size(Width, Height);
             

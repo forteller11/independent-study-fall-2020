@@ -5,16 +5,13 @@ using OpenTK;
 
 namespace CART_457.Scripts
 {
-    /// <summary>
-    /// Must be called BEFORE create materials
-    /// </summary>
     public static class CreateMeshes
     {
         public static Mesh IcoSphereHighPoly;
         public static Mesh Plane;
         public static Mesh ViewSpaceQuad;
 
-        public static void Create()
+        static CreateMeshes()
         {
             IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane", true, true, true);
