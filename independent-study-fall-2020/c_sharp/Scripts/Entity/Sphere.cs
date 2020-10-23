@@ -42,8 +42,14 @@ Position += sin;
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
             }
             else
-            { 
-                UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
+            {
+                float t = (MathF.Cos(Globals.AbsTimeF)/2) + .5f;
+
+                Debug.Log(t);
+                var camResult = new Camera();
+                Camera.Lerp(Globals.MainCamera, Globals.ShadowCastingLight, t, ref camResult);
+                
+                UniformSender.SendTransformMatrices(this, material, camResult);
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
                 UniformSender.SendLights(material);
                 UniformSender.SendTime(material);
