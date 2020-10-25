@@ -13,6 +13,8 @@ namespace CART_457.MaterialRelated
     /// </summary>
     public class Material
     {
+        public static Dictionary<string, int> UniformBufferLocations { get; private set; }
+        
         public FBO RenderTarget { get; private set; }
         public ShaderProgram Shader { get; private set; }
         
@@ -21,8 +23,9 @@ namespace CART_457.MaterialRelated
         public VAOAndBuffers VAO { get; private set; }
         
         private List<Texture> _textures = new List<Texture>();
-        
+
         public Action<Material> PerMaterialUniformSender;
+        
 
         public const string MODEL_TO_VIEW_UNIFORM = "ModelToView";
         public const string WORLD_TO_VIEW_UNIFORM = "WorldToView";
@@ -41,11 +44,28 @@ namespace CART_457.MaterialRelated
         public const string NOISE_TEXTURE = "NoiseTexture";
 
         public const string SHADOW_MAP_SAMPLER = "ShadowMap";
+
+        public const string TRANSFORM_BUFFER = "Transform";
         
         
         private const bool DEBUG = false;
 
-        private Material() { }
+        static Material()
+        {
+            // UniformBufferLocations = new Dictionary<string, int>();
+            //
+            // int transformHandle = GL.GenBuffer();
+            // GL.BindBuffer(BufferTarget.UniformBuffer, transformHandle);
+            // GL.BufferData(BufferTarget.UniformBuffer, 336, IntPtr.Zero, BufferUsageHint.StreamDraw);
+            // GL.BindBufferBase(BufferRangeTarget.UniformBuffer, 1, transformHandle); //bind point?
+            // UniformBufferLocations.Add(TRANSFORM_BUFFER, transformHandle);
+        }
+
+        private Material()
+        {
+            // int transformIndex = GL.GetUniformBlockIndex(program.Handle, TRANSFORM_BUFFER);
+            // GL.UniformBlockBinding(program.Handle, transformIndex, 1); //set binding point
+        }
         
         
         public static Material EntityBased(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
@@ -61,7 +81,7 @@ namespace CART_457.MaterialRelated
         
          public static Material PostProcessing(ShaderProgram shaderProgram)
          {
-             var mat = new Material();
+             var mat = new Material(shaderProgram);
              mat.Shader = shaderProgram;
              mat.RenderTarget = FboSetup.PostProcessing;
              mat.GetUniformAndAttribLocations();

@@ -43,9 +43,9 @@ Position += sin;
             }
             else
             {
-                float t = (MathF.Cos(Globals.AbsTimeF)/2) + .5f;
+                float t = (MathF.Cos(Globals.AbsTimeF*.3f)/2) + .5f;
 
-                Debug.Log(t);
+                // Debug.Log(t);
                 var camResult = new Camera();
                 Camera.Lerp(Globals.MainCamera, Globals.ShadowCastingLight, t, ref camResult);
                 
