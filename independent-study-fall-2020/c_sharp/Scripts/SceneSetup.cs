@@ -16,6 +16,8 @@ namespace CART_457.Scripts
             gameObjects.Add(new CameraControllerSingleton());
             
             gameObjects.Add(new Sphere(new Vector3(0,0,0), new Vector3(0,0,0), MaterialSetup.TableProto, MaterialSetup.ShadowMapTable));
+            gameObjects.Add(Sphere.PositionSize(new Vector3(.25f,0,0),Vector3.One/6f, MaterialSetup.EyeBall ));
+            gameObjects.Add(Sphere.PositionSize(new Vector3(-.25f,0,0),Vector3.One/6f, MaterialSetup.EyeBall ));
             gameObjects.Add(new Sphere(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(3,0,4),new Vector3(.55f, .1f, .05f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));

@@ -21,6 +21,11 @@ namespace CART_457.Scripts
         public static Texture TableNormal = Texture.FromFile(TABLE_PROTO + "room_proto_table_04_Material.001_Normal.jpg", TextureUnit.Texture1);
         public static Texture TableSpecular = Texture.FromFile(TABLE_PROTO + "room_proto_table_04_Material.001_Roughness.jpg", TextureUnit.Texture2);
         
+        private const string EYE_BALL = "eyeball/";
+        public static Texture EyeDiffuse = Texture.FromFile(EYE_BALL + "eyeblend_DefaultMaterial_BaseColor.jpg", TextureUnit.Texture0);
+        public static Texture EyeNormal = Texture.FromFile(EYE_BALL + "eyeblend_DefaultMaterial_Normal.jpg", TextureUnit.Texture1);
+        public static Texture EyeSpecular = Texture.FromFile(EYE_BALL + "eyeblend_DefaultMaterial_Roughness.jpg", TextureUnit.Texture2);
+        
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }
 }

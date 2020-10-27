@@ -18,11 +18,23 @@ namespace CART_457.EntitySystem.Scripts.Entity
             Scale *= 1f;
         }
 
+        private Sphere(Material[] materials)
+        {
+            SetupMaterials(materials);
+        }
         public Sphere(Vector3 position, Vector3 ran2, params Material [] material)
         {
             Position = position;
             SetupMaterials(material);
            ran = ran2;
+        }
+
+        public static Sphere PositionSize(Vector3 position, Vector3 size, params Material [] materials)
+        {
+            var sphere = new Sphere(materials);
+            sphere.Position = position;
+            sphere.Scale = size;
+            return sphere;
         }
         
 

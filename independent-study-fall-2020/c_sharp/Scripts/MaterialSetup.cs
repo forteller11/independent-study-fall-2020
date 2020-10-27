@@ -14,6 +14,7 @@ namespace CART_457.Scripts
         [IncludeInDrawLoop] public static Material DirtPlane;
         [IncludeInDrawLoop] public static Material TileSphere;
         [IncludeInDrawLoop] public static Material TableProto;
+        [IncludeInDrawLoop] public static Material EyeBall;
         
         [IncludeInDrawLoop] public static Material ShadowMapSphere;
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
@@ -71,6 +72,16 @@ namespace CART_457.Scripts
                 TextureSetup.TableDiffuse,
                 TextureSetup.TableNormal,
                 TextureSetup.TableSpecular,
+                normaMaterialUniformSender
+            );
+            
+            EyeBall = MaterialPreconfigs.Normal(
+                FboSetup.Main,
+                normalShader,
+                CreateMeshes.Eyeball,
+                TextureSetup.EyeDiffuse,
+                TextureSetup.EyeNormal,
+                TextureSetup.EyeSpecular,
                 normaMaterialUniformSender
             );
             
