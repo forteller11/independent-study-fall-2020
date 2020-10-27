@@ -68,8 +68,6 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
 
             Globals.PlayerCamera.Rotation =  rotationHorz * Globals.PlayerCamera.Rotation * rotationVert;
-
-            Quaternion.Invert(Globals.PlayerCamera.Rotation);
             // todo dont allow rotations past 90 degrees DOWN
         }
         void Move(EntityUpdateEventArgs eventArgs)
