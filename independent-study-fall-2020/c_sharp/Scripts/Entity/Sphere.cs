@@ -6,7 +6,7 @@ using CART_457.Scripts;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefabs
+namespace CART_457.EntitySystem.Scripts.Entity
 {
     public class Sphere : EntitySystem.Entity
     {

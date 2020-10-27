@@ -15,12 +15,10 @@ namespace CART_457.Scripts
         [IncludeInDrawLoop] public static Material TileSphere;
         [IncludeInDrawLoop] public static Material TableProto;
         [IncludeInDrawLoop] public static Material EyeBall;
-        [IncludeInDrawLoop] public static Material Camera;
         
         [IncludeInDrawLoop] public static Material ShadowMapSphere;
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
         [IncludeInDrawLoop] public static Material ShadowMapTable;
-        [IncludeInDrawLoop] public static Material ShadowMapDiamond;
         
         [IncludeInPostFX] public static Material PostProcessing;
         static MaterialSetup()
@@ -91,7 +89,6 @@ namespace CART_457.Scripts
 
             #region solid_color
             SolidSphere = Material.EntityBased(FboSetup.Main, ShaderProgram.Standard("textureless"), CreateMeshes.IcoSphereHighPoly, null);
-            Camera = Material.EntityBased(FboSetup.Main, ShaderProgram.Standard("textureless"), CreateMeshes.Diamond, null);
             #endregion
 
             ShadowMapSphere = Material.EntityBased(
@@ -110,12 +107,6 @@ namespace CART_457.Scripts
                 FboSetup.Shadow,
                 ShaderProgram.Standard("shadow_map"),
                 CreateMeshes.TableProto,
-                null);
-            
-            ShadowMapDiamond = Material.EntityBased(
-                FboSetup.Shadow,
-                ShaderProgram.Standard("shadow_map"),
-                CreateMeshes.Diamond,
                 null);
             
             PostProcessing = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
