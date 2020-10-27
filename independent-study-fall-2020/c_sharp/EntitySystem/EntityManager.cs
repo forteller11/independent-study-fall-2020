@@ -20,10 +20,11 @@ namespace CART_457.EntitySystem
         /// must be called after setupStaticHierarchy on draw manager has been called
         /// </summary>
         /// <param name="entity"></param>
-        public static void AddToWorldAndRenderer(Entity entity)
+        public static Entity AddToWorldAndRenderer(Entity entity)
         {
             _gameObjects.Add(entity);
             DrawManager.AddEntity(entity);
+            return entity;
         }
 
         // public void Remove(Entity entity) => _gameObjects.Remove(entity);

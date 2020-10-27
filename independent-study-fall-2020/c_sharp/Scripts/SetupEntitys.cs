@@ -18,20 +18,6 @@ namespace CART_457.Scripts
             
             gameObjects.Add(new CameraControllerSingleton());
 
-            // var parent = Sphere.PositionSize(new Vector3(0, 0, 0), Vector3.One * 1f, null);
-            var parent = new Sphere(new Vector3(-3, 0, 4), new Vector3(0.1f, 0.0f, 0f), null);
-            // parent.Scale *= 0.1f;
-            var eye1 = Empty.FromPositionRotationScale(new Vector3( -.33f, 0, 0), Quaternion.FromAxisAngle(Vector3.UnitX, MathF.PI/2), Vector3.One*.13f, InitMaterials.EyeBall);
-            var eye2 = Empty.FromPositionRotationScale(new Vector3(.33f, 0, 0), Quaternion.FromAxisAngle(Vector3.UnitX, MathF.PI/2),Vector3.One*.13f, InitMaterials.EyeBall);
-            
-            gameObjects.Add(parent);
-            
-            eye1.Parent = parent;
-            eye2.Parent = parent;
-            
-            gameObjects.Add(eye1);
-            gameObjects.Add(eye2);
-            
             gameObjects.Add(Empty.FromPosition(new Vector3(0,0,0), InitMaterials.TableProto, InitMaterials.ShadowMapTable));
             
             gameObjects.Add(new Sphere(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
