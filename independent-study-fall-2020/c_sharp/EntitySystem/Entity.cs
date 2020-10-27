@@ -15,9 +15,9 @@ namespace CART_457.EntitySystem
         {
             if (Parent == null) return _position;
             var localToWorldPosition = Quaternion.Invert(Parent.Rotation) * (_position * Parent.Scale);
-            Debug.Log(Parent.Position);
-            Debug.Log(_position);
-            Debug.Log("---");
+            // Debug.Log(Parent.Position);
+            // Debug.Log(_position);
+            // Debug.Log("---");
             return Parent.Position + localToWorldPosition;
         }
             set => _position = value;

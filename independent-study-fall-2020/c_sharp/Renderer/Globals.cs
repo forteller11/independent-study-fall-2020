@@ -9,6 +9,8 @@ namespace CART_457.Renderer
     public static class Globals
     {
         public static Camera MainCamera;
+        public static Camera PlayerCamera;
+        public static Camera WebCam;
         public static Camera ShadowCastingLight;
         
         public static Random Random;
@@ -22,8 +24,12 @@ namespace CART_457.Renderer
         {
             float near = 0.1f;
             float far = 100f;
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var mainCamPerspective);
-            MainCamera = new Camera(Vector3.Zero, Quaternion.Identity, mainCamPerspective, near, far);
+            
+            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var playerCamPerspective);
+            PlayerCamera = new Camera(Vector3.Zero, Quaternion.Identity, playerCamPerspective, near, far);
+            
+            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
+            WebCam = new Camera(Vector3.Zero, Quaternion.Identity, webCamPerspective, near, far);
             
             Matrix4.CreateOrthographic(25, 25, near, far, out var shadowLightPerspective);
             ShadowCastingLight = new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far);

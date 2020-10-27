@@ -47,14 +47,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
             }
             else
             {
-                float t = (MathF.Cos(Globals.AbsTimeF*1f)/2) + .5f;
-
-                t = 0;
-                // Debug.Log(t);
-                var camResult = new Camera();
-                Camera.Lerp(Globals.MainCamera, Globals.ShadowCastingLight, t, ref camResult);
-                
-                UniformSender.SendTransformMatrices(this, material, camResult);
+                UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
                 UniformSender.SendLights(material);
                 UniformSender.SendTime(material);
