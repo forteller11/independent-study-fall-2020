@@ -14,10 +14,23 @@ namespace CART_457.Scripts
             List<Entity> gameObjects = new List<Entity>();
             
             gameObjects.Add(new CameraControllerSingleton());
+
+            // var parent = Sphere.PositionSize(new Vector3(0, 0, 0), Vector3.One * 1f, null);
+            var parent = new Sphere(new Vector3(-3, 0, 4), new Vector3(0.1f, 0.0f, 0f), null);
+            // parent.Scale *= 0.1f;
+            var eye1 = Empty.FromPositionRotationScale(new Vector3( -.33f, 0, 0), Quaternion.FromAxisAngle(Vector3.UnitX, MathF.PI/2), Vector3.One*.13f, MaterialSetup.EyeBall);
+            var eye2 = Empty.FromPositionRotationScale(new Vector3(.33f, 0, 0), Quaternion.FromAxisAngle(Vector3.UnitX, MathF.PI/2),Vector3.One*.13f, MaterialSetup.EyeBall);
             
-            gameObjects.Add(new Sphere(new Vector3(0,0,0), new Vector3(0,0,0), MaterialSetup.TableProto, MaterialSetup.ShadowMapTable));
-            gameObjects.Add(Sphere.PositionSize(new Vector3(.25f,0,0),Vector3.One/6f, MaterialSetup.EyeBall ));
-            gameObjects.Add(Sphere.PositionSize(new Vector3(-.25f,0,0),Vector3.One/6f, MaterialSetup.EyeBall ));
+            gameObjects.Add(parent);
+            
+            eye1.Parent = parent;
+            eye2.Parent = parent;
+            
+            gameObjects.Add(eye1);
+            gameObjects.Add(eye2);
+            
+            gameObjects.Add(Empty.FromPosition(new Vector3(0,0,0), MaterialSetup.TableProto, MaterialSetup.ShadowMapTable));
+            
             gameObjects.Add(new Sphere(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(3,0,4),new Vector3(.55f, .1f, .05f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
@@ -25,9 +38,9 @@ namespace CART_457.Scripts
             gameObjects.Add(new Sphere(new Vector3(1,1,2),new Vector3(.19f,-.1f,.06f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(1,4,2),new Vector3(.13f,-.1f,.05f), MaterialSetup.DirtSphere, MaterialSetup.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(1,7,2),new Vector3(.1f,-.1f,.50f), MaterialSetup.TileSphere, MaterialSetup.ShadowMapSphere));
-            var s = new Sphere(new Vector3(0, -5, 0), Vector3.Zero, MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
+            var s = Empty.FromPosition(new Vector3(0, -5, 0), MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
             s.Scale = new Vector3(4);
-            var s2 = new Sphere(new Vector3(3, -7, 2), Vector3.Zero, MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
+            var s2 = Empty.FromPosition(new Vector3(0, -12, 0), MaterialSetup.DirtPlane, MaterialSetup.ShadowMapPlane);
             s2.Scale = new Vector3(7);
             gameObjects.Add(s);
             gameObjects.Add(s2);
