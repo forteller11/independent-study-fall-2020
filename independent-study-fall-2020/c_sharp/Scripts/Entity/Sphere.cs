@@ -6,7 +6,7 @@ using CART_457.Scripts;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public class Sphere : EntitySystem.Entity
     {
@@ -50,7 +50,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
 
         public override void SendUniformsPerObject(Material material)
         {
-            if (material == MaterialSetup.ShadowMapSphere || material == MaterialSetup.ShadowMapPlane)
+            if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
             }

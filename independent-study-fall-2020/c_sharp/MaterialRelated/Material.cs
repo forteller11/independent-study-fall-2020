@@ -85,7 +85,7 @@ namespace CART_457.MaterialRelated
              mat.Shader = shaderProgram;
              mat.RenderTarget = FboSetup.PostProcessing;
              mat.GetUniformAndAttribLocations();
-             mat.VAO = new VAOAndBuffers(mat, CreateMeshes.ViewSpaceQuad);
+             mat.VAO = new VAOAndBuffers(mat, InitMeshes.ViewSpaceQuad);
              mat.PerMaterialUniformSender = _ => FboSetup.Main.UseTexturesAndGenerateMipMaps();
              return mat;
          }

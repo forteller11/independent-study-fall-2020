@@ -2,7 +2,7 @@
 using CART_457.Renderer;
 using OpenTK.Input;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public class FBOVisualizationInput : EntitySystem.Entity
     {

@@ -6,11 +6,11 @@ using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public class Empty : EntitySystem.Entity
     {
-        private Empty(Material[] materials)
+        public Empty(params Material[] materials)
         {
             SetupMaterials(materials);
         }
@@ -41,7 +41,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
         
         public override void SendUniformsPerObject(Material material)
         {
-            if (material == MaterialSetup.ShadowMapSphere || material == MaterialSetup.ShadowMapPlane)
+            if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
             }

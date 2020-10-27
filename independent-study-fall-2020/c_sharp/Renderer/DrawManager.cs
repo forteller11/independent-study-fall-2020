@@ -75,7 +75,7 @@ namespace CART_457.Renderer
         public static void IncludeMaterialsInMaterialSetup()
         {
             
-            var materials = typeof(MaterialSetup).GetFields();
+            var materials = typeof(InitMaterials).GetFields();
             PostProcessingMaterials = new List<Material>(materials.Length);
             
             foreach (FieldInfo fieldInfo in materials)
@@ -85,7 +85,7 @@ namespace CART_457.Renderer
                 bool includeInPostFXAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX));
      
                 if (material == null && (includeInDrawLoopAttrib || includeInPostFXAttrib))
-                    throw new Exception($"Material in {nameof(MaterialSetup)} is null but still has attributes trying to include it in drawloop/postfx");
+                    throw new Exception($"Material in {nameof(InitMaterials)} is null but still has attributes trying to include it in drawloop/postfx");
 
                 if (material == null)
                     continue;
@@ -129,8 +129,8 @@ namespace CART_457.Renderer
             if (entity.Materials == null)
                 return;
             
-            if (entity.ContainsMaterial(MaterialSetup.PostProcessing))
-                throw new DataException($"Entity ${entity.GetType().Name} has material type {MaterialSetup.PostProcessing}, which is invalid!");
+            if (entity.ContainsMaterial(InitMaterials.PostProcessing))
+                throw new DataException($"Entity ${entity.GetType().Name} has material type {InitMaterials.PostProcessing}, which is invalid!");
 
             int expectedFoundMaterials = entity.Materials.Length;
             int foundMaterials = 0;

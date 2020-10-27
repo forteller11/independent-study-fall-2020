@@ -1,33 +1,35 @@
 ﻿using System;
+using CART_457;
 using CART_457.c_sharp.Renderer;
+using CART_457.EntitySystem;
+using CART_457.EntitySystem.Scripts.EntityPrefab;
 using CART_457.MaterialRelated;
 using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefab
+namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
 {
-    public class PointLightVisualizer : EntitySystem.Entity
+    public class EmptySolid : CART_457.EntitySystem.Entity
     {
-
-        public int Index;
-
-        public PointLightVisualizer(int index, params Material [] material) : base(BehaviorFlags.None, material)
+        public Vector4 Color;
+        public EmptySolid(Vector4 color, float scale, params Material[] materials)
         {
-            Index = index;
-            Scale *= 0.2f;
+            Color = color;
+            Scale *= scale;
+            SetupMaterials(materials);
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            var light = Globals.PointLights[Index];
-            light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);
-            Position = light.Position;
+            Debug.Log("EmptySolid");
+            Debug.Log(_position);
+            Debug.Log("-----");
         }
-
 
         public override void SendUniformsPerObject(Material material)
         {
+            Debug.Log("SendUniforms");
             if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
@@ -35,11 +37,11 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             else
             { 
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
-                UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color, 1), false);
+                UniformSender.SetVector4(material, "Color", Color, false);
             }
             
 
-//            UniformSender.SendLights(this);
+            Debug.Log("====");
         }
     }
 }

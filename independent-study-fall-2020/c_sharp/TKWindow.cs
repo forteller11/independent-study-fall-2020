@@ -53,12 +53,12 @@ namespace CART_457
             DrawManager.Init(this);
             
             Globals.Init();
-            SceneSetup.CreateGlobals();
+            SetupEntitys.CreateGlobals();
 
             DrawManager.SetupStaticRenderingHierarchy();
             DrawManager.TKWindowSize = new Size(Width, Height);
             
-            EntityManager.AddRangeToWorldAndRenderer(SceneSetup.CreateGameObjects());
+            EntityManager.AddRangeToWorldAndRenderer(SetupEntitys.CreateGameObjects());
             EntityManager.InvokeOnLoad();
         }
 

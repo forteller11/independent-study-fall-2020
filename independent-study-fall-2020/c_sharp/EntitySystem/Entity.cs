@@ -10,7 +10,7 @@ namespace CART_457.EntitySystem
         public readonly Guid GUID;
         public Material [] Materials  { get; private set; }
 
-        private Vector3 _position = Vector3.Zero;
+        protected Vector3 _position = Vector3.Zero;
         public Vector3 Position {get
         {
             if (Parent == null) return _position;
@@ -23,7 +23,7 @@ namespace CART_457.EntitySystem
             set => _position = value;
         }
         
-        private Quaternion _rotation = Quaternion.Identity;
+        protected Quaternion _rotation = Quaternion.Identity;
         public Quaternion Rotation {
             get {
      
@@ -33,7 +33,7 @@ namespace CART_457.EntitySystem
             set => _rotation = value;
         }
 
-        private Vector3 _scale = Vector3.One;
+        protected Vector3 _scale = Vector3.One;
         public Vector3 Scale {
             get {
      

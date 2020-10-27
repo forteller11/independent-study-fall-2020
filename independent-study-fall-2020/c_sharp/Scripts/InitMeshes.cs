@@ -5,22 +5,23 @@ using OpenTK;
 
 namespace CART_457.Scripts
 {
-    public static class CreateMeshes
+    public static class InitMeshes
     {
         public static Mesh IcoSphereHighPoly;
         public static Mesh TableProto;
         public static Mesh Eyeball;
-        public static Mesh Triangle;
+        public static Mesh Diamond;
         public static Mesh Plane;
         public static Mesh ViewSpaceQuad;
 
-        static CreateMeshes()
+        static InitMeshes()
         {
             IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
             Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane", true, true, true);
             Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", true, true, true);
-            Triangle =  ModelImporter.GetAttribBuffersFromObjFile("diamond", true, true, true);
+            Diamond =  ModelImporter.GetAttribBuffersFromObjFile("camera_visualization", true, true, true);
+            // Diamond =  ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
 
             #region ViewQuad
             var quadPositions = new []

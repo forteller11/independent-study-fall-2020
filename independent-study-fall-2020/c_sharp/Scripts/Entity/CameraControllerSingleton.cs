@@ -6,7 +6,7 @@ using CART_457.Scripts;
 using OpenTK;
 using OpenTK.Input;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public class CameraControllerSingleton : EntitySystem.Entity
     {
@@ -52,7 +52,7 @@ namespace CART_457.EntitySystem.Scripts.Entity
             
             // _camInterpIndex = MathHelper.Clamp(_camInterpIndex, 0, 1);
             PlayerCamKey.Update(eventArgs.KeyboardState);
-            WebCamKey.Update(eventArgs.KeyboardState);Debug.Log(_camInterpIndex);
+            WebCamKey.Update(eventArgs.KeyboardState);
             Globals.MainCamera = Camera.Lerp(Globals.PlayerCamera, Globals.WebCam, _camInterpIndex);
         }
 

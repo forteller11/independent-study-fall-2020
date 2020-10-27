@@ -29,7 +29,7 @@ namespace CART_457.Renderer
             PlayerCamera = new Camera(Vector3.Zero, Quaternion.Identity, playerCamPerspective, near, far);
             
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
-            WebCam = new Camera(Vector3.Zero, Quaternion.Identity, webCamPerspective, near, far);
+            WebCam = new Camera(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, webCamPerspective, near, far);
             
             Matrix4.CreateOrthographic(25, 25, near, far, out var shadowLightPerspective);
             ShadowCastingLight = new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far);
