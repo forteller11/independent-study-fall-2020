@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CART_457.EntitySystem;
-using CART_457.EntitySystem.Scripts.Entity;
+using CART_457.EntitySystem.Scripts.EntityPrefabs;
 using CART_457.Renderer;
 using OpenTK;
 
@@ -12,6 +12,8 @@ namespace CART_457.Scripts
         public static Entity[] CreateGameObjects() 
         {
             List<Entity> gameObjects = new List<Entity>();
+            
+            gameObjects.Add(new CameraVisualizer());
             
             gameObjects.Add(new CameraControllerSingleton());
 

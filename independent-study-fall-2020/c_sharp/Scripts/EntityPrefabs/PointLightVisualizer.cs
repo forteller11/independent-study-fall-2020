@@ -5,7 +5,7 @@ using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 {
     public class PointLightVisualizer : EntitySystem.Entity
     {

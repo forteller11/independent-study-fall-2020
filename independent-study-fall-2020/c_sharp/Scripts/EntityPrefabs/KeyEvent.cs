@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK.Input;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 {
     public class KeyEvent
     {

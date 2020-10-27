@@ -9,41 +9,33 @@ namespace CART_457.EntitySystem
     {
         public readonly Guid GUID;
         public Material [] Materials  { get; private set; }
-
-        private Vector3 _position = Vector3.Zero;
-        public Vector3 Position {get
+        
+        public Transform Transform;
+        #region transform acessors
+        public Vector3 Position
         {
-            if (Parent == null) return _position;
-            var localToWorldPosition = Quaternion.Invert(Parent.Rotation) * (_position * Parent.Scale);
-            // Debug.Log(Parent.Position);
-            // Debug.Log(_position);
-            // Debug.Log("---");
-            return Parent.Position + localToWorldPosition;
-        }
-            set => _position = value;
+            get => Transform.Position;
+            set => Transform.Position = value;
         }
         
-        private Quaternion _rotation = Quaternion.Identity;
-        public Quaternion Rotation {
-            get {
-     
-            if (Parent == null) return _rotation;
-            return _rotation * Parent.Rotation; //wrong order?
+        public Quaternion Rotation
+        {
+            get => Transform.Rotation;
+            set => Transform.Rotation = value;
         }
-            set => _rotation = value;
+        
+        public Vector3 Scale
+        {
+            get => Transform.Scale;
+            set => Transform.Scale = value;
         }
-
-        private Vector3 _scale = Vector3.One;
-        public Vector3 Scale {
-            get {
-     
-                if (Parent == null) return _scale;
-                return Parent.Scale * _scale;
-            }
-            set => _scale = value;
+        
+        public Entity Parent
+        {
+            get => Transform.Parent;
+            set => Transform.Parent = value;
         }
-
-        public Entity Parent;
+        #endregion
 
         [Flags]
         public enum BehaviorFlags

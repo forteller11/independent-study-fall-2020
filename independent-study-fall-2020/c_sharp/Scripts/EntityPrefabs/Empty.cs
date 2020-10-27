@@ -6,11 +6,13 @@ using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 {
     public class Empty : EntitySystem.Entity
     {
-        private Empty(Material[] materials)
+        public Action OnRender;
+        public Action OnUpdate;
+        public Empty(params Material[] materials)
         {
             SetupMaterials(materials);
         }

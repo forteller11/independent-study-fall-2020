@@ -1,6 +1,6 @@
 ﻿using CART_457.MaterialRelated;
 
-namespace CART_457.EntitySystem.Scripts.Entity
+namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 {
     public class Behaviorless : EntitySystem.Entity
     {
