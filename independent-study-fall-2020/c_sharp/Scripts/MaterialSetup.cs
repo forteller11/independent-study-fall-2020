@@ -13,8 +13,12 @@ namespace CART_457.Scripts
         [IncludeInDrawLoop] public static Material DirtSphere;
         [IncludeInDrawLoop] public static Material DirtPlane;
         [IncludeInDrawLoop] public static Material TileSphere;
+        [IncludeInDrawLoop] public static Material TableProto;
+        
         [IncludeInDrawLoop] public static Material ShadowMapSphere;
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
+        [IncludeInDrawLoop] public static Material ShadowMapTable;
+        
         [IncludeInPostFX] public static Material PostProcessing;
         static MaterialSetup()
         {
@@ -59,6 +63,17 @@ namespace CART_457.Scripts
                 TextureSetup.CarpetSpecularMap,
                 normaMaterialUniformSender
                 );
+            
+            TableProto = MaterialPreconfigs.Normal(
+                FboSetup.Main,
+                normalShader,
+                CreateMeshes.TableProto,
+                TextureSetup.TableDiffuse,
+                TextureSetup.TableNormal,
+                TextureSetup.TableSpecular,
+                normaMaterialUniformSender
+            );
+            
             #endregion
 
             #region solid_color
@@ -77,6 +92,11 @@ namespace CART_457.Scripts
                 CreateMeshes.Plane,
                 null);
             
+            ShadowMapTable = Material.EntityBased(
+                FboSetup.Shadow,
+                ShaderProgram.Standard("shadow_map"),
+                CreateMeshes.TableProto,
+                null);
             
             PostProcessing = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
             PostProcessing.SetupSampler(Material.MAIN_COLOR_FBO_SAMPLER, FboSetup.Main.ColorTexture1);

@@ -8,12 +8,16 @@ namespace CART_457.Scripts
     public static class CreateMeshes
     {
         public static Mesh IcoSphereHighPoly;
+        public static Mesh TableProto;
         public static Mesh Plane;
         public static Mesh ViewSpaceQuad;
 
         static CreateMeshes()
         {
             IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
+            
+            TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
+                
             Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane", true, true, true);
 
             #region ViewQuad

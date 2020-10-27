@@ -15,6 +15,11 @@ namespace CART_457.Scripts
         public static Texture CarpetDiffuse =     Texture.FromFile(BATHROOM_TILES + "COL_VAR2_3K.jpg", TextureUnit.Texture0);
         public static Texture CarpetNormalMap =   Texture.FromFile(BATHROOM_TILES + "NRM_3K.jpg", TextureUnit.Texture1);
         public static Texture CarpetSpecularMap = Texture.FromFile(BATHROOM_TILES + "GLOSS_3K.jpg", TextureUnit.Texture2);
+
+        private const string TABLE_PROTO = "table_proto/";
+        public static Texture TableDiffuse = Texture.FromFile(TABLE_PROTO + "room_proto_table_04_Material.001_BaseColor.jpg", TextureUnit.Texture0);
+        public static Texture TableNormal = Texture.FromFile(TABLE_PROTO + "room_proto_table_04_Material.001_Normal.jpg", TextureUnit.Texture1);
+        public static Texture TableSpecular = Texture.FromFile(TABLE_PROTO + "room_proto_table_04_Material.001_Roughness.jpg", TextureUnit.Texture2);
         
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }

@@ -81,7 +81,7 @@ namespace CART_457.MaterialRelated
         
          public static Material PostProcessing(ShaderProgram shaderProgram)
          {
-             var mat = new Material(shaderProgram);
+             var mat = new Material();
              mat.Shader = shaderProgram;
              mat.RenderTarget = FboSetup.PostProcessing;
              mat.GetUniformAndAttribLocations();
