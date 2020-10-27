@@ -2,7 +2,7 @@
 layout (location = 1) out vec4 SecondaryFragColor;
 
 in vec2 v2f_uv;
-const float MAX_OFFSET = 0.015;
+const float MAX_OFFSET = 0.01;
 
 void main(){
 
@@ -12,18 +12,16 @@ void main(){
     //frag_color = vec4(vec3(depth), 1);
     
     float depth = texture(SecondaryTexture, v2f_uv).r;
-    if (depth >= .99){
-        depth = 0;
-    }
-    if (depth > .8 && depth < .99){
-        depth = 1;
-    }
+//    if (depth >= .99){
+//        depth = 0;
+//    }
+
 
 //    float noise = rand(gl_FragCoord.xy);
 //    MainFragColor = vec4(vec3(rand(gl_FragCoord.xy)), 1);
     
-    vec2 normScreenCoord = gl_FragCoord.xy/1440;
-    float offsetDynamic = mix(0, MAX_OFFSET, 1-depth);
+    float offsetDynamic = mix(-.05, MAX_OFFSET, depth);
+    offsetDynamic = max(0, offsetDynamic);
 
     
     vec4 color = texture(MainTexture, v2f_uv);
