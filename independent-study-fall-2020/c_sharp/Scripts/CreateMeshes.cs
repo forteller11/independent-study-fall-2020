@@ -19,6 +19,7 @@ namespace CART_457.Scripts
             TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
             Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane", true, true, true);
             Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", true, true, true);
+            Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("diamond", true, true, true);
 
             #region ViewQuad
             var quadPositions = new []
