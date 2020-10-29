@@ -15,14 +15,14 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         public PointLightVisualizer(int index, params Material [] material) : base(BehaviorFlags.None, material)
         {
             Index = index;
-            Scale *= 0.2f;
+            LocalScale *= 0.2f;
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             var light = Globals.PointLights[Index];
             light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);
-            Position = light.Position;
+            LocalPosition = light.Position;
         }
 
 

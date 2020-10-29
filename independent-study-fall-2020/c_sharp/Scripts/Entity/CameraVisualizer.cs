@@ -43,8 +43,8 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 
         private void EntityTransformToCamera(Entity entity, Camera camera)
         {
-            entity.Position = camera.Position;
-            entity.Rotation = camera.Rotation;
+            entity.LocalPosition = camera.Position;
+            entity.LocalRotation = camera.Rotation;
         }
     }
 }

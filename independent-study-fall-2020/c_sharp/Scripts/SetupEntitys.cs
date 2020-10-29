@@ -16,11 +16,11 @@ namespace CART_457.Scripts
             List<Entity> gameObjects = new List<Entity>();
 
             var table = Empty.FromPosition(new Vector3(0, 3, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
-            table.Scale *= 0.2f;
-            table.UpdateAction += (entity) => entity.Rotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
+            table.LocalScale *= 0.2f;
+            table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
             
             var table2 = Empty.FromPosition(new Vector3(7, 0, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
-             table2.UpdateAction += (entity) => entity.Rotation *= Quaternion.FromAxisAngle(Vector3.UnitX, 0.002f);
+             table2.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitX, 0.000f);
             table2.Parent = table;
             
             gameObjects.Add(table);
@@ -39,9 +39,9 @@ namespace CART_457.Scripts
             gameObjects.Add(new Sphere(new Vector3(1,4,2),new Vector3(.13f,-.1f,.05f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(1,7,2),new Vector3(.1f,-.1f,.50f), InitMaterials.TileSphere, InitMaterials.ShadowMapSphere));
             var s = Empty.FromPosition(new Vector3(0, -5, 0), InitMaterials.DirtPlane, InitMaterials.ShadowMapPlane);
-            s.Scale = new Vector3(4);
+            s.LocalScale = new Vector3(4);
             var s2 = Empty.FromPosition(new Vector3(0, -12, 0), InitMaterials.DirtPlane, InitMaterials.ShadowMapPlane);
-            s2.Scale = new Vector3(7);
+            s2.LocalScale = new Vector3(7);
             gameObjects.Add(s);
             gameObjects.Add(s2);
             

@@ -15,7 +15,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 
         public override void OnLoad()
         {
-            Scale *= 1f;
+            LocalScale *= 1f;
         }
 
         private Sphere(Material[] materials)
@@ -24,7 +24,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         }
         public Sphere(Vector3 position, Vector3 ran2, params Material [] material)
         {
-            Position = position;
+            LocalPosition = position;
             SetupMaterials(material);
            ran = ran2;
         }
@@ -32,8 +32,8 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         public static Sphere PositionSize(Vector3 position, Vector3 size, params Material [] materials)
         {
             var sphere = new Sphere(materials);
-            sphere.Position = position;
-            sphere.Scale = size;
+            sphere.LocalPosition = position;
+            sphere.LocalScale = size;
             return sphere;
         }
         
@@ -42,7 +42,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         {
 //            Rotation = Quaternion.FromEulerAngles(MathF.Sin(Globals.AbsTimeF/8)*3,MathF.Cos(Globals.AbsTimeF/30)*9,Globals.AbsTimeF/20);
             var sin = new Vector3(MathF.Sin(ran.X), MathF.Sin(ran.Y)/2, MathF.Sin(ran.Z))*.01f;
-            Position += sin;
+            LocalPosition += sin;
             // Rotation = Rotation * Quaternion.FromAxisAngle(new Vector3(0, 1, 0), 0.01f);
 
         }

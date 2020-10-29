@@ -98,8 +98,6 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             Vector3 movementAbsolute = inputVector * accelerationThisFrame;
 
             Vector3 movementRelative = Globals.PlayerCamera.Rotation * inputVector;
-            Debug.Log(Globals.PlayerCamera.Rotation * Vector3.Normalize(Vector3.One));
-
 
             Vector2 movementHorzontal = Vector2.Zero; //make horizontal speed consistent no matter the rotation of the camera
             if (horzInput != 0 || depthInput != 0) 

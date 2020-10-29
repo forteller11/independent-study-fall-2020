@@ -25,24 +25,24 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         public static Empty FromPosition (Vector3 position,  params Material [] materials)
         {
             var empty = new Empty(materials);
-            empty.Position = position;
+            empty.LocalPosition = position;
             return empty;
         }
         
         public static Empty FromPositionRotation (Vector3 position, Quaternion rotation,  params Material [] materials)
         {
             var empty = new Empty(materials);
-            empty.Position = position;
-            empty.Rotation = rotation;
+            empty.LocalPosition = position;
+            empty.LocalRotation = rotation;
             return empty;
         }
         
         public static Empty FromPositionRotationScale (Vector3 position, Quaternion rotation, Vector3 scale,  params Material [] materials)
         {
             var empty = new Empty(materials);
-            empty.Position = position;
-            empty.Rotation = rotation;
-            empty.Scale = scale;
+            empty.LocalPosition = position;
+            empty.LocalRotation = rotation;
+            empty.LocalScale = scale;
             return empty;
         }
         

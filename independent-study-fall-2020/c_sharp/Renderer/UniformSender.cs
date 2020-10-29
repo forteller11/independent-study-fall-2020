@@ -18,11 +18,11 @@ namespace CART_457.c_sharp.Renderer
         /// </summary>
         public static void SendTransformMatrices(Entity entity, Material material, Camera camera, string suffix="")
         {
-            var modelToWorldRotation = Matrix4.CreateFromQuaternion(entity.Rotation);
+            var modelToWorldRotation = Matrix4.CreateFromQuaternion(entity.WorldRotation);
             var worldToViewTranslation = Matrix4.CreateTranslation(-camera.Position);
-            var modelToWorldTranslation = Matrix4.CreateTranslation(entity.Position);
+            var modelToWorldTranslation = Matrix4.CreateTranslation(entity.WorldPosition);
             var worldToViewRotation = Matrix4.CreateFromQuaternion(camera.Rotation);
-            var modelToWorldScale = Matrix4.CreateScale(entity.Scale); //transponse?
+            var modelToWorldScale = Matrix4.CreateScale(entity.WorldScale); //transponse?
             
             //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
             //todo consolidate matrices and refactor.... then go bk into shader

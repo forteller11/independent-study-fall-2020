@@ -17,7 +17,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
         public EmptySolid(Vector4 color, float scale, params Material[] materials)
         {
             Color = color;
-            Scale *= scale;
+            LocalScale *= scale;
             SetupMaterials(materials);
         }
 

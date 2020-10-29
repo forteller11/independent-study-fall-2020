@@ -10,38 +10,38 @@ namespace CART_457.EntitySystem
         public readonly Guid GUID;
         public Material [] Materials  { get; private set; }
 
-        protected Vector3 _position = Vector3.Zero;
-        public Vector3 Position {
+        public Vector3 LocalPosition = Vector3.Zero;
+        public Vector3 WorldPosition {
             get
             {
                 if (Parent == null) 
-                    return _position;
-                var parentRot = Parent.Rotation;
-                var localToWorldPosition = parentRot * (_position * Parent.Scale);
-                return Parent.Position + localToWorldPosition;
+                    return LocalPosition;
+                var parentRot = Parent.LocalRotation;
+                var localToWorldPosition = parentRot * (LocalPosition * Parent.WorldScale);
+                return Parent.WorldPosition + localToWorldPosition;
             }
-            set => _position = value;
         }
         
-        protected Quaternion _rotation = Quaternion.Identity;
-        public Quaternion Rotation {
+        public Quaternion LocalRotation = Quaternion.Identity;
+        public Quaternion WorldRotation 
+        {
             get 
             {
                 if (Parent == null) 
-                    return _rotation;
-                return _rotation * Parent.Rotation;
+                    return LocalRotation;
+                return LocalRotation * Parent.WorldRotation;
             }
-            set => _rotation = value;
         }
 
-        protected Vector3 _scale = Vector3.One;
-        public Vector3 Scale {
+
+        public Vector3 LocalScale = Vector3.One;
+        public Vector3 WorldScale 
+        {
             get 
             {
-                if (Parent == null) return _scale;
-                return Parent.Scale * _scale;
+                if (Parent == null) return LocalScale;
+                return Parent.WorldScale * LocalScale;
             }
-            set => _scale = value;
         }
 
         public Entity Parent;
