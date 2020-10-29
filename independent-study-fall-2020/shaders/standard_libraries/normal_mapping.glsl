@@ -10,9 +10,9 @@ mat3 calculate_tanToModel_space(vec3 modelNormal){
     return mat3(ortho2, ortho1, modelNormal);
 }
 
-vec3 normal_map_world_space(vec3 normalMapTexel, mat3 tangentToModelSpace, mat3 modelNormal, vec3 normal_model){
+vec3 normal_map_world_space(vec3 normalMapTexel, mat3 tangentToModelSpace, mat3 modelRotation, vec3 normal_model){
     vec3 normalMapModelSpace = calculate_norm_map_model_space(normalMapTexel, tangentToModelSpace);
     vec3 normalsWithMapModel = normalize(normal_model + (normalMapModelSpace ));
-    vec3 normalsWithMapWorld = normalsWithMapModel * modelNormal;
+    vec3 normalsWithMapWorld = modelRotation * normalsWithMapModel ;
     return normalsWithMapWorld;
 }

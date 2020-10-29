@@ -11,32 +11,33 @@ namespace CART_457.EntitySystem
         public Material [] Materials  { get; private set; }
 
         protected Vector3 _position = Vector3.Zero;
-        public Vector3 Position {get
-        {
-            if (Parent == null) return _position;
-            var localToWorldPosition = Quaternion.Invert(Parent.Rotation) * (_position * Parent.Scale);
-            // Debug.Log(Parent.Position);
-            // Debug.Log(_position);
-            // Debug.Log("---");
-            return Parent.Position + localToWorldPosition;
-        }
+        public Vector3 Position {
+            get
+            {
+                if (Parent == null) 
+                    return _position;
+                var parentRot = Parent.Rotation;
+                var localToWorldPosition = parentRot * (_position * Parent.Scale);
+                return Parent.Position + localToWorldPosition;
+            }
             set => _position = value;
         }
         
         protected Quaternion _rotation = Quaternion.Identity;
         public Quaternion Rotation {
-            get {
-     
-            if (Parent == null) return _rotation;
-            return _rotation * Parent.Rotation; //wrong order?
-        }
+            get 
+            {
+                if (Parent == null) 
+                    return _rotation;
+                return _rotation * Parent.Rotation;
+            }
             set => _rotation = value;
         }
 
         protected Vector3 _scale = Vector3.One;
         public Vector3 Scale {
-            get {
-     
+            get 
+            {
                 if (Parent == null) return _scale;
                 return Parent.Scale * _scale;
             }

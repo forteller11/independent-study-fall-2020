@@ -13,6 +13,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
     public class EmptySolid : CART_457.EntitySystem.Entity
     {
         public Vector4 Color;
+
         public EmptySolid(Vector4 color, float scale, params Material[] materials)
         {
             Color = color;
@@ -22,14 +23,12 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            Debug.Log("EmptySolid");
-            Debug.Log(_position);
-            Debug.Log("-----");
+        
         }
 
         public override void SendUniformsPerObject(Material material)
         {
-            Debug.Log("SendUniforms");
+            // Debug.Log("SendUniforms");
             if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
@@ -41,7 +40,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
             }
             
 
-            Debug.Log("====");
+            // Debug.Log("====");
         }
     }
 }

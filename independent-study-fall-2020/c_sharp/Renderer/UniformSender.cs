@@ -18,10 +18,10 @@ namespace CART_457.c_sharp.Renderer
         /// </summary>
         public static void SendTransformMatrices(Entity entity, Material material, Camera camera, string suffix="")
         {
-            var modelToWorldRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(entity.Rotation));
+            var modelToWorldRotation = Matrix4.CreateFromQuaternion(entity.Rotation);
             var worldToViewTranslation = Matrix4.CreateTranslation(-camera.Position);
             var modelToWorldTranslation = Matrix4.CreateTranslation(entity.Position);
-            var worldToViewRotation = Matrix4.Transpose(Matrix4.CreateFromQuaternion(camera.Rotation));
+            var worldToViewRotation = Matrix4.CreateFromQuaternion(camera.Rotation);
             var modelToWorldScale = Matrix4.CreateScale(entity.Scale); //transponse?
             
             //apparently matrix mult combines matrices as if matrix left matrix transformed THEN the right... opposite to how it works in math
@@ -151,8 +151,8 @@ namespace CART_457.c_sharp.Renderer
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))
                 GL.Uniform1(location, integer);
-            else
-                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            // else
+            //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
         public static void SetFloat(Material mat, string name, float value, bool useProgram=true) //set useProgram to false for batch operations for performance gains
@@ -160,8 +160,8 @@ namespace CART_457.c_sharp.Renderer
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))
                 GL.Uniform1(location, value);
-            else
-                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            // else
+            //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
         public static void SetVector4(Material mat, string name, OpenTK.Vector4 vector4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
@@ -169,8 +169,8 @@ namespace CART_457.c_sharp.Renderer
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))
                 GL.Uniform4(location, ref vector4);
-            else
-                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+            // else
+            //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
     }
 }

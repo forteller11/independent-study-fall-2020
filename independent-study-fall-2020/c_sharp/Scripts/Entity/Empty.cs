@@ -10,11 +10,18 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public class Empty : EntitySystem.Entity
     {
+        
+        public Action<Entity> UpdateAction;
         public Empty(params Material[] materials)
         {
             SetupMaterials(materials);
         }
-        
+
+        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
+        {
+            UpdateAction?.Invoke(this);
+        }
+
         public static Empty FromPosition (Vector3 position,  params Material [] materials)
         {
             var empty = new Empty(materials);

@@ -1,10 +1,13 @@
 ﻿
 using System;
+using System.Numerics;
 using CART_457.Helpers;
 using CART_457.Renderer;
 using CART_457.Scripts;
-using OpenTK;
 using OpenTK.Input;
+using Quaternion = OpenTK.Quaternion;
+using Vector2 = OpenTK.Vector2;
+using Vector3 = OpenTK.Vector3;
 
 namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
@@ -25,11 +28,11 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         
         public override void OnLoad()
         {
-            Globals.MainCamera = Globals.PlayerCamera;
-            
             Globals.PlayerCamera.Position = new Vector3(0,0,2);
             Globals.PlayerCamera.Rotation = Quaternion.Identity;
             
+            Globals.MainCamera = Globals.PlayerCamera;
+
             PlayerCamKey = new KeyEvent(Key.Number1);
             WebCamKey = new KeyEvent(Key.Number2);
 
@@ -64,10 +67,10 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 
             Vector2 accelerationInput = eventArgs.MouseDelta * angularAccelerationThisFrame;
 
-            rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
-            rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
+            rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, -accelerationInput.Y);
+            rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, accelerationInput.X);
 
-            Globals.PlayerCamera.Rotation =  rotationHorz * Globals.PlayerCamera.Rotation * rotationVert;
+            Globals.PlayerCamera.Rotation =  rotationVert * Globals.PlayerCamera.Rotation * rotationHorz;
             // todo dont allow rotations past 90 degrees DOWN
         }
         void Move(EntityUpdateEventArgs eventArgs)
@@ -84,8 +87,8 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             int depthInput = 0;
             int verticalInput = 0;
 
-            if (keyboardState.IsKeyDown(Key.W)) depthInput--;
-            if (keyboardState.IsKeyDown(Key.S)) depthInput++;
+            if (keyboardState.IsKeyDown(Key.W)) depthInput++;
+            if (keyboardState.IsKeyDown(Key.S)) depthInput--;
             if (keyboardState.IsKeyDown(Key.A)) horzInput--;
             if (keyboardState.IsKeyDown(Key.D)) horzInput++;
             if (keyboardState.IsKeyDown(Key.LShift)) verticalInput--;
@@ -95,12 +98,13 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             Vector3 movementAbsolute = inputVector * accelerationThisFrame;
 
             Vector3 movementRelative = Globals.PlayerCamera.Rotation * inputVector;
+            Debug.Log(Globals.PlayerCamera.Rotation * Vector3.Normalize(Vector3.One));
 
 
             Vector2 movementHorzontal = Vector2.Zero; //make horizontal speed consistent no matter the rotation of the camera
             if (horzInput != 0 || depthInput != 0) 
             {
-                Vector2 movementHorzontalInput = new Vector2(movementRelative.X, movementRelative.Z);
+                Vector2 movementHorzontalInput = new Vector2(movementRelative.X, -movementRelative.Z);
                 movementHorzontal = Vector2.Normalize(movementHorzontalInput) * _horziontalVelocity * sprintMultiplier;
             }
 

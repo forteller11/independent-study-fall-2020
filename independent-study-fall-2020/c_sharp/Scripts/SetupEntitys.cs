@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using CART_457.EntitySystem;
 using CART_457.EntitySystem.Scripts.EntityPrefab;
 using CART_457.EntitySystem.Scripts.EntityPrefabs;
@@ -13,12 +14,22 @@ namespace CART_457.Scripts
         public static Entity[] CreateGameObjects() 
         {
             List<Entity> gameObjects = new List<Entity>();
+
+            var table = Empty.FromPosition(new Vector3(0, 3, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
+            table.Scale *= 0.2f;
+            table.UpdateAction += (entity) => entity.Rotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
             
+            var table2 = Empty.FromPosition(new Vector3(7, 0, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
+             table2.UpdateAction += (entity) => entity.Rotation *= Quaternion.FromAxisAngle(Vector3.UnitX, 0.002f);
+            table2.Parent = table;
+            
+            gameObjects.Add(table);
+            gameObjects.Add(table2);
             gameObjects.Add(new CameraVisualizer());
             
             gameObjects.Add(new CameraControllerSingleton());
 
-            gameObjects.Add(Empty.FromPosition(new Vector3(0,0,0), InitMaterials.TableProto, InitMaterials.ShadowMapTable));
+            gameObjects.Add(table);
             
             gameObjects.Add(new Sphere(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
             gameObjects.Add(new Sphere(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
