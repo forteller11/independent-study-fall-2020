@@ -6,8 +6,8 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public class FBOVisualizationInput : EntitySystem.Entity
     {
-        public KeyEvent KeyCycle = new KeyEvent(Key.F);
-        public KeyEvent KeySecondaryToggle = new KeyEvent(Key.CapsLock);
+        public KeyState KeyCycle = new KeyState(Key.F);
+        public KeyState KeySecondaryToggle = new KeyState(Key.CapsLock);
         private int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
 
         public FBOVisualizationInput()

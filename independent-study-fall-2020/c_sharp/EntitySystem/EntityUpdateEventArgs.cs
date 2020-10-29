@@ -9,5 +9,6 @@ namespace CART_457.EntitySystem
         public KeyboardState KeyboardState;
         public MouseState MouseState;
         public Vector2 MouseDelta;
+        public InputState InputState = new InputState();
     }
 }

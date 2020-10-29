@@ -9,7 +9,7 @@ namespace CART_457.EntitySystem
     {
         private static List<Entity> _gameObjects = new List<Entity>();
         public static EntityUpdateEventArgs EntityUpdateEventArgs { get; } = new EntityUpdateEventArgs();
-        
+
         public static void AddRangeToWorldAndRenderer(params Entity[] gameObjects)
         {
             for (int i = 0; i < gameObjects.Length; i++)
@@ -37,11 +37,13 @@ namespace CART_457.EntitySystem
 
         public static void RefreshUpdateEventArgs(FrameEventArgs eventArgs)
         {
-            var  m = Mouse.GetState(); 
+            var  m = Mouse.GetState();
+            var keyboardState = Keyboard.GetState();
             EntityUpdateEventArgs.DeltaTime = eventArgs.Time;
-            EntityUpdateEventArgs.KeyboardState =  Keyboard.GetState();
+            EntityUpdateEventArgs.KeyboardState =  keyboardState;
             EntityUpdateEventArgs.MouseState = m;
             EntityUpdateEventArgs.MouseDelta = new Vector2(m.X-Globals.MousePositionLastFrame.X,-m.Y+Globals.MousePositionLastFrame.Y);
+            EntityUpdateEventArgs.InputState.Update(keyboardState);
         }
         public static void  InvokeOnUpdate()
         {
