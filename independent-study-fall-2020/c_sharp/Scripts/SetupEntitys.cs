@@ -5,6 +5,7 @@ using CART_457.EntitySystem;
 using CART_457.EntitySystem.Scripts.EntityPrefab;
 using CART_457.EntitySystem.Scripts.EntityPrefabs;
 using CART_457.Renderer;
+using Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity;
 using OpenTK;
 
 namespace CART_457.Scripts
@@ -35,6 +36,7 @@ namespace CART_457.Scripts
             gameObjects.Add(new CameraVisualizer());
             
             gameObjects.Add(new CameraControllerSingleton());
+            gameObjects.Add(new CameraInterperlator());
 
             gameObjects.Add(table);
             

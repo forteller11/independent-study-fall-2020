@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Runtime.CompilerServices;
 using OpenTK;
 
@@ -37,6 +38,12 @@ namespace CART_457.Helpers
             result.M44 = Lerp(m1.M44, m2.M44, t);
 
             return result;
-        } 
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float SmoothStep(float t) //3x^2 - 2x^3
+        {
+            return MathHelper.Clamp((3 * t * t) - (2 * t * t * t), 0,1);
+        }
+   
     }
 }
