@@ -20,11 +20,18 @@ namespace CART_457.Scripts
             table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
             
             var table2 = Empty.FromPosition(new Vector3(7, 0, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
-             table2.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitX, 0.000f);
+             table2.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.004f);
+             table2.LocalScale *= 0.5f;
             table2.Parent = table;
+            
+            var table3 = Empty.FromPosition(new Vector3(15, 0, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
+            table3.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.004f);
+            table3.LocalScale *= 0.5f;
+            table3.Parent = table2;
             
             gameObjects.Add(table);
             gameObjects.Add(table2);
+            gameObjects.Add(table3);
             gameObjects.Add(new CameraVisualizer());
             
             gameObjects.Add(new CameraControllerSingleton());

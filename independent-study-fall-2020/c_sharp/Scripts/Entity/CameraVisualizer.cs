@@ -19,8 +19,10 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
             _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new EmptySolid(new Vector4(1,0,1,1), 1f, InitMaterials.Camera, InitMaterials.ShadowMapDiamond));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
-            var eye1 = Empty.FromPositionRotationScale(new Vector3( -.33f, 0, 0), Quaternion.FromAxisAngle(Vector3.UnitX, MathF.PI/2), Vector3.One*.13f, InitMaterials.EyeBall);
-            var eye2 = Empty.FromPositionRotationScale(new Vector3(.33f, 0, 0), Quaternion.FromAxisAngle(Vector3.UnitX, MathF.PI/2),Vector3.One*.13f, InitMaterials.EyeBall);
+            var eyeRotation = Quaternion.FromEulerAngles(MathF.PI/2, 0,MathF.PI);
+            var eye1 = Empty.FromPositionRotationScale(new Vector3( -.33f, 0, 0), eyeRotation, Vector3.One*.13f, InitMaterials.EyeBall);
+  
+            var eye2 = Empty.FromPositionRotationScale(new Vector3(.33f, 0, 0), eyeRotation,Vector3.One*.13f, InitMaterials.EyeBall);
             eye1.Parent = _playerCamVisualizer;
             eye2.Parent = _playerCamVisualizer;
 

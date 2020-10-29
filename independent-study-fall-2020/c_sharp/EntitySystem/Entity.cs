@@ -29,7 +29,7 @@ namespace CART_457.EntitySystem
             {
                 if (Parent == null) 
                     return LocalRotation;
-                return LocalRotation * Parent.WorldRotation;
+                return Parent.WorldRotation * LocalRotation;
             }
         }
 
