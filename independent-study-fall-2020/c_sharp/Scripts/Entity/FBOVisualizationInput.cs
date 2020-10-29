@@ -6,18 +6,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public class FBOVisualizationInput : EntitySystem.Entity
     {
-        public KeyState KeyCycle = new KeyState(Key.F);
-        public KeyState KeySecondaryToggle = new KeyState(Key.CapsLock);
         private int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
-
-        public FBOVisualizationInput()
-        {
-            KeyCycle.OnPressed += ()=>
-            {
-                CycleFBOBlit();
-                SetFBO();
-            };
-        }
 
         private void CycleFBOBlit()
         {
@@ -27,10 +16,13 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         }
 
 
-        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
+        public override void OnUpdate(EntityUpdateEventArgs e)
         {
-            KeyCycle.Update(eventArgs.KeyboardState);
-            KeySecondaryToggle.Update(eventArgs.KeyboardState);
+            if (e.InputState.F.IsPressed)
+            {
+                CycleFBOBlit();
+                SetFBO();
+            }
         }
 
         public void SetFBO()

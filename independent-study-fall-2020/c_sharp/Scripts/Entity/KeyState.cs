@@ -5,11 +5,11 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
     public struct KeyState
     {
-        public Key Key;
+        private Key _key;
         private int _pressedFramesCount;
-        public Action OnPressed;
-        public Action OnReleased;
-        public Action OnHeldDown;
+        public event Action OnPressed;
+        public event Action OnReleased;
+        public event Action OnHeldDown;
 
         public bool IsPressed { get; private set; }
         public bool IsReleased { get; private set; }
@@ -18,12 +18,12 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         
         public KeyState(Key key) : this()
         {
-            Key = key;
+            _key = key;
         }
 
         public void Update(KeyboardState state)
         {
-            if (state.IsKeyDown(Key))
+            if (state.IsKeyDown(_key))
             {
                 if (_pressedFramesCount < 0)
                 {

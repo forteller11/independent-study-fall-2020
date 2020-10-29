@@ -36,21 +36,18 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             PlayerCamKey = new KeyState(Key.Number1);
             WebCamKey = new KeyState(Key.Number2);
 
-            PlayerCamKey.OnHeldDown = () => _camInterpIndex = MathInd.Lerp(_camInterpIndex, 0, CAM_INTERP_AMOUNT);
-            WebCamKey.OnHeldDown    = () => _camInterpIndex = MathInd.Lerp(_camInterpIndex, 1, CAM_INTERP_AMOUNT);
+            PlayerCamKey.OnHeldDown += () => _camInterpIndex = MathInd.Lerp(_camInterpIndex, 0, CAM_INTERP_AMOUNT);
+            WebCamKey.OnHeldDown    += () => _camInterpIndex = MathInd.Lerp(_camInterpIndex, 1, CAM_INTERP_AMOUNT);
             
         }
 
+        
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {  
             Rotate(eventArgs);
             Move(eventArgs);
-            
-            // _camInterpIndex = MathHelper.Clamp(_camInterpIndex, 0, 1);
-            PlayerCamKey.Update(eventArgs.KeyboardState);
-            WebCamKey.Update(eventArgs.KeyboardState);
-            // Globals.MainCamera = Camera.Lerp(Globals.MainCamera, Globals.WebCam, _camInterpIndex);
-            Globals.MainCamera = Globals.PlayerCamera;
+
+            CameraInterpolation(eventArgs);
         }
 
         void Rotate(EntityUpdateEventArgs eventArgs) //todo can't rotate around
@@ -103,6 +100,11 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             Globals.PlayerCamera.Position += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
         }
 
-        
+        void CameraInterpolation(EntityUpdateEventArgs eventArgs)
+        {
+
+            // Globals.MainCamera = Camera.Lerp(Globals.MainCamera, Globals.WebCam, _camInterpIndex);
+            Globals.MainCamera = Globals.PlayerCamera;
+        }
     }
 }
