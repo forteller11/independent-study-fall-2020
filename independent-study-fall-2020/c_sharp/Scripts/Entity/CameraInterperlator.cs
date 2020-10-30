@@ -27,7 +27,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
 
             if (_isInterpolating)
             {
-                Globals.MainCamera.CopyFrom(Camera.Lerp(Globals.MainCamera, _interpolationTarget, MathInd.SmoothStep(_interpolationIndex)));
+                Camera.Lerp(Globals.MainCamera, _interpolationTarget, MathInd.SmoothStep(_interpolationIndex),  Globals.MainCamera);
                 _interpolationIndex += INTERPOLATION_STEP;
                 
                 if (_interpolationIndex > 1)

@@ -34,6 +34,15 @@ namespace CART_457.Renderer
 
             return camera;
         }
+        
+        public static void Lerp(Camera cam1, Camera cam2, float t, Camera camResult)
+        {
+            camResult.Position = Vector3.Lerp(cam1.Position, cam2.Position, t);
+            camResult.Rotation = Quaternion.Slerp(cam1.Rotation, cam2.Rotation, t);
+            camResult.Projection = MathInd.Lerp(cam1.Projection, cam2.Projection, t);
+            camResult.NearClip = MathInd.Lerp(cam1.NearClip, cam2.NearClip, t);
+            camResult.FarClip = MathInd.Lerp(cam1.FarClip, cam2.FarClip, t);
+        }
 
         public void CopyFrom(Camera copy)
         {
