@@ -195,6 +195,7 @@ namespace CART_457.Renderer
                     {
                         Entity entity = materialBatch.Entities[entityIndex];
                         
+                        materialBatch.Material.PerEntityUniformSender.Invoke(entity, materialBatch.Material);
                         entity.SendUniformsPerObject(materialBatch.Material);
 
                         GL.DrawArrays(PrimitiveType.Triangles, 0, materialBatch.Material.VAO.VerticesCount);

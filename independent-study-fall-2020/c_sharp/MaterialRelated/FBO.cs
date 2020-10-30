@@ -18,6 +18,7 @@ namespace CART_457.MaterialRelated
         public Size Size { get; private set; }
 
         public Action RenderCapSettings;
+        public Camera Camera;
         public Texture ColorTexture1 { get; private set; }
         public Texture ColorTexture2 { get; private set; }
         public Texture DepthTexture { get; private set; }
@@ -25,12 +26,14 @@ namespace CART_457.MaterialRelated
         public ClearBufferMask ClearBufferBit;
 
         private FBO() { }
-        public static FBO Custom( string name, Size size, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
+        public static FBO Custom( string name, Size size, Camera mainCamera, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
-            fbo.Name = name;
             fbo.Handle = GL.GenFramebuffer();
+            
+            fbo.Name = name;
             fbo.Size = size;
+            fbo.Camera = mainCamera;
             fbo.RenderCapSettings = renderCapSettings;
             fbo.ClearBufferBit = clearBufferBit;
             
@@ -42,6 +45,7 @@ namespace CART_457.MaterialRelated
             
             if (depthAttachment)
                 fbo.AddDepthAttachment();
+            
             return fbo;
         }
 

@@ -17,6 +17,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             SetupMaterials(materials);
         }
 
+        
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             UpdateAction?.Invoke(this);
@@ -48,17 +49,6 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         
         public override void SendUniformsPerObject(Material material)
         {
-            if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
-            {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
-            }
-            else
-            {
-                UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
-                UniformSender.SendLights(material);
-                UniformSender.SendGlobals(material);
-            }
 
         }
     }

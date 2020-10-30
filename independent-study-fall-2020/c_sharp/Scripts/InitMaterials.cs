@@ -27,6 +27,43 @@ namespace CART_457.Scripts
         {
         
         
+            
+
+            #region solid_color
+            var shaderSolid = ShaderProgram.Standard("textureless");
+            
+            SolidSphere = Material.EntitySolid(FboSetup.Room1, shaderSolid, InitMeshes.IcoSphereHighPoly, null);
+            Camera = Material.EntitySolid(FboSetup.Room1, shaderSolid, InitMeshes.Diamond, null);
+            #endregion
+
+            #region shadow maps
+            var shadowShader = ShaderProgram.Standard("shadow_map");
+            
+            ShadowMapSphere = Material.EntityCastShadow(
+                FboSetup.Shadow,
+                shadowShader,
+                InitMeshes.IcoSphereHighPoly,
+                null);
+            
+            ShadowMapPlane = Material.EntityCastShadow(
+                FboSetup.Shadow,
+                shadowShader,
+                InitMeshes.Plane,
+                null);
+            
+            ShadowMapTable = Material.EntityCastShadow(
+                FboSetup.Shadow,
+                shadowShader,
+                InitMeshes.TableProto,
+                null);
+            
+            ShadowMapDiamond = Material.EntityCastShadow(
+                FboSetup.Shadow,
+                shadowShader,
+                InitMeshes.Diamond,
+                null);
+            #endregion
+            
             #region normal materials
             var normalShader = ShaderProgram.Standard("normal_map");
 
@@ -38,9 +75,10 @@ namespace CART_457.Scripts
             };
             
             DirtSphere  = MaterialPreconfigs.Normal(
-                FboSetup.Main,
+                FboSetup.Room1,
                 normalShader,
                 InitMeshes.IcoSphereHighPoly,
+                FboSetup.Shadow,
                 TextureSetup.DirtDiffuse,
                 TextureSetup.DirtNormalMap,
                 TextureSetup.DirtSpecularMap,
@@ -48,9 +86,10 @@ namespace CART_457.Scripts
                 );
             
             DirtPlane  = MaterialPreconfigs.Normal(
-                FboSetup.Main,
+                FboSetup.Room1,
                 normalShader,
                 InitMeshes.Plane,
+                FboSetup.Shadow,
                 TextureSetup.DirtDiffuse,
                 TextureSetup.DirtNormalMap,
                 TextureSetup.DirtSpecularMap,
@@ -58,9 +97,10 @@ namespace CART_457.Scripts
                 );
             
             TileSphere = MaterialPreconfigs.Normal(
-                FboSetup.Main,
+                FboSetup.Room1,
                 normalShader,
                 InitMeshes.IcoSphereHighPoly,
+                FboSetup.Shadow,
                 TextureSetup.CarpetDiffuse,
                 TextureSetup.CarpetNormalMap,
                 TextureSetup.CarpetSpecularMap,
@@ -68,9 +108,10 @@ namespace CART_457.Scripts
                 );
             
             TableProto = MaterialPreconfigs.Normal(
-                FboSetup.Main,
+                FboSetup.Room1,
                 normalShader,
                 InitMeshes.TableProto,
+                FboSetup.Shadow,
                 TextureSetup.TableDiffuse,
                 TextureSetup.TableNormal,
                 TextureSetup.TableSpecular,
@@ -78,56 +119,22 @@ namespace CART_457.Scripts
             );
             
             EyeBall = MaterialPreconfigs.Normal(
-                FboSetup.Main,
+                FboSetup.Room1,
                 normalShader,
                 InitMeshes.Eyeball,
+                FboSetup.Shadow,
                 TextureSetup.EyeDiffuse,
                 TextureSetup.EyeNormal,
                 TextureSetup.EyeSpecular,
                 normaMaterialUniformSender
             );
             #endregion
-
-            #region solid_color
-            var shaderSolid = ShaderProgram.Standard("textureless");
-            
-            SolidSphere = Material.EntityBased(FboSetup.Main, shaderSolid, InitMeshes.IcoSphereHighPoly, null);
-            Camera = Material.EntityBased(FboSetup.Main, shaderSolid, InitMeshes.Diamond, null);
-            #endregion
-
-            #region shadow maps
-            var shadowShader = ShaderProgram.Standard("shadow_map");
-            
-            ShadowMapSphere = Material.EntityBased(
-                FboSetup.Shadow,
-                shadowShader,
-                InitMeshes.IcoSphereHighPoly,
-                null);
-            
-            ShadowMapPlane = Material.EntityBased(
-                FboSetup.Shadow,
-                shadowShader,
-                InitMeshes.Plane,
-                null);
-            
-            ShadowMapTable = Material.EntityBased(
-                FboSetup.Shadow,
-                shadowShader,
-                InitMeshes.TableProto,
-                null);
-            
-            ShadowMapDiamond = Material.EntityBased(
-                FboSetup.Shadow,
-                shadowShader,
-                InitMeshes.Diamond,
-                null);
-            #endregion
             
             PostProcessing = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
-            PostProcessing.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, FboSetup.Main.ColorTexture1);
-            PostProcessing.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, FboSetup.Main.ColorTexture2);
+            PostProcessing.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, FboSetup.Room1.ColorTexture1);
+            PostProcessing.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, FboSetup.Room1.ColorTexture2);
             // PostProcessing.SetupSampler(Material.MAIN_DEPTH_FBO_SAMPLER, FboSetup.Shadow.DepthTexture);
-            PostProcessing.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER, FboSetup.Main.DepthTexture);
+            PostProcessing.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER, FboSetup.Room1.DepthTexture);
             
         }
 

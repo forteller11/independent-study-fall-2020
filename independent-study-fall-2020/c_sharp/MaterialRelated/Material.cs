@@ -1,8 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using CART_457.c_sharp.Renderer;
+using CART_457.EntitySystem;
 using OpenTK.Graphics.OpenGL4;
 using CART_457.Helpers;
+using CART_457.Renderer;
 using CART_457.Scripts;
 
 namespace CART_457.MaterialRelated
@@ -25,6 +28,9 @@ namespace CART_457.MaterialRelated
         private List<Texture> _textures = new List<Texture>();
 
         public Action<Material> PerMaterialUniformSender;
+        public Action<Entity, Material> PerEntityUniformSender;
+
+        public bool IsShadowMapMaterial;
         private const bool DEBUG = false;
 
         static Material()
@@ -45,7 +51,7 @@ namespace CART_457.MaterialRelated
         }
         
         
-        public static Material EntityBased(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material GenericEntityBased(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
             var mat = new Material();
             mat.Shader = shaderProgram;
@@ -53,6 +59,40 @@ namespace CART_457.MaterialRelated
             mat.RenderTarget = fbo;
             mat.GetUniformAndAttribLocations();
             mat.VAO = new VAOAndBuffers(mat, mesh);
+            return mat;
+        }
+
+        public static Material EntityNormalUseShadow(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, FBO shadowMapFBO, Action<Material> perMaterialUniformSender)
+        {
+            var mat = GenericEntityBased(fbo, shaderProgram, mesh, perMaterialUniformSender);
+            mat.PerEntityUniformSender += (entity, material) =>
+            {
+                UniformSender.SendTransformMatrices(entity, material, shadowMapFBO.Camera, "Light");
+                UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
+                UniformSender.SendLights(material);
+                UniformSender.SendGlobals(material);
+            };
+            return mat;
+        }
+        
+        public static Material EntitySolid(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        {
+            var mat = GenericEntityBased(fbo, shaderProgram, mesh, perMaterialUniformSender);
+            mat.PerEntityUniformSender += (entity, material) =>
+            {
+                UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
+                UniformSender.SendGlobals(material);
+            };
+            return mat;
+        }
+        
+        public static Material EntityCastShadow(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        {
+            var mat = GenericEntityBased(fbo, shaderProgram, mesh, perMaterialUniformSender);
+            mat.PerEntityUniformSender += (entity, material) =>
+            {
+                UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera, "Light");
+            };
             return mat;
         }
         
@@ -63,7 +103,7 @@ namespace CART_457.MaterialRelated
              mat.RenderTarget = FboSetup.PostProcessing;
              mat.GetUniformAndAttribLocations();
              mat.VAO = new VAOAndBuffers(mat, InitMeshes.ViewSpaceQuad);
-             mat.PerMaterialUniformSender = _ => FboSetup.Main.UseTexturesAndGenerateMipMaps();
+             mat.PerMaterialUniformSender = _ => FboSetup.Room1.UseTexturesAndGenerateMipMaps();
              return mat;
          }
 

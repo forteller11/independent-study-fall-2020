@@ -8,7 +8,7 @@ namespace CART_457.Renderer
 {
     public static class Globals
     {
-        public static Camera MainCamera;
+        public static Camera MainCamera = new Camera();
         public static Camera PlayerCamera;
         public static Camera WebCam;
         public static Camera ShadowCastingLight;

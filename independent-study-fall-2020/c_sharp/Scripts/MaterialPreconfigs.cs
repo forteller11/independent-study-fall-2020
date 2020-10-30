@@ -10,15 +10,11 @@ namespace CART_457.Scripts
     {
 
         public static Material Normal(
-            FBO fbo, 
-            ShaderProgram shaderProgram, 
-            Mesh mesh, 
-            Texture diffuse, 
-            Texture normal, 
-            Texture specular, 
+            FBO fbo, ShaderProgram shaderProgram, Mesh mesh, FBO shadowMapFBO, 
+            Texture diffuse, Texture normal, Texture specular, 
             Action<Material> perMatSender)
         {
-            var mat = Material.EntityBased(fbo, shaderProgram, mesh, perMatSender);
+            var mat = Material.EntityNormalUseShadow(fbo, shaderProgram, mesh, shadowMapFBO, perMatSender);
 
             mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);
             mat.SetupSampler(UniformSender.NORMAL_MAP_SAMPLER, normal);

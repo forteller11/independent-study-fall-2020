@@ -16,6 +16,7 @@ namespace CART_457.Scripts
         {
             List<Entity> gameObjects = new List<Entity>();
 
+            #region room1
             var table = Empty.FromPosition(new Vector3(0, 3, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
             table.LocalScale *= 0.2f;
             table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
@@ -58,6 +59,7 @@ namespace CART_457.Scripts
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
                 gameObjects.Add(new PointLightVisualizer(i,InitMaterials.SolidSphere));
+            #endregion
 
             return gameObjects.ToArray();
         }
