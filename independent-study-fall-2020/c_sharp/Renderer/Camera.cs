@@ -34,5 +34,14 @@ namespace CART_457.Renderer
 
             return camera;
         }
+
+        public void CopyFrom(Camera copy)
+        {
+            Position = copy.Position;
+            Rotation = copy.Rotation;
+            Projection = copy.Projection;
+            NearClip = copy.NearClip;
+            FarClip = copy.FarClip;
+        }
     }
 }

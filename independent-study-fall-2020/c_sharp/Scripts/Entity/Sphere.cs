@@ -50,17 +50,17 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 
         public override void SendUniformsPerObject(Material material)
         {
-            if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
-            {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
-            }
-            else
-            {
-                UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
-                UniformSender.SendLights(material);
-                UniformSender.SendGlobals(material);
-            }
+            // if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
+            // {
+            //     UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
+            // }
+            // else
+            // {
+            //     UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
+            //     UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
+            //     UniformSender.SendLights(material);
+            //     UniformSender.SendGlobals(material);
+            // }
 
         }
         

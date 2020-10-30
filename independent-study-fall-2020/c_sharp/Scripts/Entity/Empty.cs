@@ -49,6 +49,17 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         
         public override void SendUniformsPerObject(Material material)
         {
+            // if (material.IsShadowMapMaterial)
+            // {
+            //     UniformSender.SendTransformMatrices(this, material, material.RenderTarget.MainCamera, "Light");
+            // }
+            // else
+            // {
+            //     UniformSender.SendTransformMatrices(this, material,  material.RenderTarget.MainCamera);
+            //     UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
+            //     UniformSender.SendLights(material);
+            //     UniformSender.SendGlobals(material);
+            // }
 
         }
     }

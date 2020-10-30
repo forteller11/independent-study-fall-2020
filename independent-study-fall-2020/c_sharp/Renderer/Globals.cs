@@ -8,10 +8,10 @@ namespace CART_457.Renderer
 {
     public static class Globals
     {
-        public static Camera MainCamera = new Camera();
-        public static Camera PlayerCamera;
-        public static Camera WebCam;
-        public static Camera ShadowCastingLight;
+        public static readonly Camera MainCamera = new Camera();
+        public static readonly Camera PlayerCamera = new Camera();
+        public static readonly Camera WebCam = new Camera();
+        public static readonly Camera ShadowCastingLight = new Camera();
         
         public static Random Random;
         public static List<DirectionLight> DirectionLights;
@@ -24,17 +24,7 @@ namespace CART_457.Renderer
         public static Vector2 MousePositionLastFrame;
         public static void Init()
         {
-            float near = 0.1f;
-            float far = 100f;
-            
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var playerCamPerspective);
-            PlayerCamera = new Camera(Vector3.Zero, Quaternion.Identity, playerCamPerspective, near, far);
-            
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
-            WebCam = new Camera(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, webCamPerspective, near, far);
-            
-            Matrix4.CreateOrthographic(25, 25, near, far, out var shadowLightPerspective);
-            ShadowCastingLight = new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far);
+
             
             DirectionLights = new List<DirectionLight>();
             PointLights = new List<PointLight>();

@@ -1,13 +1,9 @@
 ﻿
 using System;
-using System.Numerics;
-using CART_457.Helpers;
 using CART_457.Renderer;
-using CART_457.Scripts;
+
+using OpenTK;
 using OpenTK.Input;
-using Quaternion = OpenTK.Quaternion;
-using Vector2 = OpenTK.Vector2;
-using Vector3 = OpenTK.Vector3;
 
 namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
@@ -25,10 +21,23 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         
         public override void OnLoad()
         {
+            float near = 0.1f;
+            float far = 100f;
+            
+            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var playerCamPerspective);
+            Globals.PlayerCamera.CopyFrom(new Camera(Vector3.Zero, Quaternion.Identity, playerCamPerspective, near, far));
             Globals.PlayerCamera.Position = new Vector3(0,0,2);
             Globals.PlayerCamera.Rotation = Quaternion.Identity;
             
-            Globals.MainCamera = Globals.PlayerCamera;
+            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
+            Globals.WebCam.CopyFrom(new Camera(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, webCamPerspective, near, far));
+            
+            Matrix4.CreateOrthographic(25, 25, near, far, out var shadowLightPerspective);
+            Globals.ShadowCastingLight.CopyFrom(new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far));
+            
+            
+            
+            Globals.MainCamera.CopyFrom(Globals.PlayerCamera);
 
         }
 
