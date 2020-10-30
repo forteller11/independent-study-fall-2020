@@ -25,29 +25,6 @@ namespace CART_457.MaterialRelated
         private List<Texture> _textures = new List<Texture>();
 
         public Action<Material> PerMaterialUniformSender;
-        
-
-        public const string MODEL_TO_VIEW_UNIFORM = "ModelToView";
-        public const string WORLD_TO_VIEW_UNIFORM = "WorldToView";
-        public const string MODEL_TO_WORLD_UNIFORM = "ModelToWorld";
-        public const string MODEL_ROTATION_UNIFORM = "ModelRotation";
-        public const string MODEL_TO_WORLD_NO_PROJECTION_UNIFORM = "ModelToWorldNoProjection";
-        public const string CAM_POSITION_UNIFORM = "CamPosition";
-        
-        public const string DIFFUSE_SAMPLER = "Diffuse";
-        public const string SPECULAR_MAP_SAMPLER = "Gloss";
-        public const string NORMAL_MAP_SAMPLER = "Normal";
-        
-        public const string MAIN_COLOR_FBO_SAMPLER = "MainTexture";
-        public const string SECONDARY_COLOR_FBO_SAMPLER = "SecondaryTexture";
-        public const string MAIN_DEPTH_FBO_SAMPLER = "MainDepthTexture";
-        public const string NOISE_TEXTURE = "NoiseTexture";
-
-        public const string SHADOW_MAP_SAMPLER = "ShadowMap";
-
-        public const string TRANSFORM_BUFFER = "Transform";
-        
-        
         private const bool DEBUG = false;
 
         static Material()

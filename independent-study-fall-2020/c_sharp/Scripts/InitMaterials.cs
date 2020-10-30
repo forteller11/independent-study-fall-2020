@@ -124,10 +124,10 @@ namespace CART_457.Scripts
             #endregion
             
             PostProcessing = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
-            PostProcessing.SetupSampler(Material.MAIN_COLOR_FBO_SAMPLER, FboSetup.Main.ColorTexture1);
-            PostProcessing.SetupSampler(Material.SECONDARY_COLOR_FBO_SAMPLER, FboSetup.Main.ColorTexture2);
+            PostProcessing.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, FboSetup.Main.ColorTexture1);
+            PostProcessing.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, FboSetup.Main.ColorTexture2);
             // PostProcessing.SetupSampler(Material.MAIN_DEPTH_FBO_SAMPLER, FboSetup.Shadow.DepthTexture);
-            PostProcessing.SetupSampler(Material.MAIN_DEPTH_FBO_SAMPLER, FboSetup.Main.DepthTexture);
+            PostProcessing.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER, FboSetup.Main.DepthTexture);
             
         }
 

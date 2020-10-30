@@ -59,7 +59,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
                 UniformSender.SendLights(material);
-                UniformSender.SendTime(material);
+                UniformSender.SendGlobals(material);
             }
 
         }

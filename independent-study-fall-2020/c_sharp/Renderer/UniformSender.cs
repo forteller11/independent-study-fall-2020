@@ -10,8 +10,32 @@ namespace CART_457.c_sharp.Renderer
 {
     public static class UniformSender
     {
+        
+        #region uniform identifiers
         private const string DIR_LIGHT = "DirectionLights";
         private const string POINT_LIGHT = "PointLights";
+        
+        public const string MODEL_TO_VIEW_UNIFORM = "ModelToView";
+        public const string WORLD_TO_VIEW_UNIFORM = "WorldToView";
+        public const string MODEL_TO_WORLD_UNIFORM = "ModelToWorld";
+        public const string MODEL_ROTATION_UNIFORM = "ModelRotation";
+        public const string MODEL_TO_WORLD_NO_PROJECTION_UNIFORM = "ModelToWorldNoProjection";
+        public const string CAM_POSITION_UNIFORM = "CamPosition";
+        
+        public const string DIFFUSE_SAMPLER = "Diffuse";
+        public const string SPECULAR_MAP_SAMPLER = "Gloss";
+        public const string NORMAL_MAP_SAMPLER = "Normal";
+        
+        public const string MAIN_COLOR_FBO_SAMPLER = "MainTexture";
+        public const string SECONDARY_COLOR_FBO_SAMPLER = "SecondaryTexture";
+        public const string MAIN_DEPTH_FBO_SAMPLER = "MainDepthTexture";
+        public const string NOISE_TEXTURE = "NoiseTexture";
+
+        public const string SHADOW_MAP_SAMPLER = "ShadowMap";
+
+        public const string TRANSFORM_BUFFER = "Transform";
+        public const string GLOBALS = "Transform";
+        #endregion
         
         /// <summary>
         /// Sends "ModelToWorld" and "WorldToView" uniform matrices to shader
@@ -31,12 +55,12 @@ namespace CART_457.c_sharp.Renderer
             var modelToViewNoProjection = modelToWorld * worldToViewTranslation * worldToViewRotation;
             var modelToView = modelToWorld * worldToView;
             
-            SetMatrix4(material, Material.MODEL_TO_VIEW_UNIFORM + suffix, modelToView, false);
-            SetMatrix4(material, Material.WORLD_TO_VIEW_UNIFORM + suffix, worldToView, false);
-            SetMatrix4(material, Material.MODEL_ROTATION_UNIFORM + suffix, modelToWorldRotation, false);
-            SetMatrix4(material, Material.MODEL_TO_WORLD_UNIFORM + suffix, modelToWorld, false);
-            SetMatrix4(material, Material.MODEL_TO_WORLD_NO_PROJECTION_UNIFORM + suffix, modelToViewNoProjection, false);
-            SetVector3(material, Material.CAM_POSITION_UNIFORM + suffix, camera.Position, false);
+            SetMatrix4(material, MODEL_TO_VIEW_UNIFORM + suffix, modelToView, false);
+            SetMatrix4(material, WORLD_TO_VIEW_UNIFORM + suffix, worldToView, false);
+            SetMatrix4(material, MODEL_ROTATION_UNIFORM + suffix, modelToWorldRotation, false);
+            SetMatrix4(material, MODEL_TO_WORLD_UNIFORM + suffix, modelToWorld, false);
+            SetMatrix4(material, MODEL_TO_WORLD_NO_PROJECTION_UNIFORM + suffix, modelToViewNoProjection, false);
+            SetVector3(material, CAM_POSITION_UNIFORM + suffix, camera.Position, false);
         }
 
         /// <summary>
@@ -63,21 +87,14 @@ namespace CART_457.c_sharp.Renderer
             }
         }
 
-        public static void SendShadowMapInfo()
+        public static void SendGlobals(Material material)
         {
-            
+            SetFloat(material, GLOBALS + ".TimeAbs", Globals.AbsTimeF);
+            SetFloat(material, GLOBALS + ".TimeDelta", Globals.DeltaTimeF);
+            SetVector2(material, GLOBALS + ".WindowSize", new Vector2(DrawManager.TKWindowSize.Width, DrawManager.TKWindowSize.Height));
         }
 
-        //todo set element vec
-        public static void SendTime(Material material)
-        {
-            // SetVector4(material, "Time", new Vector4(Globals.AbsTimeF, MathF.Cos(Globals.AbsTimeF), 0, 0));
-            SetFloat(material, "Time", Globals.AbsTimeF);
-//            gameObject.Material.set 
-//            Globals.AbsoluteTime
-        }
-        
-        
+        #region type senders helpers
         public static void SetMatrix4(Material mat, string name, OpenTK.Matrix4 matrix4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) mat.Shader.Use();
@@ -164,7 +181,7 @@ namespace CART_457.c_sharp.Renderer
             //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
-        public static void SetVector4(Material mat, string name, OpenTK.Vector4 vector4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        public static void SetVector4(Material mat, string name, Vector4 vector4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))
@@ -172,5 +189,15 @@ namespace CART_457.c_sharp.Renderer
             // else
             //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
+        
+        public static void SetVector2(Material mat, string name, Vector2 vector2, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform2(location, ref vector2);
+            // else
+            //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        #endregion
     }
 }

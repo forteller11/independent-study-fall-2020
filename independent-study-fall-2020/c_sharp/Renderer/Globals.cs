@@ -18,6 +18,8 @@ namespace CART_457.Renderer
         public static List<PointLight> PointLights;
         public static double AbsTime = 0;
         public static float AbsTimeF = 0;
+        public static double DeltaTime = 0;
+        public static float DeltaTimeF = 0;
 
         public static Vector2 MousePositionLastFrame;
         public static void Init()
@@ -42,6 +44,9 @@ namespace CART_457.Renderer
 
         public static void Update(EntityUpdateEventArgs args)
         {
+            DeltaTime = args.DeltaTime;
+            DeltaTimeF = (float) DeltaTime;
+            
             AbsTime += args.DeltaTime;
             AbsTimeF = (float) AbsTime;
             MousePositionLastFrame = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
