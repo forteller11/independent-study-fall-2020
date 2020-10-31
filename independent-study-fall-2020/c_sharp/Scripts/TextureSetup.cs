@@ -2,6 +2,16 @@
 using CART_457.MaterialRelated;
 using OpenTK.Graphics.OpenGL4;
 
+/* Texture Unit standard
+ 
+ 0-2 for normal textures inputting into shader (diffuse, normals, specular-map etc.)
+ 
+ 3-5 used as input for framebuffers to shaders (color1 and 2, depth1)
+ 
+ 6- used by custom fbos for non linear passes
+ 
+ 
+ */
 namespace CART_457.Scripts
 {
     public static class TextureSetup

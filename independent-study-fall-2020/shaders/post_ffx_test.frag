@@ -2,24 +2,14 @@
 layout (location = 1) out vec4 SecondaryFragColor;
 
 in vec2 v2f_uv;
+
+//uniform sampler2D Room2Texture;
+
 const float MAX_OFFSET = 0.01;
 
 void main(){
-
-    //float depth = texture(MainDepth, vec3(v2f_uv,1), 0.01);
-    //vec4 depthColor = texture(MainDepth, v2f_uv);
-    //vec4 color = texture(MainColor, v2f_uv);
-    //frag_color = vec4(vec3(depth), 1);
-    
     float depth = texture(SecondaryTexture, v2f_uv).r;
-//    if (depth >= .99){
-//        depth = 0;
-//    }
 
-
-//    float noise = rand(gl_FragCoord.xy);
-//    MainFragColor = vec4(vec3(rand(gl_FragCoord.xy)), 1);
-    
     float offsetDynamic = mix(-.05, MAX_OFFSET, depth);
     offsetDynamic = max(0, offsetDynamic);
 

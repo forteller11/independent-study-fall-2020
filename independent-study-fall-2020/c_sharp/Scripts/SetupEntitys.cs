@@ -16,6 +16,13 @@ namespace CART_457.Scripts
         {
             List<Entity> gameObjects = new List<Entity>();
 
+            #region room2
+            gameObjects.Add(new SinMover(new Vector3(-3,1,0), Vector3.Zero, InitMaterials.SolidSphereR2));
+            gameObjects.Add(new SinMover(new Vector3(0,2,-4), Vector3.Zero, InitMaterials.SolidSphereR2));
+            gameObjects.Add(new SinMover(new Vector3(3,0,0), Vector3.Zero, InitMaterials.SolidSphereR2));
+            gameObjects.Add(new SinMover(new Vector3(-3,-1,-4), Vector3.Zero, InitMaterials.SolidSphereR2));
+            gameObjects.Add(new SinMover(new Vector3(0,-2,4), Vector3.Zero, InitMaterials.SolidSphereR2));
+            #endregion
             #region room1
             var table = Empty.FromPosition(new Vector3(0, 3, 0), InitMaterials.TableProto, InitMaterials.ShadowMapTable);
             table.LocalScale *= 0.2f;
