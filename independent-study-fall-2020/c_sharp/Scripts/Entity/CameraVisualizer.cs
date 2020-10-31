@@ -32,8 +32,8 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            EntityTransformToCamera(_playerCamVisualizer, Globals.PlayerCamera);
-            EntityTransformToCamera(_webCamVisualizer, Globals.WebCam);
+            EntityTransformToCamera(_playerCamVisualizer, Globals.PlayerCameraRoom1);
+            EntityTransformToCamera(_webCamVisualizer, Globals.WebCamRoom1);
         }
 
         private Entity AddCamera(Vector4 color)

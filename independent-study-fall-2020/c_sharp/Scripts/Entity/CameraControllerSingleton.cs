@@ -25,19 +25,19 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             float far = 100f;
             
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var playerCamPerspective);
-            Globals.PlayerCamera.CopyFrom(new Camera(Vector3.Zero, Quaternion.Identity, playerCamPerspective, near, far));
-            Globals.PlayerCamera.Position = new Vector3(0,0,2);
-            Globals.PlayerCamera.Rotation = Quaternion.Identity;
+            Globals.PlayerCameraRoom1.CopyFrom(new Camera(Vector3.Zero, Quaternion.Identity, playerCamPerspective, near, far));
+            Globals.PlayerCameraRoom1.Position = new Vector3(0,0,2);
+            Globals.PlayerCameraRoom1.Rotation = Quaternion.Identity;
             
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
-            Globals.WebCam.CopyFrom(new Camera(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, webCamPerspective, near, far));
+            Globals.WebCamRoom1.CopyFrom(new Camera(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, webCamPerspective, near, far));
             
             Matrix4.CreateOrthographic(25, 25, near, far, out var shadowLightPerspective);
-            Globals.ShadowCastingLight.CopyFrom(new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far));
+            Globals.ShadowCastingLightRoom1.CopyFrom(new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far));
             
             
             
-            Globals.MainCamera.CopyFrom(Globals.PlayerCamera);
+            Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
 
         }
 
@@ -59,7 +59,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
 
-            Globals.PlayerCamera.Rotation =  rotationHorz * Globals.PlayerCamera.Rotation * rotationVert;
+            Globals.PlayerCameraRoom1.Rotation =  rotationHorz * Globals.PlayerCameraRoom1.Rotation * rotationVert;
             // todo dont allow rotations past 90 degrees DOWN
         }
         void Move(EntityUpdateEventArgs eventArgs)
@@ -84,7 +84,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             if (input.Space.IsHeldDown)  verticalInput++;
 
             Vector3 inputVector = new Vector3(horzInput, 0, depthInput);
-            Vector3 movementRelative = Globals.PlayerCamera.Rotation * inputVector;
+            Vector3 movementRelative = Globals.PlayerCameraRoom1.Rotation * inputVector;
 
             Vector2 movementHorzontal = Vector2.Zero; //make horizontal speed consistent no matter the rotation of the camera
             if (horzInput != 0 || depthInput != 0) 
@@ -93,7 +93,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
                 movementHorzontal = Vector2.Normalize(movementHorzontalInput) * _horziontalVelocity * sprintMultiplier;
             }
 
-            Globals.PlayerCamera.Position += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
+            Globals.PlayerCameraRoom1.Position += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
         }
 
      

@@ -30,7 +30,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         {
             if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
             {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLightRoom1, "Light");
             }
             else
             { 

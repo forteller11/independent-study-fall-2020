@@ -19,7 +19,7 @@ namespace CART_457.Scripts
             mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);
             mat.SetupSampler(UniformSender.NORMAL_MAP_SAMPLER, normal);
             mat.SetupSampler(UniformSender.SPECULAR_MAP_SAMPLER, specular);
-            mat.SetupSampler(UniformSender.SHADOW_MAP_SAMPLER, FboSetup.Shadow.ColorTexture1);
+            mat.SetupSampler(UniformSender.SHADOW_MAP_SAMPLER, FboSetup.Shadow1.ColorTexture1);
             mat.SetupSampler(UniformSender.NOISE_TEXTURE, TextureSetup.NoiseStatic);
 
             return mat;

@@ -41,13 +41,13 @@ namespace CART_457.Scripts
 
             gameObjects.Add(table);
             
-            gameObjects.Add(new Sphere(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(3,0,4),new Vector3(.55f, .1f, .05f), InitMaterials.TileSphere, InitMaterials.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(6,3,4),new Vector3(.1f,-.5f,.06f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(1,1,2),new Vector3(.19f,-.1f,.06f), InitMaterials.TileSphere, InitMaterials.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(1,4,2),new Vector3(.13f,-.1f,.05f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
-            gameObjects.Add(new Sphere(new Vector3(1,7,2),new Vector3(.1f,-.1f,.50f), InitMaterials.TileSphere, InitMaterials.ShadowMapSphere));
+            gameObjects.Add(new SinMover(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
+            gameObjects.Add(new SinMover(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
+            gameObjects.Add(new SinMover(new Vector3(3,0,4),new Vector3(.55f, .1f, .05f), InitMaterials.TileSphere, InitMaterials.ShadowMapSphere));
+            gameObjects.Add(new SinMover(new Vector3(6,3,4),new Vector3(.1f,-.5f,.06f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
+            gameObjects.Add(new SinMover(new Vector3(1,1,2),new Vector3(.19f,-.1f,.06f), InitMaterials.TileSphere, InitMaterials.ShadowMapSphere));
+            gameObjects.Add(new SinMover(new Vector3(1,4,2),new Vector3(.13f,-.1f,.05f), InitMaterials.DirtSphere, InitMaterials.ShadowMapSphere));
+            gameObjects.Add(new SinMover(new Vector3(1,7,2),new Vector3(.1f,-.1f,.50f), InitMaterials.TileSphere, InitMaterials.ShadowMapSphere));
             var s = Empty.FromPosition(new Vector3(0, -5, 0), InitMaterials.DirtPlane, InitMaterials.ShadowMapPlane);
             s.LocalScale = new Vector3(4);
             var s2 = Empty.FromPosition(new Vector3(0, -12, 0), InitMaterials.DirtPlane, InitMaterials.ShadowMapPlane);
@@ -58,7 +58,7 @@ namespace CART_457.Scripts
             gameObjects.Add(new FBOVisualizationInput());
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                gameObjects.Add(new PointLightVisualizer(i,InitMaterials.SolidSphere));
+                gameObjects.Add(new PointLightVisualizer(i,InitMaterials.SolidSphereR2));
             #endregion
 
             return gameObjects.ToArray();

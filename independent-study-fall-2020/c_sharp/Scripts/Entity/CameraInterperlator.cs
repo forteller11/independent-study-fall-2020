@@ -15,14 +15,14 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
         private const float INTERPOLATION_STEP = 0.02f;
         public override void OnLoad()
         {
-            _interpolationTarget = Globals.PlayerCamera;
+            _interpolationTarget = Globals.PlayerCameraRoom1;
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
 
-            CheckForBeginInterpolation(eventArgs.InputState.Num1, Globals.PlayerCamera);
-            CheckForBeginInterpolation(eventArgs.InputState.Num2, Globals.WebCam);
+            CheckForBeginInterpolation(eventArgs.InputState.Num1, Globals.PlayerCameraRoom1);
+            CheckForBeginInterpolation(eventArgs.InputState.Num2, Globals.WebCamRoom1);
 
 
             if (_isInterpolating)

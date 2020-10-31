@@ -8,8 +8,11 @@ namespace CART_457.Scripts
     public class FboSetup
     {
 
-        [IncludeInDrawLoop] public static FBO Shadow; 
+        [IncludeInDrawLoop] public static FBO Shadow1; 
+         
         [IncludeInDrawLoop] public static FBO Room1;
+        [IncludeInDrawLoop] public static FBO Room2;
+        [IncludeInDrawLoop] public static FBO Shadow2;
         [IncludeInDrawLoop] public static FBO Default;
         
         [IncludeInPostFX] public static FBO PostProcessing;
@@ -17,7 +20,7 @@ namespace CART_457.Scripts
         static FboSetup ()
         {
         
-            Shadow = FBO.Custom("Shadow", DrawManager.TKWindowSize*4, Globals.ShadowCastingLight, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit,
+            Shadow1 = FBO.Serial("Shadow1", DrawManager.TKWindowSize*4, Globals.ShadowCastingLightRoom1, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit,
                 () =>
                 {
                     GL.Enable(EnableCap.Texture2D);
@@ -26,7 +29,23 @@ namespace CART_457.Scripts
                 GL.DepthFunc(DepthFunction.Less);
                 });
             
-            Room1 = FBO.Custom("Room1", DrawManager.TKWindowSize, Globals.MainCamera, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+            Room1 = FBO.Serial("Room1", DrawManager.TKWindowSize, Globals.MainCamera, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+                GL.Enable(EnableCap.Texture2D);
+                GL.Enable(EnableCap.DepthTest);
+                GL.Enable(EnableCap.CullFace);
+                GL.DepthFunc(DepthFunction.Less);
+            });
+            
+            Shadow2 = FBO.Serial("Shadow2", DrawManager.TKWindowSize*4, Globals.ShadowCastingLightRoom1, true,true, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit,
+                () =>
+                {
+                    GL.Enable(EnableCap.Texture2D);
+                    GL.Enable(EnableCap.DepthTest);
+                    GL.Enable(EnableCap.CullFace);
+                    GL.DepthFunc(DepthFunction.Less);
+                });
+            
+            Room2 = FBO.Serial("Room2", DrawManager.TKWindowSize, Globals.MainCamera, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
                 GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);
@@ -42,7 +61,7 @@ namespace CART_457.Scripts
                 
             });
             
-            PostProcessing  = FBO.Custom("Post-FX", DrawManager.TKWindowSize, null, true, true,false,
+            PostProcessing  = FBO.Serial("Post-FX", DrawManager.TKWindowSize, null, true, true,false,
                 ClearBufferMask.ColorBufferBit, () =>
                 {
                      GL.Disable(EnableCap.DepthTest);

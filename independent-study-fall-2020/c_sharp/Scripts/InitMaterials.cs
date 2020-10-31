@@ -9,13 +9,16 @@ namespace CART_457.Scripts
     public static class InitMaterials
     {
 
-        [IncludeInDrawLoop] public static Material SolidSphere;
+        [IncludeInDrawLoop] public static Material SolidSphereR1;
+        [IncludeInDrawLoop] public static Material SolidSphereR2;
         [IncludeInDrawLoop] public static Material DirtSphere;
         [IncludeInDrawLoop] public static Material DirtPlane;
         [IncludeInDrawLoop] public static Material TileSphere;
         [IncludeInDrawLoop] public static Material TableProto;
         [IncludeInDrawLoop] public static Material EyeBall;
         [IncludeInDrawLoop] public static Material Camera;
+        
+        //dirt sphere room2
         
         [IncludeInDrawLoop] public static Material ShadowMapSphere;
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
@@ -32,7 +35,8 @@ namespace CART_457.Scripts
             #region solid_color
             var shaderSolid = ShaderProgram.Standard("textureless");
             
-            SolidSphere = Material.EntitySolid(FboSetup.Room1, shaderSolid, InitMeshes.IcoSphereHighPoly, null);
+            SolidSphereR1 = Material.EntitySolid(FboSetup.Room1, shaderSolid, InitMeshes.IcoSphereHighPoly, null);
+            SolidSphereR2 = Material.EntitySolid(FboSetup.Room2, shaderSolid, InitMeshes.IcoSphereHighPoly, null);
             Camera = Material.EntitySolid(FboSetup.Room1, shaderSolid, InitMeshes.Diamond, null);
             #endregion
 
@@ -40,29 +44,31 @@ namespace CART_457.Scripts
             var shadowShader = ShaderProgram.Standard("shadow_map");
             
             ShadowMapSphere = Material.EntityCastShadow(
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 shadowShader,
                 InitMeshes.IcoSphereHighPoly,
                 null);
             
             ShadowMapPlane = Material.EntityCastShadow(
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 shadowShader,
                 InitMeshes.Plane,
                 null);
             
             ShadowMapTable = Material.EntityCastShadow(
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 shadowShader,
                 InitMeshes.TableProto,
                 null);
             
             ShadowMapDiamond = Material.EntityCastShadow(
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 shadowShader,
                 InitMeshes.Diamond,
                 null);
             #endregion
+            
+            
             
             #region normal materials
             var normalShader = ShaderProgram.Standard("normal_map");
@@ -71,14 +77,14 @@ namespace CART_457.Scripts
             {
                 UniformSender.SetFloat(mat, "NormalMapStrength", 2);
                 UniformSender.SetFloat(mat, "SpecularRoughness", 16);
-                FboSetup.Shadow.UseTexturesAndGenerateMipMaps();
+                FboSetup.Shadow1.UseTexturesAndGenerateMipMaps();
             };
             
             DirtSphere  = MaterialPreconfigs.Normal(
                 FboSetup.Room1,
                 normalShader,
                 InitMeshes.IcoSphereHighPoly,
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 TextureSetup.DirtDiffuse,
                 TextureSetup.DirtNormalMap,
                 TextureSetup.DirtSpecularMap,
@@ -89,7 +95,7 @@ namespace CART_457.Scripts
                 FboSetup.Room1,
                 normalShader,
                 InitMeshes.Plane,
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 TextureSetup.DirtDiffuse,
                 TextureSetup.DirtNormalMap,
                 TextureSetup.DirtSpecularMap,
@@ -100,7 +106,7 @@ namespace CART_457.Scripts
                 FboSetup.Room1,
                 normalShader,
                 InitMeshes.IcoSphereHighPoly,
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 TextureSetup.CarpetDiffuse,
                 TextureSetup.CarpetNormalMap,
                 TextureSetup.CarpetSpecularMap,
@@ -111,7 +117,7 @@ namespace CART_457.Scripts
                 FboSetup.Room1,
                 normalShader,
                 InitMeshes.TableProto,
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 TextureSetup.TableDiffuse,
                 TextureSetup.TableNormal,
                 TextureSetup.TableSpecular,
@@ -122,7 +128,7 @@ namespace CART_457.Scripts
                 FboSetup.Room1,
                 normalShader,
                 InitMeshes.Eyeball,
-                FboSetup.Shadow,
+                FboSetup.Shadow1,
                 TextureSetup.EyeDiffuse,
                 TextureSetup.EyeNormal,
                 TextureSetup.EyeSpecular,

@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace CART_457.EntitySystem.Scripts.EntityPrefab
 {
-    public class Sphere : EntitySystem.Entity
+    public class SinMover : EntitySystem.Entity
     {
 
         public Vector3 ran = Vector3.Zero;
@@ -18,20 +18,20 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
             LocalScale *= 1f;
         }
 
-        private Sphere(Material[] materials)
+        private SinMover(Material[] materials)
         {
             SetupMaterials(materials);
         }
-        public Sphere(Vector3 position, Vector3 ran2, params Material [] material)
+        public SinMover(Vector3 position, Vector3 ran2, params Material [] material)
         {
             LocalPosition = position;
             SetupMaterials(material);
            ran = ran2;
         }
 
-        public static Sphere PositionSize(Vector3 position, Vector3 size, params Material [] materials)
+        public static SinMover PositionSize(Vector3 position, Vector3 size, params Material [] materials)
         {
-            var sphere = new Sphere(materials);
+            var sphere = new SinMover(materials);
             sphere.LocalPosition = position;
             sphere.LocalScale = size;
             return sphere;

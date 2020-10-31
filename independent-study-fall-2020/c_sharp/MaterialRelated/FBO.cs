@@ -26,7 +26,8 @@ namespace CART_457.MaterialRelated
         public ClearBufferMask ClearBufferBit;
 
         private FBO() { }
-        public static FBO Custom( string name, Size size, Camera mainCamera, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
+        //serial in that the next fbos will automatically available have access to this fbos render outputs
+        public static FBO Serial( string name, Size size, Camera mainCamera, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
             fbo.Handle = GL.GenFramebuffer();
@@ -48,7 +49,34 @@ namespace CART_457.MaterialRelated
             
             return fbo;
         }
+        
+        //custom in that the output  textureunits can be manually assigned
+        public static FBO Custom( string name, Size size, Camera mainCamera, 
+            TextureUnit? colorAttachment01TextureUnit, TextureUnit? colorAttachment02TextureUnit, TextureUnit? depthAttachment01TextureUnit, 
+            ClearBufferMask clearBufferBit, Action renderCapSettings)
+        {
+            var fbo = new FBO();
+            fbo.Handle = GL.GenFramebuffer();
+            
+            fbo.Name = name;
+            fbo.Size = size;
+            fbo.Camera = mainCamera;
+            fbo.RenderCapSettings = renderCapSettings;
+            fbo.ClearBufferBit = clearBufferBit;
+            
+            if (colorAttachment01TextureUnit != null)
+                fbo.AddColorAttachment1(colorAttachment01TextureUnit.Value);
+            
+            if (colorAttachment02TextureUnit != null)
+                fbo.AddColorAttachment2(colorAttachment02TextureUnit.Value);
+            
+            if (depthAttachment01TextureUnit != null)
+                fbo.AddDepthAttachment(depthAttachment01TextureUnit.Value);
+            
+            return fbo;
+        }
 
+        //more of an interface, represents main viewport controlled by openGL
         public static FBO Default(string name, Action renderCapSettings) //texture is main viewport
         {
             var fbo = new FBO();
@@ -67,26 +95,26 @@ namespace CART_457.MaterialRelated
                 throw new Exception($"Frame Buffer Exception! {fboStatus}");
         }
 
-        public void AddColorAttachment1()
+        public void AddColorAttachment1(TextureUnit textureUnit=TextureUnit.Texture3)
         {
             Bind();
-            ColorTexture1 = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture3);
+            ColorTexture1 = Texture.EmptyRGBA(Size.Width, Size.Height, textureUnit);
             LinkTexture(ColorTexture1, FramebufferAttachment.ColorAttachment0);
             ValidateAttachments();
         }
         
-        public void AddColorAttachment2()
+        public void AddColorAttachment2(TextureUnit textureUnit=TextureUnit.Texture4)
         {
             Bind();
-            ColorTexture2 = Texture.EmptyRGBA(Size.Width, Size.Height, TextureUnit.Texture4);
+            ColorTexture2 = Texture.EmptyRGBA(Size.Width, Size.Height, textureUnit);
             LinkTexture(ColorTexture2, FramebufferAttachment.ColorAttachment1);
             ValidateAttachments();
         }
         
-        public void AddDepthAttachment()
+        public void AddDepthAttachment(TextureUnit textureUnit=TextureUnit.Texture5)
         {
             Bind();
-            DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, TextureUnit.Texture5);
+            DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, textureUnit);
             LinkTexture(DepthTexture, FramebufferAttachment.DepthAttachment);
             ValidateAttachments();
         }

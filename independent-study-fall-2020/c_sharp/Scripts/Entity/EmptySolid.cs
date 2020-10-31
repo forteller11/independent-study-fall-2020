@@ -31,7 +31,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
             // Debug.Log("SendUniforms");
             if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
             {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLightRoom1, "Light");
             }
             else
             { 
