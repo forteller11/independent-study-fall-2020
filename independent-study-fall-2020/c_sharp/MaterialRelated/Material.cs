@@ -159,6 +159,13 @@ namespace CART_457.MaterialRelated
             if (texture == null)
                 throw new  ArgumentException("Cannot setup sampler with a null texture!");
             Shader.Use();
+            #region make sure no duplicate texture units
+            for (int i = 0; i < _textures.Count; i++)
+            {
+                if (texture.TextureUnit == _textures[i].TextureUnit)
+                    throw new Exception($"There are two textures with texture unit {texture.TextureUnit} you are trying to add. They will override eachother, only the last one will be acessible via a shader!");
+            }
+            #endregion
             _textures.Add(texture);
             Shader.SetUniformInt(samplerName, texture.TextureUnit.ToInt());
         }

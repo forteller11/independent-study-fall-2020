@@ -27,7 +27,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
          room1.LocalScale = new Vector3(4);
          
-          room2.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
+          // room2.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
         }
     }
 }

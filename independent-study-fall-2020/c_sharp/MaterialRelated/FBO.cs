@@ -39,13 +39,13 @@ namespace CART_457.MaterialRelated
             fbo.ClearBufferBit = clearBufferBit;
             
             if (colorAttachment1)
-                fbo.AddColorAttachment1();
+                fbo.AddColorAttachment1(TextureUnit.Texture3);
             
             if (colorAttachment2)
-                fbo.AddColorAttachment2();
+                fbo.AddColorAttachment2(TextureUnit.Texture4);
             
             if (depthAttachment)
-                fbo.AddDepthAttachment();
+                fbo.AddDepthAttachment(TextureUnit.Texture5);
             
             return fbo;
         }
@@ -95,7 +95,7 @@ namespace CART_457.MaterialRelated
                 throw new Exception($"Frame Buffer Exception! {fboStatus}");
         }
 
-        public void AddColorAttachment1(TextureUnit textureUnit=TextureUnit.Texture3)
+        public void AddColorAttachment1(TextureUnit textureUnit)
         {
             Bind();
             ColorTexture1 = Texture.EmptyRGBA(Size.Width, Size.Height, textureUnit);
@@ -103,7 +103,7 @@ namespace CART_457.MaterialRelated
             ValidateAttachments();
         }
         
-        public void AddColorAttachment2(TextureUnit textureUnit=TextureUnit.Texture4)
+        public void AddColorAttachment2(TextureUnit textureUnit)
         {
             Bind();
             ColorTexture2 = Texture.EmptyRGBA(Size.Width, Size.Height, textureUnit);
@@ -111,7 +111,7 @@ namespace CART_457.MaterialRelated
             ValidateAttachments();
         }
         
-        public void AddDepthAttachment(TextureUnit textureUnit=TextureUnit.Texture5)
+        public void AddDepthAttachment(TextureUnit textureUnit)
         {
             Bind();
             DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, textureUnit);
