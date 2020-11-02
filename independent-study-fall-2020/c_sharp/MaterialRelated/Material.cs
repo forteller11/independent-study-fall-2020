@@ -156,6 +156,8 @@ namespace CART_457.MaterialRelated
 
         public void SetupSampler(string samplerName, Texture texture)
         {
+            if (texture == null)
+                throw new  ArgumentException("Cannot setup sampler with a null texture!");
             Shader.Use();
             _textures.Add(texture);
             Shader.SetUniformInt(samplerName, texture.TextureUnit.ToInt());
