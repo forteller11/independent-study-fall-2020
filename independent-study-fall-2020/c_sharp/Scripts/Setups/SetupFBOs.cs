@@ -5,19 +5,20 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace CART_457.Scripts
 {
-    public class FboSetup
+    public class SetupFBOs
     {
 
         [IncludeInDrawLoop] public static FBO Shadow1; 
          
         [IncludeInDrawLoop] public static FBO Room1;
         [IncludeInDrawLoop] public static FBO Room2;
+        [IncludeInDrawLoop] public static FBO ScreenManager;
         // [IncludeInDrawLoop] public static FBO Shadow2;
         [IncludeInDrawLoop] public static FBO Default;
         
         [IncludeInPostFX] public static FBO PostProcessing;
         // [IncludeInPostFX] public static FBO PassThroughPostFX;
-        static FboSetup ()
+        static SetupFBOs ()
         {
         
             Shadow1 = FBO.Serial("Shadow1", DrawManager.TKWindowSize*4, Globals.ShadowCastingLightRoom1, true,false, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit,
@@ -51,6 +52,15 @@ namespace CART_457.Scripts
                 GL.Enable(EnableCap.CullFace);
                 GL.DepthFunc(DepthFunction.Less);
             });
+            
+            ScreenManager = FBO.Serial("ScreenManager", DrawManager.TKWindowSize, Globals.MainCamera, true,true, true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+                GL.Enable(EnableCap.Texture2D);
+                GL.Enable(EnableCap.DepthTest);
+                GL.Enable(EnableCap.CullFace);
+                GL.DepthFunc(DepthFunction.Less);
+            });
+            
+            
 
 
             Default = FBO.Default("Default",() => {

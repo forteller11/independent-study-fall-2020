@@ -1,8 +1,8 @@
 ﻿using System;
-using CART_457.EntitySystem.Scripts.EntityPrefab;
+using CART_457.EntitySystem.Scripts.Blueprints;
 using CART_457.Renderer;
 using CART_457.Scripts;
-using Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity;
+using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
 using OpenTK;
 
 namespace CART_457.EntitySystem.Scripts.EntityPrefabs
@@ -16,13 +16,13 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 
         public override void OnLoad()
         {
-            _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new EmptySolid(new Vector4(1,0,1,1), 1f, InitMaterials.Camera, InitMaterials.ShadowMapDiamond));
+            _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new EmptySolid(new Vector4(1,0,1,1), 1f, CART_457.Scripts.SetupMaterials.Camera, CART_457.Scripts.SetupMaterials.ShadowMapDiamond));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
             var eyeRotation = Quaternion.FromEulerAngles(MathF.PI/2, 0,MathF.PI);
-            var eye1 = Empty.FromPositionRotationScale(new Vector3( -.33f, 0, 0), eyeRotation, Vector3.One*.13f, InitMaterials.EyeBall);
+            var eye1 = Empty.FromPositionRotationScale(new Vector3( -.33f, 0, 0), eyeRotation, Vector3.One*.13f, CART_457.Scripts.SetupMaterials.EyeBall);
   
-            var eye2 = Empty.FromPositionRotationScale(new Vector3(.33f, 0, 0), eyeRotation,Vector3.One*.13f, InitMaterials.EyeBall);
+            var eye2 = Empty.FromPositionRotationScale(new Vector3(.33f, 0, 0), eyeRotation,Vector3.One*.13f, CART_457.Scripts.SetupMaterials.EyeBall);
             eye1.Parent = _playerCamVisualizer;
             eye2.Parent = _playerCamVisualizer;
 
@@ -38,7 +38,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 
         private Entity AddCamera(Vector4 color)
         {
-            var entity = new EmptySolid(color, 1f, InitMaterials.Camera, InitMaterials.ShadowMapDiamond);
+            var entity = new EmptySolid(color, 1f, CART_457.Scripts.SetupMaterials.Camera, CART_457.Scripts.SetupMaterials.ShadowMapDiamond);
             EntityManager.AddToWorldAndRenderer(entity);
             return entity;
         }

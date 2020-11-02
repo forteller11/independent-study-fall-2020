@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK.Input;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefab
+namespace CART_457.EntitySystem.Scripts.Blueprints
 {
     public struct KeyState
     {

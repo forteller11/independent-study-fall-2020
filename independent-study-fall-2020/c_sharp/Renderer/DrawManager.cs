@@ -43,7 +43,7 @@ namespace CART_457.Renderer
         {
             int numberOfPostFXFbos = 0;
             
-            var fboFieldInfos = typeof(FboSetup).GetFields();
+            var fboFieldInfos = typeof(SetupFBOs).GetFields();
             BatchHierachies = new List<FBOBatch>(fboFieldInfos.Length);
             
             foreach (FieldInfo fieldInfo in fboFieldInfos)
@@ -53,7 +53,7 @@ namespace CART_457.Renderer
                 bool includeInPostFXAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX));
      
                 if (fbo == null && (includeInDrawLoopAttrib || includeInPostFXAttrib))
-                    throw new Exception($"fbo in {nameof(FboSetup)} is null but still has attributes trying to include it in drawloop/postfx");
+                    throw new Exception($"fbo in {nameof(SetupFBOs)} is null but still has attributes trying to include it in drawloop/postfx");
 
                 if (fbo == null)
                     continue;
@@ -69,13 +69,13 @@ namespace CART_457.Renderer
             }
             
             if (numberOfPostFXFbos != 1)
-                throw new Exception($"In {nameof(FboSetup)} there are {numberOfPostFXFbos} FBOs with the {nameof(IncludeInPostFX)} when there can only be one.");
+                throw new Exception($"In {nameof(SetupFBOs)} there are {numberOfPostFXFbos} FBOs with the {nameof(IncludeInPostFX)} when there can only be one.");
         }
         
         public static void IncludeMaterialsInMaterialSetup()
         {
             
-            var materials = typeof(InitMaterials).GetFields();
+            var materials = typeof(SetupMaterials).GetFields();
             PostProcessingMaterials = new List<Material>(materials.Length);
             
             foreach (FieldInfo fieldInfo in materials)
@@ -85,7 +85,7 @@ namespace CART_457.Renderer
                 bool includeInPostFXAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX));
      
                 if (material == null && (includeInDrawLoopAttrib || includeInPostFXAttrib))
-                    throw new Exception($"Material in {nameof(InitMaterials)} is null but still has attributes trying to include it in drawloop/postfx");
+                    throw new Exception($"Material in {nameof(SetupMaterials)} is null but still has attributes trying to include it in drawloop/postfx");
 
                 if (material == null)
                     continue;
@@ -105,10 +105,10 @@ namespace CART_457.Renderer
         private static void AddMaterialToMainDrawLoop(Material material)
         {
 
-            if (material.RenderTarget == FboSetup.PostProcessing)
+            if (material.RenderTarget == SetupFBOs.PostProcessing)
                 throw new DataException("Cannot add a post processing material to rendering hierarchy!");
             
-            if (material.RenderTarget == FboSetup.Default)
+            if (material.RenderTarget == SetupFBOs.Default)
                 throw new DataException("Cannot render directly to default frame buffer!");
             
             for (int i = 0; i < BatchHierachies.Count; i++)
@@ -129,8 +129,8 @@ namespace CART_457.Renderer
             if (entity.Materials == null)
                 return;
             
-            if (entity.ContainsMaterial(InitMaterials.PostProcessing))
-                throw new DataException($"Entity ${entity.GetType().Name} has material type {InitMaterials.PostProcessing}, which is invalid!");
+            if (entity.ContainsMaterial(SetupMaterials.PostProcessing))
+                throw new DataException($"Entity ${entity.GetType().Name} has material type {SetupMaterials.PostProcessing}, which is invalid!");
 
             int expectedFoundMaterials = entity.Materials.Length;
             int foundMaterials = 0;
@@ -219,7 +219,7 @@ namespace CART_457.Renderer
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }   
             // FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
-            FBO.Blit(PostFXFbo, FboSetup.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
+            FBO.Blit(PostFXFbo, SetupFBOs.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
         }
 
         
@@ -228,7 +228,7 @@ namespace CART_457.Renderer
             if (FBOToDebugDraw == null)
                 return;
             
-            FBO.Blit(FBOToDebugDraw, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(FBOToDebugDraw, SetupFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
 
         }
     }

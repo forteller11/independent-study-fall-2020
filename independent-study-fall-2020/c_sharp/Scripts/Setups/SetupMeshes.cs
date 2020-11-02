@@ -5,7 +5,7 @@ using OpenTK;
 
 namespace CART_457.Scripts
 {
-    public static class InitMeshes
+    public static class SetupMeshes
     {
         public static Mesh IcoSphereHighPoly;
         public static Mesh TableProto;
@@ -14,7 +14,7 @@ namespace CART_457.Scripts
         public static Mesh Plane;
         public static Mesh ViewSpaceQuad;
 
-        static InitMeshes()
+        static SetupMeshes()
         {
             IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
             TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);

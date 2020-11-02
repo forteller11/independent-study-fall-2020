@@ -67,7 +67,7 @@ namespace CART_457.EntitySystem
             GUID = Guid.NewGuid();
         }
 
-        public void SetupMaterials(params Material[] materialTypes)
+        public void AssignMaterials(params Material[] materialTypes)
         {
             Materials = materialTypes;
         }

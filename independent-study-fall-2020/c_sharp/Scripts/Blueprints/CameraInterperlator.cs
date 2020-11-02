@@ -1,10 +1,10 @@
 ﻿using CART_457.EntitySystem;
-using CART_457.EntitySystem.Scripts.EntityPrefab;
+using CART_457.EntitySystem.Scripts.Blueprints;
 using CART_457.Helpers;
 using CART_457.Renderer;
 using OpenTK;
 
-namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Entity
+namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
     public class CameraInterperlator : CART_457.EntitySystem.Entity
     {

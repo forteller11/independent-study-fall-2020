@@ -5,7 +5,7 @@ using CART_457.Renderer;
 using OpenTK;
 using OpenTK.Input;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefab
+namespace CART_457.EntitySystem.Scripts.Blueprints
 {
     public class CameraControllerSingleton : EntitySystem.Entity
     {

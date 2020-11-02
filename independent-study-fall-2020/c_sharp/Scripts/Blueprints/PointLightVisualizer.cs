@@ -5,7 +5,7 @@ using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefab
+namespace CART_457.EntitySystem.Scripts.Blueprints
 {
     public class PointLightVisualizer : EntitySystem.Entity
     {
@@ -28,7 +28,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 
         public override void SendUniformsPerObject(Material material)
         {
-            if (material == CART_457.Scripts.InitMaterials.ShadowMapSphere || material == CART_457.Scripts.InitMaterials.ShadowMapPlane)
+            if (material == CART_457.Scripts.SetupMaterials.ShadowMapSphere || material == CART_457.Scripts.SetupMaterials.ShadowMapPlane)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLightRoom1, "Light");
             }

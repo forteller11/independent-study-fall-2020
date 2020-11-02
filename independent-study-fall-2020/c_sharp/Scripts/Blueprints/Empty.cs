@@ -6,7 +6,7 @@ using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefab
+namespace CART_457.EntitySystem.Scripts.Blueprints
 {
     public class Empty : EntitySystem.Entity
     {
@@ -14,7 +14,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
         public Action<Entity> UpdateAction;
         public Empty(params Material[] materials)
         {
-            SetupMaterials(materials);
+            AssignMaterials(materials);
         }
 
         

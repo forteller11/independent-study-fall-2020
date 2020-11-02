@@ -51,59 +51,64 @@ namespace CART_457.MaterialRelated
         }
         
         
-        public static Material GenericEntityBased(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material GenericEntityBased(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender, Action<Entity, Material> perEntityUniformSender)
         {
             var mat = new Material();
             mat.Shader = shaderProgram;
-            mat.PerMaterialUniformSender = perMaterialUniformSender;
+            mat.PerMaterialUniformSender += perMaterialUniformSender;
+            mat.PerEntityUniformSender   += perEntityUniformSender;
             mat.RenderTarget = fbo;
             mat.GetUniformAndAttribLocations();
             mat.VAO = new VAOAndBuffers(mat, mesh);
             return mat;
         }
-
-        public static Material EntityNormalUseShadow(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, FBO shadowMapFBO, Action<Material> perMaterialUniformSender)
+        
+        public static Material EntityNormalUseShadow(FBO fbo, Mesh mesh, FBO shadowMapFBO, Action<Material> perMaterialUniformSender)
         {
-            var mat = GenericEntityBased(fbo, shaderProgram, mesh, perMaterialUniformSender);
-            mat.PerEntityUniformSender += (entity, material) =>
+            var mat = GenericEntityBased(fbo, SetupShaders.Normal, mesh, perMaterialUniformSender, (entity, material) =>
             {
                 UniformSender.SendTransformMatrices(entity, material, shadowMapFBO.Camera, "Light");
                 UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                 UniformSender.SendLights(material);
                 UniformSender.SendGlobals(material);
-            };
+            });
+            
             return mat;
         }
         
-        public static Material EntitySolid(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material EntitySolid(FBO fbo, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
-            var mat = GenericEntityBased(fbo, shaderProgram, mesh, perMaterialUniformSender);
-            mat.PerEntityUniformSender += (entity, material) =>
+            var mat = GenericEntityBased(fbo, SetupShaders.Solid, mesh, perMaterialUniformSender, (entity, material) =>
             {
                 UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                 UniformSender.SendGlobals(material);
-            };
+            });
+            
             return mat;
         }
         
-        public static Material EntityCastShadow(FBO fbo, ShaderProgram shaderProgram, Mesh mesh, Action<Material> perMaterialUniformSender)
+        public static Material EntityCastShadow(FBO fbo, Mesh mesh, Action<Material> perMaterialUniformSender)
         {
-            var mat = GenericEntityBased(fbo, shaderProgram, mesh, perMaterialUniformSender);
-            mat.PerEntityUniformSender += (entity, material) =>
-            {
-                UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera, "Light");
-            };
+            var mat = GenericEntityBased(fbo, SetupShaders.Shadow, mesh, perMaterialUniformSender,
+                (entity, material) =>
+                {
+                    UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera, "Light");
+                });
             return mat;
         }
-        
-         public static Material PostProcessing(ShaderProgram shaderProgram)
-         {
-             var mat = new Material();
-             mat.Shader = shaderProgram;
-             mat.RenderTarget = FboSetup.PostProcessing;
-             mat.GetUniformAndAttribLocations();
-             mat.VAO = new VAOAndBuffers(mat, InitMeshes.ViewSpaceQuad);
-             mat.PerMaterialUniformSender = _ => FboSetup.Room1.UseTexturesAndGenerateMipMaps();
+
+        public static Material PostProcessing(ShaderProgram shaderProgram)
+        {
+            var mat = new Material();
+            mat.Shader = shaderProgram;
+            mat.RenderTarget = SetupFBOs.PostProcessing;
+            mat.GetUniformAndAttribLocations();
+            mat.VAO = new VAOAndBuffers(mat, SetupMeshes.ViewSpaceQuad);
+            {//get last fbo in fbosetup
+                
+            }
+
+        mat.PerMaterialUniformSender = _ => SetupFBOs.Room1.UseTexturesAndGenerateMipMaps();
              return mat;
          }
 

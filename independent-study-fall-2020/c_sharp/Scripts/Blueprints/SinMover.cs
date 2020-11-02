@@ -6,7 +6,7 @@ using CART_457.Scripts;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefab
+namespace CART_457.EntitySystem.Scripts.Blueprints
 {
     public class SinMover : EntitySystem.Entity
     {
@@ -20,12 +20,12 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefab
 
         private SinMover(Material[] materials)
         {
-            SetupMaterials(materials);
+            AssignMaterials(materials);
         }
         public SinMover(Vector3 position, Vector3 ran2, params Material [] material)
         {
             LocalPosition = position;
-            SetupMaterials(material);
+            AssignMaterials(material);
            ran = ran2;
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using CART_457.EntitySystem.Scripts.EntityPrefab;
+using CART_457.EntitySystem.Scripts.Blueprints;
 using OpenTK.Input;
 
 namespace CART_457.EntitySystem
