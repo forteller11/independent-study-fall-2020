@@ -49,6 +49,7 @@ namespace CART_457.Renderer
             
             foreach (FieldInfo fieldInfo in fboFieldInfos)
             {
+                
                 var fbo = fieldInfo.GetValue(null) as FBO;
                 bool includeInDrawLoopAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInDrawLoop));
                 bool includeInPostFXAttrib = Attribute.IsDefined(fieldInfo, typeof(IncludeInPostFX));
@@ -59,6 +60,9 @@ namespace CART_457.Renderer
                 if (fbo == null)
                     continue;
 
+                
+                Debug.Log("FBO: " + fbo.Name);
+                
                 if (includeInDrawLoopAttrib)
                     AddFBOToDrawLoop(fbo);
 
@@ -101,7 +105,7 @@ namespace CART_457.Renderer
 
         private static void AddFBOToDrawLoop(FBO fbo)
         {
-            BatchHierachies.Insert(0, new FBOBatch(fbo));
+            BatchHierachies.Add(new FBOBatch(fbo));
         }
         private static void AddMaterialToMainDrawLoop(Material material)
         {
