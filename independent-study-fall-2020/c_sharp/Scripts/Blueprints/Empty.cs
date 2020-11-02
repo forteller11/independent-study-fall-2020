@@ -1,10 +1,7 @@
 ﻿using System;
-using System.IO.Compression;
-using CART_457.c_sharp.Renderer;
+
 using CART_457.MaterialRelated;
-using CART_457.Renderer;
-using CART_457.Scripts;
-using OpenTK;
+using OpenTK.Mathematics;
 
 namespace CART_457.EntitySystem.Scripts.Blueprints
 {

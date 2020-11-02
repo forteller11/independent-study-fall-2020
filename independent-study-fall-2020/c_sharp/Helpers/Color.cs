@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace CART_457.Helpers
 {

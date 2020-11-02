@@ -24,35 +24,35 @@ namespace CART_457.Scripts.Setups
             Shadow1 = FBO.Serial("Shadow1", DrawManager.TKWindowSize*4, Globals.ShadowCastingLightRoom1, true,false, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit,
                 () =>
                 {
-                    GL.Enable(EnableCap.Texture2D);
+                    // GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);
                 GL.DepthFunc(DepthFunction.Less);
                 });
             
             Room1 = FBO.Custom("Room1", DrawManager.TKWindowSize, Globals.MainCamera, TextureUnit.Texture6,TextureUnit.Texture7, TextureUnit.Texture8, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
-                GL.Enable(EnableCap.Texture2D);
+                // GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);
                 GL.DepthFunc(DepthFunction.Less);
             });
 
             Room2 = FBO.Custom("Room2", DrawManager.TKWindowSize, Globals.MainCamera, TextureUnit.Texture3,TextureUnit.Texture4, TextureUnit.Texture5, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
-                GL.Enable(EnableCap.Texture2D);
+                // GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);
                 GL.DepthFunc(DepthFunction.Less);
             });
             
             ScreenManager = FBO.Custom("ScreenManager", DrawManager.TKWindowSize, Globals.MainCamera, TextureUnit.Texture6,TextureUnit.Texture7, TextureUnit.Texture8, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
-                GL.Enable(EnableCap.Texture2D);
+                // GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);
                 GL.DepthFunc(DepthFunction.Less);
             });
 
             Default = FBO.Default("Default",() => {
-                GL.Enable(EnableCap.Texture2D);
+                // GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);
                 GL.DepthFunc(DepthFunction.Less);  

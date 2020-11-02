@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using CART_457.EntitySystem;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Desktop;
 
 namespace CART_457.Renderer
 {
@@ -27,14 +29,12 @@ namespace CART_457.Renderer
         public static float DeltaTimeF = 0;
 
         public static Vector2 MousePositionLastFrame;
-        public static void Init()
+        public static void Init(GameWindow gameWindow)
         {
-
-            
             DirectionLights = new List<DirectionLight>();
             PointLights = new List<PointLight>();
             Random = new Random(0);
-            MousePositionLastFrame = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            MousePositionLastFrame = gameWindow.MouseState.Position;
         }
 
         public static void Update(EntityUpdateEventArgs args)
@@ -44,7 +44,7 @@ namespace CART_457.Renderer
             
             AbsTime += args.DeltaTime;
             AbsTimeF = (float) AbsTime;
-            MousePositionLastFrame = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            MousePositionLastFrame = args.MouseState.Position;
             // ShadowCastingLight.Rotation = Quaternion.FromEulerAngles(MathF.PI,0,0)
 
         }

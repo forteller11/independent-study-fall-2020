@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Mathematics;
 
 namespace CART_457.Renderer
 {

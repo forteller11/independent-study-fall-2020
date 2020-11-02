@@ -1,11 +1,12 @@
 ﻿using System;
 using OpenTK.Input;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace CART_457.EntitySystem.Scripts.Blueprints
 {
     public struct KeyState
     {
-        private Key _key;
+        private Keys _key;
         private int _pressedFramesCount;
         public event Action OnPressed;
         public event Action OnReleased;
@@ -16,7 +17,7 @@ namespace CART_457.EntitySystem.Scripts.Blueprints
         public bool IsToggled { get; private set; }
         public bool IsHeldDown { get; private set; }
         
-        public KeyState(Key key) : this()
+        public KeyState(Keys key) : this()
         {
             _key = key;
         }

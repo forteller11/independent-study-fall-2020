@@ -5,6 +5,7 @@ using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace CART_457.EntitySystem.Scripts.Blueprints
 {

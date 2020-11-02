@@ -4,6 +4,7 @@ using CART_457.Renderer;
 using CART_457.Scripts.Setups;
 using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace CART_457.EntitySystem.Scripts.EntityPrefabs
 {

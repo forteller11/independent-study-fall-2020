@@ -1,7 +1,5 @@
-﻿
-using System;
-using System.Runtime.CompilerServices;
-using OpenTK;
+﻿using System.Runtime.CompilerServices;
+using OpenTK.Mathematics;
 
 namespace CART_457.Helpers
 {

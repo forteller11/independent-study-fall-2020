@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
+
 using System.Reflection;
 using CART_457.Attributes;
 using CART_457.EntitySystem;
 using CART_457.Helpers;
 using CART_457.MaterialRelated;
-using CART_457.Scripts;
 using CART_457.Scripts.Setups;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 
 namespace CART_457.Renderer
 {
     public static class DrawManager
     {
-        public static Size TKWindowSize = new Size(100, 2000);
+        public static Vector2i TKWindowSize = new Vector2i(100, 2000);
         
         public static List<FBOBatch> BatchHierachies;
         public static List<Material> PostProcessingMaterials;

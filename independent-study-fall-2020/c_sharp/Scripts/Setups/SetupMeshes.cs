@@ -2,6 +2,7 @@
 using CART_457.Helpers;
 using CART_457.MaterialRelated;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace CART_457.Scripts.Setups
 {

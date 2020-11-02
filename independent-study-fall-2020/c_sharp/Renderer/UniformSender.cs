@@ -5,6 +5,7 @@ using CART_457.MaterialRelated;
 using CART_457.Renderer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace CART_457.c_sharp.Renderer
 {
@@ -91,11 +92,11 @@ namespace CART_457.c_sharp.Renderer
         {
             SetFloat(material, GLOBALS + ".TimeAbs", Globals.AbsTimeF);
             SetFloat(material, GLOBALS + ".TimeDelta", Globals.DeltaTimeF);
-            SetVector2(material, GLOBALS + ".WindowSize", new Vector2(DrawManager.TKWindowSize.Width, DrawManager.TKWindowSize.Height));
+            SetVector2(material, GLOBALS + ".WindowSize", new Vector2(DrawManager.TKWindowSize.X, DrawManager.TKWindowSize.Y));
         }
 
         #region type senders helpers
-        public static void SetMatrix4(Material mat, string name, OpenTK.Matrix4 matrix4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        public static void SetMatrix4(Material mat, string name, Matrix4 matrix4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))
@@ -104,7 +105,7 @@ namespace CART_457.c_sharp.Renderer
 //                Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
-        public static void SetMatrix3(Material mat, string name, OpenTK.Matrix3 matrix3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        public static void SetMatrix3(Material mat, string name, Matrix3 matrix3, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))

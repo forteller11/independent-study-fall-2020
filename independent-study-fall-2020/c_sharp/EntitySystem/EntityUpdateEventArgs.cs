@@ -1,5 +1,6 @@
-﻿using OpenTK;
-using OpenTK.Input;
+﻿
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace CART_457.EntitySystem
 {

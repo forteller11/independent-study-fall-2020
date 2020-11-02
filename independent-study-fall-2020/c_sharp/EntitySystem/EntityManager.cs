@@ -2,6 +2,9 @@
 using CART_457.Renderer;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 
 namespace CART_457.EntitySystem
 {
@@ -35,10 +38,11 @@ namespace CART_457.EntitySystem
                 _gameObjects[i].OnLoad();
         }
 
-        public static void RefreshUpdateEventArgs(FrameEventArgs eventArgs)
+        public static void RefreshUpdateEventArgs(GameWindow gameWindow, FrameEventArgs eventArgs)
         {
-            var  m = Mouse.GetState();
-            var keyboardState = Keyboard.GetState();
+    
+            var  m = gameWindow.MouseState;
+            var keyboardState = gameWindow.KeyboardState;
             EntityUpdateEventArgs.DeltaTime = eventArgs.Time;
             EntityUpdateEventArgs.KeyboardState =  keyboardState;
             EntityUpdateEventArgs.MouseState = m;

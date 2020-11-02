@@ -8,6 +8,10 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace CART_457
 {
@@ -15,19 +19,20 @@ namespace CART_457
     {
 
         #region initialise
-        public TKWindow(int width, int height, GraphicsMode mode, string title) : base(width, height, mode, title) { }
-        public TKWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device) : base(width, height, mode, title, options, device) { }
+        public TKWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings) { }
+        // public TKWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device) : base(width, height, mode, title, options, device) { }
 
         public static TKWindow CreateAndRun()
         {
+            var gameWindowSettings = GameWindowSettings.Default;
 
-            var newTKWindow = new TKWindow(
-                1440, 
-                1440, 
-                GraphicsMode.Default, 
-                $"Independent Study Fall 2020 - Charly Yan Miller ",
-                GameWindowFlags.Default,
-                DisplayDevice.Default);
+            var nativeWindowSettings = new NativeWindowSettings()
+            {
+                Size = new Vector2i(1440, 1440),
+                Title = "Independent Study Fall 2020 - Charly Yan Miller",
+            };
+
+            var newTKWindow = new TKWindow(gameWindowSettings, nativeWindowSettings);
             
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.DebugOutputSynchronous);
@@ -40,32 +45,31 @@ namespace CART_457
             Debug.Log($"Vendor: {GL.GetString(StringName.Vendor)}");
             Debug.Log($"");
             
-            newTKWindow.Run(60d);
+            newTKWindow.Run();
 
             return newTKWindow;
         }
         #endregion
 
-        
-        protected override void OnLoad(EventArgs e)
+        protected override void OnLoad()
         {
-
-            base.OnLoad(e);
+            base.OnLoad();
             DrawManager.Init(this);
             
-            Globals.Init();
+            Globals.Init(this);
             SetupEntities.CreateGlobals();
 
             DrawManager.SetupStaticRenderingHierarchy();
-            DrawManager.TKWindowSize = new Size(Width, Height);
+            // DrawManager.TKWindowSize = new Size(, Height);
             
             EntityManager.AddRangeToWorldAndRenderer(SetupEntities.CreateGameObjects());
             EntityManager.InvokeOnLoad();
         }
 
-        protected override void OnUnload(EventArgs e)
+
+        protected override void OnUnload()
         {
-            base.OnUnload(e);
+            base.OnUnload();
 //todo 
 //            GL.BindBuffer(BufferTarget.ArrayBuffer, 0); //reset binding to null
 //            GL.DeleteBuffer(VBOVertHandle);
@@ -75,13 +79,13 @@ namespace CART_457
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
 
-            EntityManager.RefreshUpdateEventArgs(e);
+            EntityManager.RefreshUpdateEventArgs(this, e);
       
             Globals.Update(EntityManager.EntityUpdateEventArgs);
             EntityManager.InvokeOnUpdate();
             
-            if (EntityManager.EntityUpdateEventArgs.KeyboardState.IsKeyDown(Key.Escape))
-                Exit();
+            if (EntityManager.EntityUpdateEventArgs.KeyboardState.IsKeyDown(Keys.Escape))
+                Close();
             
             base.OnUpdateFrame(e);
         }
@@ -95,12 +99,12 @@ namespace CART_457
             
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override void OnResize(ResizeEventArgs e)
         {
             base.OnResize(e);
-            DrawManager.TKWindowSize = new Size(Width, Height);
-            GL.Viewport(DrawManager.TKWindowSize);
+            DrawManager.TKWindowSize = e.Size;
+            GL.Viewport(new Size(e.Width, e.Height));
         }
-        
+
     }
 }

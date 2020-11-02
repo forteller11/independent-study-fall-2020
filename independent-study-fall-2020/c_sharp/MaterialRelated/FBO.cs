@@ -5,6 +5,7 @@ using CART_457.Helpers;
 using CART_457.Renderer;
 using CART_457.Scripts;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 //watch thinmatrix videos
 //how to draw to buffer in shaders?
@@ -15,7 +16,7 @@ namespace CART_457.MaterialRelated
     {
         public int Handle { get; private set; }
         public string Name;
-        public Size Size { get; private set; }
+        public Vector2i Size { get; private set; }
 
         public Action RenderCapSettings;
         public Camera Camera;
@@ -27,7 +28,7 @@ namespace CART_457.MaterialRelated
 
         private FBO() { }
         //serial in that the next fbos will automatically available have access to this fbos render outputs
-        public static FBO Serial( string name, Size size, Camera mainCamera, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
+        public static FBO Serial( string name, Vector2i size, Camera mainCamera, bool colorAttachment1, bool colorAttachment2, bool depthAttachment, ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
             var fbo = new FBO();
             fbo.Handle = GL.GenFramebuffer();
@@ -51,7 +52,7 @@ namespace CART_457.MaterialRelated
         }
         
         //custom in that the output  textureunits can be manually assigned
-        public static FBO Custom( string name, Size size, Camera mainCamera, 
+        public static FBO Custom( string name, Vector2i size, Camera mainCamera, 
             TextureUnit? colorAttachment01TextureUnit, TextureUnit? colorAttachment02TextureUnit, TextureUnit? depthAttachment01TextureUnit, 
             ClearBufferMask clearBufferBit, Action renderCapSettings)
         {
@@ -98,7 +99,7 @@ namespace CART_457.MaterialRelated
         public void AddColorAttachment1(TextureUnit textureUnit)
         {
             Bind();
-            ColorTexture1 = Texture.GPURGBA(Size.Width, Size.Height, textureUnit);
+            ColorTexture1 = Texture.GPURGBA(Size.X, Size.Y, textureUnit);
             LinkTexture(ColorTexture1, FramebufferAttachment.ColorAttachment0);
             ValidateAttachments();
         }
@@ -106,7 +107,7 @@ namespace CART_457.MaterialRelated
         public void AddColorAttachment2(TextureUnit textureUnit)
         {
             Bind();
-            ColorTexture2 = Texture.GPURGBA(Size.Width, Size.Height, textureUnit);
+            ColorTexture2 = Texture.GPURGBA(Size.X, Size.Y, textureUnit);
             LinkTexture(ColorTexture2, FramebufferAttachment.ColorAttachment1);
             ValidateAttachments();
         }
@@ -114,7 +115,7 @@ namespace CART_457.MaterialRelated
         public void AddDepthAttachment(TextureUnit textureUnit)
         {
             Bind();
-            DepthTexture = Texture.GPUDepth(Size.Width, Size.Height, textureUnit);
+            DepthTexture = Texture.GPUDepth(Size.X, Size.Y, textureUnit);
             LinkTexture(DepthTexture, FramebufferAttachment.DepthAttachment);
             ValidateAttachments();
         }
@@ -147,7 +148,7 @@ namespace CART_457.MaterialRelated
 
             SetDrawBuffers();
             
-            GL.Viewport(0,0,Size.Width,Size.Height);
+            GL.Viewport(0,0,Size.X,Size.Y);
             RenderCapSettings?.Invoke();
         }
 
@@ -172,8 +173,8 @@ namespace CART_457.MaterialRelated
             GL.BindFramebuffer(FramebufferTarget.ReadFramebuffer, source.Handle);
             GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, dest.Handle);
             GL.BlitFramebuffer(
-                0, 0, source.Size.Width, source.Size.Height,
-                0, 0, dest.Size.Width, dest.Size.Height,
+                0, 0, source.Size.X, source.Size.Y,
+                0, 0, dest.Size.X, dest.Size.Y,
                 clearBufferMask, blitFramebufferFilter);
         }
         

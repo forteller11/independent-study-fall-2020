@@ -4,6 +4,7 @@ using CART_457.Renderer;
 
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
 
 namespace CART_457.EntitySystem.Scripts.Blueprints
 {
@@ -65,12 +66,8 @@ namespace CART_457.EntitySystem.Scripts.Blueprints
         void Move(EntityUpdateEventArgs eventArgs)
         {
             var input = eventArgs.InputState;
-            float sprintMultiplier = eventArgs.KeyboardState.IsKeyDown(Key.AltLeft) ? 3 : 1;
+            float sprintMultiplier = eventArgs.InputState.AltL.IsHeldDown ? 3 : 1;
             float accelerationThisFrame = acceleration * (float) eventArgs.DeltaTime * sprintMultiplier;
-
-            if (eventArgs.KeyboardState.IsKeyDown(Key.AltLeft))
-                accelerationThisFrame *= 5;
-
 
             int horzInput = 0;
             int depthInput = 0;
