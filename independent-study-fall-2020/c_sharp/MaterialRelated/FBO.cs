@@ -98,7 +98,7 @@ namespace CART_457.MaterialRelated
         public void AddColorAttachment1(TextureUnit textureUnit)
         {
             Bind();
-            ColorTexture1 = Texture.EmptyRGBA(Size.Width, Size.Height, textureUnit);
+            ColorTexture1 = Texture.GPURGBA(Size.Width, Size.Height, textureUnit);
             LinkTexture(ColorTexture1, FramebufferAttachment.ColorAttachment0);
             ValidateAttachments();
         }
@@ -106,7 +106,7 @@ namespace CART_457.MaterialRelated
         public void AddColorAttachment2(TextureUnit textureUnit)
         {
             Bind();
-            ColorTexture2 = Texture.EmptyRGBA(Size.Width, Size.Height, textureUnit);
+            ColorTexture2 = Texture.GPURGBA(Size.Width, Size.Height, textureUnit);
             LinkTexture(ColorTexture2, FramebufferAttachment.ColorAttachment1);
             ValidateAttachments();
         }
@@ -114,7 +114,7 @@ namespace CART_457.MaterialRelated
         public void AddDepthAttachment(TextureUnit textureUnit)
         {
             Bind();
-            DepthTexture = Texture.EmptyDepth(Size.Width, Size.Height, textureUnit);
+            DepthTexture = Texture.GPUDepth(Size.Width, Size.Height, textureUnit);
             LinkTexture(DepthTexture, FramebufferAttachment.DepthAttachment);
             ValidateAttachments();
         }

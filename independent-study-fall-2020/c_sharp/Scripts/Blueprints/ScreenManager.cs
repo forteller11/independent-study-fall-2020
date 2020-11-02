@@ -1,9 +1,7 @@
-﻿using System;
+﻿
 using CART_457.EntitySystem;
-using CART_457.Renderer;
-using FbxSharp;
 using OpenTK;
-using Vector3 = OpenTK.Vector3;
+
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
@@ -22,12 +20,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             room2 = r2;
         }
 
-        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
+        public override void OnLoad()
         {
-
-         room1.LocalScale = new Vector3(4);
+            room1.LocalScale = new Vector3(4);
          
-          // room2.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
+            room2.LocalPosition += Vector3.One;
         }
+
+
     }
 }

@@ -7,6 +7,7 @@ namespace CART_457.Renderer
     {
         public readonly FBO FBO;
         public List<MaterialBatch> MaterialBatches;
+        public string Name => FBO.Name;
 
         public FBOBatch(FBO fbo)
         {

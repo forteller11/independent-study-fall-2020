@@ -60,7 +60,7 @@ namespace CART_457.Scripts.Setups
             gameObjects.Add(new FBOVisualizationInput());
 
             for (int i = 0; i < Globals.PointLights.Count; i++)
-                gameObjects.Add(new PointLightVisualizer(i,SetupMaterials.SolidSphereR2));
+                gameObjects.Add(new PointLightVisualizer(i,SetupMaterials.SolidSphereR1));
             #endregion
             
             #region room2

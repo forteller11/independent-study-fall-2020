@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using OpenTK.Graphics.OpenGL4;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -12,6 +13,7 @@ namespace CART_457.MaterialRelated
         public TextureUnit TextureUnit { get; private set; }
         
         public readonly int Handle;
+        public string Name { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
         
@@ -28,6 +30,7 @@ namespace CART_457.MaterialRelated
         public static Texture FromFile(string fileName, TextureUnit textureUnit, Action texSettingsCustom=null) 
         {
             var texture = new Texture();
+            texture.Name = fileName;
             texture.TextureUnit = textureUnit;
             texture.Use();
             if (texSettingsCustom == null)
@@ -43,32 +46,35 @@ namespace CART_457.MaterialRelated
             return texture;
         }
         
-        public static Texture EmptyRGBA(int width, int height, TextureUnit textureUnit)
+        public static Texture GPURGBA(int width, int height, TextureUnit textureUnit)
         {
-            var texture = EmptyFormatless(width, height, textureUnit, 4, FrameBufferTextureSettings);
+            var texture = EmptyFormatless(width, height, textureUnit, FrameBufferTextureSettings);
+            texture.Name = "GPURGBA: " + textureUnit;
             texture.GenerateStorageOnGPU(PixelInternalFormat.Rgba, PixelFormat.Rgba, PixelType.UnsignedByte);
             
             return texture;
         }
         
-        public static Texture EmptyLuminance(int width, int height, TextureUnit textureUnit)
+        public static Texture GPULuminance(int width, int height, TextureUnit textureUnit)
         {
-            var texture = EmptyFormatless(width, height, textureUnit, 1, FrameBufferTextureSettings);
+            var texture = EmptyFormatless(width, height, textureUnit, FrameBufferTextureSettings);
+            texture.Name = "GPULumninance: " + textureUnit;
             texture.GenerateStorageOnGPU(PixelInternalFormat.Luminance, PixelFormat.Luminance, PixelType.UnsignedByte);
             
             return texture;
         }
         
         
-        public static Texture EmptyDepth(int width, int height, TextureUnit textureUnit)
+        public static Texture GPUDepth(int width, int height, TextureUnit textureUnit)
         {
-            var texture = EmptyFormatless(width, height, textureUnit, 1, DepthTextureSettings);
+            var texture = EmptyFormatless(width, height, textureUnit, DepthTextureSettings);
+            texture.Name = "GPUDepth: " + textureUnit;
             texture.GenerateStorageOnGPU(PixelInternalFormat.DepthComponent, PixelFormat.DepthComponent, PixelType.Float);
             
             return texture;
         }
 
-        private static Texture EmptyFormatless(int width, int height, TextureUnit textureUnit, int channels, Action textureSettings)
+        private static Texture EmptyFormatless(int width, int height, TextureUnit textureUnit, Action textureSettings)
         {
             var texture = new Texture();
             texture.TextureUnit = textureUnit;

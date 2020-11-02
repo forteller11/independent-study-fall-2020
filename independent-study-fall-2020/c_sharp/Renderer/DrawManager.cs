@@ -222,8 +222,7 @@ namespace CART_457.Renderer
             {
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
-            }   
-            // FBO.Blit(FboSetup.Main, FboSetup.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
+            }
             FBO.Blit(PostFXFbo, SetupFBOs.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
         }
 

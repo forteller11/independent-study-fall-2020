@@ -17,10 +17,10 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             AssignMaterials(SetupMaterials.Screen); 
         }
 
-        // public override void SendUniformsPerObject(Material material)
-        // {
-        //     UniformSender.SetInt(material,"TextureIndex",RoomTextureUnit.ToInt(), false );
-        // }
+        public override void SendUniformsPerObject(Material material)
+        {
+            UniformSender.SetInt(material,"TextureIndex",RoomTextureUnit.ToInt(), false );
+        }
 
     }
 }

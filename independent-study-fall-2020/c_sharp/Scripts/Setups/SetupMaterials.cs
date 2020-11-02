@@ -70,7 +70,7 @@ namespace CART_457.Scripts.Setups
             };
             
             DirtSphere  = MaterialPreconfigs.Normal(
-                SetupFBOs.Room1,
+                SetupFBOs.Room2,
                 SetupMeshes.IcoSphereHighPoly,
                 SetupFBOs.Shadow1,
                 SetupTextures.DirtDiffuse,
@@ -129,18 +129,18 @@ namespace CART_457.Scripts.Setups
                 });
             Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER+"1", SetupFBOs.Room1.ColorTexture1);
             Screen.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER+"1", SetupFBOs.Room1.ColorTexture2);
-            Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER+"1", SetupFBOs.Room1.DepthTexture);
+            // Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER+"1", SetupFBOs.Room1.DepthTexture);
             
-            Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER + "2", SetupFBOs.Room2.ColorTexture1);
+            Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER+"2", SetupFBOs.Room2.ColorTexture1);
             Screen.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER + "2", SetupFBOs.Room2.ColorTexture2);
-            Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER + "2", SetupFBOs.Room2.DepthTexture);
+            // Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER + "2", SetupFBOs.Room2.DepthTexture);
             #endregion
             
             #region postfx
             PostProcessing = Material.PostProcessing(SetupShaders.PostFX);
             PostProcessing.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.ScreenManager.ColorTexture1);
             PostProcessing.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.ScreenManager.ColorTexture2);
-            PostProcessing.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER, SetupFBOs.ScreenManager.DepthTexture);
+            // PostProcessing.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER, SetupFBOs.ScreenManager.DepthTexture);
             #endregion
             
         }
