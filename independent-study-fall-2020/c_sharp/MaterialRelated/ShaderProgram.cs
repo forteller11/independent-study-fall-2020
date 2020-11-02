@@ -16,27 +16,26 @@ namespace CART_457.MaterialRelated
         private const string FRAG_FILE_EXT = ".frag";
         private const string LIBRARY_FILE_EXT = ".glsl";
         private static string SHADER_VERSION_DIR = "#version 330 core"+ Environment.NewLine;
-        private const string POST_FX_VERTEX_SHADER = "position_pass_through";
-        
+
         public const string MAIN_FRAG_COLOR = "MainFragColor";
         public const string SECONDARY_FRAG_COLOR = "SecondaryFragColor";
 
-        public static ShaderProgram Standard(string shadeFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
+        public static ShaderProgram Create(string shadeFileNames) //TODO capsulate stage of graphics pipeline into class (frag, vert, geo...)
         {
-            var shader = new ShaderProgram(shadeFileNames,shadeFileNames);
-            shader.FileName = shadeFileNames;
-            return shader;
-        }
-        
-        public static ShaderProgram PostProcessing(string fragmentFileName, params string[] shaderLibraryFileNames)
-        {
-            var shader = new ShaderProgram(POST_FX_VERTEX_SHADER,fragmentFileName);
-            shader.FileName = fragmentFileName;
+            var shader = new ShaderProgram(shadeFileNames,shadeFileNames, shadeFileNames);
             return shader;
         }
 
-        private ShaderProgram(string vertFileName, string fragmentFileName)
+        public static ShaderProgram Create(string vertexFileName, string fragmentFileName)
         {
+            var shader = new ShaderProgram(vertexFileName, fragmentFileName, $"{vertexFileName} | {fragmentFileName}");
+            return shader;
+        }
+
+
+        private ShaderProgram(string vertFileName, string fragmentFileName, string shaderName)
+        {
+            FileName = shaderName;
 
             int vertexHandle = CompileShaderAndDebug(vertFileName + VERTEX_FILE_EXT, ShaderType.VertexShader);
             int fragmentHandle = CompileShaderAndDebug(fragmentFileName + FRAG_FILE_EXT, ShaderType.FragmentShader);

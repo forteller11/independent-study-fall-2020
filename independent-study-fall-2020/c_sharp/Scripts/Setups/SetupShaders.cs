@@ -4,9 +4,10 @@ namespace CART_457.Scripts
 {
     public static class SetupShaders
     {
-        public static ShaderProgram Normal = ShaderProgram.Standard("normal_map");
-        public static ShaderProgram Solid = ShaderProgram.Standard("textureless");
-        public static ShaderProgram Screen = ShaderProgram.Standard("screen");
-        public static ShaderProgram Shadow = ShaderProgram.Standard("shadow_map");
+        public static ShaderProgram Normal = ShaderProgram.Create("normal_map");
+        public static ShaderProgram Solid = ShaderProgram.Create("textureless");
+        public static ShaderProgram Screen = ShaderProgram.Create("screen");
+        public static ShaderProgram Shadow = ShaderProgram.Create("shadow_map");
+        public static ShaderProgram PostFX = ShaderProgram.Create("position_pass_through","post_fx");
     }
 }
