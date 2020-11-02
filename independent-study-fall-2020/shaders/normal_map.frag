@@ -18,7 +18,6 @@ uniform sampler2D NoiseTexture;
 
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
-uniform float Time;
 
 
 void main()
@@ -30,11 +29,11 @@ void main()
     float shadowMult = max(0.2, 1-float(inShadow)); //todo change intensity based on difference
     vec4 normalMapNoise = texture(Color, v2f_uv, 4);
     
-    vec3 noiseInput = vec3(v2f_uv.xy*8, Time/5); 
+    vec3 noiseInput = vec3(v2f_uv.xy*8, Globals.TimeAbs/2.5); 
     vec3 noiseOffset = vec3(0,0,99999);
     float u = simplex3d(noiseInput);
     float v = simplex3d(noiseInput+noiseOffset);
-    vec2 uvOffset = vec2(u,v) * 0.005;
+    vec2 uvOffset = vec2(u,v) * 0.007;
     
     vec2 uv = inShadow == 1 ?
     v2f_uv + uvOffset 

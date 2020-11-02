@@ -34,7 +34,7 @@ namespace CART_457.c_sharp.Renderer
         public const string SHADOW_MAP_SAMPLER = "ShadowMap";
 
         public const string TRANSFORM_BUFFER = "Transform";
-        public const string GLOBALS = "Transform";
+        public const string GLOBALS = "Globals";
         #endregion
         
         /// <summary>
