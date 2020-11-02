@@ -127,9 +127,9 @@ namespace CART_457.Scripts.Setups
                     UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                     UniformSender.SendGlobals(material);
                 });
-            Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.Room1.ColorTexture1);
-            Screen.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.Room1.ColorTexture2);
-            Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER, SetupFBOs.Room1.DepthTexture);
+            Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER+"1", SetupFBOs.Room1.ColorTexture1);
+            Screen.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER+"1", SetupFBOs.Room1.ColorTexture2);
+            Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER+"1", SetupFBOs.Room1.DepthTexture);
             
             Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER + "2", SetupFBOs.Room2.ColorTexture1);
             Screen.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER + "2", SetupFBOs.Room2.ColorTexture2);

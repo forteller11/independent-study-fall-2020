@@ -1,5 +1,6 @@
 ﻿using System;
 using CART_457.EntitySystem;
+using CART_457.Renderer;
 using FbxSharp;
 using OpenTK;
 using Vector3 = OpenTK.Vector3;
@@ -23,10 +24,10 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-         // room1.LocalPosition = new Vector3(0,4,0);
-         // room1.LocalScale *= 4;
+
+         room1.LocalScale = new Vector3(4);
          
-         // room2.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
+          room2.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
         }
     }
 }
