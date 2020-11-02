@@ -131,7 +131,7 @@ namespace CART_457.Scripts
             #endregion
             
             #region postfx
-            PostProcessing = Material.PostProcessing(ShaderProgram.PostProcessing("post_ffx_test"));
+            PostProcessing = Material.PostProcessing(SetupShaders.PostFX);
             PostProcessing.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.Room1.ColorTexture1);
             PostProcessing.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.Room1.ColorTexture2);
             // PostProcessing.SetupSampler(Material.MAIN_DEPTH_FBO_SAMPLER, FboSetup.Shadow.DepthTexture);

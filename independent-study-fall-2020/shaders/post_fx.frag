@@ -25,7 +25,7 @@ void main(){
     depth = min(depth*2, 1);
     vec4 colorFog = color * depth;
     MainFragColor = vec4(r,g,b, 1);
-    MainFragColor = vec4(tex.rgb, 1);
+   // MainFragColor = vec4(tex.rgb, 1);
 //    MainFragColor = vec4(vec3(simplex3d(vec3(normScreenCoord.xy*60, 0))), 1);
     
     SecondaryFragColor = vec4(1,0,0,1);
