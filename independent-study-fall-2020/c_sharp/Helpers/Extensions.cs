@@ -5,7 +5,7 @@ namespace CART_457.Helpers
 {
     public static class Extensions
     {
-        public static int ToIndex(this TextureUnit texUnit)
+        public static int ToInt(this TextureUnit texUnit)
         {
             switch (texUnit)
             {

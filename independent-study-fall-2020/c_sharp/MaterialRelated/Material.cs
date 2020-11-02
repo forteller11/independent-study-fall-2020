@@ -158,7 +158,7 @@ namespace CART_457.MaterialRelated
         {
             Shader.Use();
             _textures.Add(texture);
-            Shader.SetUniformInt(samplerName, texture.TextureUnit.ToIndex());
+            Shader.SetUniformInt(samplerName, texture.TextureUnit.ToInt());
         }
 
         public void UseAllAttachedTextures()

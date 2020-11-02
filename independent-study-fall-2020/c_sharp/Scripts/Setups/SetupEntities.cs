@@ -7,9 +7,11 @@ using CART_457.EntitySystem.Scripts.EntityPrefabs;
 using CART_457.Renderer;
 using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
 using OpenTK;
+using OpenTK.Graphics.OpenGL4;
 
 namespace CART_457.Scripts.Setups
 {
+    //TODO make entity constructor automatically add entities to game world... Instant, Delayed creation CreateAndAdd vs Create
     public class SetupEntities
     {
         public static Entity[] CreateGameObjects() 
@@ -48,12 +50,12 @@ namespace CART_457.Scripts.Setups
             gameObjects.Add(new SinMover(new Vector3(1,1,2),new Vector3(.19f,-.1f,.06f), SetupMaterials.TileSphere, SetupMaterials.ShadowMapSphere));
             gameObjects.Add(new SinMover(new Vector3(1,4,2),new Vector3(.13f,-.1f,.05f), SetupMaterials.DirtSphere, SetupMaterials.ShadowMapSphere));
             gameObjects.Add(new SinMover(new Vector3(1,7,2),new Vector3(.1f,-.1f,.50f), SetupMaterials.TileSphere, SetupMaterials.ShadowMapSphere));
-            var s = Empty.FromPosition(new Vector3(0, -5, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
-            s.LocalScale = new Vector3(4);
-            var s2 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
-            s2.LocalScale = new Vector3(7);
-            gameObjects.Add(s);
-            gameObjects.Add(s2);
+            var dirtPlane01 = Empty.FromPosition(new Vector3(0, -5, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
+            dirtPlane01.LocalScale = new Vector3(4);
+            var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
+            dirtPlane02.LocalScale = new Vector3(7);
+            gameObjects.Add(dirtPlane01);
+            gameObjects.Add(dirtPlane02);
             
             gameObjects.Add(new FBOVisualizationInput());
 
@@ -72,6 +74,16 @@ namespace CART_457.Scripts.Setups
             #region screen combiner
             //screen managers
             //todo, have gameobject for every screen, manage transform/quad based on state....
+            {
+                var s1 = new Screen(TextureUnit.Texture0);
+                var s2 = new Screen(TextureUnit.Texture1);
+                var screenManager = new ScreenManager(s1, s2);
+
+                gameObjects.Add(s1); 
+                gameObjects.Add(s2); 
+                gameObjects.Add(screenManager);
+            }
+
             #endregion
             
             
