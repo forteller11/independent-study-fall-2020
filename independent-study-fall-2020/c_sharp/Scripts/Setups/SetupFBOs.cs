@@ -3,7 +3,7 @@ using CART_457.MaterialRelated;
 using CART_457.Renderer;
 using OpenTK.Graphics.OpenGL4;
 
-namespace CART_457.Scripts
+namespace CART_457.Scripts.Setups
 {
     public class SetupFBOs
     {

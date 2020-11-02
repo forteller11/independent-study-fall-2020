@@ -1,6 +1,6 @@
 ﻿using CART_457.MaterialRelated;
 
-namespace CART_457.Scripts
+namespace CART_457.Scripts.Setups
 {
     public static class SetupShaders
     {

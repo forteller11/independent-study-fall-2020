@@ -3,7 +3,7 @@ using CART_457.Helpers;
 using CART_457.MaterialRelated;
 using OpenTK;
 
-namespace CART_457.Scripts
+namespace CART_457.Scripts.Setups
 {
     public static class SetupMeshes
     {

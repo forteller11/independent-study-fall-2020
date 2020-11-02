@@ -1,6 +1,5 @@
-﻿
-using CART_457.Renderer;
-using OpenTK.Input;
+﻿using CART_457.Renderer;
+
 
 namespace CART_457.EntitySystem.Scripts.Blueprints
 {

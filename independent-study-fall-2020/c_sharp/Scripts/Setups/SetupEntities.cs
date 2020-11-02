@@ -8,9 +8,9 @@ using CART_457.Renderer;
 using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
 using OpenTK;
 
-namespace CART_457.Scripts
+namespace CART_457.Scripts.Setups
 {
-    public class SetupEntitys
+    public class SetupEntities
     {
         public static Entity[] CreateGameObjects() 
         {

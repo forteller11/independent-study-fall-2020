@@ -4,7 +4,7 @@ using CART_457.c_sharp.Renderer;
 using CART_457.MaterialRelated;
 using Texture = FbxSharp.Texture;
 
-namespace CART_457.Scripts
+namespace CART_457.Scripts.Setups
 {
     public static class SetupMaterials
     {
@@ -73,9 +73,9 @@ namespace CART_457.Scripts
                 SetupFBOs.Room1,
                 SetupMeshes.IcoSphereHighPoly,
                 SetupFBOs.Shadow1,
-                TextureSetup.DirtDiffuse,
-                TextureSetup.DirtNormalMap,
-                TextureSetup.DirtSpecularMap,
+                SetupTextures.DirtDiffuse,
+                SetupTextures.DirtNormalMap,
+                SetupTextures.DirtSpecularMap,
             normaMaterialUniformSender
                 );
             
@@ -83,9 +83,9 @@ namespace CART_457.Scripts
                 SetupFBOs.Room1,
                 SetupMeshes.Plane,
                 SetupFBOs.Shadow1,
-                TextureSetup.DirtDiffuse,
-                TextureSetup.DirtNormalMap,
-                TextureSetup.DirtSpecularMap,
+                SetupTextures.DirtDiffuse,
+                SetupTextures.DirtNormalMap,
+                SetupTextures.DirtSpecularMap,
                 normaMaterialUniformSender
                 );
             
@@ -93,9 +93,9 @@ namespace CART_457.Scripts
                 SetupFBOs.Room1,
                 SetupMeshes.IcoSphereHighPoly,
                 SetupFBOs.Shadow1,
-                TextureSetup.CarpetDiffuse,
-                TextureSetup.CarpetNormalMap,
-                TextureSetup.CarpetSpecularMap,
+                SetupTextures.CarpetDiffuse,
+                SetupTextures.CarpetNormalMap,
+                SetupTextures.CarpetSpecularMap,
                 normaMaterialUniformSender
                 );
             
@@ -103,9 +103,9 @@ namespace CART_457.Scripts
                 SetupFBOs.Room1,
                 SetupMeshes.TableProto,
                 SetupFBOs.Shadow1,
-                TextureSetup.TableDiffuse,
-                TextureSetup.TableNormal,
-                TextureSetup.TableSpecular,
+                SetupTextures.TableDiffuse,
+                SetupTextures.TableNormal,
+                SetupTextures.TableSpecular,
                 normaMaterialUniformSender
             );
             
@@ -113,9 +113,9 @@ namespace CART_457.Scripts
                 SetupFBOs.Room1,
                 SetupMeshes.Eyeball,
                 SetupFBOs.Shadow1,
-                TextureSetup.EyeDiffuse,
-                TextureSetup.EyeNormal,
-                TextureSetup.EyeSpecular,
+                SetupTextures.EyeDiffuse,
+                SetupTextures.EyeNormal,
+                SetupTextures.EyeSpecular,
                 normaMaterialUniformSender
             );
             #endregion

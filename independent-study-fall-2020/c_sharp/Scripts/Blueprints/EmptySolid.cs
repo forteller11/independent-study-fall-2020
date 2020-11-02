@@ -1,11 +1,8 @@
-﻿using System;
-using CART_457;
-using CART_457.c_sharp.Renderer;
+﻿using CART_457.c_sharp.Renderer;
 using CART_457.EntitySystem;
-using CART_457.EntitySystem.Scripts.Blueprints;
 using CART_457.MaterialRelated;
 using CART_457.Renderer;
-using CART_457.Scripts;
+using CART_457.Scripts.Setups;
 using OpenTK;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
@@ -29,7 +26,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         public override void SendUniformsPerObject(Material material)
         {
             // Debug.Log("SendUniforms");
-            if (material == CART_457.Scripts.SetupMaterials.ShadowMapSphere || material == CART_457.Scripts.SetupMaterials.ShadowMapPlane)
+            if (material == SetupMaterials.ShadowMapSphere || material == SetupMaterials.ShadowMapPlane)
             {
                 UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLightRoom1, "Light");
             }

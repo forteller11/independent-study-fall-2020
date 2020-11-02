@@ -12,9 +12,9 @@ using OpenTK.Graphics.OpenGL4;
  
  
  */
-namespace CART_457.Scripts
+namespace CART_457.Scripts.Setups
 {
-    public static class TextureSetup
+    public static class SetupTextures
     {
         public static Texture DirtDiffuse =     Texture.FromFile("GroundClay002_COL_VAR1_3K.jpg", TextureUnit.Texture0);
         public static Texture DirtNormalMap =   Texture.FromFile("GroundClay002_NRM_3K.jpg", TextureUnit.Texture1);

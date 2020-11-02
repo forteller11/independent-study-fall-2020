@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL4;
 using CART_457.Helpers;
 using CART_457.Renderer;
 using CART_457.Scripts;
+using CART_457.Scripts.Setups;
 
 namespace CART_457.MaterialRelated
 {
