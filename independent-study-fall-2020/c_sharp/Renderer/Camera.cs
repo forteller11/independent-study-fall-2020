@@ -1,8 +1,7 @@
 ﻿using System;
 using CART_457.EntitySystem;
 using CART_457.Helpers;
-using OpenTK;
-using OpenTK.Graphics.ES20;
+
 using OpenTK.Mathematics;
 
 namespace CART_457.Renderer
@@ -42,6 +41,28 @@ namespace CART_457.Renderer
         {
             Matrix4.CreateOrthographic(25, 25, size,size, out var projection);
             return new Camera(position, rotation, projection, nearClip, farClip, size, size);
+        }
+
+        public static float GetPlaneWidthFromFOV(float fov, float distanceInFrustrum)
+        {
+            Matrix2 rotateLeft = Matrix2.CreateRotation(fov/2);
+            Matrix2 rotateRight = Matrix2.CreateRotation(-fov/2);
+
+            Vector2 leftEdge  = Vector2.TransformRow(new Vector2(0,1), rotateLeft);
+            Vector2 rightEdge = Vector2.TransformRow(new Vector2(0,1), rotateRight);
+            
+            Debug.Log($"Left Edge:  {leftEdge}");
+            Debug.Log($"Right Edge: {rightEdge}");
+            
+            Vector2 planeDistanceVector = new Vector2(0, distanceInFrustrum);
+
+            Vector2 leftEdgeDistanceInFrustrumProjection  = Vector2.Dot(leftEdge, planeDistanceVector) * leftEdge;
+            Vector2 rightEdgeDistanceInFrustrumProjection = Vector2.Dot(rightEdge, planeDistanceVector) * rightEdge;
+
+            float distanceBetweenPointsOnFrustrum = rightEdgeDistanceInFrustrumProjection.X - leftEdgeDistanceInFrustrumProjection.X;
+            Debug.Log($"Distance: {distanceInFrustrum}");
+            Debug.Log($"Width: {distanceBetweenPointsOnFrustrum}");
+            return distanceBetweenPointsOnFrustrum;
         }
 
         private Camera(Vector3 position, Quaternion rotation, Matrix4 projection, float nearClip, float farClip, float nearClipSize, float farClipSize)

@@ -53,7 +53,11 @@ namespace CART_457.Scripts.EntityPrefabs
             EntityTransformToCamera(_playerCamVisualizer, Globals.PlayerCameraRoom1);
             Globals.WebCamRoom1.ToEntityOrientation(_webCamVisualizer);
 
-            PhysicsHelpersInd.IsPointInFrustrum(_playerCamVisualizer.WorldPosition, Globals.WebCamRoom1);
+            // PhysicsHelpersInd.IsPointInFrustrum(_playerCamVisualizer.WorldPosition, Globals.WebCamRoom1);
+            Camera.GetPlaneWidthFromFOV(MathF.PI/4, 1);
+            Camera.GetPlaneWidthFromFOV(MathF.PI/4, 5);
+            Camera.GetPlaneWidthFromFOV(MathF.PI/4, 100);
+            Camera.GetPlaneWidthFromFOV(MathF.PI/4, 0);
         }
 
         private Entity AddCamera(Vector4 color)
