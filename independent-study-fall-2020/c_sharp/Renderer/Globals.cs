@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CART_457.EntitySystem;
+using CART_457.Helpers;
 using OpenTK;
 using OpenTK.Input;
 using OpenTK.Mathematics;
@@ -20,7 +21,8 @@ namespace CART_457.Renderer
         public static readonly Camera WebCamRoom2 = new Camera();
         public static readonly Camera ShadowCastingLightRoom2 = new Camera();
         
-        public static Random Random;
+        public static Random Random = new Random(0);
+        public static FastNoiseLite Noise = new FastNoiseLite();
         public static List<DirectionLight> DirectionLights;
         public static List<PointLight> PointLights;
         public static double AbsTime = 0;
@@ -33,8 +35,9 @@ namespace CART_457.Renderer
         {
             DirectionLights = new List<DirectionLight>();
             PointLights = new List<PointLight>();
-            Random = new Random(0);
             MousePositionLastFrame = gameWindow.MouseState.Position;
+            
+            Noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
         }
 
         public static void Update(EntityUpdateEventArgs args)

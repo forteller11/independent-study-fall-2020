@@ -72,6 +72,13 @@ namespace CART_457.EntitySystem
         {
             Materials = materialTypes;
         }
+
+        public void SetLocalTransform(Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            LocalPosition = position;
+            LocalRotation = rotation;
+            LocalScale = scale;
+        }
         public virtual void OnLoad() { }
 
         public virtual void OnUpdate(EntityUpdateEventArgs eventArgs) { }

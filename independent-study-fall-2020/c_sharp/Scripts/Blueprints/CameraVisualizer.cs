@@ -23,21 +23,28 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
         }
         public override void OnLoad()
         {
+            Wobble CreateAndAddEye(Vector3 position)
+            {
+                var eyeRotation = Quaternion.FromEulerAngles(MathF.PI/2, 0,MathF.PI);
+                var eye = new Wobble(.005f, 70f, position, SetupMaterials.EyeBall);
+                eye.LocalScale = Vector3.One * .13f;
+                eye.LocalRotation = eyeRotation;
+                
+                eye.Parent = _playerCamVisualizer;
+                EntityManager.AddToWorldAndRenderer(eye);
+                return eye;
+            }
+
+            
             _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new EmptySolid(new Vector4(1,0,1,1), 1f, SetupMaterials.Camera, SetupMaterials.ShadowMapDiamond));
             _webCamVisualizer.Parent = Table;
             _webCamVisualizer.LocalPosition = new Vector3(-.3f,1.9f,.95f);
             _webCamVisualizer.LocalScale *= 0.2f;
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
-            var eyeRotation = Quaternion.FromEulerAngles(MathF.PI/2, 0,MathF.PI);
-            var eye1 = Empty.FromPositionRotationScale(new Vector3( -.33f, 0, 0), eyeRotation, Vector3.One*.13f, SetupMaterials.EyeBall);
-  
-            var eye2 = Empty.FromPositionRotationScale(new Vector3(.33f, 0, 0), eyeRotation,Vector3.One*.13f, SetupMaterials.EyeBall);
-            eye1.Parent = _playerCamVisualizer;
-            eye2.Parent = _playerCamVisualizer;
-
-            EntityManager.AddToWorldAndRenderer(eye1);
-            EntityManager.AddToWorldAndRenderer(eye2);
+            
+            CreateAndAddEye(new Vector3(-.33f, 0, 0));
+            CreateAndAddEye(new Vector3(.33f, 0, 0));
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
