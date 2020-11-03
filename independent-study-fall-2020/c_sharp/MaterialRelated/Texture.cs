@@ -13,6 +13,7 @@ namespace CART_457.MaterialRelated
         public TextureUnit TextureUnit { get; private set; }
         
         public readonly int Handle;
+        public bool IsStatic;
         public string Name { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -32,6 +33,7 @@ namespace CART_457.MaterialRelated
             var texture = new Texture();
             texture.Name = fileName;
             texture.TextureUnit = textureUnit;
+            texture.IsStatic = true;
             texture.Use();
             if (texSettingsCustom == null)
                 StandardTextureSettings();
@@ -78,6 +80,7 @@ namespace CART_457.MaterialRelated
         {
             var texture = new Texture();
             texture.TextureUnit = textureUnit;
+            texture.IsStatic = false;
             texture.Use();
             textureSettings.Invoke();
             texture.Width = width;

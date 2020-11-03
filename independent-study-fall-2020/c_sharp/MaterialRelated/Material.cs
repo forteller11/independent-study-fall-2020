@@ -173,7 +173,14 @@ namespace CART_457.MaterialRelated
         public void UseAllAttachedTextures()
         {
             for (int i = 0; i < _textures.Count; i++)
-                _textures[i].Use();
+            {
+                if (_textures[i].IsStatic)
+                 _textures[i].Use();
+                else
+                {
+                    _textures[i].UseAndGenerateMipMaps();
+                }
+            }
         }
 
         public void SetDrawingStates()
