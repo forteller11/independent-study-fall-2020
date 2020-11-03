@@ -19,8 +19,9 @@ namespace CART_457.Scripts.Setups
 
             #region room1
             var table = Empty.FromPosition(new Vector3(0, 3, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
-            table.LocalScale *= 0.2f;
-            table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
+            table.LocalScale *= 0.4f;
+            table.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
+            // table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
             
             var table2 = Empty.FromPosition(new Vector3(7, 0, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
              table2.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.004f);
@@ -32,10 +33,17 @@ namespace CART_457.Scripts.Setups
             table3.LocalScale *= 0.5f;
             table3.Parent = table2;
             
+            var screen = new Screen();
+            screen.Parent = table;
+            screen.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
+            screen.LocalPosition = new Vector3(-.3f,1.2f,.8f);
+            screen.LocalScale = new Vector3(.9f,.6f,1f);
+            gameObjects.Add(screen);
+            
             gameObjects.Add(table);
             gameObjects.Add(table2);
             gameObjects.Add(table3);
-            gameObjects.Add(new CameraVisualizer());
+            gameObjects.Add(new CameraVisualizer(table));
             
             gameObjects.Add(new CameraControllerSingleton());
             gameObjects.Add(new CameraInterperlator());
@@ -74,13 +82,13 @@ namespace CART_457.Scripts.Setups
             //screen managers
             //todo, have gameobject for every screen, manage transform/quad based on state....
             {
-                var s1 = new Screen(TextureUnit.Texture0);
-                var s2 = new Screen(TextureUnit.Texture1);
-                var screenManager = new ScreenManager(s1, s2);
-
-                gameObjects.Add(s1); 
-                gameObjects.Add(s2); 
-                gameObjects.Add(screenManager);
+                // var s1 = new Screen(TextureUnit.Texture0);
+                // var s2 = new Screen(TextureUnit.Texture1);
+                // var screenManager = new ScreenManager(s1, s2);
+                //
+                // gameObjects.Add(s1); 
+                // gameObjects.Add(s2); 
+                // gameObjects.Add(screenManager);
             }
 
             #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using CART_457.EntitySystem;
 using CART_457.Helpers;
 using OpenTK;
 using OpenTK.Mathematics;
@@ -52,6 +53,12 @@ namespace CART_457.Renderer
             Projection = copy.Projection;
             NearClip = copy.NearClip;
             FarClip = copy.FarClip;
+        }
+
+        public void ToEntityOrientation(Entity entity)
+        {
+            Position = entity.WorldPosition;
+            Rotation = entity.WorldRotation;
         }
     }
 }

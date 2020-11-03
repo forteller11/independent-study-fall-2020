@@ -52,5 +52,5 @@ void main()
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular) * shadowMult;
     
     MainFragColor = vec4(texColorShaded.xyz, 1);
-    SecondaryFragColor = vec4(vec3(gl_FragCoord.z/gl_FragCoord.w), 1);
+    SecondaryFragColor = vec4(vec3(FragCoordToDepth(gl_FragCoord)), 1);
 }

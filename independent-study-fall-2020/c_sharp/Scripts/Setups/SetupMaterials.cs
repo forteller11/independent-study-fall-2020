@@ -17,7 +17,7 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material TableProto;
         [IncludeInDrawLoop] public static Material EyeBall;
         [IncludeInDrawLoop] public static Material Camera;
-        [IncludeInDrawLoop] public static Material Screen;
+        [IncludeInDrawLoop] public static Material ScreenR1;
         
         //dirt sphere room2
         
@@ -57,9 +57,7 @@ namespace CART_457.Scripts.Setups
                 SetupMeshes.Diamond,
                 null);
             #endregion
-            
-            
-            
+
             #region normal materials
 
             Action<Material> normaMaterialUniformSender = (mat) =>
@@ -120,27 +118,21 @@ namespace CART_457.Scripts.Setups
             #endregion
             
             #region screen material
-            Screen = Material.GenericEntityBased(SetupFBOs.ScreenManager, SetupShaders.Screen, SetupMeshes.ViewSpaceQuad, null, 
+            ScreenR1 = Material.GenericEntityBased(SetupFBOs.Room1, SetupShaders.Screen, SetupMeshes.ViewSpaceQuad, null, 
                 (entity, material) =>
                 {
                     UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                     UniformSender.SendGlobals(material);
                 });
-            Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER+"2", SetupFBOs.Room2.ColorTexture1);
-            Screen.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER + "2", SetupFBOs.Room2.ColorTexture2);
-            
-            Screen.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER+"1", SetupFBOs.Room1.ColorTexture1);
-            Screen.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER+"1", SetupFBOs.Room1.ColorTexture2);
-            // Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER+"1", SetupFBOs.Room1.DepthTexture);
-            
-            
-            // Screen.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER + "2", SetupFBOs.Room2.DepthTexture);
+            ScreenR1.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.Room2.ColorTexture1);
+            ScreenR1.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.Room2.ColorTexture2);
+
             #endregion
             
             #region postfx
             PostProcessing = Material.PostProcessing(SetupShaders.PostFX);
-            PostProcessing.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.ScreenManager.ColorTexture1);
-            PostProcessing.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.ScreenManager.ColorTexture2);
+            PostProcessing.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.Room1.ColorTexture1);
+            PostProcessing.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.Room1.ColorTexture2);
             // PostProcessing.SetupSampler(UniformSender.MAIN_DEPTH_FBO_SAMPLER, SetupFBOs.ScreenManager.DepthTexture);
             #endregion
             

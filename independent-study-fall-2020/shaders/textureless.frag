@@ -5,5 +5,5 @@ uniform vec4 Color;
 void main()
 {
     MainFragColor = Color;
-    SecondaryFragColor = vec4(vec3(gl_FragCoord.z/gl_FragCoord.w), 1);
+    SecondaryFragColor =  vec4(vec3(FragCoordToDepth(gl_FragCoord)), 1);
 }

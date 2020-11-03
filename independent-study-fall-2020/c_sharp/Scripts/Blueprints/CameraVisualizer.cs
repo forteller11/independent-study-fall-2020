@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using CART_457.EntitySystem.Scripts.Blueprints;
 using CART_457.Renderer;
 using CART_457.Scripts.Setups;
@@ -12,12 +13,20 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
     {
         //onload, look at every camera using reflection, add gameobject
 
+        private Entity Table;
         private Entity _playerCamVisualizer;
         private Entity _webCamVisualizer;
 
+        public CameraVisualizer(Entity table)
+        {
+            Table = table;
+        }
         public override void OnLoad()
         {
             _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new EmptySolid(new Vector4(1,0,1,1), 1f, SetupMaterials.Camera, SetupMaterials.ShadowMapDiamond));
+            _webCamVisualizer.Parent = Table;
+            _webCamVisualizer.LocalPosition = new Vector3(-.3f,1.9f,.95f);
+            _webCamVisualizer.LocalScale *= 0.2f;
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
             var eyeRotation = Quaternion.FromEulerAngles(MathF.PI/2, 0,MathF.PI);
@@ -34,7 +43,7 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             EntityTransformToCamera(_playerCamVisualizer, Globals.PlayerCameraRoom1);
-            EntityTransformToCamera(_webCamVisualizer, Globals.WebCamRoom1);
+            Globals.WebCamRoom1.ToEntityOrientation(_webCamVisualizer);
         }
 
         private Entity AddCamera(Vector4 color)
@@ -49,5 +58,6 @@ namespace CART_457.EntitySystem.Scripts.EntityPrefabs
             entity.LocalPosition = camera.Position;
             entity.LocalRotation = camera.Rotation;
         }
+        
     }
 }

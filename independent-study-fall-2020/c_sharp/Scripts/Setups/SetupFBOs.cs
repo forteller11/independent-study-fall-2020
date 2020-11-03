@@ -8,12 +8,12 @@ namespace CART_457.Scripts.Setups
     public class SetupFBOs
     {
 
-        [IncludeInDrawLoop] public static FBO Shadow1;
-        [IncludeInDrawLoop] public static FBO Room1;
-        
         [IncludeInDrawLoop] public static FBO Shadow2; 
         [IncludeInDrawLoop] public static FBO Room2;
         
+        [IncludeInDrawLoop] public static FBO Shadow1;
+        [IncludeInDrawLoop] public static FBO Room1;
+
         [IncludeInDrawLoop] public static FBO ScreenManager;
         // [IncludeInDrawLoop] public static FBO Shadow2;
         public static FBO Default;

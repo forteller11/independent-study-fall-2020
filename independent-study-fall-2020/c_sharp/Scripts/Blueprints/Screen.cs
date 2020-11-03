@@ -10,16 +10,16 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
     public class Screen : Entity
     {
-        public TextureUnit RoomTextureUnit;
-        public Screen(TextureUnit roomTexture)
+        // public TextureUnit RoomTextureUnit;
+        public Screen()
         {
-            RoomTextureUnit = roomTexture;
-            AssignMaterials(SetupMaterials.Screen); 
+
+            AssignMaterials(SetupMaterials.ScreenR1); 
         }
 
         public override void SendUniformsPerObject(Material material)
         {
-            UniformSender.SetInt(material,"TextureIndex",RoomTextureUnit.ToInt(), false );
+            // UniformSender.SetInt(material,"TextureIndex",RoomTextureUnit.ToInt(), false );
         }
 
     }
