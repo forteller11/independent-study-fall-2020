@@ -14,6 +14,7 @@ namespace CART_457.Scripts.Setups
         public static Mesh Diamond;
         public static Mesh Plane;
         public static Mesh ViewSpaceQuad;
+        public static Mesh WeirdHead;
 
         static SetupMeshes()
         {
@@ -22,6 +23,7 @@ namespace CART_457.Scripts.Setups
             Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane", true, true, true);
             Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", true, true, true);
             Diamond =  ModelImporter.GetAttribBuffersFromObjFile("camera_visualization", true, true, true);
+            WeirdHead =  ModelImporter.GetAttribBuffersFromObjFile("head", true, true, true);
             // Diamond =  ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
 
             #region ViewQuad

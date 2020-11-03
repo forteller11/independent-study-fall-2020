@@ -4,7 +4,9 @@ namespace CART_457.Scripts.Setups
 {
     public static class SetupShaders
     {
+        public static ShaderProgram NormalReceiveShadow = ShaderProgram.Create("normal_map_receive_shadow");
         public static ShaderProgram Normal = ShaderProgram.Create("normal_map");
+
         public static ShaderProgram Solid = ShaderProgram.Create("textureless");
         public static ShaderProgram Screen = ShaderProgram.Create("screen");
         public static ShaderProgram Shadow = ShaderProgram.Create("shadow_map");

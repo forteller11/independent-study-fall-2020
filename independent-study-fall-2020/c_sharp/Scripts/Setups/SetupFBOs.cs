@@ -48,7 +48,7 @@ namespace CART_457.Scripts.Setups
                     GL.DepthFunc(DepthFunction.Less);
                 });
 
-            Room2 = FBO.Custom("Room2", DrawManager.TKWindowSize, Globals.MainCamera, TextureUnit.Texture6,TextureUnit.Texture7, TextureUnit.Texture8, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+            Room2 = FBO.Custom("Room2", DrawManager.TKWindowSize, Globals.WebCamRoom2, TextureUnit.Texture6,TextureUnit.Texture7, TextureUnit.Texture8, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
                 // GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);

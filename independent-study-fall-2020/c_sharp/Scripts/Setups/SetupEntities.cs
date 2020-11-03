@@ -17,7 +17,8 @@ namespace CART_457.Scripts.Setups
         {
             List<Entity> gameObjects = new List<Entity>();
 
-            #region room1
+            #region room 1
+            #region table
             var table = Empty.FromPosition(new Vector3(0, 1, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
             table.LocalScale *= 0.4f;
             table.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
@@ -33,12 +34,6 @@ namespace CART_457.Scripts.Setups
             table3.LocalScale *= 0.5f;
             table3.Parent = table2;
             
-            var screen = new Screen();
-            screen.Parent = table;
-            screen.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
-            screen.LocalPosition = new Vector3(-.3f,1.2f,.8f);
-            screen.LocalScale = new Vector3(.9f,.6f,1f);
-            gameObjects.Add(screen);
             
             gameObjects.Add(table);
             gameObjects.Add(table2);
@@ -49,6 +44,17 @@ namespace CART_457.Scripts.Setups
             gameObjects.Add(new CameraInterperlator());
 
             gameObjects.Add(table);
+            
+            #endregion
+            
+            #region screen
+            var screen = new Screen();
+            screen.Parent = table;
+            screen.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
+            screen.LocalPosition = new Vector3(-.3f,1.2f,.8f);
+            screen.LocalScale = new Vector3(.9f,.6f,1f);
+            gameObjects.Add(screen);
+            #endregion
             
             gameObjects.Add(new SinMover(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), SetupMaterials.DirtSphere, SetupMaterials.ShadowMapSphere));
             gameObjects.Add(new SinMover(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), SetupMaterials.DirtSphere, SetupMaterials.ShadowMapSphere));
@@ -71,11 +77,15 @@ namespace CART_457.Scripts.Setups
             #endregion
             
             #region room2
-            gameObjects.Add(new SinMover(new Vector3(-3,1,0), Vector3.Zero, SetupMaterials.SolidSphereR2));
-            gameObjects.Add(new SinMover(new Vector3(0,2,-4), Vector3.Zero, SetupMaterials.SolidSphereR2));
-            gameObjects.Add(new SinMover(new Vector3(3,0,0), Vector3.Zero, SetupMaterials.SolidSphereR2));
-            gameObjects.Add(new SinMover(new Vector3(-3,-1,-4), Vector3.Zero, SetupMaterials.SolidSphereR2));
-            gameObjects.Add(new SinMover(new Vector3(0,-2,4), Vector3.Zero, SetupMaterials.SolidSphereR2));
+            // gameObjects.Add(new SinMover(new Vector3(-3,1,0), Vector3.Zero, SetupMaterials.SolidSphereR2));
+            // gameObjects.Add(new SinMover(new Vector3(0,2,4), Vector3.Zero, SetupMaterials.SolidSphereR2));
+            // gameObjects.Add(new SinMover(new Vector3(3,0,0), Vector3.Zero, SetupMaterials.SolidSphereR2));
+            // gameObjects.Add(new SinMover(new Vector3(-3,-1,4), Vector3.Zero, SetupMaterials.SolidSphereR2));
+            // gameObjects.Add(new SinMover(new Vector3(0,-2,4), Vector3.Zero, SetupMaterials.SolidSphereR2));
+            
+            var head = new Wobble(.03f, 100f, new Vector3(0, 1.9f, 4), SetupMaterials.WeirdHeadR2);
+            head.LocalRotation = Quaternion.FromEulerAngles(0, MathF.PI/2,0);
+            gameObjects.Add(head);
             #endregion
             
             #region screen combiner

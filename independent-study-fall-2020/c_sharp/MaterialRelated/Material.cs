@@ -64,18 +64,7 @@ namespace CART_457.MaterialRelated
             return mat;
         }
         
-        public static Material EntityNormalUseShadow(FBO fbo, Mesh mesh, FBO shadowMapFBO, Action<Material> perMaterialUniformSender)
-        {
-            var mat = GenericEntityBased(fbo, SetupShaders.Normal, mesh, perMaterialUniformSender, (entity, material) =>
-            {
-                UniformSender.SendTransformMatrices(entity, material, shadowMapFBO.Camera, "Light");
-                UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
-                UniformSender.SendLights(material);
-                UniformSender.SendGlobals(material);
-            });
-            
-            return mat;
-        }
+     
         
         public static Material EntitySolid(FBO fbo, Mesh mesh, Action<Material> perMaterialUniformSender)
         {

@@ -18,6 +18,7 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material EyeBall;
         [IncludeInDrawLoop] public static Material Camera;
         [IncludeInDrawLoop] public static Material ScreenR1;
+        [IncludeInDrawLoop] public static Material WeirdHeadR2;
         
         //dirt sphere room2
         
@@ -66,17 +67,17 @@ namespace CART_457.Scripts.Setups
                 UniformSender.SetFloat(mat, "SpecularRoughness", 16);
             };
             
-            DirtSphere  = MaterialPreconfigs.Normal(
+            DirtSphere  = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.IcoSphereHighPoly,
                 SetupFBOs.Shadow1,
                 SetupTextures.DirtDiffuse,
                 SetupTextures.DirtNormalMap,
                 SetupTextures.DirtSpecularMap,
-            normaMaterialUniformSender
+                normaMaterialUniformSender
                 );
             
-            DirtPlane  = MaterialPreconfigs.Normal(
+            DirtPlane  = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.Plane,
                 SetupFBOs.Shadow1,
@@ -86,7 +87,7 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSender
                 );
             
-            TileSphere = MaterialPreconfigs.Normal(
+            TileSphere = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.IcoSphereHighPoly,
                 SetupFBOs.Shadow1,
@@ -96,7 +97,7 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSender
                 );
             
-            TableProto = MaterialPreconfigs.Normal(
+            TableProto = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.TableProto,
                 SetupFBOs.Shadow1,
@@ -106,13 +107,22 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSender
             );
             
-            EyeBall = MaterialPreconfigs.Normal(
+            EyeBall = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.Eyeball,
                 SetupFBOs.Shadow1,
                 SetupTextures.EyeDiffuse,
                 SetupTextures.EyeNormal,
                 SetupTextures.EyeSpecular,
+                normaMaterialUniformSender
+            );
+            
+            WeirdHeadR2 = MaterialPreconfigs.NormalNoShadow(
+                SetupFBOs.Room2,
+                SetupMeshes.WeirdHead,
+                SetupTextures.WeirdHeadDiffuse,
+                SetupTextures.WeirdHeadNormal,
+                SetupTextures.WeirdHeadSpecular,
                 normaMaterialUniformSender
             );
             #endregion

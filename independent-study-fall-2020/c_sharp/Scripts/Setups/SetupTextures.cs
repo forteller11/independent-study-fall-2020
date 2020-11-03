@@ -36,6 +36,11 @@ namespace CART_457.Scripts.Setups
         public static Texture EyeNormal = Texture.FromFile(EYE_BALL + "eyeblend_DefaultMaterial_Normal.jpg", TextureUnit.Texture1);
         public static Texture EyeSpecular = Texture.FromFile(EYE_BALL + "eyeblend_DefaultMaterial_Roughness.jpg", TextureUnit.Texture2);
         
+        private const string WEIRD_HEAD = "head/";
+        public static Texture WeirdHeadDiffuse = Texture.FromFile(WEIRD_HEAD + "head_None_BaseColor.jpg", TextureUnit.Texture0);
+        public static Texture WeirdHeadNormal = Texture.FromFile(WEIRD_HEAD + "head_None_Normal.jpg", TextureUnit.Texture1);
+        public static Texture WeirdHeadSpecular = Texture.FromFile(WEIRD_HEAD + "head_None_Roughness.jpg", TextureUnit.Texture2);
+        
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }
 }
