@@ -1,5 +1,4 @@
 ﻿
-using CART_457.EntitySystem.Scripts.Blueprints;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace CART_457.EntitySystem
