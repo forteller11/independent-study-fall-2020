@@ -22,7 +22,7 @@ void main(){
     else if (TextureIndex == 1){
         texColor = texture(MainTexture2, v2f_uv);
         vec4 a = vec4(0,1,0,1);
-        texColor = mix(a, texColor, 0.8);
+//        texColor = mix(a, texColor, 0.8);
     }
     
     else {

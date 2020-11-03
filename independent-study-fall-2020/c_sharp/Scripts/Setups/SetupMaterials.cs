@@ -66,11 +66,10 @@ namespace CART_457.Scripts.Setups
             {
                 UniformSender.SetFloat(mat, "NormalMapStrength", 2);
                 UniformSender.SetFloat(mat, "SpecularRoughness", 16);
-                SetupFBOs.Shadow1.UseTexturesAndGenerateMipMaps();
             };
             
             DirtSphere  = MaterialPreconfigs.Normal(
-                SetupFBOs.Room2,
+                SetupFBOs.Room1,
                 SetupMeshes.IcoSphereHighPoly,
                 SetupFBOs.Shadow1,
                 SetupTextures.DirtDiffuse,

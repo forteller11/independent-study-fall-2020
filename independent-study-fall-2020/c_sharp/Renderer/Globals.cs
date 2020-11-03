@@ -11,7 +11,7 @@ namespace CART_457.Renderer
     public static class Globals
     {
         public static readonly Camera MainCamera = new Camera();
-        
+
         public static readonly Camera PlayerCameraRoom1 = new Camera();
         public static readonly Camera WebCamRoom1 = new Camera();
         public static readonly Camera ShadowCastingLightRoom1 = new Camera();

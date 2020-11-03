@@ -30,14 +30,16 @@ namespace CART_457.EntitySystem.Scripts.Blueprints
             Globals.PlayerCameraRoom1.Position = new Vector3(0,0,2);
             Globals.PlayerCameraRoom1.Rotation = Quaternion.Identity;
             
+            
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
             Globals.WebCamRoom1.CopyFrom(new Camera(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, webCamPerspective, near, far));
             
             Matrix4.CreateOrthographic(25, 25, near, far, out var shadowLightPerspective);
             Globals.ShadowCastingLightRoom1.CopyFrom(new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far));
             
-            
-            
+            Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
+            Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
+
             Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
 
         }
@@ -47,6 +49,10 @@ namespace CART_457.EntitySystem.Scripts.Blueprints
         {  
             Rotate(eventArgs);
             Move(eventArgs);
+            
+            Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
+            Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
+            Globals.WebCamRoom2.CopyFrom( Globals.WebCamRoom1);
         }
 
         void Rotate(EntityUpdateEventArgs eventArgs) //todo can't rotate around
