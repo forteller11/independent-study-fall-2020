@@ -6,6 +6,14 @@ namespace CART_457.Helpers
     public static class MathInd
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        public static float GetPercentageBetweenEdges(float edge1, float edge2, float value)
+        {
+            float sum = edge2 - edge1;
+            float valueWithEdge1Origin = value - edge1;
+            return valueWithEdge1Origin / sum;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static float Lerp(float n1, float n2, float t)
         {
             float diff = n2 - n1;

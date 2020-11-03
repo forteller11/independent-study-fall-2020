@@ -1,5 +1,6 @@
 ﻿using System;
 using CART_457.EntitySystem;
+using CART_457.Helpers;
 using CART_457.Renderer;
 using CART_457.Scripts.Blueprints;
 using CART_457.Scripts.Setups;
@@ -39,6 +40,7 @@ namespace CART_457.Scripts.EntityPrefabs
             _webCamVisualizer.Parent = Table;
             _webCamVisualizer.LocalPosition = new Vector3(-.3f,1.9f,.95f);
             _webCamVisualizer.LocalScale *= 0.2f;
+            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(MathF.PI/2,0,0);
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
             
@@ -50,6 +52,8 @@ namespace CART_457.Scripts.EntityPrefabs
         {
             EntityTransformToCamera(_playerCamVisualizer, Globals.PlayerCameraRoom1);
             Globals.WebCamRoom1.ToEntityOrientation(_webCamVisualizer);
+
+            PhysicsHelpersInd.IsPointInFrustrum(_playerCamVisualizer.WorldPosition, Globals.WebCamRoom1);
         }
 
         private Entity AddCamera(Vector4 color)

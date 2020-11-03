@@ -1,5 +1,6 @@
 ﻿using System;
 using CART_457.EntitySystem;
+using CART_457.Helpers;
 using CART_457.Renderer;
 using OpenTK.Mathematics;
 
@@ -21,18 +22,15 @@ namespace CART_457.Scripts.Blueprints
         {
             float near = 0.1f;
             float far = 100f;
-            
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var playerCamPerspective);
-            Globals.PlayerCameraRoom1.CopyFrom(new Camera(Vector3.Zero, Quaternion.Identity, playerCamPerspective, near, far));
+
+            Globals.PlayerCameraRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
             Globals.PlayerCameraRoom1.Position = new Vector3(0,0,2);
             Globals.PlayerCameraRoom1.Rotation = Quaternion.Identity;
-            
-            
+  
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
-            Globals.WebCamRoom1.CopyFrom(new Camera(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, webCamPerspective, near, far));
+            Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, MathHelper.DegreesToRadians(45), near, far));
             
-            Matrix4.CreateOrthographic(25, 25, near, far, out var shadowLightPerspective);
-            Globals.ShadowCastingLightRoom1.CopyFrom(new Camera(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), shadowLightPerspective, near, far));
+            Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreateOrthographic(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), 25, near, far));
             
             Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
             Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
@@ -50,6 +48,8 @@ namespace CART_457.Scripts.Blueprints
             Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
             Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
             Globals.WebCamRoom2.CopyFrom( Globals.WebCamRoom1);
+            
+            
         }
 
         void Rotate(EntityUpdateEventArgs eventArgs) //todo can't rotate around
