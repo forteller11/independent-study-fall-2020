@@ -1,9 +1,9 @@
 ﻿using System;
-
+using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
 using OpenTK.Mathematics;
 
-namespace CART_457.EntitySystem.Scripts.Blueprints
+namespace CART_457.Scripts.Blueprints
 {
     public class Empty : EntitySystem.Entity
     {

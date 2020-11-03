@@ -1,13 +1,9 @@
 ﻿using System;
-using CART_457.c_sharp.Renderer;
 using CART_457.MaterialRelated;
-using CART_457.Renderer;
-using CART_457.Scripts;
-using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+using CART_457.EntitySystem;
 using OpenTK.Mathematics;
 
-namespace CART_457.EntitySystem.Scripts.Blueprints
+namespace CART_457.Blueprints
 {
     public class SinMover : EntitySystem.Entity
     {

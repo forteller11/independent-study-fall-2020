@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using CART_457.Blueprints;
 using CART_457.EntitySystem;
-using CART_457.EntitySystem.Scripts.Blueprints;
-using CART_457.EntitySystem.Scripts.EntityPrefabs;
 using CART_457.Renderer;
-using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
-using OpenTK.Graphics.OpenGL4;
+using CART_457.Scripts.Blueprints;
+using CART_457.Scripts.EntityPrefabs;
+using CART_457Scripts.Blueprints;
 using OpenTK.Mathematics;
 
 namespace CART_457.Scripts.Setups

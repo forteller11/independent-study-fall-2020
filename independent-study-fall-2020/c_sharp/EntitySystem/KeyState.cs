@@ -2,7 +2,7 @@
 using OpenTK.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace CART_457.EntitySystem.Scripts.Blueprints
+namespace CART_457.EntitySystem
 {
     public struct KeyState
     {

@@ -1,10 +1,12 @@
-﻿using CART_457.Renderer;
+﻿using CART_457;
+using CART_457.EntitySystem;
+using CART_457.Renderer;
 using OpenTK.Graphics.OpenGL4;
 
 
-namespace CART_457.EntitySystem.Scripts.Blueprints
+namespace CART_457Scripts.Blueprints
 {
-    public class FBOVisualizationInput : EntitySystem.Entity
+    public class FBOVisualizationInput : Entity
     {
         private int _blitOffscreenFBOsIndex = -1; //where -1 == default buffer no blit
 

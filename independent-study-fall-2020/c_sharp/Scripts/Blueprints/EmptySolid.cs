@@ -6,7 +6,7 @@ using CART_457.Scripts.Setups;
 using OpenTK;
 using OpenTK.Mathematics;
 
-namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
+namespace CART_457.Scripts.Blueprints
 {
     public class EmptySolid : CART_457.EntitySystem.Entity
     {

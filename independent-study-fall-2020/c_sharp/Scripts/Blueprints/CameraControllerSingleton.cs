@@ -1,12 +1,9 @@
-﻿
-using System;
+﻿using System;
+using CART_457.EntitySystem;
 using CART_457.Renderer;
-
-using OpenTK;
-using OpenTK.Input;
 using OpenTK.Mathematics;
 
-namespace CART_457.EntitySystem.Scripts.Blueprints
+namespace CART_457.Scripts.Blueprints
 {
     public class CameraControllerSingleton : EntitySystem.Entity
     {

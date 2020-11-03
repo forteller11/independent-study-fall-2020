@@ -6,7 +6,7 @@ using CART_457.Scripts.Setups;
 using CART_457.Helpers;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
+namespace CART_457.Scripts.Blueprints
 {
     public class Screen : Entity
     {

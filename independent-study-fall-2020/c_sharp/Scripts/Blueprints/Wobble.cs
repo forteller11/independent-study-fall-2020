@@ -4,7 +4,7 @@ using CART_457.MaterialRelated;
 using CART_457.Renderer;
 using OpenTK.Mathematics;
 
-namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
+namespace CART_457.Scripts.Blueprints
 {
     public class Wobble : Entity
     {

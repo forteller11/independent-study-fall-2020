@@ -1,13 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using CART_457.EntitySystem.Scripts.Blueprints;
+using CART_457.EntitySystem;
 using CART_457.Renderer;
+using CART_457.Scripts.Blueprints;
 using CART_457.Scripts.Setups;
-using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
-using OpenTK;
+
 using OpenTK.Mathematics;
 
-namespace CART_457.EntitySystem.Scripts.EntityPrefabs
+namespace CART_457.Scripts.EntityPrefabs
 {
     public class CameraVisualizer : EntitySystem.Entity
     {
