@@ -168,10 +168,12 @@ namespace CART_457.MaterialRelated
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);
         }
         
-        public static void Blit(FBO source, FBO dest, ClearBufferMask clearBufferMask, BlitFramebufferFilter blitFramebufferFilter)
+        public static void Blit(FBO source, FBO dest, ReadBufferMode readBufferAttachment, ClearBufferMask clearBufferMask, BlitFramebufferFilter blitFramebufferFilter)
         {
+            
             GL.BindFramebuffer(FramebufferTarget.ReadFramebuffer, source.Handle);
             GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, dest.Handle);
+            GL.ReadBuffer(readBufferAttachment);
             GL.BlitFramebuffer(
                 0, 0, source.Size.X, source.Size.Y,
                 0, 0, dest.Size.X, dest.Size.Y,

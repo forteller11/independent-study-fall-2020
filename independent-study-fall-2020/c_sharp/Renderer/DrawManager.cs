@@ -22,6 +22,8 @@ namespace CART_457.Renderer
         public static List<Material> PostProcessingMaterials;
         
         public static FBO FBOToDebugDraw; //where -1 == default buffer no blit
+        public static ReadBufferMode ReadBufferToDebugDraw = ReadBufferMode.ColorAttachment1;
+        
         public static FBO PostFXFbo;
         
 
@@ -223,7 +225,7 @@ namespace CART_457.Renderer
                 PostProcessingMaterials[i].SetDrawingStates();
                 GL.DrawArrays(PrimitiveType.Triangles, 0,PostProcessingMaterials[i].VAO.VerticesCount);
             }
-            FBO.Blit(PostFXFbo, SetupFBOs.Default, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
+            FBO.Blit(PostFXFbo, SetupFBOs.Default, ReadBufferMode.ColorAttachment0, ClearBufferMask.ColorBufferBit , BlitFramebufferFilter.Nearest);
         }
 
         
@@ -232,7 +234,7 @@ namespace CART_457.Renderer
             if (FBOToDebugDraw == null)
                 return;
             
-            FBO.Blit(FBOToDebugDraw, SetupFBOs.Default, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            FBO.Blit(FBOToDebugDraw, SetupFBOs.Default, ReadBufferToDebugDraw, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
 
         }
     }
