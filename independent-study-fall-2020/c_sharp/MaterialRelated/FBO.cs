@@ -152,17 +152,8 @@ namespace CART_457.MaterialRelated
             RenderCapSettings?.Invoke();
         }
 
-        
-
-        public void UseTexturesAndGenerateMipMaps() //todo cache gen mip maps with dirty-pattern
-        {
-            ColorTexture1?.UseAndGenerateMipMaps();
-            ColorTexture2?.UseAndGenerateMipMaps();
-            DepthTexture?.UseAndGenerateMipMaps();
-        }
 
 
-        
         public void LinkTexture(Texture texture, FramebufferAttachment attachment)
         {
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment, TextureTarget.Texture2D, texture.Handle, 0);

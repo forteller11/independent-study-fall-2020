@@ -1,5 +1,6 @@
 ﻿
 using CART_457.EntitySystem;
+using CART_457.Renderer;
 using OpenTK;
 using OpenTK.Mathematics;
 
@@ -21,11 +22,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             room2 = r2;
         }
 
-        public override void OnLoad()
+
+        
+        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            room1.LocalScale = new Vector3(4);
-         
-            room2.LocalPosition += Vector3.One;
+            room1.LocalRotation = Globals.MainCamera.Rotation;
+            Vector3 viewDir = Globals.MainCamera.Rotation * Vector3.UnitZ;
+            room1.LocalPosition = Globals.MainCamera.Position - viewDir * 2;
         }
 
 

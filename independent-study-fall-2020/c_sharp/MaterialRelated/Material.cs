@@ -105,12 +105,7 @@ namespace CART_457.MaterialRelated
             mat.RenderTarget = SetupFBOs.PostProcessing;
             mat.GetUniformAndAttribLocations();
             mat.VAO = new VAOAndBuffers(mat, SetupMeshes.ViewSpaceQuad);
-            {//get last fbo in fbosetup
-                
-            }
-
-        mat.PerMaterialUniformSender = _ => SetupFBOs.Room1.UseTexturesAndGenerateMipMaps();
-             return mat;
+            return mat;
          }
 
          /// <summary>
