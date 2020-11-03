@@ -15,7 +15,7 @@ namespace CART_457.Scripts.Blueprints
 
 
 
-        public CameraControllerSingleton() : base(BehaviorFlags.None, null) { }
+        public CameraControllerSingleton() : base( null) { }
         
         public override void OnLoad()
         {

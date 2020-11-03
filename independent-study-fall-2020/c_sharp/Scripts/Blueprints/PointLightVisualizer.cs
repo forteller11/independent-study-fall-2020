@@ -14,7 +14,7 @@ namespace CART_457.Blueprints
 
         public int Index;
 
-        public PointLightVisualizer(int index, params Material [] material) : base(BehaviorFlags.None, material)
+        public PointLightVisualizer(int index, params Material [] material) : base( material)
         {
             Index = index;
             LocalScale *= 0.2f;

@@ -1,6 +1,7 @@
 ﻿using System;
 using CART_457.MaterialRelated;
 using CART_457.EntitySystem;
+using CART_457.Helpers;
 using OpenTK.Mathematics;
 
 namespace CART_457.Blueprints
@@ -41,6 +42,7 @@ namespace CART_457.Blueprints
             var sin = new Vector3(MathF.Sin(ran.X), MathF.Sin(ran.Y)/2, MathF.Sin(ran.Z))*.01f;
             LocalPosition += sin;
             // Rotation = Rotation * Quaternion.FromAxisAngle(new Vector3(0, 1, 0), 0.01f);
+
 
         }
         

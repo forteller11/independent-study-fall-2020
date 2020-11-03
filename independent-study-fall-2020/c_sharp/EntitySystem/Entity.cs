@@ -1,4 +1,5 @@
 ﻿using System;
+using CART_457.Helpers;
 using CART_457.MaterialRelated;
 using OpenTK;
 using OpenTK.Mathematics;
@@ -11,6 +12,7 @@ namespace CART_457.EntitySystem
         public readonly Guid GUID;
         public Material [] Materials  { get; private set; }
 
+        #region transform related
         public Vector3 LocalPosition = Vector3.Zero;
         public Vector3 WorldPosition {
             get
@@ -46,20 +48,13 @@ namespace CART_457.EntitySystem
         }
 
         public Entity Parent;
-
-        [Flags]
-        public enum BehaviorFlags
-        {
-            None = 0b_0000_0000_0000_0000,
-        }
-
-        public BehaviorFlags Flags;
+        #endregion
+        
         
 
-        public Entity(BehaviorFlags flags, params Material [] materialTypes)
+        public Entity(params Material [] materialTypes)
         {
-            Materials = materialTypes;
-            Flags = flags;
+            AssignMaterials(materialTypes);
             GUID = Guid.NewGuid();
         }
 
@@ -114,16 +109,6 @@ namespace CART_457.EntitySystem
             return GUID.GetHashCode();
         }
         #endregion
-
-        /// <summary>
-        /// does entity have at least all the flags toCompare does?
-        /// </summary>
-        /// <param name="toCompare"></param>
-        /// <returns></returns>
-        public bool HasFlags(BehaviorFlags toCompare)
-        {
-            BehaviorFlags likeFlags = toCompare & Flags;
-            return toCompare == likeFlags;
-        }
+        
     }
 }

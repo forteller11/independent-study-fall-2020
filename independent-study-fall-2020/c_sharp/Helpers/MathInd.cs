@@ -5,13 +5,13 @@ namespace CART_457.Helpers
 {
     public static class MathInd
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static float Lerp(float n1, float n2, float t)
         {
             float diff = n2 - n1;
             return (diff * t) + n1;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         public static Matrix4 Lerp(Matrix4 m1, Matrix4 m2, float t)
         {
             var result = new Matrix4();
@@ -37,7 +37,7 @@ namespace CART_457.Helpers
 
             return result;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static float SmoothStep(float t) //3x^2 - 2x^3
         {
             return MathHelper.Clamp((3 * t * t) - (2 * t * t * t), 0,1);
