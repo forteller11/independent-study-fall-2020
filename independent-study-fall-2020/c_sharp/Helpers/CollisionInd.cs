@@ -27,13 +27,13 @@ namespace CART_457.Helpers
             return width;
         }
 
-        public static  bool IsPointWithinFrustrum(Vector3 point, Camera camera, bool withinClipPlanes=false)
+        public static bool IsPointWithinFrustrum(Vector3 point, Camera camera, bool withinClipPlanes=false)
         {
             Quaternion toIdentity = camera.Rotation.Inverted();
 
             Vector3 pointAlignedSpace = PivotAbout(point, camera.Position, toIdentity);
             Vector3 nearCenterAlignedSpace = new Vector3(0, 0, camera.NearClip) - camera.Position;
-            Vector3 farCenterAlignedSpace = new Vector3(0, 0, camera.FarClip) - camera.Position;
+            Vector3 farCenterAlignedSpace  = new Vector3(0, 0, camera.FarClip)  - camera.Position;
 
             float t = MathInd.GetPercentageBetweenEdges(nearCenterAlignedSpace.Z, farCenterAlignedSpace.Z, -pointAlignedSpace.Z);
             

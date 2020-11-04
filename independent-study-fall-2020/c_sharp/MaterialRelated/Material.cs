@@ -30,6 +30,7 @@ namespace CART_457.MaterialRelated
 
         public Action<Material> PerMaterialUniformSender;
         public Action<Entity, Material> PerEntityUniformSender;
+        
 
         public bool IsShadowMapMaterial;
         private const bool DEBUG = false;
