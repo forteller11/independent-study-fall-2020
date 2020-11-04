@@ -2,6 +2,7 @@
 using CART_457.c_sharp.Renderer;
 using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
+using CART_457.Renderer;
 
 namespace CART_457.Scripts.Setups
 {
@@ -37,6 +38,25 @@ namespace CART_457.Scripts.Setups
                 UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                 UniformSender.SendLights(material);
                 UniformSender.SendGlobals(material);
+            });
+
+            mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);
+            mat.SetupSampler(UniformSender.NORMAL_MAP_SAMPLER, normal);
+            mat.SetupSampler(UniformSender.SPECULAR_MAP_SAMPLER, specular);
+
+            return mat;
+        }
+        
+        public static Material NormalNoShadowFrustrum(
+            FBO fbo, Mesh mesh, Camera camera, Texture diffuse, Texture normal, Texture specular, Action<Material> perMatSender)
+        {
+
+            Material mat = Material.GenericEntityBased(fbo, SetupShaders.NormalFrustrum, mesh, perMatSender, (entity, material) =>
+            {
+                UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
+                UniformSender.SendLights(material);
+                UniformSender.SendGlobals(material);
+                UniformSender.SendFrustrum(material, camera);
             });
 
             mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);

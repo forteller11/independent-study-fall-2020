@@ -13,6 +13,7 @@ namespace CART_457.c_sharp.Renderer
     {
         
         #region uniform identifiers
+        private const string DOT = ".";
         private const string DIR_LIGHT = "DirectionLights";
         private const string POINT_LIGHT = "PointLights";
         
@@ -36,6 +37,17 @@ namespace CART_457.c_sharp.Renderer
 
         public const string TRANSFORM_BUFFER = "Transform";
         public const string GLOBALS = "Globals";
+        
+        #region frustrum
+        public const string FRUSTRUM = "Frustrum.";
+        public const string FRUSTRUM_POSITION = FRUSTRUM  + "Position";
+        public const string FRUSTRUM_ROTATION = FRUSTRUM  + "Rotation";
+        public const string FRUSTRUM_ROTATION_INVERSE = FRUSTRUM  + "RotationInverse";
+        public const string FRUSTRUM_NEAR_CLIP = FRUSTRUM  + "NearClip";
+        public const string FRUSTRUM_FAR_CLIP  = FRUSTRUM + "FarClip";
+        public const string FRUSTRUM_NEAR_CLIP_WIDTH = FRUSTRUM  + "NearClipWidth";
+        public const string FRUSTRUM_FAR_CLIP_WIDTH  = FRUSTRUM + "FarClipWidth";
+        #endregion
         #endregion
         
         /// <summary>
@@ -62,6 +74,20 @@ namespace CART_457.c_sharp.Renderer
             SetMatrix4(material, MODEL_TO_WORLD_UNIFORM + suffix, modelToWorld, false);
             SetMatrix4(material, MODEL_TO_WORLD_NO_PROJECTION_UNIFORM + suffix, modelToViewNoProjection, false);
             SetVector3(material, CAM_POSITION_UNIFORM + suffix, camera.Position, false);
+        }
+
+        public static void SendFrustrum(Material material, Camera camera)
+        {
+            SetVector3(material, FRUSTRUM_POSITION, camera.Position);
+            
+            SetMatrix3(material, FRUSTRUM_ROTATION,         Matrix3.CreateFromQuaternion(camera.Rotation));
+            SetMatrix3(material, FRUSTRUM_ROTATION_INVERSE, Matrix3.CreateFromQuaternion(Quaternion.Invert(camera.Rotation)));
+            
+            SetFloat(material, FRUSTRUM_NEAR_CLIP, camera.NearClip);
+            SetFloat(material, FRUSTRUM_FAR_CLIP,  camera.FarClip);
+            
+            SetFloat(material, FRUSTRUM_NEAR_CLIP_WIDTH, camera.NearClipWidth);
+            SetFloat(material, FRUSTRUM_FAR_CLIP_WIDTH,  camera.FarClipWidth);
         }
 
         /// <summary>

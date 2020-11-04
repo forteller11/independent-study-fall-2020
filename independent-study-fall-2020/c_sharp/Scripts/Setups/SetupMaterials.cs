@@ -2,6 +2,7 @@
 using CART_457.Attributes;
 using CART_457.c_sharp.Renderer;
 using CART_457.MaterialRelated;
+using CART_457.Renderer;
 using Texture = FbxSharp.Texture;
 
 namespace CART_457.Scripts.Setups
@@ -10,6 +11,7 @@ namespace CART_457.Scripts.Setups
     {
 
         [IncludeInDrawLoop] public static Material SolidSphereR1;
+        [IncludeInDrawLoop] public static Material DirtSphereR1Frustrum;
         [IncludeInDrawLoop] public static Material SolidSphereR2;
         [IncludeInDrawLoop] public static Material DirtSphere;
         [IncludeInDrawLoop] public static Material DirtPlane;
@@ -77,6 +79,16 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSender
                 );
             
+            DirtSphere  = MaterialPreconfigs.NormalReceiveShadow(
+                SetupFBOs.Room1,
+                SetupMeshes.IcoSphereHighPoly,
+                SetupFBOs.Shadow1,
+                SetupTextures.DirtDiffuse,
+                SetupTextures.DirtNormalMap,
+                SetupTextures.DirtSpecularMap,
+                normaMaterialUniformSender
+            );
+            
             DirtPlane  = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.Plane,
@@ -123,6 +135,16 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.WeirdHeadDiffuse,
                 SetupTextures.WeirdHeadNormal,
                 SetupTextures.WeirdHeadSpecular,
+                normaMaterialUniformSender
+            );
+            
+            DirtSphereR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
+                SetupFBOs.Room1,
+                SetupMeshes.IcoSphereHighPoly,
+                Globals.WebCamRoom1,
+                SetupTextures.DirtDiffuse,
+                SetupTextures.DirtNormalMap,
+                SetupTextures.DirtSpecularMap,
                 normaMaterialUniformSender
             );
             #endregion

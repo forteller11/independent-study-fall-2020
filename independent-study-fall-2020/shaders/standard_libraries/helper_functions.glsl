@@ -23,14 +23,8 @@ bool IsPointWithinFrustrum(vec3 point, FrustrumStruct frustrum){
     vec3 farCenterAlignedSpace  = vec3(0, 0, frustrum.FarClip)  - frustrum.Position;
 
     float t = GetPercentageBetweenEdges(nearCenterAlignedSpace.z, farCenterAlignedSpace.z, - pointAlignedSpace.z);
-    
-    if (withinClipPlanes){
-        if (t > 1 || t < 0){
-            return false;
-            }
-    }
 
-    float widthOfFrustrumAtPoint = MathInd.Lerp(frustrum.NearClipWidth, frustrum.FarClipWidth, t);
+    float widthOfFrustrumAtPoint = mix(frustrum.NearClipWidth, frustrum.FarClipWidth, t);
 
     vec3 pointFrustrumOrigin = pointAlignedSpace - frustrum.Position;
 
@@ -41,6 +35,3 @@ bool IsPointWithinFrustrum(vec3 point, FrustrumStruct frustrum){
 
     return true;
 }
-
-//todo pivot about 
-//get percentage dege between

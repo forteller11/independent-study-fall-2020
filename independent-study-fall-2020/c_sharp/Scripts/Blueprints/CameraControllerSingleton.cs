@@ -27,7 +27,7 @@ namespace CART_457.Scripts.Blueprints
             Globals.PlayerCameraRoom1.Position = new Vector3(0,0,2);
             Globals.PlayerCameraRoom1.Rotation = Quaternion.Identity;
   
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), 1, near, far, out var webCamPerspective);
+            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var webCamPerspective);
             Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, MathHelper.DegreesToRadians(45), near, far));
             
             Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreateOrthographic(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), 25, near, far));
