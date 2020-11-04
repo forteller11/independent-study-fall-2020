@@ -11,7 +11,12 @@ namespace CART_457.EntitySystem
     {
         public readonly Guid GUID;
         public Material [] Materials  { get; private set; }
-
+        
+        public bool AddedToRenderer;
+        public bool AddedToCollisionWorld;
+        
+        
+        
         #region transform related
         public Vector3 LocalPosition = Vector3.Zero;
         public Vector3 WorldPosition {
@@ -57,6 +62,8 @@ namespace CART_457.EntitySystem
             AssignMaterials(materialTypes);
             GUID = Guid.NewGuid();
         }
+        
+        public Entity CreateAdd(Material[] materials, )
 
         public Entity()
         {
