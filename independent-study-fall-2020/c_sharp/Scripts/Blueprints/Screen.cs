@@ -11,11 +11,7 @@ namespace CART_457.Scripts.Blueprints
     public class Screen : Entity
     {
         // public TextureUnit RoomTextureUnit;
-        public Screen()
-        {
-
-            AssignMaterials(SetupMaterials.ScreenR1); 
-        }
+        public Screen() : base(new []{SetupMaterials.ScreenR1}) { }
 
         public override void SendUniformsPerObject(Material material)
         {

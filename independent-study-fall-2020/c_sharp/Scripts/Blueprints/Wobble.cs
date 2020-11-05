@@ -13,14 +13,12 @@ namespace CART_457.Scripts.Blueprints
         public Vector3 Anchor;
         public float Seed;
         
-        public Wobble(float wobbleRadius, float wobbleSpeed, Vector3 anchor, params Material[] mats)
+        public Wobble(float wobbleRadius, float wobbleSpeed, Vector3 anchor, params Material[] mats) : base(mats)
         {
-            AssignMaterials(mats);
             Radius = wobbleRadius;
             Speed = wobbleSpeed;
             Anchor = anchor;
             Seed = (float) (Globals.Random.NextDouble()*9999);
-            Debug.Log(Seed);
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

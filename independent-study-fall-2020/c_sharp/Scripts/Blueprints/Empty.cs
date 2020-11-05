@@ -9,10 +9,7 @@ namespace CART_457.Scripts.Blueprints
     {
         
         public Action<Entity> UpdateAction;
-        public Empty(params Material[] materials)
-        {
-            AssignMaterials(materials);
-        }
+        public Empty(params Material[] materials) : base(materials) { }
 
         
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

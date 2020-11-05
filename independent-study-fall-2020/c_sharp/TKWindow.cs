@@ -62,7 +62,7 @@ namespace CART_457
             DrawManager.SetupStaticRenderingHierarchy();
             // DrawManager.TKWindowSize = new Size(, Height);
             
-            EntityManager.AddRangeToWorldAndRenderer(SetupEntities.CreateGameObjects());
+            SetupEntities.CreateGameObjects();
             EntityManager.InvokeOnLoad();
         }
 

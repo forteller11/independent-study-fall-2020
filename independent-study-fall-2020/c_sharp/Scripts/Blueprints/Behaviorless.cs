@@ -4,9 +4,6 @@ namespace CART_457.Scripts.Blueprints
 {
     public class Behaviorless : EntitySystem.Entity
     {
-        public Behaviorless(Material [] mat)
-        {
-            AssignMaterials(mat);
-        }
+        public Behaviorless(Material [] mat) : base(mat){ } 
     }
 }

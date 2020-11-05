@@ -8,21 +8,16 @@ using OpenTK.Mathematics;
 
 namespace CART_457.Scripts.Blueprints
 {
-    public class EmptySolid : CART_457.EntitySystem.Entity
+    public class EmptySolid : Entity
     {
         public Vector4 Color;
 
-        public EmptySolid(Vector4 color, float scale, params Material[] materials)
+        public EmptySolid(Vector4 color, float scale, params Material[] materials) : base(materials)
         {
             Color = color;
             LocalScale *= scale;
-            AssignMaterials(materials);
         }
-
-        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
-        {
         
-        }
 
         public override void SendUniformsPerObject(Material material)
         {

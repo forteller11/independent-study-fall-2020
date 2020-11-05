@@ -16,15 +16,11 @@ namespace CART_457.Blueprints
             LocalScale *= 1f;
         }
 
-        private SinMover(Material[] materials)
-        {
-            AssignMaterials(materials);
-        }
-        public SinMover(Vector3 position, Vector3 ran2, params Material [] material)
+        private SinMover(Material[] materials) : base(materials) { }
+        public SinMover(Vector3 position, Vector3 ran2, params Material [] material) : base(material)
         {
             LocalPosition = position;
-            AssignMaterials(material);
-           ran = ran2;
+            ran = ran2;
         }
 
         public static SinMover PositionSize(Vector3 position, Vector3 size, params Material [] materials)
