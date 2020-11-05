@@ -18,14 +18,14 @@ namespace CART_457.PhysicsRelated
                 {
                     Hit = true,
                     Inside = true,
-                    HitPosition = r.Origin,
-                    NearestHitPosition = r.Origin
+                    NearestOrHitPosition = r.Origin,
+                    HitEntity = s.Entity
                 };
             }
 
             float rayProjection = -1 * Vector3.Dot(r.Direction, ray2SphereCenter);
             float centerMinusRadius = ray2SphereCenterDistance - s.Radius;
-            Vector3 nearestOrHitPosition = rayProjection * r.Direction;
+            Vector3 nearestOrHitPosition = -rayProjection * r.Direction + r.Origin;
             
             // Debug.Log(r.ToString());
             // Debug.Log($"Ray2SphereCenter : {ray2SphereCenter}");
@@ -39,8 +39,8 @@ namespace CART_457.PhysicsRelated
                 {
                     Hit = true,
                     Inside = false,
-                    HitPosition = nearestOrHitPosition,
-                    NearestHitPosition = nearestOrHitPosition
+                    NearestOrHitPosition = nearestOrHitPosition,
+                    HitEntity = s.Entity
                 };
             }
 
@@ -50,8 +50,8 @@ namespace CART_457.PhysicsRelated
                 {
                     Hit = false,
                     Inside = false,
-                    HitPosition = nearestOrHitPosition,
-                    NearestHitPosition = nearestOrHitPosition
+                    NearestOrHitPosition = nearestOrHitPosition,
+                    HitEntity = s.Entity
                 };
             }
         
