@@ -8,7 +8,7 @@ namespace CART_457.PhysicsRelated
 
         private SphereCollider(Entity entity) : base(entity) { }
 
-        public static SphereCollider CreateAdd(Entity entity, float radius)
+        public static SphereCollider Create(Entity entity, float radius)
         {
             var sphere = new SphereCollider(entity);
             sphere.Radius = radius;

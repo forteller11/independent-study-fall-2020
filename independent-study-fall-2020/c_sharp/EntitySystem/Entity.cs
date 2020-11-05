@@ -75,6 +75,18 @@ namespace CART_457.EntitySystem
             Materials = materialTypes;
         }
 
+        public void AddCollider(SphereCollider collider)
+        {
+            ColliderGroup.AddCollider(collider);
+            CollisionWorld.ColliderGroup.AddCollider(collider);
+        }
+        
+        public void AddCollider(PlaneCollider collider)
+        {
+            ColliderGroup.AddCollider(collider);
+            CollisionWorld.ColliderGroup.AddCollider(collider);
+        }
+
         public void SetLocalTransform(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             LocalPosition = position;

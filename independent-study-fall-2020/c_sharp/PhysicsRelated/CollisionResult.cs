@@ -1,4 +1,5 @@
-﻿using OpenTK.Mathematics;
+﻿using CART_457.EntitySystem;
+using OpenTK.Mathematics;
 
 namespace CART_457.PhysicsRelated
 {
@@ -7,6 +8,7 @@ namespace CART_457.PhysicsRelated
         public bool Hit;
         public Vector3 HitPosition;
         public Vector3 NearestHitPosition;
+        public Entity HitEntity;
         
     }
 }

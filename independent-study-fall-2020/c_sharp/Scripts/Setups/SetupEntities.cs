@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using CART_457.Blueprints;
 using CART_457.EntitySystem;
+using CART_457.PhysicsRelated;
 using CART_457.Renderer;
 using CART_457.Scripts.Blueprints;
 using CART_457.Scripts.EntityPrefabs;
 using CART_457Scripts.Blueprints;
+using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
 using OpenTK.Mathematics;
 
 namespace CART_457.Scripts.Setups
@@ -20,6 +22,8 @@ namespace CART_457.Scripts.Setups
             #region room 1
             #region table
             var table = Empty.FromPosition(new Vector3(0, 1, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
+            table.AddCollider(SphereCollider.Create(table, 5f));
+            
             table.LocalScale *= 0.4f;
             table.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
             // table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
@@ -38,9 +42,17 @@ namespace CART_457.Scripts.Setups
             gameObjects.Add(table);
             gameObjects.Add(table2);
             gameObjects.Add(table3);
-            gameObjects.Add(new CameraVisualizer(table));
             
-            gameObjects.Add(new CameraControllerSingleton());
+            gameObjects.Add(new CameraVisualizer(table));
+
+            var camController = new CameraControllerSingleton();
+             gameObjects.Add(camController);
+             
+            var raycastTest = new RaycastChecker();
+            raycastTest.Parent = camController;
+            gameObjects.Add(raycastTest);
+            
+           
             gameObjects.Add(new CameraInterperlator());
 
             gameObjects.Add(table);
