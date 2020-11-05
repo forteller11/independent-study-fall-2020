@@ -48,8 +48,7 @@ namespace CART_457.Scripts.Blueprints
             Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
             Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
             Globals.WebCamRoom2.CopyFrom( Globals.WebCamRoom1);
-            
-            
+
         }
 
         void Rotate(EntityUpdateEventArgs eventArgs) //todo can't rotate around
@@ -64,6 +63,7 @@ namespace CART_457.Scripts.Blueprints
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
 
             Globals.PlayerCameraRoom1.Rotation =  rotationHorz * Globals.PlayerCameraRoom1.Rotation * rotationVert;
+            LocalRotation = Globals.PlayerCameraRoom1.Rotation;
             // todo dont allow rotations past 90 degrees DOWN
         }
         void Move(EntityUpdateEventArgs eventArgs)
@@ -94,6 +94,7 @@ namespace CART_457.Scripts.Blueprints
             }
 
             Globals.PlayerCameraRoom1.Position += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
+            LocalPosition = Globals.PlayerCameraRoom1.Position;
         }
 
      

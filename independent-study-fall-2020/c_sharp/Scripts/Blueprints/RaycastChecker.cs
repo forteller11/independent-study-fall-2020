@@ -13,8 +13,9 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             var dir = WorldRotation * Vector3.UnitZ;
             
             var ray = new Ray(WorldPosition, dir);
-            if (CollisionWorld.ColliderGroup.Raycast(ray, out var results))
-                Debug.Log("Hit");
+            CollisionWorld.ColliderGroup.Raycast(ray, out var results);
+            
+            Debug.Log(results[0].ToString());
         }
     }
 }

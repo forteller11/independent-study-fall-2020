@@ -1,22 +1,19 @@
 ﻿using CART_457.EntitySystem;
+using OpenTK.Mathematics;
 
 namespace CART_457.PhysicsRelated
 {
     public class SphereCollider : Collider
     {
         public float Radius;
+        private Vector3 _offset;
+        public Vector3 WorldPosition => Entity.WorldPosition + _offset * Entity.WorldScale;
 
-        private SphereCollider(Entity entity) : base(entity) { }
-
-        public static SphereCollider Create(Entity entity, float radius)
+        public SphereCollider(Entity entity, float radius, Vector3 offset = new Vector3()) : base(entity)
         {
-            var sphere = new SphereCollider(entity);
-            sphere.Radius = radius;
-            return sphere;
+            Radius = radius;
+            _offset = offset;
         }
-        
-        
-        
-        
+
     }
 }

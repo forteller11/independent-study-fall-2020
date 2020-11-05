@@ -5,6 +5,6 @@ namespace CART_457.PhysicsRelated
 {
     public static class CollisionWorld
     {
-        public static ColliderGroup ColliderGroup;
+        public static ColliderGroup ColliderGroup = new ColliderGroup();
     }
 }

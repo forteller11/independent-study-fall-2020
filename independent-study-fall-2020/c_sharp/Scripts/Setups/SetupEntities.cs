@@ -22,7 +22,7 @@ namespace CART_457.Scripts.Setups
             #region room 1
             #region table
             var table = Empty.FromPosition(new Vector3(0, 1, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
-            table.AddCollider(SphereCollider.Create(table, 5f));
+            table.AddCollider(new SphereCollider(table, 0.2f, new Vector3(-.3f,1.2f,.8f)));
             
             table.LocalScale *= 0.4f;
             table.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
