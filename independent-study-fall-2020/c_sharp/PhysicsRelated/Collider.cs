@@ -7,7 +7,7 @@ namespace CART_457.PhysicsRelated
     {
         public Entity Entity { get; protected set; }
 
-        public Collider(Entity entity)
+        protected Collider(Entity entity)
         {
             Entity = entity;
         }

@@ -1,17 +1,25 @@
-﻿namespace CART_457.PhysicsRelated
+﻿using System;
+
+namespace CART_457.PhysicsRelated
 {
     public static class CollisionHelper
     {
-        public static CollisionResult CheckCollision(ICollider c1, ICollider c2)
+        
+        public static CollisionResult RaySphereCollision(Ray r, SphereCollider s)
         {
-            switch (c1.ColliderType)
-            {
-                case ColliderType.Sphere:
-                    
-            }
+            throw new NotImplementedException();
         }
         
+        public static CollisionResult RayPlaneCollision(Ray r, PlaneCollider s)
+        {
+            throw new NotImplementedException();
+        }
         
-        public static CollisionResult RaySphereCollision(Ray)
+        public static CollisionResult SphereSphereCollision(SphereCollider r, SphereCollider s)
+        {
+            throw new NotImplementedException();
+        }
+
+   
     }
 }

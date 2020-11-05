@@ -1,16 +1,18 @@
 ﻿using System;
 using CART_457.Helpers;
 using CART_457.MaterialRelated;
+using CART_457.PhysicsRelated;
 using OpenTK;
 using OpenTK.Mathematics;
 
 
 namespace CART_457.EntitySystem
 {
-    public abstract class Entity //todo... make mega object with flags... add physics component?
+    public abstract class Entity 
     {
         public readonly Guid GUID;
         public Material [] Materials  { get; private set; }
+        public ColliderGroup ColliderGroup;
         
         public bool AddedToRenderer;
         public bool AddedToCollisionWorld;
@@ -57,17 +59,15 @@ namespace CART_457.EntitySystem
         
         
 
-        public Entity(params Material [] materialTypes)
-        {
-            AssignMaterials(materialTypes);
-            GUID = Guid.NewGuid();
-        }
-        
-        public Entity CreateAdd(Material[] materials, )
-
         public Entity()
         {
             GUID = Guid.NewGuid();
+        }
+        
+        public Entity(Material [] materials) 
+        {
+            GUID = Guid.NewGuid();
+            AssignMaterials(materials);
         }
 
         public void AssignMaterials(params Material[] materialTypes)
