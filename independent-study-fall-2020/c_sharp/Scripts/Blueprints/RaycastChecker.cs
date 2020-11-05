@@ -10,9 +10,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
     public class RaycastChecker : Entity
     {
-        private EmptySolid Visulizer = new EmptySolid(Vector4.Zero, .2f, SetupMaterials.SolidSphereR1);
+        private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .2f, SetupMaterials.SolidSphereR1);
+        private EmptySolid VisulizerSphere = new EmptySolid(Vector4.Zero, .2f, SetupMaterials.SolidSphereR1);
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
+            Parent = null;
+            LocalRotation = Globals.MainCamera.Rotation;
+            LocalPosition = Globals.MainCamera.Position;
             var dir = WorldRotation * Vector3.UnitZ;
             
             var ray = new Ray(WorldPosition, dir);
@@ -21,9 +25,15 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             var result = results[0];
            
             
-            Visulizer.Color = result.Hit ? new Vector4(.2f,.2f,1f,1) :  new Vector4(.6f,.2f,.2f,1);
+            VisulizerHit.Color = result.Hit ? new Vector4(.2f,.2f,1f,1) :  new Vector4(.6f,.2f,.2f,1);
+            if (result.Inside)
+            {
+                VisulizerHit.Color = new Vector4(0,.8f,.8f,1);
+            }
             if (result.Hit)
-                Visulizer.LocalPosition = result.NearestOrHitPosition;
+                VisulizerHit.LocalPosition = result.NearestOrHitPosition;
+            
+            
         }
     }
 }

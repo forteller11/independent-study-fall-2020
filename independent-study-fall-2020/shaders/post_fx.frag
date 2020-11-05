@@ -5,7 +5,8 @@ in vec2 v2f_uv;
 
 uniform sampler2D Room2Texture;
 
-const float MAX_OFFSET = 0.01;
+//const float MAX_OFFSET = 0.01;
+const float MAX_OFFSET = 0.00;
 
 void main(){
     vec4 tex = texture(Room2Texture, v2f_uv);

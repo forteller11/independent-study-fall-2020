@@ -7,7 +7,7 @@ namespace CART_457.PhysicsRelated
     {
         public float Radius;
         private Vector3 _offset;
-        public Vector3 WorldPosition => Entity.WorldPosition + _offset * Entity.WorldScale;
+        public Vector3 WorldPosition => Entity.WorldPosition + (_offset * Entity.WorldScale);
 
         public SphereCollider(Entity entity, float radius, Vector3 offset = new Vector3()) : base(entity)
         {

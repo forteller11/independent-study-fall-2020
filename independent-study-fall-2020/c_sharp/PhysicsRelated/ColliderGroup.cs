@@ -4,13 +4,13 @@ namespace CART_457.PhysicsRelated
 {
     public class ColliderGroup
     {
-        private List<SphereCollider> _spheres;
-        private List<PlaneCollider> _planes;
+        public List<SphereCollider> Spheres { get; private set;}
+        public List<PlaneCollider> Planes { get; private set; }
 
         public ColliderGroup()
         {
-            _spheres = new List<SphereCollider>();
-            _planes = new List<PlaneCollider>();
+            Spheres = new List<SphereCollider>();
+            Planes = new List<PlaneCollider>();
         }
 
         public void AddColliders(Collider[] colliders)
@@ -24,8 +24,8 @@ namespace CART_457.PhysicsRelated
                     AddCollider((PlaneCollider)collider);
             }
         }
-        public void AddCollider(SphereCollider collider) =>_spheres.Add(collider);
-        public void AddCollider(PlaneCollider collider) => _planes.Add(collider);
+        public void AddCollider(SphereCollider collider) =>Spheres.Add(collider);
+        public void AddCollider(PlaneCollider collider) => Planes.Add(collider);
         
         
         public bool Raycast(Ray ray, out List<CollisionResult> results)
@@ -33,16 +33,16 @@ namespace CART_457.PhysicsRelated
             results = new List<CollisionResult>(); //TODO remove potentially huge per frame GC causer --> CACHE
 
             bool atLeastOneCollision = false;
-            for (int i = 0; i < _spheres.Count; i++)
+            for (int i = 0; i < Spheres.Count; i++)
             {
-                var result = CollisionHelper.RaySphereCollision(ray, _spheres[i]);
+                var result = CollisionHelper.RaySphereCollision(ray, Spheres[i]);
                 results.Add(result);
                 if (result.Hit) atLeastOneCollision = true;
             }
             
-            for (int i = 0; i < _planes.Count; i++)
+            for (int i = 0; i < Planes.Count; i++)
             {
-                var result = CollisionHelper.RayPlaneCollision(ray, _planes[i]);
+                var result = CollisionHelper.RayPlaneCollision(ray, Planes[i]);
                 results.Add(result);
                 if (result.Hit) atLeastOneCollision = true;
             }

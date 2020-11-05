@@ -6,55 +6,55 @@ namespace CART_457.PhysicsRelated
     public static class CollisionHelper
     {
         
-        public static CollisionResult RaySphereCollision(Ray r, SphereCollider s)
+        public static CollisionResult RaySphereCollision(Ray ray, SphereCollider sphere)
         {
-            //make ray origin the origin
-            Vector3 ray2SphereCenter = s.WorldPosition - r.Origin;
-            float ray2SphereCenterDistance = Vector3.Distance(s.WorldPosition, r.Origin);
             
-            if (ray2SphereCenterDistance < s.Radius) //if inside sphere
-            {
-                return new CollisionResult()
-                {
-                    Hit = true,
-                    Inside = true,
-                    NearestOrHitPosition = r.Origin,
-                    HitEntity = s.Entity
-                };
-            }
+            //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter3/raycast_sphere.html
+            // This function will return the value of t
+            // if it returns negative, no collision!
 
-            float rayProjection = -1 * Vector3.Dot(r.Direction, ray2SphereCenter);
-            float centerMinusRadius = ray2SphereCenterDistance - s.Radius;
-            Vector3 nearestOrHitPosition = -rayProjection * r.Direction + r.Origin;
-            
-            // Debug.Log(r.ToString());
-            // Debug.Log($"Ray2SphereCenter : {ray2SphereCenter}");
-            // Debug.Log($"Ray2SphereCenterDist : {ray2SphereCenterDistance}");
-            // Debug.Log($"projection : {rayProjection}");
-            // Debug.Log($"centerMinusRadius : {centerMinusRadius}");
-            
-            if (rayProjection > centerMinusRadius) //if hit from outside
-            {
+                Vector3 rPos = ray.Origin;
+                Vector3 rDir = ray.Direction;
+                Vector3 sPos = sphere.WorldPosition;
+                float sRadius = sphere.Radius;
+
+                Vector3 e = sPos - rPos;
+                // Using Length here would cause floating point error to creep in
+                float Esq = e.LengthSquared;
+                float a = Vector3.Dot(e, rDir);
+                float b = MathF.Sqrt(Esq - (a * a));
+                float f = MathF.Sqrt(((sRadius * sRadius) - (b * b)));
+
+                // No collision
+                if (sRadius * sRadius - Esq + a * a < 0f) 
+                {
+                    return new CollisionResult()
+                    {
+                        Hit = false,
+                        Inside = false,
+                        NearestOrHitPosition = (a - f) * ray.Direction,
+                        HitEntity = sphere.Entity
+                    };
+                }
+                // Ray is inside
+                else if (Esq < sRadius * sRadius) {
+                    return new CollisionResult()
+                    {
+                        Hit = true,
+                        Inside = true,
+                        NearestOrHitPosition = (a - f) * ray.Direction,
+                        HitEntity = sphere.Entity
+                    };
+                }
+                // else Normal intersection
                 return new CollisionResult()
                 {
                     Hit = true,
                     Inside = false,
-                    NearestOrHitPosition = nearestOrHitPosition,
-                    HitEntity = s.Entity
+                    NearestOrHitPosition = (a + f) * ray.Direction,
+                    HitEntity = sphere.Entity
                 };
-            }
-
-            else
-            {
-                return new CollisionResult() //if not hit
-                {
-                    Hit = false,
-                    Inside = false,
-                    NearestOrHitPosition = nearestOrHitPosition,
-                    HitEntity = s.Entity
-                };
-            }
-        
+            
         }
         
         public static CollisionResult RayPlaneCollision(Ray r, PlaneCollider s)

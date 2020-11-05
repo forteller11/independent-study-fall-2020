@@ -21,8 +21,7 @@ namespace CART_457.Scripts.Setups
             #region room 1
             #region table
             var table = Empty.FromPosition(new Vector3(0, 1, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
-            table.AddCollider(new SphereCollider(table, 0.2f, new Vector3(-.3f,1.2f,.8f)));
-            
+
             table.LocalScale *= 0.4f;
             table.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
             // table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
@@ -60,6 +59,8 @@ namespace CART_457.Scripts.Setups
             screen.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
             screen.LocalPosition = new Vector3(-.3f,1.2f,.8f);
             screen.LocalScale = new Vector3(.9f,.6f,1f);
+            screen.AddCollider(new SphereCollider(screen, 6f));
+            screen.VisualizeColliders();
 
             #endregion
             
@@ -70,8 +71,8 @@ namespace CART_457.Scripts.Setups
             new SinMover(new Vector3(1,1,2),new Vector3(.19f,-.1f,.06f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
             new SinMover(new Vector3(1,4,2),new Vector3(.13f,-.1f,.05f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
             new SinMover(new Vector3(1,7,2),new Vector3(.1f,-.1f,.50f), SetupMaterials.TileSphere, SetupMaterials.ShadowMapSphere);
-            var dirtPlane01 = Empty.FromPosition(new Vector3(0, 0, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
-            dirtPlane01.LocalScale = new Vector3(4);
+            // var dirtPlane01 = Empty.FromPosition(new Vector3(0, 0, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
+            // dirtPlane01.LocalScale = new Vector3(4);
             var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
             dirtPlane02.LocalScale = new Vector3(7);
 
