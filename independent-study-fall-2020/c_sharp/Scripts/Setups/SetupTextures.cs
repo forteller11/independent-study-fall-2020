@@ -41,6 +41,11 @@ namespace CART_457.Scripts.Setups
         public static Texture WeirdHeadNormal = Texture.FromFile(WEIRD_HEAD + "head_None_Normal.jpg", TextureUnit.Texture1);
         public static Texture WeirdHeadSpecular = Texture.FromFile(WEIRD_HEAD + "head_None_Roughness.jpg", TextureUnit.Texture2);
         
+        private const string WEBCAM = "webcam/";
+        public static Texture WebcamDiffuse = Texture.FromFile(WEBCAM + "diffuse.jpg", TextureUnit.Texture0);
+        public static Texture WebcamNormal = Texture.FromFile(WEBCAM + "normal.jpg", TextureUnit.Texture1);
+        public static Texture WebcamSpecular = Texture.FromFile(WEBCAM + "specular.jpg", TextureUnit.Texture2);
+        
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }
 }

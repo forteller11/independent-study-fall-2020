@@ -3,6 +3,7 @@ using CART_457.Attributes;
 using CART_457.c_sharp.Renderer;
 using CART_457.MaterialRelated;
 using CART_457.Renderer;
+using OpenTK.Graphics.ES11;
 using Texture = FbxSharp.Texture;
 
 namespace CART_457.Scripts.Setups
@@ -70,6 +71,12 @@ namespace CART_457.Scripts.Setups
             {
                 UniformSender.SetFloat(mat, "NormalMapStrength", 2);
                 UniformSender.SetFloat(mat, "SpecularRoughness", 16);
+            };
+            Action<Material> normaMaterialUniformSenderNoCull = (mat) =>
+            {
+                UniformSender.SetFloat(mat, "NormalMapStrength", 2);
+                UniformSender.SetFloat(mat, "SpecularRoughness", 16);
+                GL.Disable(EnableCap.CullFace);
             };
             
             #region receive shadow
@@ -147,9 +154,9 @@ namespace CART_457.Scripts.Setups
             WebcamNormal = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.Webcam,
-                SetupTextures.DirtDiffuse,
-                SetupTextures.DirtNormalMap,
-                SetupTextures.DirtSpecularMap,
+                SetupTextures.WebcamDiffuse,
+                SetupTextures.WebcamNormal,
+                SetupTextures.WebcamSpecular,
                 normaMaterialUniformSender
             );
             #endregion
@@ -161,7 +168,7 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.DirtDiffuse,
                 SetupTextures.DirtNormalMap,
                 SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSender
+                normaMaterialUniformSenderNoCull
             );
             
             DirtPlaneR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
@@ -171,7 +178,7 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.DirtDiffuse,
                 SetupTextures.DirtNormalMap,
                 SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSender
+                normaMaterialUniformSenderNoCull
             );
             
             CarpetPlaneR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
@@ -181,7 +188,7 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.CarpetDiffuse,
                 SetupTextures.CarpetNormalMap,
                 SetupTextures.CarpetSpecularMap,
-                normaMaterialUniformSender
+                normaMaterialUniformSenderNoCull
             );
             #endregion
             

@@ -12,7 +12,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
     public class CameraRotater : Entity
     {
-        private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .05f, SetupMaterials.SolidSphereR1);
+        private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .02f, SetupMaterials.SolidSphereR1);
 
         private bool IsDragging;
         private float _rotationSensitivity = 0.03f;
@@ -44,7 +44,8 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             }
             
             
-            VisulizerHit.Color = IsDragging ? new Vector4(.2f,.2f,1f,1) :  new Vector4(.6f,.2f,.2f,1);
+            VisulizerHit.Color = IsDragging ? new Vector4(.8f,.7f,0f,1) :  new Vector4(.4f,.4f,.4f,1);
+            VisulizerHit.LocalScale = IsDragging ? new Vector3(0.01f) :  new Vector3(0.002f);
 
             if (result.Hit)
                 VisulizerHit.LocalPosition = result.NearestOrHitPosition;
