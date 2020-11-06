@@ -1,6 +1,7 @@
 ﻿using System;
 using CART_457.EntitySystem;
 using CART_457.Helpers;
+using CART_457.MaterialRelated;
 using CART_457.PhysicsRelated;
 using CART_457.Renderer;
 using CART_457.Scripts.Blueprints;
@@ -37,11 +38,11 @@ namespace CART_457.Scripts.EntityPrefabs
             }
 
             
-            _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new EmptySolid(new Vector4(1,0,1,1), 1f, SetupMaterials.Camera, SetupMaterials.ShadowMapDiamond));
-            _webCamVisualizer.Parent = Table;
+            _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty(SetupMaterials.WebcamNormal, SetupMaterials.ShadowMapWebcam));
+        
             _webCamVisualizer.LocalPosition = new Vector3(-.3f,1.9f,.95f);
             _webCamVisualizer.LocalScale *= 0.8f;
-            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,0,0);
+            // _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,0,MathF.PI); //negate table rolled
             _webCamVisualizer.AddCollider(new SphereCollider(_webCamVisualizer, 0.5f));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
@@ -56,13 +57,6 @@ namespace CART_457.Scripts.EntityPrefabs
             Globals.WebCamRoom1.ToEntityOrientation(_webCamVisualizer);
 
             // Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_playerCamVisualizer.WorldPosition, Globals.ShadowCastingLightRoom1));
-        }
-
-        private Entity AddCamera(Vector4 color)
-        {
-            var entity = new EmptySolid(color, 1f, SetupMaterials.Camera, SetupMaterials.ShadowMapDiamond);
-            EntityManager.AddToWorldAndRenderer(entity);
-            return entity;
         }
 
         private void EntityTransformToCamera(Entity entity, Camera camera)

@@ -18,7 +18,8 @@ vec3 PivotAbout(vec3 point, vec3 pivot, mat3 rotation)
         
 bool IsPointWithinFrustrum(vec3 point, FrustrumStruct frustrum){
 
-    vec3 pointAlignedSpace = PivotAbout(point, frustrum.Position, frustrum.RotationInverse);
+
+    vec3 pointAlignedSpace = PivotAbout(point, frustrum.Position, frustrum.Rotation);
     vec3 nearCenterAlignedSpace = vec3(0, 0, frustrum.NearClip) - frustrum.Position;
     vec3 farCenterAlignedSpace  = vec3(0, 0, frustrum.FarClip)  - frustrum.Position;
 

@@ -13,12 +13,13 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material SolidSphereR1;
         [IncludeInDrawLoop] public static Material DirtSphereR1Frustrum;
         [IncludeInDrawLoop] public static Material SolidSphereR2;
+        
         [IncludeInDrawLoop] public static Material DirtSphere;
         [IncludeInDrawLoop] public static Material DirtPlane;
         [IncludeInDrawLoop] public static Material TileSphere;
         [IncludeInDrawLoop] public static Material TableProto;
         [IncludeInDrawLoop] public static Material EyeBall;
-        [IncludeInDrawLoop] public static Material Camera;
+        [IncludeInDrawLoop] public static Material WebcamNormal;
         [IncludeInDrawLoop] public static Material ScreenR1;
         [IncludeInDrawLoop] public static Material WeirdHeadR2;
         
@@ -27,7 +28,7 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material ShadowMapSphere;
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
         [IncludeInDrawLoop] public static Material ShadowMapTable;
-        [IncludeInDrawLoop] public static Material ShadowMapDiamond;
+        [IncludeInDrawLoop] public static Material ShadowMapWebcam;
         
         [IncludeInPostFX] public static Material PostProcessing;
         static SetupMaterials()
@@ -36,7 +37,7 @@ namespace CART_457.Scripts.Setups
             #region solid_color
             SolidSphereR1 = Material.EntitySolid(SetupFBOs.Room1, SetupMeshes.IcoSphereHighPoly, null);
             SolidSphereR2 = Material.EntitySolid(SetupFBOs.Room2, SetupMeshes.IcoSphereHighPoly, null);
-            Camera = Material.EntitySolid(SetupFBOs.Room1, SetupMeshes.Diamond, null);
+     
             #endregion
 
             #region shadow maps
@@ -55,9 +56,9 @@ namespace CART_457.Scripts.Setups
                 SetupMeshes.TableProto,
                 null);
             
-            ShadowMapDiamond = Material.EntityCastShadow(
+            ShadowMapWebcam = Material.EntityCastShadow(
                 SetupFBOs.Shadow1,
-                SetupMeshes.Diamond,
+                SetupMeshes.Webcam,
                 null);
             #endregion
 
@@ -69,6 +70,7 @@ namespace CART_457.Scripts.Setups
                 UniformSender.SetFloat(mat, "SpecularRoughness", 16);
             };
             
+            #region receive shadow
             DirtSphere  = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.IcoSphereHighPoly,
@@ -128,7 +130,9 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.EyeSpecular,
                 normaMaterialUniformSender
             );
+            #endregion
             
+            #region noshadow
             WeirdHeadR2 = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Room2,
                 SetupMeshes.WeirdHead,
@@ -138,6 +142,16 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSender
             );
             
+            WebcamNormal = MaterialPreconfigs.NormalNoShadow(
+                SetupFBOs.Room1,
+                SetupMeshes.Webcam,
+                SetupTextures.DirtDiffuse,
+                SetupTextures.DirtNormalMap,
+                SetupTextures.DirtSpecularMap,
+                normaMaterialUniformSender
+            );
+            #endregion
+            #region frustrum
             DirtSphereR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.IcoSphereHighPoly,
@@ -147,6 +161,10 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.DirtSpecularMap,
                 normaMaterialUniformSender
             );
+            #endregion
+            
+            
+            
             #endregion
             
             #region screen material

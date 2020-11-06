@@ -25,12 +25,14 @@ namespace CART_457
         public static TKWindow CreateAndRun()
         {
             var gameWindowSettings = GameWindowSettings.Default;
+            
 
-            var nativeWindowSettings = new NativeWindowSettings()
-            {
-                Size = new Vector2i(1440, 1440),
-                Title = "Independent Study Fall 2020 - Charly Yan Miller",
-            };
+            var nativeWindowSettings =  NativeWindowSettings.Default;
+            nativeWindowSettings.Size = new Vector2i(1440, 1440);
+            nativeWindowSettings.Title = "Independent Study Fall 2020 - Charly Yan Miller";
+            nativeWindowSettings.WindowBorder = WindowBorder.Fixed;
+            nativeWindowSettings.Location = new Vector2i(2560/2 - 1440/2, 0);
+            
 
             var newTKWindow = new TKWindow(gameWindowSettings, nativeWindowSettings);
             

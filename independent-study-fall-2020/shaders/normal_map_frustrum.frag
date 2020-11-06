@@ -38,6 +38,5 @@ void main()
     vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular);
     
     MainFragColor = vec4(texColorShaded.xyz, 1);
-    MainFragColor = vec4(v2f_worldPos * Frustrum.Rotation, 1);
     SecondaryFragColor = vec4(vec3(FragCoordToDepth(gl_FragCoord)), 1);
 }

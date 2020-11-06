@@ -78,11 +78,15 @@ namespace CART_457.c_sharp.Renderer
 
         public static void SendFrustrum(Material material, Camera camera)
         {
+
+            var rot = camera.Rotation;
+            var rotRolled = Quaternion.FromEulerAngles(0f, 0f, MathF.PI);
+            
             SetVector3(material, FRUSTRUM_POSITION, camera.Position);
             
             SetMatrix3(material, FRUSTRUM_ROTATION,         Matrix3.CreateFromQuaternion(camera.Rotation));
             SetMatrix3(material, FRUSTRUM_ROTATION_INVERSE, Matrix3.CreateFromQuaternion(Quaternion.Invert(camera.Rotation)));
-            
+
             SetFloat(material, FRUSTRUM_NEAR_CLIP, camera.NearClip);
             SetFloat(material, FRUSTRUM_FAR_CLIP,  camera.FarClip);
             
