@@ -40,9 +40,9 @@ namespace CART_457.Scripts.EntityPrefabs
             
             _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty(SetupMaterials.WebcamNormal, SetupMaterials.ShadowMapWebcam));
         
-            _webCamVisualizer.LocalPosition = new Vector3(-.3f,1.9f,.95f);
-            _webCamVisualizer.LocalScale *= 0.8f;
-            // _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,0,MathF.PI); //negate table rolled
+            _webCamVisualizer.LocalPosition = new Vector3(.15f,1.79f,-.37f);
+            _webCamVisualizer.LocalScale *= 0.5f;
+            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,MathF.PI,0); //negate table rolled
             _webCamVisualizer.AddCollider(new SphereCollider(_webCamVisualizer, 0.5f));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());

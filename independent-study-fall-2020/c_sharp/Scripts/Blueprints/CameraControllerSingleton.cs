@@ -61,9 +61,15 @@ namespace CART_457.Scripts.Blueprints
 
             rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
+            
+            if (eventArgs.InputState.R.IsPressed)
+                rotationHorz *= Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI/4f);
+     
 
             Globals.PlayerCameraRoom1.Rotation =  rotationHorz * Globals.PlayerCameraRoom1.Rotation * rotationVert;
+            
             LocalRotation = Globals.PlayerCameraRoom1.Rotation;
+            
             // todo dont allow rotations past 90 degrees DOWN
         }
         void Move(EntityUpdateEventArgs eventArgs)

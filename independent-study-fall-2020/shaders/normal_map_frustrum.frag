@@ -14,16 +14,25 @@ uniform sampler2D Color;
 uniform sampler2D Normal;
 uniform sampler2D Gloss;
 
+uniform float ShouldAppearInFrustrum;
+
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
+
 uniform FrustrumStruct Frustrum;
 
 
 void main()
 {
-    if (IsPointWithinFrustrum(v2f_worldPos, Frustrum)){
+
+    int inFrustrum = IsPointWithinFrustrum(v2f_worldPos, Frustrum);
+    
+    if (inFrustrum == 1){
         discard;
     }
+//    if (inFrustrum != ShouldAppearInFrustrum){
+//        discard;
+//    }
     
     vec4 diffuseTex = texture(Color, v2f_uv);
     vec4 normalMapTex = texture(Normal, v2f_uv);

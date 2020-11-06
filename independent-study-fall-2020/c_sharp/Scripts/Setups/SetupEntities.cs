@@ -43,7 +43,7 @@ namespace CART_457.Scripts.Setups
             var camController = new CameraControllerSingleton();
 
              
-            var raycastTest = new RaycastChecker();
+            var raycastTest = new CameraRotater();
             raycastTest.Parent = camController;
 
             
@@ -63,26 +63,16 @@ namespace CART_457.Scripts.Setups
 
             #endregion
             
-            new SinMover(new Vector3(-3,0,4), new Vector3(1,0.2f, -1f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(0,0,0),new Vector3(-.2f, 0, -.5f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(3,0,4),new Vector3(.55f, .1f, .05f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(6,3,4),new Vector3(.1f,-.5f,.06f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,1,2),new Vector3(.19f,-.1f,.06f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,4,2),new Vector3 (0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,0,2),new Vector3 (0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,0,2),new Vector3 (0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,0,5),new Vector3 (0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,2,-2),new Vector3(0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,2,-3),new Vector3(0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(0,2,-4),new Vector3(0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,0,-3),new Vector3(0,0,0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(0,4,-3),new Vector3(.13f,-.1f,.05f), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            new SinMover(new Vector3(1,7,-1),new Vector3(.1f,-.1f,.50f), SetupMaterials.TileSphere, SetupMaterials.ShadowMapSphere);
-            var s = new SinMover(new Vector3(0,0,14),new Vector3(0), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
-            s.LocalScale *= 6;
+  
+            FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-3,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
+            FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2.5f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
+            FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-2,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
+            FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-2,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
+            FrustrumNormal.FromPositionRotationScale(true, new Vector3(1,-2,16),Quaternion.Identity, new Vector3(6), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
+           
             // var dirtPlane01 = Empty.FromPosition(new Vector3(0, 0, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
             // dirtPlane01.LocalScale = new Vector3(4);
-            var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
+            var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             dirtPlane02.LocalScale = new Vector3(7);
 
             

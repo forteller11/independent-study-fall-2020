@@ -212,6 +212,8 @@ namespace CART_457.c_sharp.Renderer
             //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }
         
+
+
         public static void SetVector4(Material mat, string name, Vector4 vector4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {
             if (useProgram) mat.Shader.Use();

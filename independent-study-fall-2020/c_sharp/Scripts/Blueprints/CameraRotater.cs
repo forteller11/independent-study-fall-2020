@@ -1,4 +1,5 @@
-﻿using CART_457;
+﻿using System;
+using CART_457;
 using CART_457.EntitySystem;
 using CART_457.PhysicsRelated;
 using CART_457.Renderer;
@@ -9,7 +10,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
-    public class RaycastChecker : Entity
+    public class CameraRotater : Entity
     {
         private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .05f, SetupMaterials.SolidSphereR1);
 
@@ -33,10 +34,11 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                 IsDragging = false;
             else
             {
+         
                 IsDragging = true;
                 var radiansToMove = eventArgs.MouseState.Delta * _rotationSensitivity;
-                var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY, radiansToMove.X);
-                var rotVert = Quaternion.FromAxisAngle(Vector3.UnitX, -radiansToMove.Y);
+                var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -radiansToMove.X  );
+                var rotVert = Quaternion.FromAxisAngle(Vector3.UnitX, -radiansToMove.Y );
 
                 result.HitEntity.LocalRotation = rotHorz * result.HitEntity.LocalRotation * rotVert;
             }
