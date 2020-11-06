@@ -2,6 +2,8 @@
 using CART_457.Helpers;
 using CART_457.MaterialRelated;
 using CART_457.PhysicsRelated;
+using CART_457.Scripts.Blueprints;
+using CART_457.Scripts.Setups;
 using OpenTK;
 using OpenTK.Mathematics;
 
@@ -12,7 +14,7 @@ namespace CART_457.EntitySystem
     {
         public readonly Guid GUID;
         public Material [] Materials  { get; private set; }
-        public ColliderGroup ColliderGroup;
+        public ColliderGroup ColliderGroup = new ColliderGroup();
         
         public bool AddedToRenderer;
         public bool AddedToCollisionWorld;
@@ -62,12 +64,14 @@ namespace CART_457.EntitySystem
         public Entity()
         {
             GUID = Guid.NewGuid();
+            EntityManager.AddToWorldAndRenderer(this);
         }
         
         public Entity(Material [] materials) 
         {
             GUID = Guid.NewGuid();
             AssignMaterials(materials);
+            EntityManager.AddToWorldAndRenderer(this);
         }
 
         public void AssignMaterials(params Material[] materialTypes)
@@ -75,6 +79,15 @@ namespace CART_457.EntitySystem
             Materials = materialTypes;
         }
 
+        public void VisualizeColliders()
+        {
+            for (int i = 0; i < ColliderGroup.Spheres.Count; i++)
+            {
+                var visualizer = new EmptySolid(new Vector4(1f, 1f, 1f, 1f), ColliderGroup.Spheres[i].Radius, SetupMaterials.SolidSphereR1);
+                visualizer.LocalPosition = WorldPosition;
+                // visualizer.Parent = this;
+            }
+        }
         public void AddCollider(SphereCollider collider)
         {
             ColliderGroup.AddCollider(collider);

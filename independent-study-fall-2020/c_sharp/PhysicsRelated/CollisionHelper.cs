@@ -32,7 +32,7 @@ namespace CART_457.PhysicsRelated
                     {
                         Hit = false,
                         Inside = false,
-                        NearestOrHitPosition = (a - f) * ray.Direction,
+                        NearestOrHitPosition = (a - f) * ray.Direction + ray.Origin,
                         HitEntity = sphere.Entity
                     };
                 }
@@ -42,7 +42,7 @@ namespace CART_457.PhysicsRelated
                     {
                         Hit = true,
                         Inside = true,
-                        NearestOrHitPosition = (a - f) * ray.Direction,
+                        NearestOrHitPosition = (a - f) * ray.Direction+ ray.Origin,
                         HitEntity = sphere.Entity
                     };
                 }
@@ -51,7 +51,7 @@ namespace CART_457.PhysicsRelated
                 {
                     Hit = true,
                     Inside = false,
-                    NearestOrHitPosition = (a + f) * ray.Direction,
+                    NearestOrHitPosition = (a + f) * ray.Direction+ ray.Origin,
                     HitEntity = sphere.Entity
                 };
             
