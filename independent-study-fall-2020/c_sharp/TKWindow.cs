@@ -29,9 +29,10 @@ namespace CART_457
 
             var nativeWindowSettings =  NativeWindowSettings.Default;
             nativeWindowSettings.Size = new Vector2i(1440, 1440);
+            
             nativeWindowSettings.Title = "Independent Study Fall 2020 - Charly Yan Miller";
-            nativeWindowSettings.WindowBorder = WindowBorder.Fixed;
-            nativeWindowSettings.Location = new Vector2i(2560/2 - 1440/2, 0);
+            nativeWindowSettings.WindowBorder = WindowBorder.Hidden;
+            nativeWindowSettings.Location = new Vector2i(2560/2 - nativeWindowSettings.Size.X/2, 0);
             
 
             var newTKWindow = new TKWindow(gameWindowSettings, nativeWindowSettings);

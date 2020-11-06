@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OpenTK.Mathematics;
 
 namespace CART_457.PhysicsRelated
@@ -55,10 +56,31 @@ namespace CART_457.PhysicsRelated
             
         }
         
-        public static CollisionResult RayPlaneCollision(Ray r, PlaneCollider s)
+
+        
+        public static CollisionResult RayPlaneCollision(Ray r, PlaneCollider p)
         {
+            // Vector3 rayToPlane = p.Position - r.Origin;
+            // // Returns t if collision happened, -1 if it didnt
+            // float Raycast(Ray ray, PlaneCollider plane) {
+            //     float nd = Vector3.Dot(r.Direction, plane.Normal);
+            //     float pn = Vector3.Dot(r.Origin, plane.Normal);
+            //
+            //     if (nd >= 0f) {
+            //         return -1;
+            //     }
+            //
+            //     t = (plane.Position - pn) / nd;
+            //
+            //     if (t >= 0f) {
+            //         return t;
+            //     }
+            //     return -1;
+            // }
             throw new NotImplementedException();
         }
+        
+        
         
         public static CollisionResult SphereSphereCollision(SphereCollider r, SphereCollider s)
         {

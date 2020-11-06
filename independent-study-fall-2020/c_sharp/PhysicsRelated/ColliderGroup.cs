@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OpenTK.Mathematics;
 
 namespace CART_457.PhysicsRelated
 {
@@ -6,6 +7,9 @@ namespace CART_457.PhysicsRelated
     {
         public List<SphereCollider> Spheres { get; private set;}
         public List<PlaneCollider> Planes { get; private set; }
+        
+        private List<CollisionResult> CollisionsUnsorted = new List<CollisionResult>();
+        // private List<CollisionResult> CollisionsSorted = new List<CollisionResult>();
 
         public ColliderGroup()
         {
@@ -28,26 +32,66 @@ namespace CART_457.PhysicsRelated
         public void AddCollider(PlaneCollider collider) => Planes.Add(collider);
         
         
-        public bool Raycast(Ray ray, out List<CollisionResult> results)
+        public bool Raycast(Ray ray, out List<CollisionResult> results, bool sortByDistanceToRay=false)
         {
-            results = new List<CollisionResult>(); //TODO remove potentially huge per frame GC causer --> CACHE
+            ClearCacheLists();
 
             bool atLeastOneCollision = false;
             for (int i = 0; i < Spheres.Count; i++)
             {
                 var result = CollisionHelper.RaySphereCollision(ray, Spheres[i]);
-                results.Add(result);
+                CollisionsUnsorted.Add(result);
                 if (result.Hit) atLeastOneCollision = true;
             }
             
             for (int i = 0; i < Planes.Count; i++)
             {
                 var result = CollisionHelper.RayPlaneCollision(ray, Planes[i]);
-                results.Add(result);
+                CollisionsUnsorted.Add(result);
                 if (result.Hit) atLeastOneCollision = true;
             }
 
+            results = CollisionsUnsorted;
+            
+            if (sortByDistanceToRay)
+                results = SortByDistance(ray.Origin, results); //uncessary return value
+
             return atLeastOneCollision;
+        }
+
+        public List<CollisionResult> SortByDistance(Vector3 position, List<CollisionResult> unsorted)
+        {
+            for (int i = 0; i < unsorted.Count; i++)
+            {
+                float toSwapDistance = Vector3.Distance(unsorted[i].NearestOrHitPosition, position); //can be distance squared right?
+                int toSwapIndex = i;
+
+                float currentLowestDistance = toSwapDistance;
+                int currentLowestIndex = toSwapIndex;
+                for (int j = i; j < unsorted.Count; j++)
+                {
+                    float currentDistance = Vector3.Distance(unsorted[i].NearestOrHitPosition, position);
+                    if (currentDistance < currentLowestDistance)
+                    {
+                        currentLowestDistance = currentDistance;
+                        currentLowestIndex = j;
+                    }
+                }
+                
+                //swap
+                var toSwapCache = unsorted[toSwapIndex];
+                var lowestDistanceThisPassCache   = unsorted[currentLowestIndex];
+
+                unsorted[currentLowestIndex] = toSwapCache;
+                unsorted[toSwapIndex] = lowestDistanceThisPassCache;
+            }
+
+            return unsorted;
+        }
+        private void ClearCacheLists()
+        {
+            CollisionsUnsorted.Clear();
+            // CollisionsSorted.Clear();
         }
     }
 }
