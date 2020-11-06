@@ -22,6 +22,9 @@ namespace CART_457
                    v1.Y.EqualsAprox(v2.Y);
         }
         
+        public static float ComponentMean(this Vector3 v) => (v.X + v.Y + v.Z)/3;
+        public static float ComponentMean(this Vector2 v) => (v.X + v.Y)/2;
+        
 
     }
 }

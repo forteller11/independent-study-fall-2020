@@ -59,7 +59,6 @@ namespace CART_457.Scripts.Setups
             screen.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
             screen.LocalPosition = new Vector3(-.3f,1.2f,.8f);
             screen.LocalScale = new Vector3(.9f,.6f,1f);
-            screen.AddCollider(new SphereCollider(screen, 6f));
             screen.VisualizeColliders();
 
             #endregion

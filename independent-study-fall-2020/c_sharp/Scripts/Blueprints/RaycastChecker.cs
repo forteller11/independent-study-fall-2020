@@ -5,13 +5,16 @@ using CART_457.Renderer;
 using CART_457.Scripts.Blueprints;
 using CART_457.Scripts.Setups;
 using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
     public class RaycastChecker : Entity
     {
-        private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .2f, SetupMaterials.SolidSphereR1);
-        private EmptySolid VisulizerSphere = new EmptySolid(Vector4.Zero, .2f, SetupMaterials.SolidSphereR1);
+        private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .05f, SetupMaterials.SolidSphereR1);
+
+        private bool IsDragging;
+        private float _rotationSensitivity = 0.03f;
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             Parent = null;
@@ -23,13 +26,24 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             CollisionWorld.ColliderGroup.Raycast(ray, out var results);
 
             var result = results[0];
-           
             
-            VisulizerHit.Color = result.Hit ? new Vector4(.2f,.2f,1f,1) :  new Vector4(.6f,.2f,.2f,1);
-            if (result.Inside)
+            bool mouseDown = eventArgs.MouseState.IsButtonDown(MouseButton.Left);
+            
+            if (!result.Hit || !mouseDown)
+                IsDragging = false;
+            else
             {
-                VisulizerHit.Color = new Vector4(0,.8f,.8f,1);
+                IsDragging = true;
+                var radiansToMove = eventArgs.MouseState.Delta * _rotationSensitivity;
+                var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY, radiansToMove.X);
+                var rotVert = Quaternion.FromAxisAngle(Vector3.UnitX, -radiansToMove.Y);
+
+                result.HitEntity.LocalRotation = rotHorz * result.HitEntity.LocalRotation * rotVert;
             }
+            
+            
+            VisulizerHit.Color = IsDragging ? new Vector4(.2f,.2f,1f,1) :  new Vector4(.6f,.2f,.2f,1);
+
             if (result.Hit)
                 VisulizerHit.LocalPosition = result.NearestOrHitPosition;
             

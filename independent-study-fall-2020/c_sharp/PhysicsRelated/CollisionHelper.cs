@@ -10,50 +10,48 @@ namespace CART_457.PhysicsRelated
         {
             
             //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter3/raycast_sphere.html
-            // This function will return the value of t
-            // if it returns negative, no collision!
 
-                Vector3 rPos = ray.Origin;
-                Vector3 rDir = ray.Direction;
-                Vector3 sPos = sphere.WorldPosition;
-                float sRadius = sphere.Radius;
+            Vector3 rayPos = ray.Origin;
+            Vector3 rayDir = ray.Direction;
+            Vector3 spherePos = sphere.WorldPosition;
+            float sRadius = sphere.Radius;
 
-                Vector3 e = sPos - rPos;
-                // Using Length here would cause floating point error to creep in
-                float Esq = e.LengthSquared;
-                float a = Vector3.Dot(e, rDir);
-                float b = MathF.Sqrt(Esq - (a * a));
-                float f = MathF.Sqrt(((sRadius * sRadius) - (b * b)));
+            Vector3 sphereToRay = spherePos - rayPos;
+            // Using Length here would cause floating point error to creep in
+            float sphereToRayDistSquared = sphereToRay.LengthSquared;
+            float raySphere2RayProjection = Vector3.Dot(sphereToRay, rayDir);
+            float b = MathF.Sqrt(sphereToRayDistSquared - (raySphere2RayProjection * raySphere2RayProjection));
+            float f = MathF.Sqrt(((sRadius * sRadius) - (b * b)));
 
-                // No collision
-                if (sRadius * sRadius - Esq + a * a < 0f) 
+            // No collision
+            if (sRadius * sRadius - sphereToRayDistSquared + raySphere2RayProjection * raySphere2RayProjection < 0f) 
+            {
+                return new CollisionResult()
                 {
-                    return new CollisionResult()
-                    {
-                        Hit = false,
-                        Inside = false,
-                        NearestOrHitPosition = (a - f) * ray.Direction + ray.Origin,
-                        HitEntity = sphere.Entity
-                    };
-                }
-                // Ray is inside
-                else if (Esq < sRadius * sRadius) {
-                    return new CollisionResult()
-                    {
-                        Hit = true,
-                        Inside = true,
-                        NearestOrHitPosition = (a - f) * ray.Direction+ ray.Origin,
-                        HitEntity = sphere.Entity
-                    };
-                }
-                // else Normal intersection
+                    Hit = false,
+                    Inside = false,
+                    NearestOrHitPosition = (raySphere2RayProjection - f) * ray.Direction + ray.Origin,
+                    HitEntity = sphere.Entity
+                };
+            }
+            // Ray is inside
+            else if (sphereToRayDistSquared < sRadius * sRadius) {
                 return new CollisionResult()
                 {
                     Hit = true,
-                    Inside = false,
-                    NearestOrHitPosition = (a + f) * ray.Direction+ ray.Origin,
+                    Inside = true,
+                    NearestOrHitPosition = (raySphere2RayProjection - f) * ray.Direction+ ray.Origin,
                     HitEntity = sphere.Entity
                 };
+            }
+            // else Normal intersection
+            return new CollisionResult()
+            {
+                Hit = true,
+                Inside = false,
+                NearestOrHitPosition = (raySphere2RayProjection + f) * ray.Direction+ ray.Origin,
+                HitEntity = sphere.Entity
+            };
             
         }
         

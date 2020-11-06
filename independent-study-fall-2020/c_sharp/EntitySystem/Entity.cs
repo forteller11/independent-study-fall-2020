@@ -92,6 +92,7 @@ namespace CART_457.EntitySystem
         {
             ColliderGroup.AddCollider(collider);
             CollisionWorld.ColliderGroup.AddCollider(collider);
+            
         }
         
         public void AddCollider(PlaneCollider collider)

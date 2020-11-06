@@ -1,6 +1,7 @@
 ﻿using System;
 using CART_457.EntitySystem;
 using CART_457.Helpers;
+using CART_457.PhysicsRelated;
 using CART_457.Renderer;
 using CART_457.Scripts.Blueprints;
 using CART_457.Scripts.Setups;
@@ -41,6 +42,7 @@ namespace CART_457.Scripts.EntityPrefabs
             _webCamVisualizer.LocalPosition = new Vector3(-.3f,1.9f,.95f);
             _webCamVisualizer.LocalScale *= 0.8f;
             _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,0,0);
+            _webCamVisualizer.AddCollider(new SphereCollider(_webCamVisualizer, 0.5f));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
             
