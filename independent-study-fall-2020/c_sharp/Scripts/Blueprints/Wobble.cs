@@ -18,7 +18,7 @@ namespace CART_457.Scripts.Blueprints
             Radius = wobbleRadius;
             Speed = wobbleSpeed;
             Anchor = anchor;
-            Seed = (float) (Globals.Random.NextDouble()*9999);
+            Seed = (float) (Globals.Random.NextDouble(9999));
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

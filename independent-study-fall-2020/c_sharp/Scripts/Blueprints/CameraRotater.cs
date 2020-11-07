@@ -16,6 +16,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
         private bool IsDragging;
         private float _rotationSensitivity = 0.03f;
+        private Entity _toCastAgainst;
+
+
+        public CameraRotater(Entity toCastAgainst)
+        {
+            _toCastAgainst = toCastAgainst;
+        }
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             Parent = null;
@@ -24,17 +31,15 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             var dir = WorldRotation * Vector3.UnitZ;
             
             var ray = new Ray(WorldPosition, dir);
-            CollisionWorld.ColliderGroup.Raycast(ray, out var results);
+            bool hit = _toCastAgainst.ColliderGroup.Raycast(ray, out var results);
 
-            var result = results[0];
-            
             bool mouseDown = eventArgs.MouseState.IsButtonDown(MouseButton.Left);
             
-            if (!result.Hit || !mouseDown)
+            if (!hit || !mouseDown)
                 IsDragging = false;
             else
             {
-         
+                var result = results[0];
                 IsDragging = true;
                 var radiansToMove = eventArgs.MouseState.Delta * _rotationSensitivity;
                 var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -radiansToMove.X  );
@@ -47,8 +52,8 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             VisulizerHit.Color = IsDragging ? new Vector4(.8f,.7f,0f,1) :  new Vector4(.4f,.4f,.4f,1);
             VisulizerHit.LocalScale = IsDragging ? new Vector3(0.01f) :  new Vector3(0.002f);
 
-            if (result.Hit)
-                VisulizerHit.LocalPosition = result.NearestOrHitPosition;
+            if (hit)
+                VisulizerHit.LocalPosition = results[0].NearestOrHitPosition;
             
             
         }

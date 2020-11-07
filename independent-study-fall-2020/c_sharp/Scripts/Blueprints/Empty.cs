@@ -45,8 +45,8 @@ namespace CART_457.Scripts.Blueprints
     
         public override void SendUniformsPerEntity(Material material)
         {
-            UniformSender.SetFloat(material, UniformSender.SPECULAR_ROUGHNESS, 128);
-            UniformSender.SetFloat(material, UniformSender.NORMAL_MAP_STRENGTH, 64);
+            // UniformSender.SetFloat(material, UniformSender.SPECULAR_ROUGHNESS, 128);
+            // UniformSender.SetFloat(material, UniformSender.NORMAL_MAP_STRENGTH, 64);
         }
 
         

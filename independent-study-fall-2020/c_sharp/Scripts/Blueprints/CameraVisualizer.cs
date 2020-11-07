@@ -14,17 +14,11 @@ namespace CART_457.Scripts.EntityPrefabs
 {
     public class CameraVisualizer : EntitySystem.Entity
     {
-        //onload, look at every camera using reflection, add gameobject
 
-        private Entity Table;
         private Entity _playerCamVisualizer;
-        private Entity _webCamVisualizer;
+        public Entity WebCamVisualizer;
 
-        public CameraVisualizer(Entity table)
-        {
-            Table = table;
-        }
-        public override void OnLoad()
+        public CameraVisualizer( )
         {
             Wobble CreateAndAddEye(Vector3 position)
             {
@@ -39,23 +33,24 @@ namespace CART_457.Scripts.EntityPrefabs
             }
 
             
-            _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty(SetupMaterials.EyeBall, SetupMaterials.ShadowMapSphere));
+            WebCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty(SetupMaterials.EyeBall, SetupMaterials.ShadowMapSphere));
         
-            _webCamVisualizer.LocalPosition = new Vector3(.15f,1.79f,-.37f);
-            _webCamVisualizer.LocalScale *= 0.05f;
-            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,MathF.PI,0); //negate table rolled
-            _webCamVisualizer.AddCollider(new SphereCollider(_webCamVisualizer, 6f));
+            WebCamVisualizer.LocalPosition = new Vector3(.15f,1.79f,-.37f);
+            WebCamVisualizer.LocalScale *= 0.05f;
+            WebCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,MathF.PI,0); //negate table rolled
+            WebCamVisualizer.AddCollider(new SphereCollider(WebCamVisualizer, 6f));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
             
             CreateAndAddEye(new Vector3(-.33f, 0, 0));
             CreateAndAddEye(new Vector3(.33f, 0, 0));
         }
+        
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             EntityTransformToCamera(_playerCamVisualizer, Globals.PlayerCameraRoom1);
-            Globals.WebCamRoom1.ToEntityOrientation(_webCamVisualizer);
+            Globals.WebCamRoom1.ToEntityOrientation(WebCamVisualizer);
 
             // Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_playerCamVisualizer.WorldPosition, Globals.ShadowCastingLightRoom1));
         }

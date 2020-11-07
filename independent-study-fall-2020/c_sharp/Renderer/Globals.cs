@@ -21,7 +21,7 @@ namespace CART_457.Renderer
         public static readonly Camera WebCamRoom2 = new Camera();
         public static readonly Camera ShadowCastingLightRoom2 = new Camera();
         
-        public static Random Random = new Random(0);
+        public static RandomInd Random = new RandomInd(0);
         public static FastNoiseLite Noise = new FastNoiseLite();
         public static List<DirectionLight> DirectionLights;
         public static List<PointLight> PointLights;

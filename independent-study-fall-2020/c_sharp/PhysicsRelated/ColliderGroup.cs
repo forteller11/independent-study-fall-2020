@@ -40,15 +40,21 @@ namespace CART_457.PhysicsRelated
             for (int i = 0; i < Spheres.Count; i++)
             {
                 var result = CollisionHelper.RaySphereCollision(ray, Spheres[i]);
-                CollisionsUnsorted.Add(result);
-                if (result.Hit) atLeastOneCollision = true;
+                if (result.Hit)
+                {
+                    CollisionsUnsorted.Add(result);
+                    atLeastOneCollision = true;
+                }
             }
             
             for (int i = 0; i < Planes.Count; i++)
             {
                 var result = CollisionHelper.RayPlaneCollision(ray, Planes[i]);
-                CollisionsUnsorted.Add(result);
-                if (result.Hit) atLeastOneCollision = true;
+                if (result.Hit)
+                {
+                    CollisionsUnsorted.Add(result);
+                    atLeastOneCollision = true;
+                }
             }
 
             results = CollisionsUnsorted;

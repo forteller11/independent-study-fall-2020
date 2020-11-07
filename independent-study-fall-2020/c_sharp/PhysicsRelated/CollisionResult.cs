@@ -16,5 +16,13 @@ namespace CART_457.PhysicsRelated
                    $"Hit{Hit}, Inside? {Inside}\n" +
                    $"NearestOrHitPosition {NearestOrHitPosition}";
         }
+
+        public static CollisionResult NoHitNoInfo()
+        {
+            return new CollisionResult
+            {
+                NearestOrHitPosition = Vector3.NegativeInfinity
+            };
+        }
     }
 }

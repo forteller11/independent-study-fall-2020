@@ -38,12 +38,12 @@ namespace CART_457.Scripts.Setups
             
 
             
-            new CameraVisualizer(table);
+            var cameraVisualizer = new CameraVisualizer();
 
             var camController = new CameraControllerSingleton();
 
              
-            var raycastTest = new CameraRotater();
+            var raycastTest = new CameraRotater(cameraVisualizer.WebCamVisualizer);
             raycastTest.Parent = camController;
 
             
@@ -62,9 +62,11 @@ namespace CART_457.Scripts.Setups
             screen.VisualizeColliders();
 
             #endregion
-            
   
-            FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,-2,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+  
+            var f = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,-2,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+            f.AddCollider(new PlaneCollider(f, -3, Vector3.UnitY));
+            f.AddCollider(new SphereCollider(f, 2));
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
@@ -75,9 +77,12 @@ namespace CART_457.Scripts.Setups
             var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             dirtPlane02.LocalScale = new Vector3(7);
 
-            
+            #region visualizers and debuggers
             new FBOVisualizationInput();
 
+            new RaycastDebugger();
+                
+            #endregion
             for (int i = 0; i < Globals.PointLights.Count; i++)
                 new PointLightVisualizer(i,SetupMaterials.SolidSphereR1);
             #endregion
