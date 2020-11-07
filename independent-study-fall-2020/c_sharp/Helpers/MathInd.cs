@@ -50,6 +50,8 @@ namespace CART_457.Helpers
         {
             return MathHelper.Clamp((3 * t * t) - (2 * t * t * t), 0,1);
         }
+        
+      
    
     }
 }
