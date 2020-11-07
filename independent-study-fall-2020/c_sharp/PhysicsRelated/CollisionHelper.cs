@@ -58,26 +58,41 @@ namespace CART_457.PhysicsRelated
         
 
         
-        public static CollisionResult RayPlaneCollision(Ray r, PlaneCollider p)
-        {
-            // Vector3 rayToPlane = p.Position - r.Origin;
-            // // Returns t if collision happened, -1 if it didnt
-            // float Raycast(Ray ray, PlaneCollider plane) {
-            //     float nd = Vector3.Dot(r.Direction, plane.Normal);
-            //     float pn = Vector3.Dot(r.Origin, plane.Normal);
-            //
-            //     if (nd >= 0f) {
-            //         return -1;
-            //     }
-            //
-            //     t = (plane.Position - pn) / nd;
-            //
-            //     if (t >= 0f) {
-            //         return t;
-            //     }
-            //     return -1;
-            // }
-            throw new NotImplementedException();
+        // Returns t if collision happened, -1 if it didnt
+        //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter3/raycast_plane.html
+        public static CollisionResult RayPlaneCollision(Ray ray, PlaneCollider plane) {
+            float directionsProjection = Vector3.Dot(ray.Direction, plane.Normal);
+            float pn = Vector3.Dot(ray.Origin, plane.Normal);
+            
+            if (directionsProjection >= 0f)
+            {
+                new CollisionResult
+                {
+                    Hit = false,
+                    HitEntity = null,
+                    Inside = false,
+                    NearestOrHitPosition = Vector3.NegativeInfinity
+                };
+            }
+
+            float distAlongRay = (plane.Distance - pn) / directionsProjection;
+
+            if (distAlongRay >= 0f) {
+                new CollisionResult
+                {
+                    Hit = true,
+                    HitEntity = plane.Entity,
+                    Inside = false,
+                    NearestOrHitPosition = distAlongRay * ray.Direction + ray.Origin
+                };
+            }
+            return new CollisionResult
+            {
+                Hit = false,
+                HitEntity = null,
+                Inside = false,
+                NearestOrHitPosition = Vector3.NegativeInfinity
+            };
         }
         
         

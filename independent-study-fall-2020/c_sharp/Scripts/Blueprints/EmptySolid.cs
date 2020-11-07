@@ -21,18 +21,7 @@ namespace CART_457.Scripts.Blueprints
 
         public override void SendUniformsPerEntity(Material material)
         {
-            // Debug.Log("SendUniforms");
-            if (material == SetupMaterials.ShadowMapSphere || material == SetupMaterials.ShadowMapPlane)
-            {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLightRoom1, "Light");
-            }
-            else
-            { 
-                UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
-                UniformSender.SetVector4(material, "Color", Color, false);
-            }
-            
-
+            UniformSender.SetVector4(material, "Color", Color, false);
             // Debug.Log("====");
         }
     }

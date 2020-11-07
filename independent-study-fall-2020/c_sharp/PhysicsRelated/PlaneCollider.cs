@@ -8,6 +8,7 @@ namespace CART_457.PhysicsRelated
     {
         public float Distance; //along normal
         public Vector3 Normal;
+        public Vector3 Position => Distance * Normal;
 
         public PlaneCollider(Entity entity, float distance, Vector3 normal) : base(entity)
         {
