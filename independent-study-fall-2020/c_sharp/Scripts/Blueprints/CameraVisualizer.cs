@@ -28,7 +28,7 @@ namespace CART_457.Scripts.EntityPrefabs
         {
             Wobble CreateAndAddEye(Vector3 position)
             {
-                var eyeRotation = Quaternion.FromEulerAngles(MathF.PI/2, 0,MathF.PI);
+                var eyeRotation = Quaternion.FromEulerAngles(0, 0,MathF.PI);
                 var eye = new Wobble(.005f, 70f, position, SetupMaterials.EyeBall);
                 eye.LocalScale = Vector3.One * .13f;
                 eye.LocalRotation = eyeRotation;
@@ -43,7 +43,7 @@ namespace CART_457.Scripts.EntityPrefabs
         
             _webCamVisualizer.LocalPosition = new Vector3(.15f,1.79f,-.37f);
             _webCamVisualizer.LocalScale *= 0.05f;
-            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(MathF.PI/2,MathF.PI,0); //negate table rolled
+            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,MathF.PI,0); //negate table rolled
             _webCamVisualizer.AddCollider(new SphereCollider(_webCamVisualizer, 6f));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());

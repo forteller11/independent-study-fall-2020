@@ -1,4 +1,5 @@
 ﻿
+using System;
 using CART_457.Helpers;
 using CART_457.MaterialRelated;
 using OpenTK;
@@ -19,13 +20,13 @@ namespace CART_457.Scripts.Setups
 
         static SetupMeshes()
         {
-            IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere", true, true, true);
-            TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
-            Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane", true, true, true);
-            Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", true, true, true);
-            Diamond =  ModelImporter.GetAttribBuffersFromObjFile("camera_visualization", true, true, true);
-            Webcam =  ModelImporter.GetAttribBuffersFromObjFile("webcam", true, true, true);
-            WeirdHead =  ModelImporter.GetAttribBuffersFromObjFile("head", true, true, true);
+            IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere");
+            TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table");
+            Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane");
+            Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", Quaternion.FromEulerAngles(-MathF.PI/2,0f,0f ));
+            Diamond =  ModelImporter.GetAttribBuffersFromObjFile("camera_visualization");
+            Webcam =  ModelImporter.GetAttribBuffersFromObjFile("webcam");
+            WeirdHead =  ModelImporter.GetAttribBuffersFromObjFile("head");
             // Diamond =  ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
 
             #region ViewQuad

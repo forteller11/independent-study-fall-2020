@@ -1,5 +1,7 @@
 ﻿using System.Data;
+using JeremyAnsel.Media.WavefrontObj;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace CART_457.Helpers
 {
@@ -44,5 +46,12 @@ namespace CART_457.Helpers
                 default: throw new DataException($"Texture Unit is {texUnit} which is outside the acceptable range openGL allows!");
             }
         }
+
+        public static Vector3 ToTKVector3(this ObjVector4 v) => new Vector3(v.X, v.Y,v.Z);
+        public static Vector3 ToTKVector3(this ObjVector3 v) => new Vector3(v.X, v.Y,v.Z);
+        
+        
+        public static ObjVector4 ToOBJVector4(this Vector3 v) => new ObjVector4(v.X,v.Y,v.Z, 1.0f);
+        public static ObjVector3 ToOBJVector3(this Vector3 v) => new ObjVector3(v.X, v.Y, v.Z);
     }
 }
