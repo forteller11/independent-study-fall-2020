@@ -13,7 +13,7 @@ namespace CART_457.Scripts.Blueprints
         // public TextureUnit RoomTextureUnit;
         public Screen() : base(new []{SetupMaterials.ScreenR1}) { }
 
-        public override void SendUniformsPerObject(Material material)
+        public override void SendUniformsPerEntity(Material material)
         {
             // UniformSender.SetInt(material,"TextureIndex",RoomTextureUnit.ToInt(), false );
         }

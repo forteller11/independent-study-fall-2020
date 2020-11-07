@@ -16,7 +16,7 @@ vec3 PivotAbout(vec3 point, vec3 pivot, mat3 rotation)
     return pointRotated + pivot;
 }
         
-int IsPointWithinFrustrum(vec3 point, FrustrumStruct frustrum){
+bool IsPointWithinFrustrum(vec3 point, FrustrumStruct frustrum){
 
 
     vec3 pointAlignedSpace = PivotAbout(point, frustrum.Position, frustrum.Rotation);
@@ -29,10 +29,12 @@ int IsPointWithinFrustrum(vec3 point, FrustrumStruct frustrum){
 
     vec3 pointFrustrumOrigin = pointAlignedSpace - frustrum.Position;
 
-    if (abs(pointFrustrumOrigin.x) > widthOfFrustrumAtPoint / 2)
-        return 0;
-    if (abs(pointFrustrumOrigin.y) > widthOfFrustrumAtPoint / 2)
-        return 0;
+    if (abs(pointFrustrumOrigin.x) > widthOfFrustrumAtPoint / 2){
+        return false;
+    }
+    if (abs(pointFrustrumOrigin.y) > widthOfFrustrumAtPoint / 2){
+        return false;
+    }
 
-    return 1;
+    return true;
 }

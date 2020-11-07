@@ -14,7 +14,7 @@ uniform sampler2D Color;
 uniform sampler2D Normal;
 uniform sampler2D Gloss;
 
-uniform float ShouldAppearInFrustrum;
+uniform bool VisibleInFrustrum;
 
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
@@ -25,9 +25,9 @@ uniform FrustrumStruct Frustrum;
 void main()
 {
 
-    int inFrustrum = IsPointWithinFrustrum(v2f_worldPos, Frustrum);
+    bool inFrustrum = IsPointWithinFrustrum(v2f_worldPos, Frustrum);
     
-    if (inFrustrum == 1){
+    if (inFrustrum == VisibleInFrustrum){
         discard;
     }
 //    if (inFrustrum != ShouldAppearInFrustrum){

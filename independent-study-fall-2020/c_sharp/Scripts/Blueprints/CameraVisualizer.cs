@@ -1,4 +1,5 @@
 ﻿using System;
+using CART_457.c_sharp.Renderer;
 using CART_457.EntitySystem;
 using CART_457.Helpers;
 using CART_457.MaterialRelated;
@@ -38,12 +39,12 @@ namespace CART_457.Scripts.EntityPrefabs
             }
 
             
-            _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty(SetupMaterials.WebcamNormal, SetupMaterials.ShadowMapWebcam));
+            _webCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty(SetupMaterials.EyeBall, SetupMaterials.ShadowMapSphere));
         
             _webCamVisualizer.LocalPosition = new Vector3(.15f,1.79f,-.37f);
-            _webCamVisualizer.LocalScale *= 0.5f;
-            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,MathF.PI,0); //negate table rolled
-            _webCamVisualizer.AddCollider(new SphereCollider(_webCamVisualizer, 0.5f));
+            _webCamVisualizer.LocalScale *= 0.05f;
+            _webCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(MathF.PI/2,MathF.PI,0); //negate table rolled
+            _webCamVisualizer.AddCollider(new SphereCollider(_webCamVisualizer, 6f));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
             
@@ -64,6 +65,7 @@ namespace CART_457.Scripts.EntityPrefabs
             entity.LocalPosition = camera.Position;
             entity.LocalRotation = camera.Rotation;
         }
+
         
     }
 }

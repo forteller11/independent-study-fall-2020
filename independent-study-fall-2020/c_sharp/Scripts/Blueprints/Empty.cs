@@ -1,4 +1,5 @@
 ﻿using System;
+using CART_457.c_sharp.Renderer;
 using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
 using OpenTK.Mathematics;
@@ -41,20 +42,13 @@ namespace CART_457.Scripts.Blueprints
             return empty;
         }
         
-        public override void SendUniformsPerObject(Material material)
+    
+        public override void SendUniformsPerEntity(Material material)
         {
-            // if (material.IsShadowMapMaterial)
-            // {
-            //     UniformSender.SendTransformMatrices(this, material, material.RenderTarget.MainCamera, "Light");
-            // }
-            // else
-            // {
-            //     UniformSender.SendTransformMatrices(this, material,  material.RenderTarget.MainCamera);
-            //     UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
-            //     UniformSender.SendLights(material);
-            //     UniformSender.SendGlobals(material);
-            // }
-
+            UniformSender.SetFloat(material, UniformSender.SPECULAR_ROUGHNESS, 128);
+            UniformSender.SetFloat(material, UniformSender.NORMAL_MAP_STRENGTH, 64);
         }
+
+        
     }
 }

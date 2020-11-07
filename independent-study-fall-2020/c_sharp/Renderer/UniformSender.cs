@@ -23,6 +23,9 @@ namespace CART_457.c_sharp.Renderer
         public const string MODEL_ROTATION_UNIFORM = "ModelRotation";
         public const string MODEL_TO_WORLD_NO_PROJECTION_UNIFORM = "ModelToWorldNoProjection";
         public const string CAM_POSITION_UNIFORM = "CamPosition";
+
+        public const string NORMAL_MAP_STRENGTH = "NormalMapStrength";
+        public const string SPECULAR_ROUGHNESS = "SpecularRoughness";
         
         public const string DIFFUSE_SAMPLER = "Diffuse";
         public const string SPECULAR_MAP_SAMPLER = "Gloss";
@@ -47,6 +50,7 @@ namespace CART_457.c_sharp.Renderer
         public const string FRUSTRUM_FAR_CLIP  = FRUSTRUM + "FarClip";
         public const string FRUSTRUM_NEAR_CLIP_WIDTH = FRUSTRUM  + "NearClipWidth";
         public const string FRUSTRUM_FAR_CLIP_WIDTH  = FRUSTRUM + "FarClipWidth";
+        public const string VISIBLE_IN_FRUSTRUM = "VisibleInFrustrum";
         #endregion
         #endregion
         
@@ -208,6 +212,16 @@ namespace CART_457.c_sharp.Renderer
             if (useProgram) mat.Shader.Use();
             if (mat.UniformLocations.TryGetValue(name, out int location))
                 GL.Uniform1(location, value);
+            // else
+            //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
+        }
+        
+        public static void SetBool(Material mat, string name, bool value, bool useProgram=true) //set useProgram to false for batch operations for performance gains
+        {
+            int valueGLReadable = value ? 1 : 0;
+            if (useProgram) mat.Shader.Use();
+            if (mat.UniformLocations.TryGetValue(name, out int location))
+                GL.Uniform1(location, valueGLReadable);
             // else
             //     Debug.LogWarning($"Uniform \"{name}\" not found in shader program! Are you using it in your output? (optimized out?)");
         }

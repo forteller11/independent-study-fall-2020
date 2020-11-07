@@ -28,7 +28,7 @@ namespace CART_457.Blueprints
         }
 
 
-        public override void SendUniformsPerObject(Material material)
+        public override void SendUniformsPerEntity(Material material)
         {
             if (material == SetupMaterials.ShadowMapSphere || material == SetupMaterials.ShadowMapPlane)
             {

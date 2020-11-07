@@ -69,13 +69,13 @@ namespace CART_457.Scripts.Setups
 
             Action<Material> normaMaterialUniformSender = (mat) =>
             {
-                UniformSender.SetFloat(mat, "NormalMapStrength", 2);
-                UniformSender.SetFloat(mat, "SpecularRoughness", 16);
+                UniformSender.SetFloat(mat, UniformSender.NORMAL_MAP_STRENGTH, 2);
+                UniformSender.SetFloat(mat, UniformSender.SPECULAR_ROUGHNESS, 16);
             };
             Action<Material> normaMaterialUniformSenderNoCull = (mat) =>
             {
-                UniformSender.SetFloat(mat, "NormalMapStrength", 2);
-                UniformSender.SetFloat(mat, "SpecularRoughness", 16);
+                UniformSender.SetFloat(mat, UniformSender.NORMAL_MAP_STRENGTH, 2);
+                UniformSender.SetFloat(mat, UniformSender.SPECULAR_ROUGHNESS, 16);
                 GL.Disable(EnableCap.CullFace);
             };
             

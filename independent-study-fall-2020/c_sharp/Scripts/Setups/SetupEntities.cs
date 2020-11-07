@@ -64,11 +64,11 @@ namespace CART_457.Scripts.Setups
             #endregion
             
   
-            FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-3,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
-            FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2.5f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
-            FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-2,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
-            FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-2,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapSphere);
-            FrustrumNormal.FromPositionRotationScale(true, new Vector3(1,-2,16),Quaternion.Identity, new Vector3(6), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapSphere);
+            FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,-2,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+            FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+            FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+            FrustrumNormal.FromPositionRotationScale(false,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+            FrustrumNormal.FromPositionRotationScale(true, new Vector3(1,-4,16),Quaternion.Identity, new Vector3(6), SetupMaterials.DirtSphereR1Frustrum, SetupMaterials.ShadowMapPlane);
            
             // var dirtPlane01 = Empty.FromPosition(new Vector3(0, 0, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
             // dirtPlane01.LocalScale = new Vector3(4);

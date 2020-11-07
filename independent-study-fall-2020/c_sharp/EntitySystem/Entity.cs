@@ -110,7 +110,7 @@ namespace CART_457.EntitySystem
         public virtual void OnLoad() { }
 
         public virtual void OnUpdate(EntityUpdateEventArgs eventArgs) { }
-        public virtual void SendUniformsPerObject(Material material) { }
+        public virtual void SendUniformsPerEntity(Material material) { }
 
         public virtual void OnClose() { }
 
