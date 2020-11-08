@@ -28,8 +28,8 @@ namespace CART_457.PhysicsRelated
                     AddCollider((PlaneCollider)collider);
             }
         }
-        public void AddCollider(SphereCollider collider) =>Spheres.Add(collider);
-        public void AddCollider(PlaneCollider collider) => Planes.Add(collider);
+        public void AddCollider(SphereCollider collider) => Spheres.Add(collider);
+        public void AddCollider(PlaneCollider collider) =>  Planes.Add(collider);
         
         
         public bool Raycast(Ray ray, out List<CollisionResult> results, bool sortByDistanceToRay=false)

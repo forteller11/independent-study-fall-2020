@@ -63,16 +63,16 @@ namespace CART_457.PhysicsRelated
         public static CollisionResult RayPlaneCollision(Ray ray, PlaneCollider plane)
         {
 
-            var rayDir = -ray.Direction;
-            float directionsProjection = Vector3.Dot(rayDir, plane.Normal);
+            var rayDir = -ray.Direction; //todo shouldn't have to do this, source of error???
+            float directionsProjection = Vector3.Dot(rayDir, plane.WorldNormal);
           
-            float pn = Vector3.Dot(ray.Origin, plane.Normal);
+            float pn = Vector3.Dot(ray.Origin, plane.WorldNormal);
 
-            float distAlongRay = (plane.Distance - pn) / directionsProjection;
+            float distAlongRay = (plane.WorldDistance - pn) / directionsProjection;
 
             if (directionsProjection == 0) //ray parralllel to plane
             {
-                if (plane.Position == ray.Origin) //inside ray
+                if (plane.WorldPosition == ray.Origin) //inside ray
                 {
                     return new CollisionResult
                     {

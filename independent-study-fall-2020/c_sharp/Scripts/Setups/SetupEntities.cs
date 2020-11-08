@@ -64,9 +64,10 @@ namespace CART_457.Scripts.Setups
             #endregion
   
   
-            var f = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,-2,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
-            f.AddCollider(new PlaneCollider(f, -3, Vector3.UnitY));
-            f.AddCollider(new SphereCollider(f, 2));
+            var f = FrustrumNormal.FromPositionRotationScale(true,new Vector3(3,10,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+            f.LocalRotation *= Quaternion.FromEulerAngles(1f,0,0);
+            f.AddCollider(new PlaneCollider(f, 0, Vector3.UnitY));
+            // f.AddCollider(new SphereCollider(f, 2));
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
