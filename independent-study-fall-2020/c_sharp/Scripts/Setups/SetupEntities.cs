@@ -39,17 +39,7 @@ namespace CART_457.Scripts.Setups
             
 
             
-            var cameraVisualizer = new CameraVisualizer();
-
-            var camController = new CameraControllerSingleton();
-
-             
-            var raycastTest = new CameraRotater(cameraVisualizer.WebCamVisualizer);
-            raycastTest.Parent = camController;
-
             
-           
-            new CameraInterperlator();
 
             
             #endregion
@@ -65,16 +55,16 @@ namespace CART_457.Scripts.Setups
             #endregion
   
   
-            var f = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,0), Quaternion.Identity,  new Vector3(1), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
-               f.LocalRotation *= Quaternion.FromEulerAngles(MathF.PI/4,0,0);
-            // f.AddCollider(new PlaneCollider(f, 0, Vector3.UnitY));
-            // f.AddCollider(new TriangleCollider(new Vector3(-5,0,5),new Vector3(5,0,5),new Vector3(0,0,-5), f ));
+            var planeFloor = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,0), Quaternion.Identity,  new Vector3(8), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+               planeFloor.LocalRotation *= Quaternion.FromEulerAngles(MathF.PI/4,0,0);
+               var floor = ModelImporter.GetTrianglesFromObjFile("Plane", planeFloor, true);
+               planeFloor.AddColliders(floor);
+  
             var tris = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table, true);
-            //
-            for (int i = 0; i < tris.Length; i++)
-            {
-                table.AddCollider(tris[i]);
-            }
+            var tris2 = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table2, true);
+            // table.AddColliders(tris);
+            // table2.AddColliders(tris2);
+      
             // f.AddCollider(new SphereCollider(f, 2));
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
@@ -86,6 +76,18 @@ namespace CART_457.Scripts.Setups
             var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             dirtPlane02.LocalScale = new Vector3(7);
 
+            #region camera related
+            var cameraVisualizer = new CameraVisualizer();
+
+            var camController = new CameraControllerSingleton(planeFloor.ColliderGroup, Globals.PlayerCameraRoom1);
+
+            
+            var raycastTest = new CameraRotater(cameraVisualizer.WebCamVisualizer);
+            raycastTest.Parent = camController;
+
+            new CameraInterperlator();
+            
+            #endregion
             #region visualizers and debuggers
             new FBOVisualizationInput();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using CART_457.EntitySystem;
 using CART_457.Helpers;
+using CART_457.PhysicsRelated;
 using CART_457.Renderer;
 using OpenTK.Mathematics;
 
@@ -10,13 +11,27 @@ namespace CART_457.Scripts.Blueprints
     {
         private float acceleration = 1.5f;
         private float angularAcceleration = 0.2f;
+
+        public Camera Camera;
+        public ColliderGroup Floor;
         
         private float _horziontalVelocity = .05f;
 
+        public Vector3 Velocity;
+        public float PlayerHeight = 1.5f;
+        public float Acceleration = 0.05f;
+        public float SprintMultiplier = 3f;
+        public float MaxVelocity = .2f;
+        public float Drag = 0.8f;
 
 
 
-        public CameraControllerSingleton() : base( null) { }
+
+        public CameraControllerSingleton(ColliderGroup floor, Camera camera) : base(null)
+        {
+            Camera = camera;
+            Floor = floor;
+        }
         
         public override void OnLoad()
         {
@@ -24,9 +39,7 @@ namespace CART_457.Scripts.Blueprints
             float far = 100f;
 
             Globals.PlayerCameraRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
-            Globals.PlayerCameraRoom1.Position = new Vector3(0,0,2);
-            Globals.PlayerCameraRoom1.Rotation = Quaternion.Identity;
-  
+
             Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var webCamPerspective);
             Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, MathHelper.DegreesToRadians(45), near, far));
             
@@ -36,6 +49,8 @@ namespace CART_457.Scripts.Blueprints
             Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
 
             Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
+            
+            LocalPosition = new Vector3(0,6,0);
 
         }
 
@@ -43,7 +58,10 @@ namespace CART_457.Scripts.Blueprints
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {  
             Rotate(eventArgs);
-            Move(eventArgs);
+            // Move3D(eventArgs);
+            MoveWalkingSim(eventArgs);
+            
+            Globals.PlayerCameraRoom1.ToEntityOrientation(this);
             
             Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
             Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
@@ -64,15 +82,61 @@ namespace CART_457.Scripts.Blueprints
             
             if (eventArgs.InputState.R.IsPressed)
                 rotationHorz *= Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI/4f);
-     
-
-            Globals.PlayerCameraRoom1.Rotation =  rotationHorz * Globals.PlayerCameraRoom1.Rotation * rotationVert;
             
-            LocalRotation = Globals.PlayerCameraRoom1.Rotation;
+            LocalRotation = rotationHorz * Camera.Rotation * rotationVert;
             
             // todo dont allow rotations past 90 degrees DOWN
         }
-        void Move(EntityUpdateEventArgs eventArgs)
+
+        void MoveWalkingSim(EntityUpdateEventArgs eventArgs)
+        {
+            Velocity *= Drag;
+            
+            InputState input = eventArgs.InputState;
+            Vector3 absoluteInput = Vector3.Zero;
+            if (input.W.IsHeldDown) absoluteInput.Z--;
+            if (input.S.IsHeldDown) absoluteInput.Z++;
+            if (input.A.IsHeldDown) absoluteInput.X--;
+            if (input.D.IsHeldDown) absoluteInput.X++;
+
+            float sprintMultiplier = (input.ShiftL.IsHeldDown) ? SprintMultiplier : 1;
+
+            if (absoluteInput.X != 0 || absoluteInput.Z != 0) 
+            {
+                Vector3 movementRelative = LocalRotation * absoluteInput;
+                Vector2 accelerationRelative = Vector2.Normalize(new Vector2(movementRelative.X, movementRelative.Z)) * Acceleration * sprintMultiplier;
+                Velocity += new Vector3(accelerationRelative.X, 0, accelerationRelative.Y);
+            }
+
+            float velMag = Velocity.Length; //clamp
+            if (velMag > MaxVelocity * sprintMultiplier)
+                Velocity = (Velocity/velMag) * MaxVelocity * sprintMultiplier;
+
+            var targetPos = WorldPosition + Velocity;
+
+            Velocity = Vector3.Zero;
+
+            int maxAttempts = 10;
+            float lerpAmount = 1f;
+            while (maxAttempts > 0)
+            {
+                var attemptedPos = Vector3.Lerp(WorldPosition, targetPos, lerpAmount);
+                var ray = new Ray(attemptedPos, Vector3.UnitY);
+                if (Floor.Raycast(ray, out var results, true))
+                {
+                    LocalPosition = results[0].NearestOrHitPosition + new Vector3(0,PlayerHeight,0);
+                    break;
+                }
+                
+                Velocity *= Drag * Drag * Drag * Drag * Drag;
+                lerpAmount -= 0.1f;
+                maxAttempts--;
+            }
+ 
+            
+
+        }
+        void Move3D(EntityUpdateEventArgs eventArgs)
         {
             var input = eventArgs.InputState;
             float sprintMultiplier = eventArgs.InputState.AltL.IsHeldDown ? 3 : 1;
@@ -88,19 +152,18 @@ namespace CART_457.Scripts.Blueprints
             if (input.D.IsHeldDown)      horzInput++;
             if (input.ShiftL.IsHeldDown) verticalInput--;
             if (input.Space.IsHeldDown)  verticalInput++;
-
-            Vector3 inputVector = new Vector3(horzInput, 0, depthInput);
-            Vector3 movementRelative = Globals.PlayerCameraRoom1.Rotation * inputVector;
+            
 
             Vector2 movementHorzontal = Vector2.Zero; //make horizontal speed consistent no matter the rotation of the camera
             if (horzInput != 0 || depthInput != 0) 
             {
+                Vector3 inputVector = new Vector3(horzInput, 0, depthInput);
+                Vector3 movementRelative = Camera.Rotation * inputVector;
                 Vector2 movementHorzontalInput = new Vector2(movementRelative.X, movementRelative.Z);
                 movementHorzontal = Vector2.Normalize(movementHorzontalInput) * _horziontalVelocity * sprintMultiplier;
             }
 
-            Globals.PlayerCameraRoom1.Position += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
-            LocalPosition = Globals.PlayerCameraRoom1.Position;
+            LocalPosition += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
         }
 
      

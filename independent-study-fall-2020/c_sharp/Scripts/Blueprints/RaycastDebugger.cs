@@ -29,7 +29,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         {
             for (int i = 0; i < VisulizerHits.Length; i++)
             {
-                VisulizerHits[i] = new EmptySolid(new Vector4(0,1,1,1), .08f, SetupMaterials.SolidSphereR1);
+                VisulizerHits[i] = new EmptySolid(new Vector4(0,1,1,1), .1f, SetupMaterials.SolidSphereR1);
                  //var dir = WorldRotation * Directions[i];
                 var dir = Globals.MainCamera.Rotation * new Vector3(0,0,1);
                 if (CollisionWorld.ColliderGroup.Raycast(new Ray(Globals.MainCamera.Position, dir), out var results, true))
