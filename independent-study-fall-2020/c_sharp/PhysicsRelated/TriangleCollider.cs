@@ -37,7 +37,7 @@ namespace CART_457.PhysicsRelated
             return dist;
         }
 
-        public PlaneCollider GetPlane()
+        public PlaneCollider GetPlane() //todo cache this value so no per frame heap allocations, make it struct so no added cache miss?
         {
             var plane = new PlaneCollider(Entity, false, GetDistance(), GetNormal());
             return plane;
