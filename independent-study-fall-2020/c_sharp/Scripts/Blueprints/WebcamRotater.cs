@@ -10,7 +10,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
-    public class CameraRotater : Entity
+    public class WebcamRotater : Entity
     {
         private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .02f, SetupMaterials.SolidSphereR1);
 
@@ -19,7 +19,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         private Entity _toCastAgainst;
 
 
-        public CameraRotater(Entity toCastAgainst)
+        public WebcamRotater(Entity toCastAgainst)
         {
             _toCastAgainst = toCastAgainst;
         }

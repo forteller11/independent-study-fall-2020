@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Numerics;
 using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
 using CART_457.PhysicsRelated;
 using JeremyAnsel.Media.WavefrontObj;
-using OpenTK.Mathematics;
+using Quaternion = OpenTK.Mathematics.Quaternion;
+using Vector3 = OpenTK.Mathematics.Vector3;
 
 namespace CART_457.Helpers
 {
@@ -28,12 +30,46 @@ namespace CART_457.Helpers
                 int vertexIndex1 = obj.Faces[i].Vertices[0].Vertex  -1;
                 int vertexIndex2 = obj.Faces[i].Vertices[1].Vertex  -1;
                 int vertexIndex3 = obj.Faces[i].Vertices[2].Vertex - 1;
-                
+
                 Vector3 p1 = obj.Vertices[vertexIndex1].Position.ToTKVector3();
                 Vector3 p2 = obj.Vertices[vertexIndex2].Position.ToTKVector3();
                 Vector3 p3 = obj.Vertices[vertexIndex3].Position.ToTKVector3();
                 
+                tris[i] = new TriangleCollider(parent, isTransformRelative, p3,p2,p1);
+                
+                int normIndex   = obj.Faces[i].Vertices[0].Normal  -1;
+                Vector3 norm = new Vector3(obj.VertexNormals[normIndex].X, obj.VertexNormals[normIndex].Y, obj.VertexNormals[normIndex].Z);
+
+                var project = Vector3.Dot(tris[i].GetNormal(), norm);
+                if (project < 0)
+                {
+                    tris[i]= new TriangleCollider(parent, isTransformRelative, p1,p2,p3);
+                }
+
+
+            }
+
+            return tris;
+        }
+
+        public static TriangleCollider[] GetTrianglesMesh(Mesh mesh, Entity parent, bool isTransformRelative)
+        {
+            float[] b = mesh.Positions.Buffer;
+            var tris = new TriangleCollider[mesh.Positions.VerticesCount/POINTS_IN_TRIANGLE];
+            int ii = 0;
+            for (int i = 0; i < tris.Length; i++)
+            {
+                int p1I = mesh.Positions.Stride * 0 + ii;
+                int p2I = mesh.Positions.Stride * 1 + ii;
+                int p3I = mesh.Positions.Stride * 2 + ii;
+                
+                Vector3 p1 = new Vector3(b[p1I + 0], b[p1I + 1], b[p1I + 2]);
+                Vector3 p2 = new Vector3(b[p2I + 0], b[p2I + 1], b[p2I + 2]);
+                Vector3 p3 = new Vector3(b[p3I + 0], b[p3I + 1], b[p3I + 2]);
+                
                 tris[i] = new TriangleCollider(parent, isTransformRelative, p1,p2,p3);
+
+                ii += mesh.Positions.Stride*3;
             }
 
             return tris;
