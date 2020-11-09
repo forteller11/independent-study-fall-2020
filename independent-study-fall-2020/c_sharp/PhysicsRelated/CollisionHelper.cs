@@ -102,6 +102,13 @@ namespace CART_457.PhysicsRelated
             
 
         }
+
+        public static CollisionResult RayTriangleCollision(Ray ray, TriangleCollider triangle)
+        {
+            var plane = triangle.GetPlane();
+            return RayPlaneCollision(ray, plane);
+        }
+        
         
         
         

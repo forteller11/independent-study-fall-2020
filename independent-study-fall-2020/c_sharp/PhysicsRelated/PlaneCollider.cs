@@ -1,25 +1,34 @@
-﻿using System.Numerics;
+﻿
 using CART_457.EntitySystem;
-using Vector3 = OpenTK.Mathematics.Vector3;
+using OpenTK.Mathematics;
 
 namespace CART_457.PhysicsRelated
 {
     public class PlaneCollider : Collider
     {
-        public float LocalDistance; //along normal
-
-        
-        public Vector3 LocalNormal;
+        public float LocalDistance { private get; set; } //along normal
+        public Vector3 LocalNormal { private get; set; } //along normal
         
         public float WorldDistance
         {
             get
             {
-                return LocalDistance + Vector3.Dot(WorldNormal, Entity.WorldPosition);
+                if (TransformRelative)
+                    return LocalDistance + Vector3.Dot(WorldNormal, Entity.WorldPosition);
+                return LocalDistance;
             }
         } //along normal
+
+        public Vector3 WorldNormal
+        {
+            get
+            {
+                if (TransformRelative)
+                    return Entity.WorldRotation * LocalNormal;
+                return LocalNormal;
+            }
+        }
         
-        public Vector3 WorldNormal => Entity.WorldRotation * LocalNormal;
         public Vector3 WorldPosition => WorldDistance * WorldNormal;
 
         public PlaneCollider(Entity entity, float distance, Vector3 normal) : base(entity)
@@ -27,7 +36,6 @@ namespace CART_457.PhysicsRelated
             LocalDistance = distance;
             LocalNormal = normal;
             Entity = entity;
-            
         }
     }
 }

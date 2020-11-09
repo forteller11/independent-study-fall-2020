@@ -7,6 +7,7 @@ namespace CART_457.PhysicsRelated
     {
         public List<SphereCollider> Spheres { get; private set;}
         public List<PlaneCollider> Planes { get; private set; }
+        public List<TriangleCollider> Tris { get; private set; }
         
         private List<CollisionResult> CollisionsUnsorted = new List<CollisionResult>();
         // private List<CollisionResult> CollisionsSorted = new List<CollisionResult>();
@@ -15,6 +16,7 @@ namespace CART_457.PhysicsRelated
         {
             Spheres = new List<SphereCollider>();
             Planes = new List<PlaneCollider>();
+            Tris = new List<TriangleCollider>();
         }
 
         public void AddColliders(Collider[] colliders)
@@ -26,10 +28,14 @@ namespace CART_457.PhysicsRelated
                 
                 if (collider is PlaneCollider)
                     AddCollider((PlaneCollider)collider);
+                
+                if (collider is TriangleCollider)
+                    AddCollider((TriangleCollider)collider);
             }
         }
-        public void AddCollider(SphereCollider collider) => Spheres.Add(collider);
-        public void AddCollider(PlaneCollider collider) =>  Planes.Add(collider);
+        public void AddCollider(SphereCollider collider)   => Spheres.Add(collider);
+        public void AddCollider(PlaneCollider collider)    =>  Planes.Add(collider);
+        public void AddCollider(TriangleCollider collider) =>  Tris.Add(collider);
         
         
         public bool Raycast(Ray ray, out List<CollisionResult> results, bool sortByDistanceToRay=false)
@@ -56,6 +62,16 @@ namespace CART_457.PhysicsRelated
                     atLeastOneCollision = true;
                 }
             }
+            
+            for (int i = 0; i < Tris.Count; i++)
+            {
+                var result = CollisionHelper.RayTriangleCollision(ray, Tris[i]);
+                if (result.Hit)
+                {
+                    CollisionsUnsorted.Add(result);
+                    atLeastOneCollision = true;
+                }
+            }
 
             results = CollisionsUnsorted;
             
@@ -64,6 +80,8 @@ namespace CART_457.PhysicsRelated
 
             return atLeastOneCollision;
         }
+        
+        
 
         public List<CollisionResult> SortByDistance(Vector3 position, List<CollisionResult> unsorted)
         {

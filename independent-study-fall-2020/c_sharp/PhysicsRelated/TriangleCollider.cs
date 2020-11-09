@@ -3,23 +3,22 @@ using OpenTK.Mathematics;
 
 namespace CART_457.PhysicsRelated
 {
-    public class TriangleCollider
+    public class TriangleCollider : Collider
     {
         public Vector3 P1Local;
         public Vector3 P2Local;
         public Vector3 P3Local;
-        public Entity Entity;
-        
+
         public Vector3 P1World => LocalToWorld(P1Local);
         public Vector3 P2World => LocalToWorld(P2Local);
         public Vector3 P3World => LocalToWorld(P3Local);
 
         public Vector3 GetNormal()
         {
-            var p1cache = P1World;
+            var p1cache =  P1World;
             var p2Origin = P2World - p1cache;
             var p3Origin = P3World - p1cache;
-            var normal = Vector3.Cross(p2Origin, p3Origin);
+            var normal = Vector3.Normalize(Vector3.Cross(p2Origin, p3Origin));
             return normal;
         }
 
@@ -39,23 +38,30 @@ namespace CART_457.PhysicsRelated
 
         public PlaneCollider GetPlane()
         {
-            return new PlaneCollider(Entity, GetDistance(), GetNormal());
+            var plane = new PlaneCollider(Entity, GetDistance(), GetNormal());
+            plane.TransformRelative = false;
+            return plane;
         }
 
-        public TriangleCollider(Vector3 p1, Vector3 p2, Vector3 p3, Entity entity)
+        public TriangleCollider(Vector3 p1, Vector3 p2, Vector3 p3, Entity entity) : base(entity)
         {
             P1Local = p1;
             P2Local = p2;
             P3Local = p3;
-            
-            Entity = entity;
         }
 
         Vector3 LocalToWorld(Vector3 localPosition)
         {
-            var parentRot = Entity.LocalRotation;
-            var localToWorldPosition = parentRot * (localPosition * Entity.WorldScale);
-            return Entity.WorldPosition + localToWorldPosition;
+            if (TransformRelative)
+            {
+                var parentRot = Entity.WorldRotation;
+                var localToWorldPosition = parentRot * (localPosition * Entity.WorldScale);
+                return Entity.WorldPosition + localToWorldPosition;
+            }
+
+            return localPosition;
         }
+
+        
     }
 }

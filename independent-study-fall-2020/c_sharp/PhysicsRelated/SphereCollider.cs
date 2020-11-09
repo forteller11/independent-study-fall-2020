@@ -9,11 +9,26 @@ namespace CART_457.PhysicsRelated
         public float Radius
         {
             set => _localRadius = value;
-            get => Entity.WorldScale.ComponentMean() * _localRadius;
+            get
+            {
+                if (TransformRelative)
+                   return Entity.WorldScale.ComponentMean() * _localRadius;
+                return _localRadius;
+            }
             
+
         }
         public Vector3 Offset { set; private get; }
-        public Vector3 WorldPosition => Entity.WorldPosition + (Offset * Entity.WorldScale);
+
+        public Vector3 WorldPosition
+        {
+            get
+            {
+                if (TransformRelative)
+                    return Entity.WorldPosition + (Offset * Entity.WorldScale);
+                return Offset;
+            }
+        }
 
         public SphereCollider(Entity entity, float radius, Vector3 offset = new Vector3()) : base(entity)
         {

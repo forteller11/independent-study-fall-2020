@@ -28,7 +28,7 @@ namespace CART_457.EntitySystem
             {
                 if (Parent == null) 
                     return LocalPosition;
-                var parentRot = Parent.LocalRotation;
+                var parentRot = Parent.WorldRotation;
                 var localToWorldPosition = parentRot * (LocalPosition * Parent.WorldScale);
                 return Parent.WorldPosition + localToWorldPosition;
             }
@@ -92,7 +92,12 @@ namespace CART_457.EntitySystem
         {
             ColliderGroup.AddCollider(collider);
             CollisionWorld.ColliderGroup.AddCollider(collider);
-            
+        }
+        
+        public void AddCollider(TriangleCollider collider)
+        {
+            ColliderGroup.AddCollider(collider);
+            CollisionWorld.ColliderGroup.AddCollider(collider);
         }
         
         public void AddCollider(PlaneCollider collider)
