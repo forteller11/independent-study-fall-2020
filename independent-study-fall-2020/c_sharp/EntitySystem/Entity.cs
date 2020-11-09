@@ -109,10 +109,8 @@ namespace CART_457.EntitySystem
         public void AddColliders(TriangleCollider[] triangles)
         {
             for (int i = 0; i < triangles.Length; i++)
-            {
-                ColliderGroup.AddCollider(triangles[i]);
-                CollisionWorld.ColliderGroup.AddCollider(triangles[i]);
-            }
+                AddCollider(triangles[i]);
+
         }
         
 

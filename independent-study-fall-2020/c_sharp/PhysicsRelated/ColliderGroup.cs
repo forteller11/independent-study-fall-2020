@@ -73,10 +73,10 @@ namespace CART_457.PhysicsRelated
                 }
             }
 
-            results = CollisionsUnsorted;
-            
             if (sortByDistanceToRay)
-                results = SortByDistance(ray.Origin, results); //uncessary return value
+                CollisionsUnsorted = SortByDistance(ray.Origin, CollisionsUnsorted); //uncessary return value
+            
+            results = CollisionsUnsorted;
 
             return atLeastOneCollision;
         }
@@ -87,14 +87,13 @@ namespace CART_457.PhysicsRelated
         {
             for (int i = 0; i < unsorted.Count; i++)
             {
-                float toSwapDistance = Vector3.Distance(unsorted[i].NearestOrHitPosition, position); //can be distance squared right?
                 int toSwapIndex = i;
 
-                float currentLowestDistance = toSwapDistance;
+                float currentLowestDistance = Vector3.DistanceSquared(unsorted[i].NearestOrHitPosition, position);
                 int currentLowestIndex = toSwapIndex;
                 for (int j = i; j < unsorted.Count; j++)
                 {
-                    float currentDistance = Vector3.Distance(unsorted[i].NearestOrHitPosition, position);
+                    float currentDistance = Vector3.DistanceSquared(unsorted[j].NearestOrHitPosition, position);
                     if (currentDistance < currentLowestDistance)
                     {
                         currentLowestDistance = currentDistance;

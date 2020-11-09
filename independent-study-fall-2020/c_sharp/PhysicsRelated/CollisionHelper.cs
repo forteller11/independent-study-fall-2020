@@ -10,6 +10,7 @@ namespace CART_457.PhysicsRelated
         public static CollisionResult RaySphereCollision(Ray ray, SphereCollider sphere)
         {
             
+            
             //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter3/raycast_sphere.html
 
             Vector3 rayPos = ray.Origin;
@@ -106,8 +107,6 @@ namespace CART_457.PhysicsRelated
 
         public static CollisionResult RayTriangleCollision(Ray ray, TriangleCollider triangle)
         {
-            var plane = triangle.GetPlane();
-            
             var planeCollision= RayPlaneCollision(ray, triangle.GetPlane());
             if (planeCollision.Hit == false)
                 return planeCollision;

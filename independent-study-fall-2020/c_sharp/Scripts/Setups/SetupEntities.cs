@@ -27,7 +27,7 @@ namespace CART_457.Scripts.Setups
             table.LocalRotation = Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI);
             // table.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.002f);
             
-            var table2 = Empty.FromPosition(new Vector3(7, 0, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
+            var table2 = Empty.FromPosition(new Vector3(7, 2, 0), SetupMaterials.TableProto, SetupMaterials.ShadowMapTable);
              table2.UpdateAction += (entity) => entity.LocalRotation *= Quaternion.FromAxisAngle(Vector3.UnitY, 0.004f);
              table2.LocalScale *= 0.5f;
             table2.Parent = table;
@@ -62,8 +62,8 @@ namespace CART_457.Scripts.Setups
   
             var tris = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table, true);
             var tris2 = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table2, true);
-            // table.AddColliders(tris);
-            // table2.AddColliders(tris2);
+             table.AddColliders(tris);
+             table2.AddColliders(tris2);
       
             // f.AddCollider(new SphereCollider(f, 2));
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
