@@ -30,8 +30,7 @@ namespace CART_457.PhysicsRelated
             var normal = GetNormal();
             var p1World = P1World;
             var ray = new Ray(p1World, normal);
-            var plane = new PlaneCollider(Entity, 0, normal); //dont have to raycast to get pos, just distance (optimize potent)
-            plane.TransformRelative = false;
+            var plane = new PlaneCollider(Entity, false, 0, normal); //dont have to raycast to get pos, just distance (optimize potent)
             var result = CollisionHelper.RayPlaneCollision(ray, plane);
 
             var dist = Vector3.Distance(result.NearestOrHitPosition, p1World);
@@ -40,12 +39,11 @@ namespace CART_457.PhysicsRelated
 
         public PlaneCollider GetPlane()
         {
-            var plane = new PlaneCollider(Entity, GetDistance(), GetNormal());
-            plane.TransformRelative = false;
+            var plane = new PlaneCollider(Entity, false, GetDistance(), GetNormal());
             return plane;
         }
 
-        public TriangleCollider(Vector3 p1, Vector3 p2, Vector3 p3, Entity entity) : base(entity)
+        public TriangleCollider(Entity entity, bool isTransformRelative, Vector3 p1, Vector3 p2, Vector3 p3) : base(entity, isTransformRelative)
         {
             P1Local = p1;
             P2Local = p2;

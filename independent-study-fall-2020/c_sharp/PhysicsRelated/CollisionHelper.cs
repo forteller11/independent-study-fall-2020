@@ -116,24 +116,22 @@ namespace CART_457.PhysicsRelated
             //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter4/point_in_triangle.html
             
             //set plane hit to origin of triangle points
-            var p1 = triangle.P1World - planeHit;
-            var p2 = triangle.P2World - planeHit;
-            var p3 = triangle.P3World - planeHit;
+            var p1 = (triangle.P1World - planeHit) * 1;
+            var p2 = (triangle.P2World - planeHit) * 1;
+            var p3 = (triangle.P3World - planeHit) * 1;
 
-            var norm1 = GetNormalOfTriangle(planeHit, p1, p2);
-            var norm2 = GetNormalOfTriangle(planeHit, p2, p3);
-            var norm3 = GetNormalOfTriangle(planeHit, p3, p1);
+            var norm1 = GetNormalOfTriangle( p1, p2);
+            var norm2 = GetNormalOfTriangle( p2, p3);
+            var norm3 = GetNormalOfTriangle( p3, p1);
 
             if (norm1.EqualsAprox(norm2) && norm2.EqualsAprox(norm3) && norm3.EqualsAprox(norm1)) //if inside triangle
                 return planeCollision;
             
             return CollisionResult.NoHitNoInfo();
             
-            Vector3 GetNormalOfTriangle(Vector3 planeHit, Vector3 p2, Vector3 p3)
+            Vector3 GetNormalOfTriangle(Vector3 p2, Vector3 p3)
             {
-                var w1 = p2 - planeHit;
-                var w2 = p3 - planeHit;
-                return Vector3.Normalize(Vector3.Cross(w1, w2));
+                return Vector3.Normalize(Vector3.Cross(p2, p3));
             }
             
         }

@@ -30,11 +30,14 @@ namespace CART_457.PhysicsRelated
             }
         }
 
-        public SphereCollider(Entity entity, float radius, Vector3 offset = new Vector3()) : base(entity)
+        public SphereCollider( Entity entity, bool isTransformRelative, float radius, Vector3 offset) : base(entity,isTransformRelative)
         {
             Radius = radius;
             Offset = offset;
         }
+        
+        public SphereCollider( Entity entity, bool isTransformRelative, float radius) 
+            : this(entity,isTransformRelative, radius, Vector3.Zero) { }
 
     }
 }

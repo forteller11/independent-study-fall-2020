@@ -31,7 +31,7 @@ namespace CART_457.PhysicsRelated
         
         public Vector3 WorldPosition => WorldDistance * WorldNormal;
 
-        public PlaneCollider(Entity entity, float distance, Vector3 normal) : base(entity)
+        public PlaneCollider(Entity entity, bool isTransformRelative, float distance, Vector3 normal) : base(entity, isTransformRelative)
         {
             LocalDistance = distance;
             LocalNormal = normal;

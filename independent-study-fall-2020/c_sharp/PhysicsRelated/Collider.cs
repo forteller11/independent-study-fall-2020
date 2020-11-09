@@ -8,8 +8,9 @@ namespace CART_457.PhysicsRelated
         public Entity Entity { get; protected set; }
         public bool TransformRelative = true;
 
-        protected Collider(Entity entity)
+        protected Collider(Entity entity, bool isTransformRelative)
         {
+            TransformRelative = isTransformRelative;
             Entity = entity;
         }
     }

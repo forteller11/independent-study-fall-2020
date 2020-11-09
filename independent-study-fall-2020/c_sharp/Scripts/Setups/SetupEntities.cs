@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CART_457.Blueprints;
 using CART_457.EntitySystem;
+using CART_457.Helpers;
 using CART_457.PhysicsRelated;
 using CART_457.Renderer;
 using CART_457.Scripts.Blueprints;
@@ -64,10 +65,16 @@ namespace CART_457.Scripts.Setups
             #endregion
   
   
-            var f = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,0), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
+            var f = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,0), Quaternion.Identity,  new Vector3(1), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
                f.LocalRotation *= Quaternion.FromEulerAngles(MathF.PI/4,0,0);
             // f.AddCollider(new PlaneCollider(f, 0, Vector3.UnitY));
-            f.AddCollider(new TriangleCollider(new Vector3(-5,0,5),new Vector3(5,0,5),new Vector3(0,0,-5), f ));
+            // f.AddCollider(new TriangleCollider(new Vector3(-5,0,5),new Vector3(5,0,5),new Vector3(0,0,-5), f ));
+            var tris = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table, true);
+            //
+            for (int i = 0; i < tris.Length; i++)
+            {
+                table.AddCollider(tris[i]);
+            }
             // f.AddCollider(new SphereCollider(f, 2));
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true,new Vector3(1,-4,4), Quaternion.Identity,  new Vector3(5), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);

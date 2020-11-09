@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
+using CART_457.PhysicsRelated;
 using JeremyAnsel.Media.WavefrontObj;
 using OpenTK.Mathematics;
 
@@ -10,11 +12,38 @@ namespace CART_457.Helpers
     {
         private const int POINTS_IN_TRIANGLE = 3;
 
+        public static TriangleCollider [] GetTrianglesFromObjFile(string fileName) => GetTrianglesFromObjFile(fileName, null, false);
+        public static TriangleCollider [] GetTrianglesFromObjFile(string fileName, Entity parent, bool isTransformRelative)
+        {
+            var obj = ObjFile.FromFile(SerializationManager.MeshPath + "\\" + fileName + ".obj");
+            var tris = new TriangleCollider[obj.Faces.Count];
+
+            
+            for (int i = 0; i < obj.Faces.Count; i++)
+            {
+                if (obj.Faces[i].Vertices.Count != POINTS_IN_TRIANGLE)
+                    throw new DataException($"A face doesn't has \"{obj.Faces[i].Vertices.Count}\" and not {POINTS_IN_TRIANGLE} vertices, was the mesh not triangulated?");
+                
+                
+                int vertexIndex1 = obj.Faces[i].Vertices[0].Vertex  -1;
+                int vertexIndex2 = obj.Faces[i].Vertices[1].Vertex  -1;
+                int vertexIndex3 = obj.Faces[i].Vertices[2].Vertex - 1;
+                
+                Vector3 p1 = obj.Vertices[vertexIndex1].Position.ToTKVector3();
+                Vector3 p2 = obj.Vertices[vertexIndex2].Position.ToTKVector3();
+                Vector3 p3 = obj.Vertices[vertexIndex3].Position.ToTKVector3();
+                
+                tris[i] = new TriangleCollider(parent, isTransformRelative, p1,p2,p3);
+            }
+
+            return tris;
+        }
+        
         public static Mesh GetAttribBuffersFromObjFile(string fileName) => GetAttribBuffersFromObjFile(fileName, Quaternion.Identity, true, true, true);
         public static Mesh GetAttribBuffersFromObjFile(string fileName, Quaternion rotationToBakeIn) => GetAttribBuffersFromObjFile(fileName, rotationToBakeIn, true, true, true);
         public static Mesh GetAttribBuffersFromObjFile(string fileName, Quaternion? rotationToBakeIn, bool in_position, bool in_uv, bool in_normal) //TODO collaspe indices' specefic attribs into one
         {
-            var obj = JeremyAnsel.Media.WavefrontObj.ObjFile.FromFile(SerializationManager.MeshPath + "\\" + fileName + ".obj");
+            var obj = ObjFile.FromFile(SerializationManager.MeshPath + "\\" + fileName + ".obj");
             
             #region bake in rotation
 
@@ -70,7 +99,7 @@ namespace CART_457.Helpers
                     normalsFlattened[rootIndex + 1] = obj.VertexNormals[normIndex].Y;
                     normalsFlattened[rootIndex + 2] = obj.VertexNormals[normIndex].Z;
 
-                    rootIndex += 3;
+                    rootIndex += POINTS_IN_TRIANGLE;
                 }
             }
             
