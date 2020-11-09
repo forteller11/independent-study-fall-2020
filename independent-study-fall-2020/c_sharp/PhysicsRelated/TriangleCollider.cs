@@ -13,6 +13,7 @@ namespace CART_457.PhysicsRelated
         public Vector3 P1World => LocalToWorld(P1Local);
         public Vector3 P2World => LocalToWorld(P2Local);
         public Vector3 P3World => LocalToWorld(P3Local);
+        private PlaneCollider _planeCache;
 
         public Vector3 GetNormal()
         {
@@ -39,8 +40,9 @@ namespace CART_457.PhysicsRelated
 
         public PlaneCollider GetPlane() //todo cache this value so no per frame heap allocations, make it struct so no added cache miss?
         {
-            var plane = new PlaneCollider(Entity, false, GetDistance(), GetNormal());
-            return plane;
+            _planeCache.LocalDistance = GetDistance();
+            _planeCache.LocalNormal =  GetNormal();
+            return _planeCache;
         }
 
         public TriangleCollider(Entity entity, bool isTransformRelative, Vector3 p1, Vector3 p2, Vector3 p3) : base(entity, isTransformRelative)
@@ -48,6 +50,7 @@ namespace CART_457.PhysicsRelated
             P1Local = p1;
             P2Local = p2;
             P3Local = p3;
+            _planeCache = new PlaneCollider(entity, false, 0, Vector3.Zero);
         }
 
         Vector3 LocalToWorld(Vector3 localPosition)
