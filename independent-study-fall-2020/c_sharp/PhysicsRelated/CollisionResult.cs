@@ -21,7 +21,10 @@ namespace CART_457.PhysicsRelated
         {
             return new CollisionResult
             {
-                NearestOrHitPosition = Vector3.NegativeInfinity
+                Hit = false,
+                Inside = false,
+                NearestOrHitPosition = Vector3.NegativeInfinity,
+                HitEntity = null
             };
         }
     }

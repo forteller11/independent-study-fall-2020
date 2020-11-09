@@ -70,9 +70,10 @@ namespace CART_457.PhysicsRelated
 
             float distAlongRay = (plane.WorldDistance - pn) / directionsProjection;
 
-            if (directionsProjection == 0) //ray parralllel to plane
+            bool rayParrallelToPlane = MathHelper.ApproximatelyEqual(directionsProjection, 0, 4);
+            if (rayParrallelToPlane) //ray parralllel to plane
             {
-                if (plane.WorldPosition == ray.Origin) //inside ray
+                if (plane.WorldPosition.EqualsAprox(ray.Origin)) //inside ray
                 {
                     return new CollisionResult
                     {
@@ -94,7 +95,7 @@ namespace CART_457.PhysicsRelated
 
             return new CollisionResult
                 {
-                    Inside = (distAlongRay == 0),
+                    Inside = MathHelper.ApproximatelyEqual(directionsProjection, 0, 2),
                     Hit = true,
                     HitEntity = plane.Entity,
                     NearestOrHitPosition = distAlongRay * rayDir + ray.Origin
@@ -119,20 +120,20 @@ namespace CART_457.PhysicsRelated
             var p2 = triangle.P2World - planeHit;
             var p3 = triangle.P3World - planeHit;
 
-            var norm1 = GetSurfaceDirectionOfTriangle(planeHit, p1, p2);
-            var norm2 = GetSurfaceDirectionOfTriangle(planeHit, p2, p3);
-            var norm3 = GetSurfaceDirectionOfTriangle(planeHit, p3, p1);
+            var norm1 = GetNormalOfTriangle(planeHit, p1, p2);
+            var norm2 = GetNormalOfTriangle(planeHit, p2, p3);
+            var norm3 = GetNormalOfTriangle(planeHit, p3, p1);
 
             if (norm1.EqualsAprox(norm2) && norm2.EqualsAprox(norm3) && norm3.EqualsAprox(norm1)) //if inside triangle
                 return planeCollision;
             
             return CollisionResult.NoHitNoInfo();
             
-            Vector3 GetSurfaceDirectionOfTriangle(Vector3 planeHit, Vector3 p2, Vector3 p3) //NOTE, not nromalized
+            Vector3 GetNormalOfTriangle(Vector3 planeHit, Vector3 p2, Vector3 p3)
             {
                 var w1 = p2 - planeHit;
                 var w2 = p3 - planeHit;
-                return Vector3.Cross(w1, w2);
+                return Vector3.Normalize(Vector3.Cross(w1, w2));
             }
             
         }

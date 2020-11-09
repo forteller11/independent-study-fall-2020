@@ -1,4 +1,5 @@
-﻿using CART_457.EntitySystem;
+﻿using System;
+using CART_457.EntitySystem;
 using OpenTK.Mathematics;
 
 namespace CART_457.PhysicsRelated
@@ -28,8 +29,9 @@ namespace CART_457.PhysicsRelated
             //question: ray origin at p1 or at mean between p1,p2 and p3???
             var normal = GetNormal();
             var p1World = P1World;
-            var ray = new Ray(p1World, -normal);
+            var ray = new Ray(p1World, normal);
             var plane = new PlaneCollider(Entity, 0, normal); //dont have to raycast to get pos, just distance (optimize potent)
+            plane.TransformRelative = false;
             var result = CollisionHelper.RayPlaneCollision(ray, plane);
 
             var dist = Vector3.Distance(result.NearestOrHitPosition, p1World);
