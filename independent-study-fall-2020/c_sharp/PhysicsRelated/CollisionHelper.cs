@@ -106,7 +106,35 @@ namespace CART_457.PhysicsRelated
         public static CollisionResult RayTriangleCollision(Ray ray, TriangleCollider triangle)
         {
             var plane = triangle.GetPlane();
-            return RayPlaneCollision(ray, plane);
+            
+            var planeCollision= RayPlaneCollision(ray, triangle.GetPlane());
+            if (planeCollision.Hit == false)
+                return planeCollision;
+            var planeHit = planeCollision.NearestOrHitPosition;
+
+            //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter4/point_in_triangle.html
+            
+            //set plane hit to origin of triangle points
+            var p1 = triangle.P1World - planeHit;
+            var p2 = triangle.P2World - planeHit;
+            var p3 = triangle.P3World - planeHit;
+
+            var norm1 = GetSurfaceDirectionOfTriangle(planeHit, p1, p2);
+            var norm2 = GetSurfaceDirectionOfTriangle(planeHit, p2, p3);
+            var norm3 = GetSurfaceDirectionOfTriangle(planeHit, p3, p1);
+
+            if (norm1.EqualsAprox(norm2) && norm2.EqualsAprox(norm3) && norm3.EqualsAprox(norm1)) //if inside triangle
+                return planeCollision;
+            
+            return CollisionResult.NoHitNoInfo();
+            
+            Vector3 GetSurfaceDirectionOfTriangle(Vector3 planeHit, Vector3 p2, Vector3 p3) //NOTE, not nromalized
+            {
+                var w1 = p2 - planeHit;
+                var w2 = p3 - planeHit;
+                return Vector3.Cross(w1, w2);
+            }
+            
         }
         
         
