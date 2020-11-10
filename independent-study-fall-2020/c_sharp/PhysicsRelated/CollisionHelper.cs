@@ -94,6 +94,8 @@ namespace CART_457.PhysicsRelated
                 return CollisionResult.NoHitNoInfo();
             }
 
+            Debug.Log("PlaneHit");
+            Debug.Log($"Plane Normal {plane.WorldNormal}");
             return new CollisionResult
                 {
                     Inside = MathHelper.ApproximatelyEqual(directionsProjection, 0, 2),
@@ -115,17 +117,29 @@ namespace CART_457.PhysicsRelated
             //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter4/point_in_triangle.html
             
             //set plane hit to origin of triangle points
-            var p1 = (triangle.P1World - planeHit) * 1;
-            var p2 = (triangle.P2World - planeHit) * 1;
-            var p3 = (triangle.P3World - planeHit) * 1;
+            var p1 = (triangle.P1World - planeHit);
+            var p2 = (triangle.P2World - planeHit);
+            var p3 = (triangle.P3World - planeHit);
 
+            //todo somehow winding order here is not same
             var norm1 = GetNormalOfTriangle( p1, p2);
             var norm2 = GetNormalOfTriangle( p2, p3);
             var norm3 = GetNormalOfTriangle( p3, p1);
 
-            if (norm1.EqualsAprox(norm2) && norm2.EqualsAprox(norm3) && norm3.EqualsAprox(norm1)) //if inside triangle
-                return planeCollision;
+            Debug.Log($"p1 {p1.ToStringSmall()}");
+            Debug.Log($"p2 {p2.ToStringSmall()}");
+            Debug.Log($"p3 {p3.ToStringSmall()}");
             
+            Debug.Log($"Norm1 {norm1.ToStringSmall()}");
+            Debug.Log($"Norm2 {norm2.ToStringSmall()}");
+            Debug.Log($"Norm3 {norm3.ToStringSmall()}");
+            if (norm1.EqualsAprox(norm2) && norm2.EqualsAprox(norm3) && norm3.EqualsAprox(norm1))
+            {
+                Debug.Log("Inside Triangle");
+                //if inside triangle
+                return planeCollision;
+            }
+            Debug.Log("Outside Triangle");
             return CollisionResult.NoHitNoInfo();
             
             Vector3 GetNormalOfTriangle(Vector3 p2, Vector3 p3)

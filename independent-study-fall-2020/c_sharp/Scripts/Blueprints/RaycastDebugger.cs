@@ -15,7 +15,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
         public override void OnLoad()
         {
-            VisulizerHit = new EmptySolid(new Vector4(1,0,0,1), .02f, SetupMaterials.SolidSphereR1);
+            VisulizerHit = new EmptySolid(new Vector4(1,0,0,1), .6f, SetupMaterials.SolidSphereR1);
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

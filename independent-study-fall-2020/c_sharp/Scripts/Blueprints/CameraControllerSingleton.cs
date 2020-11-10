@@ -58,8 +58,8 @@ namespace CART_457.Scripts.Blueprints
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {  
             Rotate(eventArgs);
-            // Move3D(eventArgs);
-            MoveWalkingSim(eventArgs);
+            Move3D(eventArgs);
+            // MoveWalkingSim(eventArgs);
             
             Globals.PlayerCameraRoom1.ToEntityOrientation(this);
             

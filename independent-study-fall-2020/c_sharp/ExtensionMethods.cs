@@ -22,8 +22,22 @@ namespace CART_457
                    v1.Y.EqualsAprox(v2.Y);
         }
         
+        public static Vector3 Absolute(this Vector3 v) => new Vector3(MathF.Abs(v.X),MathF.Abs(v.Y),MathF.Abs(v.Z));
+        
         public static float ComponentMean(this Vector3 v) => (v.X + v.Y + v.Z)/3;
         public static float ComponentMean(this Vector2 v) => (v.X + v.Y)/2;
+
+        public static string ToStringSmall(this Vector3 v, int digits = 2)
+        {
+            float x = (float) MathHelper.Round(v.X, digits, MidpointRounding.ToEven);
+            float y = (float) MathHelper.Round(v.Y, digits, MidpointRounding.ToEven);
+            float z = (float) MathHelper.Round(v.Z, digits, MidpointRounding.ToEven);
+
+            string sX = (x.ToString()).PadLeft(digits + 2, ' ');
+            string sY = (y.ToString()).PadLeft(digits + 2, ' ');
+            string sZ = (z.ToString()).PadLeft(digits + 2, ' ');
+            return $"({sX}; {sY}; {sZ})";
+        }
         
 
     }

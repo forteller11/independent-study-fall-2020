@@ -1,4 +1,5 @@
-﻿using CART_457;
+﻿using System;
+using CART_457;
 using CART_457.c_sharp.Renderer;
 using CART_457.EntitySystem;
 using CART_457.MaterialRelated;
@@ -10,6 +11,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
     {
         public bool AppearsInFrustrum; //1 = true, -1 = false
         public Material FrustrumMaterial;
+        public Action<Entity> UpdateAction;
         public FrustrumNormal (Material[]mats): base(mats){}
         
         public static FrustrumNormal FromPositionRotationScale (bool appearInFrustrum, Vector3 position, Quaternion rotation, Vector3 scale,  Material frustrumMat, Material shadowMat)
@@ -21,6 +23,11 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             frustrumNormal.AppearsInFrustrum = appearInFrustrum;
             frustrumNormal.FrustrumMaterial = frustrumMat;
             return frustrumNormal;
+        }
+
+        public override void OnUpdate(EntityUpdateEventArgs eventArgs)
+        {
+            UpdateAction?.Invoke(this);
         }
 
         public override void SendUniformsPerEntity(Material material)

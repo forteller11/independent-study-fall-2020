@@ -53,6 +53,11 @@ namespace CART_457.PhysicsRelated
             _planeCache = new PlaneCollider(entity, false, 0, Vector3.Zero);
         }
 
+        public static TriangleCollider Test(Entity entitiy, bool isTransformRelative) 
+        {
+            return new TriangleCollider(entitiy, isTransformRelative, new Vector3(-1, 0, 0), new Vector3(1, 0, 0), new Vector3(0, 1, 0));
+        }
+
         Vector3 LocalToWorld(Vector3 localPosition)
         {
             if (TransformRelative)

@@ -55,21 +55,21 @@ namespace CART_457.Scripts.Setups
             #endregion
   
   
-            var planeFloor = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,2), Quaternion.Identity,  new Vector3(2), SetupMaterials.DirtPathR1Frustrum, SetupMaterials.ShadowMapPlane);
-                 planeFloor.LocalRotation *= Quaternion.FromEulerAngles(MathF.PI/15,0,0);
-               var floor = ModelImporter.GetTrianglesFromObjFile("path", planeFloor, true);
-               planeFloor.AddColliders(floor);
+            var planeFloor = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,0), Quaternion.FromEulerAngles(MathF.PI/20,MathF.PI/220,0),  new Vector3(6), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
+                 // planeFloor.UpdateAction += (planeFloor) => planeFloor.LocalRotation *= Quaternion.FromEulerAngles(MathF.PI/800,0,0);
+               // var floor = ModelImporter.GetTrianglesFromObjFile("path", planeFloor, true);
+               planeFloor.AddColliders( ModelImporter.GetTrianglesFromObjFile("Plane", planeFloor, true));
                // var p1 = new Vector3(1,0,0);
                // var p2 = new Vector3(-1,0,0);
                // var p3 = new Vector3(0,0,1);
                // planeFloor.AddCollider(new TriangleCollider(planeFloor, true, p1,p2,p3));
   
-            var tris = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table, true);
-            var tris2 = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table2, true);
-            var tris3 = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table3, true);
-             table.AddColliders(tris);
-             table2.AddColliders(tris2);
-             table2.AddColliders(tris3);
+            // var tris = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table, true);
+            // var tris2 = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table2, true);
+            // var tris3 = ModelImporter.GetTrianglesFromObjFile("room_proto_table", table3, true);
+             // table.AddColliders(tris);
+             // table2.AddColliders(tris2);
+             // table2.AddColliders(tris3);
       
             // f.AddCollider(new SphereCollider(f, 2));
             FrustrumNormal.FromPositionRotationScale(false,new Vector3(0,-2f,4f), Quaternion.Identity,  new Vector3(5), SetupMaterials.CarpetPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
