@@ -38,6 +38,28 @@ namespace CART_457.PhysicsRelated
             return dist;
         }
 
+        public Vector3 GetBarycentric(Vector3 point)
+        {
+            Vector3 p1Unit = Vector3.UnitX;
+            Vector3 p2Unit = Vector3.UnitY;
+            Vector3 p3Unit = Vector3.UnitZ;
+            
+            Vector3 side12 = P2World - P1World;
+            Vector3 side23 = P3World - P2World;
+            Vector3 side31 = P1World - P3World;
+
+            Vector3 proj_12_23 = Vector3.Dot(side12, side23) * p1Unit;
+            Vector3 proj_23_31 = Vector3.Dot(side23, side31) * p2Unit;
+            Vector3 proj_31_12 = Vector3.Dot(side31, side12) * p3Unit;
+
+            var p1Bary = Vector3.Dot(proj_12_23, point);
+            var p2Bary = Vector3.Dot(proj_23_31, point);
+            var p3Bary = Vector3.Dot(proj_31_12, point);
+            
+            return new Vector3(p1Bary, p2Bary, p3Bary);
+     
+        }
+
         public PlaneCollider GetPlane() //todo cache this value so no per frame heap allocations, make it struct so no added cache miss?
         {
             _planeCache.LocalDistance = GetDistance();
@@ -51,6 +73,8 @@ namespace CART_457.PhysicsRelated
             P2Local = p2;
             P3Local = p3;
             _planeCache = new PlaneCollider(entity, false, 0, Vector3.Zero);
+            
+            
         }
 
         public static TriangleCollider Test(Entity entitiy, bool isTransformRelative) 

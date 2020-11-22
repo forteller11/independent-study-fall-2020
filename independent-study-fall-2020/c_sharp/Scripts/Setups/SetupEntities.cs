@@ -55,10 +55,11 @@ namespace CART_457.Scripts.Setups
             #endregion
   
   
-            var planeFloor = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,0), Quaternion.FromEulerAngles(MathF.PI/20,MathF.PI/220,0),  new Vector3(6), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
-                 // planeFloor.UpdateAction += (planeFloor) => planeFloor.LocalRotation *= Quaternion.FromEulerAngles(MathF.PI/800,0,0);
-               // var floor = ModelImporter.GetTrianglesFromObjFile("path", planeFloor, true);
-               planeFloor.AddColliders( ModelImporter.GetTrianglesFromObjFile("Plane", planeFloor, true));
+            var planeFloor = FrustrumNormal.FromPositionRotationScale(true,new Vector3(0,0,0), Quaternion.FromEulerAngles(0,0,0),  new Vector3(1), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
+                  // planeFloor.UpdateAction += (planeFloor) => planeFloor.LocalRotation *= Quaternion.FromEulerAngles(MathF.PI/800,0,0);
+                var floor = ModelImporter.GetTrianglesFromObjFile("path", planeFloor, true);
+                var plane =ModelImporter.GetTrianglesFromObjFile("Plane", planeFloor, true);
+               planeFloor.AddColliders( plane);
                // var p1 = new Vector3(1,0,0);
                // var p2 = new Vector3(-1,0,0);
                // var p3 = new Vector3(0,0,1);
