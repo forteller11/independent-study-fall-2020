@@ -16,6 +16,7 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material CarpetPlaneR1Frustrum;
         [IncludeInDrawLoop] public static Material DirtPlaneR1Frustrum;
         [IncludeInDrawLoop] public static Material DirtPathR1Frustrum;
+        [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
         [IncludeInDrawLoop] public static Material SolidSphereR2;
         
         [IncludeInDrawLoop] public static Material DirtSphere;
@@ -199,6 +200,16 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.CarpetDiffuse,
                 SetupTextures.CarpetNormalMap,
                 SetupTextures.CarpetSpecularMap,
+                normaMaterialUniformSenderNoCull
+            );
+            
+            RoomCleanR1InCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+                SetupFBOs.Room1,
+                SetupMeshes.TableClean01,
+                Globals.WebCamRoom1,
+                SetupTextures.RoomClean01Diffuse,
+                SetupTextures.RoomClean01Normal,
+                SetupTextures.RoomClean01Specular,
                 normaMaterialUniformSenderNoCull
             );
             #endregion

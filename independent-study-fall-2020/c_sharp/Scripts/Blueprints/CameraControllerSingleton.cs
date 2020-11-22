@@ -18,11 +18,11 @@ namespace CART_457.Scripts.Blueprints
         private float _horziontalVelocity = .05f;
 
         public Vector3 Velocity;
-        public float PlayerHeight = 1.5f;
-        public float Acceleration = 0.05f;
+        public float PlayerHeight = 4f;
+        public float Acceleration = 0.08f;
         public float SprintMultiplier = 3f;
         public float MaxVelocity = .2f;
-        public float Drag = 0.8f;
+        public float Drag = 0.95f;
 
 
 
@@ -58,8 +58,8 @@ namespace CART_457.Scripts.Blueprints
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {  
             Rotate(eventArgs);
-            Move3D(eventArgs);
-            // MoveWalkingSim(eventArgs);
+            // Move3D(eventArgs);
+            MoveWalkingSim(eventArgs);
             
             Globals.PlayerCameraRoom1.ToEntityOrientation(this);
             

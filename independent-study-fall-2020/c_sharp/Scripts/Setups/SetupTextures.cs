@@ -46,6 +46,11 @@ namespace CART_457.Scripts.Setups
         public static Texture WebcamNormal = Texture.FromFile(WEBCAM + "normal.jpg", TextureUnit.Texture1);
         public static Texture WebcamSpecular = Texture.FromFile(WEBCAM + "specular.jpg", TextureUnit.Texture2);
         
+        private const string ROOM_CLEAN_01 = "table_clean_01/";
+        public static Texture RoomClean01Diffuse = Texture.FromFile(ROOM_CLEAN_01 + "diffuse.jpg", TextureUnit.Texture0);
+        public static Texture RoomClean01Normal = Texture.FromFile(ROOM_CLEAN_01 + "normal.jpg", TextureUnit.Texture1);
+        public static Texture RoomClean01Specular = Texture.FromFile(ROOM_CLEAN_01 + "specular.jpg", TextureUnit.Texture2);
+        
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }
 }

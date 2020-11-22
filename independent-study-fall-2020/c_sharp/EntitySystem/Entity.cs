@@ -110,7 +110,12 @@ namespace CART_457.EntitySystem
         {
             for (int i = 0; i < triangles.Length; i++)
                 AddCollider(triangles[i]);
-
+        }
+        
+        public void AddColliders(Mesh mesh, bool shouldParent=true)
+        {
+            var parentEntity = shouldParent ? this : null;
+            AddColliders(ModelImporter.GetTrianglesMesh(mesh, parentEntity, shouldParent));
         }
         
 
