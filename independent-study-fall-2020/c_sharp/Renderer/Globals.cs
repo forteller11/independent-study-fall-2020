@@ -30,13 +30,12 @@ namespace CART_457.Renderer
         public static double DeltaTime = 0;
         public static float DeltaTimeF = 0;
 
-        public static Vector2 MousePositionLastFrame;
+
         public static void Init(GameWindow gameWindow)
         {
             DirectionLights = new List<DirectionLight>();
             PointLights = new List<PointLight>();
-            MousePositionLastFrame = gameWindow.MouseState.Position;
-            
+
             Noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
         }
 
@@ -47,7 +46,7 @@ namespace CART_457.Renderer
             
             AbsTime += args.DeltaTime;
             AbsTimeF = (float) AbsTime;
-            MousePositionLastFrame = args.MouseState.Position;
+            
             // ShadowCastingLight.Rotation = Quaternion.FromEulerAngles(MathF.PI,0,0)
 
         }

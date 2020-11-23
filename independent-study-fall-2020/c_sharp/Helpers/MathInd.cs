@@ -50,8 +50,10 @@ namespace CART_457.Helpers
         {
             return MathHelper.Clamp((3 * t * t) - (2 * t * t * t), 0,1);
         }
-        
-      
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+
+        public static Vector2 Convert(Vector2i v) => new Vector2(v.X, v.Y);
    
     }
 }

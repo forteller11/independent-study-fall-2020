@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using CART_457.EntitySystem;
+using CART_457.Helpers;
 using CART_457.Scripts;
 using CART_457.Renderer;
 using CART_457.Scripts.Setups;
@@ -25,7 +26,7 @@ namespace CART_457
         public static TKWindow CreateAndRun()
         {
             var gameWindowSettings = GameWindowSettings.Default;
-            
+
 
             var nativeWindowSettings =  NativeWindowSettings.Default;
             nativeWindowSettings.Size = new Vector2i(1440, 1440);
@@ -33,15 +34,19 @@ namespace CART_457
             nativeWindowSettings.Title = "Independent Study Fall 2020 - Charly Yan Miller";
             nativeWindowSettings.WindowBorder = WindowBorder.Hidden;
             nativeWindowSettings.Location = new Vector2i(2560/2 - nativeWindowSettings.Size.X/2, 0);
-            
+            nativeWindowSettings.StartFocused = true;
+
 
             var newTKWindow = new TKWindow(gameWindowSettings, nativeWindowSettings);
-            
+
+            newTKWindow.CursorGrabbed = true;
+            newTKWindow.CursorVisible = false;
+
             GL.Enable(EnableCap.DebugOutput);
             GL.Enable(EnableCap.DebugOutputSynchronous);
 
             GL.DebugMessageCallback(Debug.GLErrorCallback, IntPtr.Zero);
-            
+      
             Debug.Log($"");
             Debug.Log($"Renderer: {GL.GetString(StringName.Renderer)}");
             Debug.Log($"Version: {GL.GetString(StringName.Version)}");
@@ -83,12 +88,14 @@ namespace CART_457
         {
 
             EntityManager.RefreshUpdateEventArgs(this, e);
-      
+
             Globals.Update(EntityManager.EntityUpdateEventArgs);
             EntityManager.InvokeOnUpdate();
             
             if (EntityManager.EntityUpdateEventArgs.KeyboardState.IsKeyDown(Keys.Escape))
                 Close();
+            
+            MousePosition = MathInd.Convert(DrawManager.TKWindowSize)/2f;
             
             base.OnUpdateFrame(e);
         }

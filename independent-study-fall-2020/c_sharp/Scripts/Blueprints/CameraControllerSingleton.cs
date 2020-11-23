@@ -77,13 +77,13 @@ namespace CART_457.Scripts.Blueprints
 
             Vector2 accelerationInput = eventArgs.MouseDelta * angularAccelerationThisFrame;
 
-            rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, accelerationInput.Y);
+            rotationVert = Quaternion.FromAxisAngle(Vector3.UnitX, -accelerationInput.Y);
             rotationHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -accelerationInput.X);
             
             if (eventArgs.InputState.R.IsPressed)
                 rotationHorz *= Quaternion.FromAxisAngle(Vector3.UnitY, MathF.PI/4f);
             
-            LocalRotation = rotationHorz * Camera.Rotation * rotationVert;
+            LocalRotation = rotationHorz * LocalRotation * rotationVert;
             
             // todo dont allow rotations past 90 degrees DOWN
         }

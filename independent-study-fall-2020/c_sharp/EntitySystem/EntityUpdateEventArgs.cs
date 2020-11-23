@@ -10,6 +10,8 @@ namespace CART_457.EntitySystem
         public KeyboardState KeyboardState;
         public MouseState MouseState;
         public Vector2 MouseDelta;
+        public Vector2 MousePosition;
+        public Vector2 MousePositionPreviousFrame;
         public InputState InputState = new InputState();
     }
 }

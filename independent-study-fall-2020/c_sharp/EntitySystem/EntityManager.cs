@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CART_457.Helpers;
 using CART_457.Renderer;
 using OpenTK;
 using OpenTK.Input;
@@ -12,6 +13,7 @@ namespace CART_457.EntitySystem
     {
         private static List<Entity> _gameObjects = new List<Entity>();
         public static EntityUpdateEventArgs EntityUpdateEventArgs { get; } = new EntityUpdateEventArgs();
+
 
         public static void AddRangeToWorldAndRenderer(params Entity[] gameObjects)
         {
@@ -46,8 +48,11 @@ namespace CART_457.EntitySystem
             EntityUpdateEventArgs.DeltaTime = eventArgs.Time;
             EntityUpdateEventArgs.KeyboardState =  keyboardState;
             EntityUpdateEventArgs.MouseState = m;
-            EntityUpdateEventArgs.MouseDelta = new Vector2(m.X-Globals.MousePositionLastFrame.X,-m.Y+Globals.MousePositionLastFrame.Y);
+            EntityUpdateEventArgs.MouseDelta = m.Position - MathInd.Convert(gameWindow.Size)/2;
             EntityUpdateEventArgs.InputState.Update(keyboardState);
+            
+            EntityUpdateEventArgs.MousePositionPreviousFrame = EntityUpdateEventArgs.MousePosition;
+            EntityUpdateEventArgs.MousePosition += EntityUpdateEventArgs.MouseDelta;
         }
         public static void  InvokeOnUpdate()
         {
