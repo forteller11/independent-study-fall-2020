@@ -15,13 +15,16 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
         public override void OnLoad()
         {
-            VisulizerHit = new EmptySolid(new Vector4(1,0,0,1), .1f, SetupMaterials.SolidSphereR1);
+            VisulizerHit = new EmptySolid(new Vector4(1,0,0,1), .05f, SetupMaterials.SolidSphereR1);
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             if (!eventArgs.MouseState.IsButtonDown(MouseButton.Left))
+            {
+                VisulizerHit.LocalPosition = Vector3.NegativeInfinity;
                 return;
+            }
             
             var dir = Globals.MainCamera.Rotation * Vector3.UnitZ;
             //var dir = Globals.MainCamera.Rotation * new Vector3(0, 0, 1);
@@ -31,7 +34,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                 // s.LocalPosition = results[0].NearestOrHitPosition;
                 // var dir = WorldRotation * Vector3.UnitZ;
                 VisulizerHit.LocalPosition = results[0].NearestOrHitPosition;
-                VisulizerHit.Color = new Vector4(0, 1, 0, 1);
+                VisulizerHit.Color = new Vector4(.2f, .8f, .2f, 1);
                 // Debug.Log(results[0].NearestOrHitPosition);
             }
             else

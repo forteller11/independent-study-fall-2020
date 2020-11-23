@@ -17,13 +17,20 @@ namespace CART_457.Scripts.EntityPrefabs
 
         private Entity _playerCamVisualizer;
         public Entity WebCamVisualizer;
-
+        
+        public float WobbleSpeed = 50f;
+        public float WobbleAmount = 0.0006f;
+        public float Seed;
+        public Quaternion RotationCache;
+        
         public override void OnLoad()
         {
             float near = 0.01f;
             float far = 100f;
             Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(0), Quaternion.FromEulerAngles(0,MathF.PI,0), MathHelper.DegreesToRadians(160), near, far));
             Globals.WebCamRoom1.OverrideFrustrumDimensions(2,100);
+            
+            Seed = (float) (Globals.Random.NextDouble(9999));
      
         }
         
@@ -60,10 +67,21 @@ namespace CART_457.Scripts.EntityPrefabs
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
+            float noiseX = Globals.Noise.GetNoise(Globals.AbsTimeF * WobbleSpeed, Seed);
+            float noiseY = Globals.Noise.GetNoise(Globals.AbsTimeF * WobbleSpeed, Seed + 9999);
+
+            var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY, noiseX * WobbleAmount);
+            var rotVert = Quaternion.FromAxisAngle(Vector3.UnitX, noiseY * WobbleAmount);
+                
+            // WebCamVisualizer.LocalRotation *= Quaternion.Invert(RotationCache); //undo last frames rot, so not accumulative
+            RotationCache = rotVert * Quaternion.Identity * rotHorz;
+            WebCamVisualizer.LocalRotation *= RotationCache;
+            
+            
+            // Debug.Log( WebCamVisualizer.LocalRotation.ToEulerAngles().ToStringSmall());
+            
             EntityTransformToCamera(_playerCamVisualizer, Globals.PlayerCameraRoom1);
             Globals.WebCamRoom1.ToEntityOrientation(WebCamVisualizer);
-
-            // Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_playerCamVisualizer.WorldPosition, Globals.ShadowCastingLightRoom1));
         }
 
         private void EntityTransformToCamera(Entity entity, Camera camera)
