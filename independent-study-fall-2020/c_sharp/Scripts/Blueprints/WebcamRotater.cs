@@ -41,7 +41,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             {
                 var result = results[0];
                 IsDragging = true;
-                var radiansToMove = eventArgs.MouseState.Delta * _rotationSensitivity;
+                var radiansToMove = eventArgs.MouseDelta * _rotationSensitivity;
                 var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -radiansToMove.X  );
                 var rotVert = Quaternion.FromAxisAngle(Vector3.UnitX, -radiansToMove.Y );
 
