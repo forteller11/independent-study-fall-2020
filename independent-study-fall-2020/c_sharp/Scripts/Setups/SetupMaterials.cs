@@ -14,6 +14,8 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
         [IncludeInDrawLoop] public static Material RoomCleanCeilingLampsR1InCamera;
         
+        [IncludeInDrawLoop] public static Material RoomDirtyR1OutCamera;
+        
         
         [IncludeInDrawLoop] public static Material SolidSphereR1;
         [IncludeInDrawLoop] public static Material DirtSphereR1Frustrum;
@@ -208,7 +210,7 @@ namespace CART_457.Scripts.Setups
             
             RoomCleanR1InCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
-                SetupMeshes.TableClean01,
+                SetupMeshes.RoomClean01,
                 Globals.WebCamRoom1,
                 SetupTextures.RoomClean01Diffuse,
                 SetupTextures.RoomClean01Normal,
@@ -218,11 +220,21 @@ namespace CART_457.Scripts.Setups
             
             RoomCleanCeilingLampsR1InCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
-                SetupMeshes.TableCleanCeilingLamp01,
+                SetupMeshes.RoomCleanCeilingLamp01,
                 Globals.WebCamRoom1,
                 SetupTextures.RoomClean01CeilingLampsDiffuse,
                 SetupTextures.RoomClean01CeilingLampsNormal,
                 SetupTextures.RoomClean01CeilingLampsSpecular,
+                normaMaterialUniformSenderNoCull
+            );
+            
+            RoomDirtyR1OutCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+                SetupFBOs.Room1,
+                SetupMeshes.RoomDirty01,
+                Globals.WebCamRoom1,
+                SetupTextures.RoomDirty01Diffuse,
+                SetupTextures.RoomDirty01Normal,
+                SetupTextures.RoomDirty01Specular,
                 normaMaterialUniformSenderNoCull
             );
             #endregion

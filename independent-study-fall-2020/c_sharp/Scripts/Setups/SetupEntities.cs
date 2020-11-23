@@ -21,16 +21,18 @@ namespace CART_457.Scripts.Setups
 
             #region room 1
 
-
+             var dirty= FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomDirtyR1OutCamera, SetupMaterials.ShadowMapPlane);
+             dirty.AppearsInFrustrum = false;
             var room = FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
-            room.AddColliders(SetupMeshes.TableClean01Colliders);
+            room.AddColliders(SetupMeshes.RoomClean01Colliders);
             // var room
             // var dirtPlane01 = Empty.FromPosition(new Vector3(0, 0, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
             // dirtPlane01.LocalScale = new Vector3(4);
+            
             var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             dirtPlane02.LocalScale = new Vector3(7);
-
+            
             #region camera related
             var cameraVisualizer = new CameraVisualizer(new Vector3(1.27f,2.96f,7.5f), .2f);
 

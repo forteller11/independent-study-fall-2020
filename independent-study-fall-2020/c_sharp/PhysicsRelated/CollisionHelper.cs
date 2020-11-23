@@ -114,7 +114,7 @@ namespace CART_457.PhysicsRelated
                 return planeCollision;
             var planeHit = planeCollision.NearestOrHitPosition;
             
-            Debug.Log(triangle.GetBarycentric(planeHit).ToStringSmall(4));
+            // Debug.Log(triangle.GetBarycentric(planeHit).ToStringSmall(4));
             //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter4/point_in_triangle.html
             
             //set plane hit to origin of triangle points

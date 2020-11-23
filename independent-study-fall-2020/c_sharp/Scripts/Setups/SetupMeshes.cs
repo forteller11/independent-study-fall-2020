@@ -18,9 +18,10 @@ namespace CART_457.Scripts.Setups
         public static Mesh ViewSpaceQuad;
         public static Mesh WeirdHead;
         public static Mesh Path;
-        public static Mesh TableClean01;
-        public static Mesh TableCleanCeilingLamp01;
-        public static Mesh TableClean01Colliders;
+        public static Mesh RoomClean01;
+        public static Mesh RoomCleanCeilingLamp01;
+        public static Mesh RoomClean01Colliders;
+        public static Mesh RoomDirty01;
 
         static SetupMeshes()
         {
@@ -32,9 +33,14 @@ namespace CART_457.Scripts.Setups
             Webcam =  ModelImporter.GetAttribBuffersFromObjFile("webcam");
             WeirdHead =  ModelImporter.GetAttribBuffersFromObjFile("head");
             Path =  ModelImporter.GetAttribBuffersFromObjFile("path");
-            TableClean01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
-            TableClean01Colliders =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
-            TableCleanCeilingLamp01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
+            
+            RoomClean01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
+            RoomCleanCeilingLamp01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
+            
+            RoomDirty01 =  ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01");
+            
+            RoomClean01Colliders =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
+           
             // Diamond =  ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
 
             #region ViewQuad
