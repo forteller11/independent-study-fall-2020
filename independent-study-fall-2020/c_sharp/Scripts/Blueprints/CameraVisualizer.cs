@@ -23,6 +23,7 @@ namespace CART_457.Scripts.EntityPrefabs
             float near = 0.01f;
             float far = 100f;
             Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(0), Quaternion.FromEulerAngles(0,MathF.PI,0), MathHelper.DegreesToRadians(160), near, far));
+            Globals.WebCamRoom1.OverrideFrustrumDimensions(2,100);
      
         }
         

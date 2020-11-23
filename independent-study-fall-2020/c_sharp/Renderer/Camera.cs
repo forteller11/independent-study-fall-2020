@@ -38,6 +38,12 @@ namespace CART_457.Renderer
 
             return new Camera(position, rotation, playerCamPerspective, nearClip, farClip, nearClipSize, farClipSize);
         }
+
+        public void OverrideFrustrumDimensions(float nearClipWidth, float farClipWidth) //NOTE!! Frustrum will no longer match camera perspective!!
+        {
+            NearClipWidth = nearClipWidth;
+            FarClipWidth = farClipWidth;
+        }
         
         public static Camera CreateOrthographic(Vector3 position, Quaternion rotation, float size, float nearClip, float farClip)
         {

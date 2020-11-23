@@ -44,7 +44,7 @@ void main()
     vec3 diffuse = calculate_diffuse(normalsWithMapWorld, v2f_worldPos);
     
     
-    vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular);
+    vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular+ vec3(.15)) ;
     
     MainFragColor = vec4(texColorShaded.xyz, 1);
     SecondaryFragColor = vec4(vec3(FragCoordToDepth(gl_FragCoord)), 1);
