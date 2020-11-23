@@ -18,7 +18,7 @@ namespace CART_457.Scripts.Blueprints
         private float _horziontalVelocity = .05f;
 
         public Vector3 Velocity;
-        public float PlayerHeight = 4f;
+        public float PlayerHeight = 5f;
         public float Acceleration = 0.08f;
         public float SprintMultiplier = 3f;
         public float MaxVelocity = .2f;
@@ -40,9 +40,6 @@ namespace CART_457.Scripts.Blueprints
 
             Globals.PlayerCameraRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
 
-            Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1, near, far, out var webCamPerspective);
-            Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(-.3f,1.8f,.6f), Quaternion.Identity, MathHelper.DegreesToRadians(45), near, far));
-            
             Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreateOrthographic(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), 25, near, far));
             
             Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);

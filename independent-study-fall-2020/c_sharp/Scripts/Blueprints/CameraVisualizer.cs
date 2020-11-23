@@ -18,6 +18,14 @@ namespace CART_457.Scripts.EntityPrefabs
         private Entity _playerCamVisualizer;
         public Entity WebCamVisualizer;
 
+        public override void OnLoad()
+        {
+            float near = 0.01f;
+            float far = 100f;
+            Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(0), Quaternion.FromEulerAngles(0,MathF.PI,0), MathHelper.DegreesToRadians(160), near, far));
+     
+        }
+        
         public CameraVisualizer(Vector3 cameraPosition, float cameraScale)
         {
             Wobble CreateAndAddEye(Vector3 position)
@@ -37,7 +45,7 @@ namespace CART_457.Scripts.EntityPrefabs
         
             WebCamVisualizer.LocalPosition = cameraPosition;
             WebCamVisualizer.LocalScale *= cameraScale;
-            WebCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,MathF.PI,0); //negate table rolled
+            WebCamVisualizer.LocalRotation = Quaternion.FromEulerAngles(0,0,0); //negate table rolled
             WebCamVisualizer.AddCollider(new SphereCollider(WebCamVisualizer, true, 1f));
 
             _playerCamVisualizer = EntityManager.AddToWorldAndRenderer(new Empty());
@@ -45,7 +53,9 @@ namespace CART_457.Scripts.EntityPrefabs
             CreateAndAddEye(new Vector3(-.33f, 0, 0));
             CreateAndAddEye(new Vector3(.33f, 0, 0));
         }
+
         
+
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {

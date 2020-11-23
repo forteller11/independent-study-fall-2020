@@ -48,10 +48,10 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             if (IsDragging)
             {
                 var radiansToMove = eventArgs.MouseDelta * _rotationSensitivity;
-                var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY, -radiansToMove.X  );
+                var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY,  radiansToMove.X );
                 var rotVert = Quaternion.FromAxisAngle(Vector3.UnitX, -radiansToMove.Y );
 
-                _draggedEntity.LocalRotation = rotHorz * _draggedEntity.LocalRotation * rotVert;
+                _draggedEntity.LocalRotation = rotVert * _draggedEntity.LocalRotation * rotHorz;
             }
             
             
