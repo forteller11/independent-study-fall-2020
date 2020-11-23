@@ -31,7 +31,7 @@ namespace CART_457.Scripts.Setups
             dirtPlane02.LocalScale = new Vector3(7);
 
             #region camera related
-            var cameraVisualizer = new CameraVisualizer();
+            var cameraVisualizer = new CameraVisualizer(new Vector3(1.27f,2.96f,7.5f), .2f);
 
             var camController = new CameraControllerSingleton(room.ColliderGroup, Globals.PlayerCameraRoom1);
 
@@ -66,12 +66,13 @@ namespace CART_457.Scripts.Setups
 
         public static void CreateGlobals()
         {
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(.8f)));
+            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(.8f)));wwd
 //            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,0,0)));
 //            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,0,1), new Vector3(0,1,1)));
             
-            Globals.PointLights.Add(new PointLight(new Vector3(-2,-3f,0), new Vector3(.3f,.3f,1)));
-            Globals.PointLights.Add(new PointLight(new Vector3(2,-3f,0), new Vector3(1,.3f,.3f)));
+            // Globals.PointLights.Add(new PointLight(new Vector3(-2,-3f,0), new Vector3(.3f,.3f,1)));
+            // Globals.PointLights.Add(new PointLight(new Vector3(2,-3f,0), new Vector3(1,.3f,.3f)));
+            Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,1f,.8f)));
         }
     }
 }
