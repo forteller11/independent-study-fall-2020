@@ -11,12 +11,15 @@ namespace CART_457.Scripts.Setups
     public static class SetupMaterials
     {
 
+        [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
+        [IncludeInDrawLoop] public static Material RoomCleanCeilingLampsR1InCamera;
+        
+        
         [IncludeInDrawLoop] public static Material SolidSphereR1;
         [IncludeInDrawLoop] public static Material DirtSphereR1Frustrum;
         [IncludeInDrawLoop] public static Material CarpetPlaneR1Frustrum;
         [IncludeInDrawLoop] public static Material DirtPlaneR1Frustrum;
         [IncludeInDrawLoop] public static Material DirtPathR1Frustrum;
-        [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
         [IncludeInDrawLoop] public static Material SolidSphereR2;
         
         [IncludeInDrawLoop] public static Material DirtSphere;
@@ -210,6 +213,16 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.RoomClean01Diffuse,
                 SetupTextures.RoomClean01Normal,
                 SetupTextures.RoomClean01Specular,
+                normaMaterialUniformSenderNoCull
+            );
+            
+            RoomCleanCeilingLampsR1InCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+                SetupFBOs.Room1,
+                SetupMeshes.TableCleanCeilingLamp01,
+                Globals.WebCamRoom1,
+                SetupTextures.RoomClean01CeilingLampsDiffuse,
+                SetupTextures.RoomClean01CeilingLampsNormal,
+                SetupTextures.RoomClean01CeilingLampsSpecular,
                 normaMaterialUniformSenderNoCull
             );
             #endregion

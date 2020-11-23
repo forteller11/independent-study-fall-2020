@@ -19,6 +19,7 @@ namespace CART_457.Scripts.Setups
         public static Mesh WeirdHead;
         public static Mesh Path;
         public static Mesh TableClean01;
+        public static Mesh TableCleanCeilingLamp01;
         public static Mesh TableClean01Colliders;
 
         static SetupMeshes()
@@ -33,6 +34,7 @@ namespace CART_457.Scripts.Setups
             Path =  ModelImporter.GetAttribBuffersFromObjFile("path");
             TableClean01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
             TableClean01Colliders =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
+            TableCleanCeilingLamp01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
             // Diamond =  ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
 
             #region ViewQuad

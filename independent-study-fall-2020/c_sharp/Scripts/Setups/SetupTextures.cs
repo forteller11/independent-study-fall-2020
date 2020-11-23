@@ -51,6 +51,11 @@ namespace CART_457.Scripts.Setups
         public static Texture RoomClean01Normal = Texture.FromFile(ROOM_CLEAN_01 + "normal.jpg", TextureUnit.Texture1);
         public static Texture RoomClean01Specular = Texture.FromFile(ROOM_CLEAN_01 + "specular.jpg", TextureUnit.Texture2);
         
+        private const string ROOM_CLEAN_01_CEILING_LAMPS = "table_clean_01_ceiling_lamps/";
+        public static Texture RoomClean01CeilingLampsDiffuse = Texture.FromFile(ROOM_CLEAN_01_CEILING_LAMPS + "diffuse.jpg", TextureUnit.Texture0);
+        public static Texture RoomClean01CeilingLampsNormal = Texture.FromFile(ROOM_CLEAN_01_CEILING_LAMPS + "normal.jpg", TextureUnit.Texture1);
+        public static Texture RoomClean01CeilingLampsSpecular = Texture.FromFile(ROOM_CLEAN_01_CEILING_LAMPS + "specular.jpg", TextureUnit.Texture2);
+        
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }
 }

@@ -23,6 +23,7 @@ namespace CART_457.Scripts.Setups
 
 
             var room = FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
+            FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
             room.AddColliders(SetupMeshes.TableClean01Colliders);
             // var room
             // var dirtPlane01 = Empty.FromPosition(new Vector3(0, 0, 0), SetupMaterials.DirtPlane, SetupMaterials.ShadowMapPlane);
@@ -66,13 +67,16 @@ namespace CART_457.Scripts.Setups
 
         public static void CreateGlobals()
         {
-            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(.8f)));wwd
+            // Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,1,0), new Vector3(.8f)));
+            
+            Globals.PointLights.Add(new PointLight(new Vector3(0.427837f,6.2f,-1.98f), new Vector3(.4f))); //ceiling light
 //            Globals.DirectionLights.Add(new DirectionLight(new Vector3(1,0,0), new Vector3(1,0,0)));
 //            Globals.DirectionLights.Add(new DirectionLight(new Vector3(0,0,1), new Vector3(0,1,1)));
             
             // Globals.PointLights.Add(new PointLight(new Vector3(-2,-3f,0), new Vector3(.3f,.3f,1)));
             // Globals.PointLights.Add(new PointLight(new Vector3(2,-3f,0), new Vector3(1,.3f,.3f)));
-            Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,1f,.8f)));
+            Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,1f,.8f)*.2f)); //window lighbt
+            Globals.PointLights.Add(new PointLight(new Vector3(6.65284f,3.30652f,1.68395f), new Vector3(1,.8f,.6f)*.4f)); //lamp
         }
     }
 }

@@ -22,9 +22,9 @@ namespace CART_457.Blueprints
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            var light = Globals.PointLights[Index];
-            light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);
-            LocalPosition = light.Position;
+            // var light = Globals.PointLights[Index];
+            // light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);
+            // LocalPosition = light.Position;
         }
 
 
