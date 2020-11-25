@@ -13,5 +13,7 @@ the pipeline uses forward rendering
 - [x] walking sim type 2D mvoement system where walkable topology can be defined
 - [ ] serialization
 - [ ] editor gui
+- [ ] physics system
+- [ ] audio
 - [ ] scripts that can be compiled seperately from engine
 - [ ] data oriented, cache friendly entity system
