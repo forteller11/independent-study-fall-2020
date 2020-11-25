@@ -18,3 +18,4 @@ a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 - [ ] audio
 - [ ] scripts that can be compiled seperately from engine
 - [ ] data oriented, cache friendly entity system
+- [ ] multi-threaded
