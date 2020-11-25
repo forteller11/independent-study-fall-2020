@@ -1,6 +1,6 @@
 ### *the webcam's g👁ze*
 ###### an independent study at Concordia University, Fall 2020
-a graphics framework created  in C# to learn OpenGL (OpenTK).
+a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 
 the pipeline uses forward rendering
 - [x] scriptable offscreen buffers
