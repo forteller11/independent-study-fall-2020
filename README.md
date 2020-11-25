@@ -2,7 +2,8 @@
 ###### an independent study at Concordia University, Fall 2020
 a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 
-the pipeline uses forward rendering
+##### a features and wishlist
+- [x] forward rendering
 - [x] scriptable offscreen buffers
 - [x] multiple lights (direction and point)
 - [x] normal mapping, with roughness maps
