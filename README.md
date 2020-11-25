@@ -19,3 +19,6 @@ a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 - [ ] scripts that can be compiled seperately from engine
 - [ ] data oriented, cache friendly entity system
 - [ ] multi-threaded
+- [ ] batching
+- [ ] profiling 
+- [ ] virtual textures
