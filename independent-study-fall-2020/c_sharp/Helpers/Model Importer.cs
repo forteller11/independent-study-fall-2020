@@ -12,7 +12,7 @@ namespace CART_457.Helpers
 {
     public class ModelImporter
     {
-        private const int POINTS_IN_TRIANGLE = 3;
+        public const int POINTS_IN_TRIANGLE = 3;
 
         public static TriangleCollider [] GetTrianglesFromObjFile(string fileName) => GetTrianglesFromObjFile(fileName, null, false);
         public static TriangleCollider [] GetTrianglesFromObjFile(string fileName, Entity parent, bool isTransformRelative)
@@ -52,29 +52,6 @@ namespace CART_457.Helpers
             return tris;
         }
 
-        public static TriangleCollider[] GetTrianglesMesh(Mesh mesh, Entity parent, bool isTransformRelative)
-        {
-            float[] b = mesh.Positions.Buffer;
-            var tris = new TriangleCollider[mesh.Positions.VerticesCount/POINTS_IN_TRIANGLE];
-            int ii = 0;
-            for (int i = 0; i < tris.Length; i++)
-            {
-                int p1I = mesh.Positions.Stride * 0 + ii;
-                int p2I = mesh.Positions.Stride * 1 + ii;
-                int p3I = mesh.Positions.Stride * 2 + ii;
-                
-                Vector3 p1 = new Vector3(b[p1I + 0], b[p1I + 1], b[p1I + 2]);
-                Vector3 p2 = new Vector3(b[p2I + 0], b[p2I + 1], b[p2I + 2]);
-                Vector3 p3 = new Vector3(b[p3I + 0], b[p3I + 1], b[p3I + 2]);
-                
-                tris[i] = new TriangleCollider(parent, isTransformRelative, p1,p2,p3);
-
-                ii += mesh.Positions.Stride*3;
-            }
-
-            return tris;
-        }
-        
         public static Mesh GetAttribBuffersFromObjFile(string fileName) => GetAttribBuffersFromObjFile(fileName, Quaternion.Identity, true, true, true);
         public static Mesh GetAttribBuffersFromObjFile(string fileName, Quaternion rotationToBakeIn) => GetAttribBuffersFromObjFile(fileName, rotationToBakeIn, true, true, true);
         public static Mesh GetAttribBuffersFromObjFile(string fileName, Quaternion? rotationToBakeIn, bool in_position, bool in_uv, bool in_normal) //TODO collaspe indices' specefic attribs into one

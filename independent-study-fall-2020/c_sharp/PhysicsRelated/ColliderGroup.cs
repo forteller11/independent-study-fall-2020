@@ -8,8 +8,9 @@ namespace CART_457.PhysicsRelated
         public List<SphereCollider> Spheres { get; private set;}
         public List<PlaneCollider> Planes { get; private set; }
         public List<TriangleCollider> Tris { get; private set; }
+        public List<MeshCollider> Meshes { get; private set; }
         
-        private List<CollisionResult> CollisionsUnsorted = new List<CollisionResult>();
+        private List<CollisionResult> Collisions = new List<CollisionResult>();
         // private List<CollisionResult> CollisionsSorted = new List<CollisionResult>();
 
         public ColliderGroup()
@@ -17,25 +18,13 @@ namespace CART_457.PhysicsRelated
             Spheres = new List<SphereCollider>();
             Planes = new List<PlaneCollider>();
             Tris = new List<TriangleCollider>();
+            Meshes = new List<MeshCollider>();
         }
-
-        public void AddColliders(Collider[] colliders)
-        {
-            foreach (var collider in colliders)
-            {
-                if (collider is SphereCollider)
-                    AddCollider((SphereCollider)collider);
-                
-                if (collider is PlaneCollider)
-                    AddCollider((PlaneCollider)collider);
-                
-                if (collider is TriangleCollider)
-                    AddCollider((TriangleCollider)collider);
-            }
-        }
+        
         public void AddCollider(SphereCollider collider)   => Spheres.Add(collider);
         public void AddCollider(PlaneCollider collider)    =>  Planes.Add(collider);
         public void AddCollider(TriangleCollider collider) =>  Tris.Add(collider);
+        public void AddCollider(MeshCollider collider) =>  Meshes.Add(collider);
         
         
         public bool Raycast(Ray ray, out List<CollisionResult> results, bool sortByDistanceToRay=false)
@@ -48,7 +37,7 @@ namespace CART_457.PhysicsRelated
                 var result = CollisionHelper.RaySphereCollision(ray, Spheres[i]);
                 if (result.Hit)
                 {
-                    CollisionsUnsorted.Add(result);
+                    Collisions.Add(result);
                     atLeastOneCollision = true;
                 }
             }
@@ -58,7 +47,7 @@ namespace CART_457.PhysicsRelated
                 var result = CollisionHelper.RayPlaneCollision(ray, Planes[i]);
                 if (result.Hit)
                 {
-                    CollisionsUnsorted.Add(result);
+                    Collisions.Add(result);
                     atLeastOneCollision = true;
                 }
             }
@@ -68,15 +57,28 @@ namespace CART_457.PhysicsRelated
                 var result = CollisionHelper.RayTriangleCollision(ray, Tris[i]);
                 if (result.Hit)
                 {
-                    CollisionsUnsorted.Add(result);
+                    Collisions.Add(result);
                     atLeastOneCollision = true;
+                }
+            }
+            
+            for (int i = 0; i < Meshes.Count; i++)
+            {
+                for (int j = 0; j < Meshes[i].Triangles.Length; j++)
+                {
+                    var result = CollisionHelper.RayTriangleCollision(ray, Meshes[i].Triangles[j]);
+                    if (result.Hit)
+                    {
+                        Collisions.Add(result);
+                        atLeastOneCollision = true;
+                    }
                 }
             }
 
             if (sortByDistanceToRay)
-                CollisionsUnsorted = SortByDistance(ray.Origin, CollisionsUnsorted); //uncessary return value
+                Collisions = SortByDistance(ray.Origin, Collisions); //uncessary return value
             
-            results = CollisionsUnsorted;
+            results = Collisions;
 
             return atLeastOneCollision;
         }
@@ -113,7 +115,7 @@ namespace CART_457.PhysicsRelated
         }
         private void ClearCacheLists()
         {
-            CollisionsUnsorted.Clear();
+            Collisions.Clear();
             // CollisionsSorted.Clear();
         }
     }

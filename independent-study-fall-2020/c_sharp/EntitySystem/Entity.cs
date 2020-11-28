@@ -79,6 +79,7 @@ namespace CART_457.EntitySystem
             Materials = materialTypes;
         }
 
+        #region collider related
         public void VisualizeColliders()
         {
             for (int i = 0; i < ColliderGroup.Spheres.Count; i++)
@@ -88,37 +89,35 @@ namespace CART_457.EntitySystem
                 // visualizer.Parent = this;
             }
         }
-        public void AddCollider(SphereCollider collider)
+        public void AddCollider(SphereCollider collider, bool addToCollisionWorld = true)
         {
             ColliderGroup.AddCollider(collider);
-            CollisionWorld.ColliderGroup.AddCollider(collider);
+            if (addToCollisionWorld)
+                CollisionWorld.ColliderGroup.AddCollider(collider);
         }
         
-        public void AddCollider(TriangleCollider collider)
+        public void AddCollider(TriangleCollider collider, bool addToCollisionWorld = true)
         {
             ColliderGroup.AddCollider(collider);
-            CollisionWorld.ColliderGroup.AddCollider(collider);
+            if (addToCollisionWorld)
+                CollisionWorld.ColliderGroup.AddCollider(collider);
         }
         
-        public void AddCollider(PlaneCollider collider)
+        public void AddCollider(PlaneCollider collider, bool addToCollisionWorld = true)
         {
             ColliderGroup.AddCollider(collider);
-            CollisionWorld.ColliderGroup.AddCollider(collider);
+            if (addToCollisionWorld)
+                CollisionWorld.ColliderGroup.AddCollider(collider);
         }
 
-        public void AddColliders(TriangleCollider[] triangles)
+        public void AddCollider(MeshCollider collider, bool addToCollisionWorld = true)
         {
-            for (int i = 0; i < triangles.Length; i++)
-                AddCollider(triangles[i]);
+            ColliderGroup.AddCollider(collider);
+            if (addToCollisionWorld)
+                CollisionWorld.ColliderGroup.AddCollider(collider);
         }
-        
-        public void AddColliders(Mesh mesh, bool shouldParent=true)
-        {
-            var parentEntity = shouldParent ? this : null;
-            AddColliders(ModelImporter.GetTrianglesMesh(mesh, parentEntity, shouldParent));
-        }
-        
 
+        #endregion
         public void SetLocalTransform(Vector3 position, Quaternion rotation, Vector3 scale)
         {
             LocalPosition = position;

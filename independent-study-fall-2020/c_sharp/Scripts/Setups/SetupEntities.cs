@@ -26,10 +26,11 @@ namespace CART_457.Scripts.Setups
              dirty.AppearsInFrustrum = false;
             var room = FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
-            room.AddColliders(SetupMeshes.RoomClean01Colliders);
-
-            TriangleCollider[] basementColliders = null;
-            var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCamRoom1, basementColliders);
+      
+            var floorColliders = new ColliderGroup();
+            floorColliders.AddCollider(new MeshCollider(null, false, SetupMeshes.RoomClean01Colliders));
+            
+            //var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCamRoom1, SetupMeshes.BasementFloorColliders, floorColliders, new Vector3());
    
             
             var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
@@ -42,7 +43,7 @@ namespace CART_457.Scripts.Setups
             webcamController.AddCollider(new SphereCollider(webcamController, true, 1));
             webcamController.LocalScale *= .35f;
 
-            var playerCameraController = new PlayerMovementController(room.ColliderGroup, Globals.PlayerCameraRoom1);
+            var playerCameraController = new PlayerMovementController(floorColliders, Globals.PlayerCameraRoom1);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             

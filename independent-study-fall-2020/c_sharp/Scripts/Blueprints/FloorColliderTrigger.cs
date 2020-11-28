@@ -9,14 +9,16 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
     public class FloorColliderTrigger : Entity
     {
         private Vector3[] _triggerPositions;
-        private TriangleCollider[] _floorCollider;
+        private ColliderGroup _floorColliders;
+        private MeshCollider _colliderSection;
         private Camera _frustrum;
         public bool IsWithinFrustrum;
 
-        public FloorColliderTrigger(Camera frustrum, TriangleCollider[] floorCollider, params Vector3 [] triggerPositions)
+        public FloorColliderTrigger(Camera frustrum, MeshCollider colliderSection, ColliderGroup floorColliders, params Vector3 [] triggerPositions)
         {
             _frustrum = frustrum;
-            _floorCollider = floorCollider;
+            _colliderSection = colliderSection;
+            _floorColliders = floorColliders;
             _triggerPositions = triggerPositions;
         }
 
@@ -29,7 +31,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                         return;
                 
                 IsWithinFrustrum = true;
-                //add collider
+                _floorColliders.Meshes.Add(_colliderSection);
             }
             if (IsWithinFrustrum)
             {
@@ -37,7 +39,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                     if (!PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[i], _frustrum))
                     {
                         IsWithinFrustrum = false;
-                        //remove collider
+                        _floorColliders.Meshes.Remove(_colliderSection);
                     }
             }
 
