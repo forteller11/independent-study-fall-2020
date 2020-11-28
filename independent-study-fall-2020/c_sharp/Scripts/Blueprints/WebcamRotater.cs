@@ -15,7 +15,6 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         private EmptySolid VisulizerHit = new EmptySolid(Vector4.Zero, .02f, SetupMaterials.SolidSphereR1);
 
         private bool IsDragging;
-        private Entity _draggedEntity;
         private float _rotationSensitivity = 0.03f;
         private Entity _toCastAgainst;
 
@@ -39,7 +38,6 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             if (hit && mouseDown)
             {
                 IsDragging = true;
-                _draggedEntity = results[0].HitEntity;
             }
             
             if (!mouseDown)
@@ -51,7 +49,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                 var rotHorz = Quaternion.FromAxisAngle(Vector3.UnitY,  radiansToMove.X );
                 var rotVert = Quaternion.FromAxisAngle(Vector3.UnitX, -radiansToMove.Y );
 
-                _draggedEntity.LocalRotation = rotVert * _draggedEntity.LocalRotation * rotHorz;
+                _toCastAgainst.LocalRotation = rotVert * _toCastAgainst.LocalRotation * rotHorz;
             }
             
             

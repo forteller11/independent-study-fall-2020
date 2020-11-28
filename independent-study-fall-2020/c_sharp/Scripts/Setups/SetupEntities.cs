@@ -35,12 +35,17 @@ namespace CART_457.Scripts.Setups
             dirtPlane02.LocalScale = new Vector3(7);
             
             #region camera related
-            var webcamControllerAndVisualizer = new CameraController(Globals.WebCamRoom1, new Vector3(1.27f,2.96f,7.5f), Quaternion.FromEulerAngles(0,0,0),  new Empty(SetupMaterials.EyeBall, SetupMaterials.ShadowMapSphere));
+
+            var webcamVisualizer = new Empty(SetupMaterials.EyeBall, SetupMaterials.ShadowMapSphere);
+            var webcamController = new CameraController(Globals.WebCamRoom1, new Vector3(1.27f,3f,7.5f), Quaternion.FromEulerAngles(0,0,0),  webcamVisualizer);
+            webcamController.AddCollider(new SphereCollider(webcamController, true, 1));
+            webcamController.LocalScale *= .35f;
+            
             var playerCameraController = new PlayerMovementController(room.ColliderGroup, Globals.PlayerCameraRoom1);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             
-            var webcamRotater = new WebcamRotater(webcamControllerAndVisualizer);
+            var webcamRotater = new WebcamRotater(webcamController);
             webcamRotater.Parent = playerCameraController;
 
             new CameraInterperlator();

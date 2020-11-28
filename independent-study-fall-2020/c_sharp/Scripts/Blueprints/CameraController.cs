@@ -20,7 +20,6 @@ namespace CART_457.Scripts.EntityPrefabs
         {
             Camera = cameraToControl;
             
-            
             LocalPosition = position;
             LocalRotation = rotation;
             
