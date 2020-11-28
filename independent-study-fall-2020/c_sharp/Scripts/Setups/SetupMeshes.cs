@@ -9,39 +9,27 @@ namespace CART_457.Scripts.Setups
 {
     public static class SetupMeshes
     {
-        public static Mesh IcoSphereHighPoly;
-        public static Mesh TableProto;
-        public static Mesh Eyeball;
-        public static Mesh Diamond;
-        public static Mesh Webcam;
-        public static Mesh Plane;
+        public static Mesh IcoSphereHighPoly = ModelImporter.GetAttribBuffersFromObjFile("ico_sphere");
+        public static Mesh TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table");
+        public static Mesh Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", Quaternion.FromEulerAngles(-MathF.PI/2,0f,0f ));
+        public static Mesh Webcam = ModelImporter.GetAttribBuffersFromObjFile("webcam");
+        public static Mesh Plane = ModelImporter.GetAttribBuffersFromObjFile("Plane");
+        public static Mesh WeirdHead = ModelImporter.GetAttribBuffersFromObjFile("head");
+        public static Mesh Path = ModelImporter.GetAttribBuffersFromObjFile("path");
+        
+        public static Mesh RoomClean01 = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
+        public static Mesh RoomCleanCeilingLamp01 = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
+        public static Mesh RoomClean01Colliders = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
+        public static Mesh RoomDirty01 = ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01");
+        public static Mesh BasementFloorColliders = ModelImporter.GetAttribBuffersFromObjFile("basement_stairs_test");
+        
         public static Mesh ViewSpaceQuad;
-        public static Mesh WeirdHead;
-        public static Mesh Path;
-        public static Mesh RoomClean01;
-        public static Mesh RoomCleanCeilingLamp01;
-        public static Mesh RoomClean01Colliders;
-        public static Mesh RoomDirty01;
 
         static SetupMeshes()
         {
-            IcoSphereHighPoly =  ModelImporter.GetAttribBuffersFromObjFile("ico_sphere");
-            TableProto = ModelImporter.GetAttribBuffersFromObjFile("room_proto_table");
-            Plane =  ModelImporter.GetAttribBuffersFromObjFile("Plane");
-            Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", Quaternion.FromEulerAngles(-MathF.PI/2,0f,0f ));
-            Diamond =  ModelImporter.GetAttribBuffersFromObjFile("camera_visualization");
-            Webcam =  ModelImporter.GetAttribBuffersFromObjFile("webcam");
-            WeirdHead =  ModelImporter.GetAttribBuffersFromObjFile("head");
-            Path =  ModelImporter.GetAttribBuffersFromObjFile("path");
+  
+
             
-            RoomClean01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
-            RoomCleanCeilingLamp01 =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
-            
-            RoomDirty01 =  ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01");
-            
-            RoomClean01Colliders =  ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
-           
-            // Diamond =  ModelImporter.GetAttribBuffersFromObjFile("room_proto_table", true, true, true);
 
             #region ViewQuad
             var quadPositions = new []

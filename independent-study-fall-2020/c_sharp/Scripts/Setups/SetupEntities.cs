@@ -27,12 +27,13 @@ namespace CART_457.Scripts.Setups
             var room = FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
       
+            
             var floorColliders = new ColliderGroup();
             floorColliders.AddCollider(new MeshCollider(null, false, SetupMeshes.RoomClean01Colliders));
-            
-            //var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCamRoom1, SetupMeshes.BasementFloorColliders, floorColliders, new Vector3());
-   
-            
+
+            var basementCollider = new MeshCollider(null, false, SetupMeshes.BasementFloorColliders);
+             var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCamRoom1, basementCollider, floorColliders, new Vector3(-7.1744f, -1.49f, 3.882f));
+  
             var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             dirtPlane02.LocalScale = new Vector3(7);
             

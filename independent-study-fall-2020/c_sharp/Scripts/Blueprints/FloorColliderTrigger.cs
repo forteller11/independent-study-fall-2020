@@ -1,7 +1,10 @@
-﻿using CART_457.EntitySystem;
+﻿using CART_457;
+using CART_457.EntitySystem;
 using CART_457.Helpers;
 using CART_457.PhysicsRelated;
 using CART_457.Renderer;
+using CART_457.Scripts.Blueprints;
+using CART_457.Scripts.Setups;
 using OpenTK.Mathematics;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
@@ -20,10 +23,15 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             _colliderSection = colliderSection;
             _floorColliders = floorColliders;
             _triggerPositions = triggerPositions;
+
+            for (int i = 0; i < _triggerPositions.Length; i++)
+                Empty.FromPosition(triggerPositions[i], SetupMaterials.SolidSphereR1);
+            
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
+            Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[0], _frustrum));
             if (IsWithinFrustrum == false)
             {
                 for (int i = 0; i < _triggerPositions.Length; i++)
@@ -40,6 +48,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                     {
                         IsWithinFrustrum = false;
                         _floorColliders.Meshes.Remove(_colliderSection);
+                        return;
                     }
             }
 
