@@ -9,6 +9,7 @@ using CART_457.Scripts.Blueprints;
 using CART_457.Scripts.EntityPrefabs;
 using CART_457Scripts.Blueprints;
 using Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
 namespace CART_457.Scripts.Setups
@@ -40,7 +41,7 @@ namespace CART_457.Scripts.Setups
             var webcamController = new CameraController(Globals.WebCamRoom1, new Vector3(1.27f,3f,7.5f), Quaternion.FromEulerAngles(0,0,0),  webcamVisualizer);
             webcamController.AddCollider(new SphereCollider(webcamController, true, 1));
             webcamController.LocalScale *= .35f;
-            
+
             var playerCameraController = new PlayerMovementController(room.ColliderGroup, Globals.PlayerCameraRoom1);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
