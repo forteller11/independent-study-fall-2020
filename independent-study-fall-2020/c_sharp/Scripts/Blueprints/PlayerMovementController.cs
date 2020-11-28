@@ -7,7 +7,7 @@ using OpenTK.Mathematics;
 
 namespace CART_457.Scripts.Blueprints
 {
-    public class CameraControllerSingleton : EntitySystem.Entity
+    public class PlayerMovementController : EntitySystem.Entity
     {
         private float acceleration = 1.5f;
         private float angularAcceleration = 0.2f;
@@ -27,7 +27,7 @@ namespace CART_457.Scripts.Blueprints
 
 
 
-        public CameraControllerSingleton(ColliderGroup floor, Camera camera) : base(null)
+        public PlayerMovementController(ColliderGroup floor, Camera camera) : base(null)
         {
             Camera = camera;
             Floor = floor;
@@ -35,18 +35,6 @@ namespace CART_457.Scripts.Blueprints
         
         public override void OnLoad()
         {
-            float near = 0.1f;
-            float far = 100f;
-
-            Globals.PlayerCameraRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
-
-            Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreateOrthographic(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), 25, near, far));
-            
-            Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
-            Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
-
-            Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
-            
             LocalPosition = new Vector3(0,6,0);
 
         }

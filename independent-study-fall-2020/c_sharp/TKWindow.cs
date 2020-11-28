@@ -65,7 +65,7 @@ namespace CART_457
             DrawManager.Init(this);
             
             Globals.Init(this);
-            SetupEntities.CreateGlobals();
+            SetupEntities.SetupGlobals();
 
             DrawManager.SetupStaticRenderingHierarchy();
             // DrawManager.TKWindowSize = new Size(, Height);

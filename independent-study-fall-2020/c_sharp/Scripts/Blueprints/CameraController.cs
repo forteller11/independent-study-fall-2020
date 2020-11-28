@@ -16,13 +16,10 @@ namespace CART_457.Scripts.EntityPrefabs
     {
         public Camera Camera;
 
-        public CameraController(Vector3 position, Quaternion rotation, Camera cameraToControl, float cameraFOVDegrees, Entity visualizerToParent)
+        public CameraController(Camera cameraToControl, Vector3 position, Quaternion rotation, Entity visualizerToParent)
         {
             Camera = cameraToControl;
             
-            float near = 0.01f;
-            float far = 100f;
-            Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(0), Quaternion.Identity, MathHelper.DegreesToRadians(cameraFOVDegrees), near, far));
             
             LocalPosition = position;
             LocalRotation = rotation;
