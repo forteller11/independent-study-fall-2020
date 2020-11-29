@@ -27,7 +27,7 @@ namespace CART_457.PhysicsRelated
         public void AddCollider(MeshCollider collider) =>  Meshes.Add(collider);
         
         
-        public bool Raycast(Ray ray, out List<CollisionResult> results, bool sortByDistanceToRay=false)
+        public bool Raycast(Ray ray, out List<CollisionResult> results, bool sortByDistanceToRay=true, bool triggerOnRaycastHit=false)
         {
             ClearCacheLists();
 
@@ -76,16 +76,30 @@ namespace CART_457.PhysicsRelated
             }
 
             if (sortByDistanceToRay)
-                Collisions = SortByDistance(ray.Origin, Collisions); //uncessary return value
+                SortByDistance(ray.Origin, Collisions);
             
             results = Collisions;
+
+            if (sortByDistanceToRay) //if sorted, trigger nearest onraycasthit entity (if hit)
+            {
+                if (atLeastOneCollision && triggerOnRaycastHit)
+                    Collisions[0].HitEntity.OnRaycastHit();
+            }
+            else if (triggerOnRaycastHit) //otherwise trigger all hit entities
+            {
+                for (int i = 0; i < Collisions.Count; i++)
+                {
+                    if (Collisions[i].Hit)
+                        Collisions[i].HitEntity.OnRaycastHit();
+                }
+            }
 
             return atLeastOneCollision;
         }
         
         
 
-        public List<CollisionResult> SortByDistance(Vector3 position, List<CollisionResult> unsorted)
+        public void SortByDistance(Vector3 position, List<CollisionResult> unsorted)
         {
             for (int i = 0; i < unsorted.Count; i++)
             {
@@ -110,8 +124,6 @@ namespace CART_457.PhysicsRelated
                 unsorted[currentLowestIndex] = toSwapCache;
                 unsorted[toSwapIndex] = lowestDistanceThisPassCache;
             }
-
-            return unsorted;
         }
         private void ClearCacheLists()
         {

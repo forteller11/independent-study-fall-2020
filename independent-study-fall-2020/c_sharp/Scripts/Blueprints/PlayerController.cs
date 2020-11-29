@@ -3,11 +3,13 @@ using CART_457.EntitySystem;
 using CART_457.Helpers;
 using CART_457.PhysicsRelated;
 using CART_457.Renderer;
+using CART_457.Scripts.Setups;
 using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace CART_457.Scripts.Blueprints
 {
-    public class PlayerMovementController : EntitySystem.Entity
+    public class PlayerController : EntitySystem.Entity
     {
         private float acceleration = 1.5f;
         private float angularAcceleration = 0.2f;
@@ -23,11 +25,12 @@ namespace CART_457.Scripts.Blueprints
         public float SprintMultiplier = 3f;
         public float MaxVelocity = .2f;
         public float Drag = 0.95f;
+        
+        public EmptySolid RayHitVisualizer = new EmptySolid(new Vector4(0.6f), 1f, SetupMaterials.SolidSphereR1);
 
 
 
-
-        public PlayerMovementController(ColliderGroup floor, Camera camera) : base(null)
+        public PlayerController(ColliderGroup floor, Camera camera) : base(null)
         {
             Camera = camera;
             Floor = floor;
@@ -45,12 +48,10 @@ namespace CART_457.Scripts.Blueprints
             Rotate(eventArgs);
             // Move3D(eventArgs);
             MoveWalkingSim(eventArgs);
-            
+
+            RaycastAndVisualize(eventArgs.MouseState.IsButtonDown(MouseButton.Left));
+
             Globals.PlayerCameraRoom1.ToEntityOrientation(this);
-            
-            Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
-            Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
-            Globals.WebCamRoom2.CopyFrom( Globals.WebCamRoom1);
 
         }
 
@@ -149,6 +150,30 @@ namespace CART_457.Scripts.Blueprints
             }
 
             LocalPosition += new Vector3(movementHorzontal.X, verticalInput * accelerationThisFrame, movementHorzontal.Y);
+        }
+
+        void RaycastAndVisualize(bool mouseDown)
+        {
+            var dir = WorldRotation * Vector3.UnitZ;
+            var ray = new Ray(WorldPosition, dir);
+            if (CollisionWorld.ColliderGroup.Raycast(ray, out var hits, true, true))
+            {
+                RayHitVisualizer.LocalPosition = hits[0].NearestOrHitPosition;
+                
+                if (!mouseDown)
+                {
+                    RayHitVisualizer.LocalScale = new Vector3(.1f);
+                    RayHitVisualizer.Color = new Vector4(0.6f);
+                }
+                else
+                {
+                    RayHitVisualizer.LocalScale = new Vector3(.06f);
+                    RayHitVisualizer.Color = new Vector4(230, 245, 60, 255)/255;
+                }
+
+            }
+            else 
+                RayHitVisualizer.LocalScale = new Vector3(0);
         }
 
      

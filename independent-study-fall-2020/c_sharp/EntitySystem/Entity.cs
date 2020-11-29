@@ -116,7 +116,6 @@ namespace CART_457.EntitySystem
             if (addToCollisionWorld)
                 CollisionWorld.ColliderGroup.AddCollider(collider);
         }
-
         #endregion
         public void SetLocalTransform(Vector3 position, Quaternion rotation, Vector3 scale)
         {
@@ -127,6 +126,7 @@ namespace CART_457.EntitySystem
         public virtual void OnLoad() { }
 
         public virtual void OnUpdate(EntityUpdateEventArgs eventArgs) { }
+        public virtual void OnRaycastHit() { }
         public virtual void SendUniformsPerEntity(Material material) { }
 
         public virtual void OnClose() { }

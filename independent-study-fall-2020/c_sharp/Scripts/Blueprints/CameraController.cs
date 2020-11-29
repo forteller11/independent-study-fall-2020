@@ -16,15 +16,12 @@ namespace CART_457.Scripts.EntityPrefabs
     {
         public Camera Camera;
 
-        public CameraController(Camera cameraToControl, Vector3 position, Quaternion rotation, Entity visualizerToParent)
+        public CameraController(Camera cameraToControl, Vector3 position, Quaternion rotation)
         {
             Camera = cameraToControl;
             
             LocalPosition = position;
             LocalRotation = rotation;
-            
-            if (visualizerToParent != null)
-                visualizerToParent.Parent = this;
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

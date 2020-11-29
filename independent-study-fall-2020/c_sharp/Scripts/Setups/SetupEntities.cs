@@ -42,17 +42,23 @@ namespace CART_457.Scripts.Setups
             
             #region camera related
 
+            var webcamRotater = new RotateOnHit(new Vector3(1.27f,3f,7.5f), Quaternion.FromEulerAngles(0,0,0));
+            webcamRotater.AddCollider(new SphereCollider(webcamRotater, true, 1));
+            webcamRotater.LocalScale *= .35f;
+            
             var webcamVisualizer = new Empty(SetupMaterials.EyeBall, SetupMaterials.ShadowMapSphere);
-            var webcamController = new CameraController(Globals.WebCamRoom1, new Vector3(1.27f,3f,7.5f), Quaternion.FromEulerAngles(0,0,0),  webcamVisualizer);
-            webcamController.AddCollider(new SphereCollider(webcamController, true, 1));
-            webcamController.LocalScale *= .35f;
+            webcamVisualizer.Parent = webcamRotater;
+            
+            var webcamController = new CameraController(Globals.WebCamRoom1, Vector3.Zero, Quaternion.Identity);
+            webcamController.Parent = webcamRotater;
+            
 
-            var playerCameraController = new PlayerMovementController(floorColliders, Globals.PlayerCameraRoom1);
+            var playerCameraController = new PlayerController(floorColliders, Globals.PlayerCameraRoom1);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             
-            var webcamRotater = new WebcamRotater(webcamController);
-            webcamRotater.Parent = playerCameraController;
+            //var webcamRotater = new WebcamRotater(webcamController);
+            //webcamRotater.Parent = playerCameraController;
 
             new CameraInterperlator();
             #endregion
