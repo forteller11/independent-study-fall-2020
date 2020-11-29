@@ -23,24 +23,22 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         public override void OnRaycastHit()
         {
             RaycastHitThisFrame = true;
-            Debug.Log("raycast");
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             bool mouseDown = eventArgs.MouseState.IsButtonDown(MouseButton.Left);
-            if (RaycastHitThisFrame && mouseDown)
+            if (RaycastHitThisFrame && mouseDown && !BeingHeld)
             {
                 BeingHeld = true;
                 _doorOpen.BeginOpen();
             }
-            else if (!mouseDown)
+            else if (!mouseDown && BeingHeld)
             {
                 BeingHeld = false;
                 _doorOpen.EndOpen();
             }
 
-            Debug.Log("held: "+BeingHeld);
             if (BeingHeld)
                 LocalRotation = Quaternion.Slerp(LocalRotation, Quaternion.FromEulerAngles(0f,MathHelper.DegreesToRadians(-10.4f),-MathF.PI/2), 0.1f);
             else

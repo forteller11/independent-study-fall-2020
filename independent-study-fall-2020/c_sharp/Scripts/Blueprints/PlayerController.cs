@@ -46,8 +46,8 @@ namespace CART_457.Scripts.Blueprints
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {  
             Rotate(eventArgs);
-            // Move3D(eventArgs);
-            MoveWalkingSim(eventArgs);
+             Move3D(eventArgs);
+            //MoveWalkingSim(eventArgs);
 
             RaycastAndVisualize(eventArgs.MouseState.IsButtonDown(MouseButton.Left));
 
@@ -125,7 +125,7 @@ namespace CART_457.Scripts.Blueprints
         void Move3D(EntityUpdateEventArgs eventArgs)
         {
             var input = eventArgs.InputState;
-            float sprintMultiplier = eventArgs.InputState.AltL.IsHeldDown ? 3 : 1;
+            float sprintMultiplier = eventArgs.InputState.AltL.IsHeldDown ? 6 : 1;
             float accelerationThisFrame = acceleration * (float) eventArgs.DeltaTime * sprintMultiplier;
 
             int horzInput = 0;
