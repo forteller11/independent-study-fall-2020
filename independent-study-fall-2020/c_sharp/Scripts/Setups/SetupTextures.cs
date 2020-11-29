@@ -71,6 +71,11 @@ namespace CART_457.Scripts.Setups
         public static Texture DoorOpenNormal = Texture.FromFile(DOOR_OPEN + "normal.jpg", TextureUnit.Texture1);
         public static Texture DoorOpenSpecular = Texture.FromFile(DOOR_OPEN + "specular.jpg", TextureUnit.Texture2);
         
+        private const string DOOR_OPEN_HANDLE = "door_open_handle/";
+        public static Texture DoorOpenHandleDiffuse = Texture.FromFile(DOOR_OPEN_HANDLE + "diffuse.jpg", TextureUnit.Texture0);
+        public static Texture DoorOpenHandleNormal = Texture.FromFile(DOOR_OPEN_HANDLE + "normal.jpg", TextureUnit.Texture1);
+        public static Texture DoorOpenHandleSpecular = Texture.FromFile(DOOR_OPEN_HANDLE + "specular.jpg", TextureUnit.Texture2);
+        
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }
 }

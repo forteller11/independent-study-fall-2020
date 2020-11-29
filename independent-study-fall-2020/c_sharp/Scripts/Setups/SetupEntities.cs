@@ -52,8 +52,14 @@ namespace CART_457.Scripts.Setups
             webcamController.Parent = webcamRotater;
 
             var doorOpen = new Empty(SetupMaterials.DoorOpen);
+            var doorOpenHandle = new Empty(SetupMaterials.DoorOpenHandle);
             doorOpen.LocalPosition = new Vector3(-17.662f, -9.1f, 52.416f);
-            doorOpen.LocalRotation = Quaternion.FromEulerAngles(0f, .5f, 0);
+            
+            doorOpenHandle.Parent = doorOpen;
+            doorOpenHandle.LocalPosition = new Vector3(-3.1671f, -0.29577f, -0.26485f);
+            doorOpenHandle.LocalRotation = Quaternion.FromEulerAngles(0f, MathHelper.DegreesToRadians(-10.4f), 0);
+            
+            
             var playerCameraController = new PlayerController(floorColliders, Globals.PlayerCameraRoom1);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
