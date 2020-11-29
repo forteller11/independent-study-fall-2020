@@ -12,10 +12,11 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         public bool BeingHeld;
         public bool RaycastHitThisFrame;
         private float _rotationAcceleration;
+        private DoorOpen _doorOpen;
 
-        public DoorHandle() : base(new []{SetupMaterials.DoorOpenHandle})
+        public DoorHandle(DoorOpen doorOpen) : base(new []{SetupMaterials.DoorOpenHandle})
         {
-            
+            _doorOpen = doorOpen;
         }
    
 
@@ -29,10 +30,16 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         {
             bool mouseDown = eventArgs.MouseState.IsButtonDown(MouseButton.Left);
             if (RaycastHitThisFrame && mouseDown)
+            {
                 BeingHeld = true;
+                _doorOpen.BeginOpen();
+            }
             else if (!mouseDown)
+            {
                 BeingHeld = false;
-            
+                _doorOpen.EndOpen();
+            }
+
             Debug.Log("held: "+BeingHeld);
             if (BeingHeld)
                 LocalRotation = Quaternion.Slerp(LocalRotation, Quaternion.FromEulerAngles(0f,MathHelper.DegreesToRadians(-10.4f),-MathF.PI/2), 0.1f);

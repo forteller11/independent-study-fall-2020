@@ -50,19 +50,18 @@ namespace CART_457.Scripts.Setups
             
             var webcamController = new CameraController(Globals.WebCamRoom1, Vector3.Zero, Quaternion.Identity);
             webcamController.Parent = webcamRotater;
-
-            var doorOpen = new Empty(SetupMaterials.DoorOpen);
+            
+            var playerCameraController = new PlayerController(floorColliders, Globals.PlayerCameraRoom1);
+            CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
+            CreateEyeVisualizer(new Vector3(-0.33f, 0, 0), playerCameraController);
+            
+            var doorOpen = new DoorOpen(playerCameraController);
             doorOpen.LocalPosition = new Vector3(-17.662f, -9.1f, 52.416f);
             
-            var doorOpenHandle = new DoorHandle();
+            var doorOpenHandle = new DoorHandle(doorOpen);
             doorOpenHandle.AddCollider(new MeshCollider(doorOpenHandle, true, SetupMeshes.DoorOpenHandle));
             doorOpenHandle.Parent = doorOpen;
             doorOpenHandle.LocalPosition = new Vector3(-3.1671f, -0.29577f, -0.26485f);
-
-
-            var playerCameraController = new PlayerController(floorColliders, Globals.PlayerCameraRoom1);
-            CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
-            CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             
             //var webcamRotater = new WebcamRotater(webcamController);
             //webcamRotater.Parent = playerCameraController;
