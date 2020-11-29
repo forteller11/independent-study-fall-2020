@@ -15,41 +15,65 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         private ColliderGroup _floorColliders;
         private MeshCollider _colliderSection;
         private Camera _frustrum;
-        public bool IsWithinFrustrum;
+        public bool Triggered;
+        private bool _triggeredWhenInFrustrum;
 
-        public FloorColliderTrigger(Camera frustrum, MeshCollider colliderSection, ColliderGroup floorColliders, params Vector3 [] triggerPositions)
+        public FloorColliderTrigger(Camera frustrum, MeshCollider colliderSection, ColliderGroup floorColliders, bool triggerWhenInFrustrum, params Vector3 [] triggerPositions)
         {
             _frustrum = frustrum;
             _colliderSection = colliderSection;
             _floorColliders = floorColliders;
             _triggerPositions = triggerPositions;
+            _triggeredWhenInFrustrum = triggerWhenInFrustrum;
 
             // for (int i = 0; i < _triggerPositions.Length; i++)
             //     Empty.FromPosition(triggerPositions[i], SetupMaterials.SolidSphereR1);
-            
+
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             //Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[0], _frustrum));
-            if (IsWithinFrustrum == false)
+            if (!Triggered)
             {
                 for (int i = 0; i < _triggerPositions.Length; i++)
-                    if (!PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[i], _frustrum))
+                {
+                    
+                    bool isPointWithinFrustrum = PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[i], _frustrum);
+                    
+                    if (_triggeredWhenInFrustrum && !isPointWithinFrustrum)
                         return;
-                
-                IsWithinFrustrum = true;
-                _floorColliders.Meshes.Add(_colliderSection);
+                    
+                    if (!_triggeredWhenInFrustrum && isPointWithinFrustrum)
+                        return;
+                    Triggered = true;
+                    _floorColliders.Meshes.Add(_colliderSection);
+                    return;
+                    
+                }
             }
-            if (IsWithinFrustrum)
+            
+            if (Triggered)
             {
                 for (int i = 0; i < _triggerPositions.Length; i++)
-                    if (!PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[i], _frustrum))
+                {
+                    bool isPointWithinFrustrum = PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[i], _frustrum);
+                    
+                    if (_triggeredWhenInFrustrum && !isPointWithinFrustrum)
                     {
-                        IsWithinFrustrum = false;
+                        Triggered = false;
                         _floorColliders.Meshes.Remove(_colliderSection);
                         return;
                     }
+                    
+                    if (!_triggeredWhenInFrustrum && isPointWithinFrustrum)
+                    {
+                        Triggered = false;
+                        _floorColliders.Meshes.Remove(_colliderSection);
+                        return;
+                    }
+                }
+
             }
 
         }
