@@ -24,14 +24,14 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             _floorColliders = floorColliders;
             _triggerPositions = triggerPositions;
 
-            for (int i = 0; i < _triggerPositions.Length; i++)
-                Empty.FromPosition(triggerPositions[i], SetupMaterials.SolidSphereR1);
+            // for (int i = 0; i < _triggerPositions.Length; i++)
+            //     Empty.FromPosition(triggerPositions[i], SetupMaterials.SolidSphereR1);
             
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[0], _frustrum));
+            //Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[0], _frustrum));
             if (IsWithinFrustrum == false)
             {
                 for (int i = 0; i < _triggerPositions.Length; i++)

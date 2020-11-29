@@ -54,12 +54,17 @@ namespace CART_457.Scripts.Setups
         private const string ROOM_CLEAN_01_CEILING_LAMPS = "table_clean_01_ceiling_lamps/";
         public static Texture RoomClean01CeilingLampsDiffuse = Texture.FromFile(ROOM_CLEAN_01_CEILING_LAMPS + "diffuse.jpg", TextureUnit.Texture0);
         public static Texture RoomClean01CeilingLampsNormal = Texture.FromFile(ROOM_CLEAN_01_CEILING_LAMPS + "normal.jpg", TextureUnit.Texture1);
-        public static Texture RoomClean01CeilingLampsSpecular = Texture.FromFile(ROOM_CLEAN_01_CEILING_LAMPS + "specular.jpg", TextureUnit.Texture2)
-            
-            ;private const string ROOM_DIRTY_01_ = "table_dirty_01/";
+        public static Texture RoomClean01CeilingLampsSpecular = Texture.FromFile(ROOM_CLEAN_01_CEILING_LAMPS + "specular.jpg", TextureUnit.Texture2);
+        
+        private const string ROOM_DIRTY_01_ = "table_dirty_01/";
         public static Texture RoomDirty01Diffuse = Texture.FromFile(ROOM_DIRTY_01_ + "diffuse.jpg", TextureUnit.Texture0);
         public static Texture RoomDirty01Normal = Texture.FromFile(ROOM_DIRTY_01_ + "normal.jpg", TextureUnit.Texture1);
         public static Texture RoomDirty01Specular = Texture.FromFile(ROOM_DIRTY_01_ + "specular.jpg", TextureUnit.Texture2);
+        
+        private const string BASEMENT = "basement/";
+        public static Texture BasementDiffuse = Texture.FromFile(BASEMENT + "diffuse.jpg", TextureUnit.Texture0);
+        public static Texture BasementNormal = Texture.FromFile(BASEMENT + "normal.jpg", TextureUnit.Texture1);
+        public static Texture BasementSpecular = Texture.FromFile(BASEMENT + "specular.jpg", TextureUnit.Texture2);
         
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }

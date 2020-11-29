@@ -26,13 +26,16 @@ namespace CART_457.Scripts.Setups
              dirty.AppearsInFrustrum = false;
             var room = FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
-      
-            
+            var s = new Empty(SetupMaterials.Basement);
+            // s.LocalRotation = Quaternion.FromEulerAngles(1,1,1);
             var floorColliders = new ColliderGroup();
             floorColliders.AddCollider(new MeshCollider(null, false, SetupMeshes.RoomClean01Colliders));
 
             var basementCollider = new MeshCollider(null, false, SetupMeshes.BasementFloorColliders);
-             var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCamRoom1, basementCollider, floorColliders, new Vector3(-7.1744f, -1.49f, 3.882f));
+             var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCamRoom1, basementCollider, floorColliders, 
+                 new Vector3(-7.1744f, -1.49f, 3.5f), new Vector3(-7.1744f, -1.49f, 0.6f),
+                 new Vector3(-7.1744f, 3.43f, 3.5f), new Vector3(-7.1744f, 3.43f, 0.6f)
+                 );
   
             var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
             dirtPlane02.LocalScale = new Vector3(7);
@@ -79,6 +82,9 @@ namespace CART_457.Scripts.Setups
 
             Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,1f,.8f)*.2f)); //window lighbt
             Globals.PointLights.Add(new PointLight(new Vector3(6.65284f,3.30652f,1.68395f), new Vector3(1,.8f,.6f)*.4f)); //lamp
+            
+            //Globals.PointLights.Add(new PointLight(new Vector3(30,30,30), new Vector3(0))); //basement
+            Globals.PointLights.Add(new PointLight(new Vector3(-18.98f,-6.76f,51.17f), new Vector3(.4f))); //basement
             
             
             float near = 0.1f;

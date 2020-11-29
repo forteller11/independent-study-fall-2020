@@ -20,9 +20,9 @@ namespace CART_457.Scripts.Setups
         public static Mesh RoomClean01 = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
         public static Mesh RoomCleanCeilingLamp01 = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
         public static Mesh RoomClean01Colliders = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
-        public static Mesh RoomDirty01 = ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01");
-        public static Mesh BasementFloorColliders = ModelImporter.GetAttribBuffersFromObjFile("basement_stairs_test");
-        
+        public static Mesh RoomDirty01 = ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01_no_stairs");
+        public static Mesh BasementFloorColliders = ModelImporter.GetAttribBuffersFromObjFile("basement_floor_colliders");
+        public static Mesh Basement = ModelImporter.GetAttribBuffersFromObjFile("basement");
         public static Mesh ViewSpaceQuad;
 
         static SetupMeshes()

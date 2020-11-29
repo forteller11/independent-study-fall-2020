@@ -13,6 +13,7 @@ namespace CART_457.Scripts.Setups
 
         [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
         [IncludeInDrawLoop] public static Material RoomCleanCeilingLampsR1InCamera;
+        [IncludeInDrawLoop] public static Material Basement;
         
         [IncludeInDrawLoop] public static Material RoomDirtyR1OutCamera;
         
@@ -147,6 +148,16 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.EyeSpecular,
                 normaMaterialUniformSender
             );
+            
+            Basement = MaterialPreconfigs.NormalReceiveShadow(
+                SetupFBOs.Room1,
+                SetupMeshes.Basement,
+                SetupFBOs.Shadow1,
+                SetupTextures.BasementDiffuse,
+                SetupTextures.BasementNormal,
+                SetupTextures.BasementSpecular,
+                normaMaterialUniformSender
+            );
             #endregion
             
             #region noshadow
@@ -238,6 +249,8 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.RoomDirty01Specular,
                 normaMaterialUniformSenderNoCull
             );
+            
+            
             #endregion
             
             
