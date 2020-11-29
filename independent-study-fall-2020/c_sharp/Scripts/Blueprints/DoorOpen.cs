@@ -2,6 +2,7 @@
 using CART_457;
 using CART_457.EntitySystem;
 using CART_457.PhysicsRelated;
+using CART_457.Renderer;
 using CART_457.Scripts.Blueprints;
 using CART_457.Scripts.Setups;
 using OpenTK.Mathematics;
@@ -41,6 +42,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
+            Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
             if (_openingDoor)
             {
                 var angle = GetAngle();
@@ -49,11 +51,17 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                 LocalRotation = _rotFromLastOpen * Quaternion.FromEulerAngles(0f, finalAngle, 0f);
 
                 LocalRotation.ToAxisAngle(out Vector3 _, out float axisDifference);
-                AngleDifferenceFromIdentity = axisDifference;
-                if (MathF.Abs(axisDifference) > MathHelper.DegreesToRadians(160f))
+                AngleDifferenceFromIdentity = MathF.Abs(axisDifference);
+                if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(160f))
                 {
                     LocalRotation = rotCache;
                 }
+
+                if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(20f))
+                {
+                    Globals.MainCamera.CopyFrom(Globals.UberDriver);
+                }
+        
             }
         }
 

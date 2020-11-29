@@ -65,6 +65,9 @@ namespace CART_457.Scripts.Setups
             doorOpenHandle.Parent = doorOpen;
             doorOpenHandle.LocalPosition = new Vector3(-3.1671f, -0.29577f, -0.26485f);
             
+            var uberDriverCameraController = new CameraController(Globals.UberDriver, new Vector3(-23.13793f,-6.2f , 93.552f), Quaternion.Identity);
+      
+            
             //var webcamRotater = new WebcamRotater(webcamController);
             //webcamRotater.Parent = playerCameraController;
 
@@ -105,6 +108,7 @@ namespace CART_457.Scripts.Setups
             float far = 100f;
 
             Globals.PlayerCameraRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
+            Globals.UberDriver.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
 
             Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreateOrthographic(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), 25, near, far));
 

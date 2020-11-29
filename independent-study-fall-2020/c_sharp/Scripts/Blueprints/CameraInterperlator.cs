@@ -21,24 +21,25 @@ namespace CART_457.Scripts.Blueprints
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
 
-            CheckForBeginInterpolation(eventArgs.InputState.Num1, Globals.PlayerCameraRoom1);
-            CheckForBeginInterpolation(eventArgs.InputState.Num2, Globals.WebCamRoom1);
-
-
-            if (_isInterpolating)
-            {
-                Camera.Lerp(Globals.MainCamera, _interpolationTarget, MathInd.SmoothStep(_interpolationIndex),  Globals.MainCamera);
-                _interpolationIndex += INTERPOLATION_STEP;
-                
-                if (_interpolationIndex > 1)
-                {
-                    _isInterpolating = false;
-                }
-            }
-            else
-            {
-                Globals.MainCamera.CopyFrom(_interpolationTarget);
-            }
+            // CheckForBeginInterpolation(eventArgs.InputState.Num1, Globals.PlayerCameraRoom1);
+            // CheckForBeginInterpolation(eventArgs.InputState.Num2, Globals.WebCamRoom1);
+            // CheckForBeginInterpolation(eventArgs.InputState.Num3, Globals.UberDriver);
+            //
+            //
+            // if (_isInterpolating)
+            // {
+            //     Camera.Lerp(Globals.MainCamera, _interpolationTarget, MathInd.SmoothStep(_interpolationIndex),  Globals.MainCamera);
+            //     _interpolationIndex += INTERPOLATION_STEP;
+            //     
+            //     if (_interpolationIndex > 1)
+            //     {
+            //         _isInterpolating = false;
+            //     }
+            // }
+            // else
+            // {
+            //     Globals.MainCamera.CopyFrom(_interpolationTarget);
+            // }
 
         }
 
