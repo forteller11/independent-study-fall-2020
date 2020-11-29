@@ -23,6 +23,7 @@ namespace CART_457.Scripts.Setups
         public static Mesh RoomDirty01 = ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01_no_stairs");
         public static Mesh BasementFloorColliders = ModelImporter.GetAttribBuffersFromObjFile("basement_floor_colliders");
         public static Mesh Basement = ModelImporter.GetAttribBuffersFromObjFile("basement");
+        public static Mesh DoorOpen = ModelImporter.GetAttribBuffersFromObjFile("door_open");
         public static Mesh ViewSpaceQuad;
 
         static SetupMeshes()

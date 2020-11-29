@@ -25,7 +25,7 @@ namespace CART_457.Scripts.Setups
              var dirty= FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomDirtyR1OutCamera, SetupMaterials.ShadowMapPlane);
              var room = FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
-            var s = new Empty(SetupMaterials.Basement);
+            new Empty(SetupMaterials.Basement);
             // s.LocalRotation = Quaternion.FromEulerAngles(1,1,1);
             var floorColliders = new ColliderGroup();
             floorColliders.AddCollider(new MeshCollider(null, false, SetupMeshes.RoomClean01Colliders));
@@ -50,8 +50,10 @@ namespace CART_457.Scripts.Setups
             
             var webcamController = new CameraController(Globals.WebCamRoom1, Vector3.Zero, Quaternion.Identity);
             webcamController.Parent = webcamRotater;
-            
 
+            var doorOpen = new Empty(SetupMaterials.DoorOpen);
+            doorOpen.LocalPosition = new Vector3(-17.662f, -9.1f, 52.416f);
+            doorOpen.LocalRotation = Quaternion.FromEulerAngles(0f, .5f, 0);
             var playerCameraController = new PlayerController(floorColliders, Globals.PlayerCameraRoom1);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);

@@ -14,6 +14,7 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
         [IncludeInDrawLoop] public static Material RoomCleanCeilingLampsR1InCamera;
         [IncludeInDrawLoop] public static Material Basement;
+        [IncludeInDrawLoop] public static Material DoorOpen;
         
         [IncludeInDrawLoop] public static Material RoomDirtyR1OutCamera;
         
@@ -156,6 +157,16 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.BasementDiffuse,
                 SetupTextures.BasementNormal,
                 SetupTextures.BasementSpecular,
+                normaMaterialUniformSender
+            );
+            
+            DoorOpen = MaterialPreconfigs.NormalReceiveShadow(
+                SetupFBOs.Room1,
+                SetupMeshes.DoorOpen,
+                SetupFBOs.Shadow1,
+                SetupTextures.DoorOpenDiffuse,
+                SetupTextures.DoorOpenNormal,
+                SetupTextures.DoorOpenSpecular,
                 normaMaterialUniformSender
             );
             #endregion

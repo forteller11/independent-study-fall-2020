@@ -66,6 +66,11 @@ namespace CART_457.Scripts.Setups
         public static Texture BasementNormal = Texture.FromFile(BASEMENT + "normal.jpg", TextureUnit.Texture1);
         public static Texture BasementSpecular = Texture.FromFile(BASEMENT + "specular.jpg", TextureUnit.Texture2);
         
+        private const string DOOR_OPEN = "door_open/";
+        public static Texture DoorOpenDiffuse = Texture.FromFile(DOOR_OPEN + "diffuse.jpg", TextureUnit.Texture0);
+        public static Texture DoorOpenNormal = Texture.FromFile(DOOR_OPEN + "normal.jpg", TextureUnit.Texture1);
+        public static Texture DoorOpenSpecular = Texture.FromFile(DOOR_OPEN + "specular.jpg", TextureUnit.Texture2);
+        
          public static Texture NoiseStatic = Texture.FromFile("noise_gaussian_2000.bmp", TextureUnit.Texture7);
     }
 }
