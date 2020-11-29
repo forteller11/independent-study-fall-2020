@@ -24,6 +24,8 @@ namespace CART_457.Scripts.Setups
 
              var dirty= FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomDirtyR1OutCamera, SetupMaterials.ShadowMapPlane);
              var room = FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
+             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanWebcam, SetupMaterials.ShadowMapPlane);
+             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingAndLampsWebcam, SetupMaterials.ShadowMapPlane);
             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
             new Empty(SetupMaterials.Basement);
             // s.LocalRotation = Quaternion.FromEulerAngles(1,1,1);
@@ -81,6 +83,8 @@ namespace CART_457.Scripts.Setups
             var head = Wobble.Position(new Vector3(.03f), new Vector3(100f), new Vector3(0, 1.9f, 4), SetupMaterials.WeirdHeadR2);
             head.LocalRotation = Quaternion.FromEulerAngles(0, MathF.PI/2,0);
             #endregion
+
+            var monitor = Empty.FromPositionRotationScale(new Vector3(1.3f, 2.177f, 7.4f), Quaternion.FromEulerAngles(0, MathF.PI, 0), new Vector3(0.855f, .563f, 1f), SetupMaterials.ScreenR1);
 
         }
 

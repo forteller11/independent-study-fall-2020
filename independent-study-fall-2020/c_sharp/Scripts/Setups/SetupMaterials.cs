@@ -13,6 +13,8 @@ namespace CART_457.Scripts.Setups
 
         [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
         [IncludeInDrawLoop] public static Material RoomCleanCeilingLampsR1InCamera;
+        [IncludeInDrawLoop] public static Material RoomCleanWebcam;
+        [IncludeInDrawLoop] public static Material RoomCleanCeilingAndLampsWebcam;
         [IncludeInDrawLoop] public static Material Basement;
         [IncludeInDrawLoop] public static Material DoorOpen;
         [IncludeInDrawLoop] public static Material DoorOpenHandle;
@@ -252,6 +254,24 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSenderNoCull
             );
             
+            RoomCleanWebcam = MaterialPreconfigs.NormalNoShadow(
+                SetupFBOs.Webcam,
+                SetupMeshes.RoomClean01,
+                SetupTextures.RoomClean01Diffuse,
+                SetupTextures.RoomClean01Normal,
+                SetupTextures.RoomClean01Specular,
+                normaMaterialUniformSenderNoCull
+            );
+            
+            RoomCleanCeilingAndLampsWebcam = MaterialPreconfigs.NormalNoShadow(
+                SetupFBOs.Webcam,
+                SetupMeshes.RoomCleanCeilingLamp01,
+                SetupTextures.RoomClean01CeilingLampsDiffuse,
+                SetupTextures.RoomClean01CeilingLampsNormal,
+                SetupTextures.RoomClean01CeilingLampsSpecular,
+                normaMaterialUniformSenderNoCull
+            );
+            
             RoomCleanCeilingLampsR1InCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.RoomCleanCeilingLamp01,
@@ -286,8 +306,8 @@ namespace CART_457.Scripts.Setups
                     UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                     UniformSender.SendGlobals(material);
                 });
-            ScreenR1.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.Room2.ColorTexture1);
-            ScreenR1.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.Room2.ColorTexture2);
+            ScreenR1.SetupSampler(UniformSender.MAIN_COLOR_FBO_SAMPLER, SetupFBOs.Webcam.ColorTexture1);
+            ScreenR1.SetupSampler(UniformSender.SECONDARY_COLOR_FBO_SAMPLER, SetupFBOs.Webcam.ColorTexture2);
 
             #endregion
             

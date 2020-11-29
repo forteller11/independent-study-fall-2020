@@ -8,6 +8,8 @@ namespace CART_457.Scripts.Setups
     public class SetupFBOs
     {
 
+        [IncludeInDrawLoop] public static FBO Webcam;
+        
         [IncludeInDrawLoop] public static FBO Shadow2; 
         [IncludeInDrawLoop] public static FBO Room2;
         
@@ -31,6 +33,13 @@ namespace CART_457.Scripts.Setups
                 GL.Enable(EnableCap.CullFace);
                 GL.DepthFunc(DepthFunction.Less);
                 });
+            
+            Webcam = FBO.Serial("Webcam", DrawManager.TKWindowSize, Globals.WebCamRoom1, true, true,true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+                // GL.Enable(EnableCap.Texture2D);
+                GL.Enable(EnableCap.DepthTest);
+                GL.Enable(EnableCap.CullFace);
+                GL.DepthFunc(DepthFunction.Less);
+            });
             
             Room1 = FBO.Custom("Room1", DrawManager.TKWindowSize, Globals.MainCamera, TextureUnit.Texture3,TextureUnit.Texture4, TextureUnit.Texture5, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
                 // GL.Enable(EnableCap.Texture2D);
