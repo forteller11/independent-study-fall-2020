@@ -153,9 +153,15 @@ namespace CART_457.PhysicsRelated
         
         
         
-        public static CollisionResult SphereSphereCollision(SphereCollider r, SphereCollider s)
+        public static bool SphereSphereCollision(SphereCollider s1, SphereCollider s2)
         {
-            throw new NotImplementedException();
+            var dist = Vector3.Distance(s1.WorldPosition, s2.WorldPosition);
+            if (dist < s1.Radius + s2.Radius)
+            {
+                return true;
+            }
+
+            return false;
         }
 
    
