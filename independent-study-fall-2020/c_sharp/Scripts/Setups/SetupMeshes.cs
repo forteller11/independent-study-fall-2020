@@ -22,6 +22,7 @@ namespace CART_457.Scripts.Setups
         public static Mesh RoomClean01Colliders = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
         public static Mesh RoomDirty01 = ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01_no_stairs");
         public static Mesh BasementFloorColliders = ModelImporter.GetAttribBuffersFromObjFile("basement_floor_colliders");
+        public static Mesh BasementFloorCollidersDoor = ModelImporter.GetAttribBuffersFromObjFile("basement_floor_colliders_door");
         public static Mesh Basement = ModelImporter.GetAttribBuffersFromObjFile("basement");
         public static Mesh DoorOpen = ModelImporter.GetAttribBuffersFromObjFile("door_open");
         public static Mesh DoorOpenHandle = ModelImporter.GetAttribBuffersFromObjFile("door_open_handle");

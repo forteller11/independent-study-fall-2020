@@ -109,7 +109,7 @@ namespace CART_457.PhysicsRelated
 
         public static CollisionResult RayTriangleCollision(Ray ray, TriangleCollider triangle)
         {
-            var planeCollision= RayPlaneCollision(ray, triangle.GetPlane());
+            var planeCollision = RayPlaneCollision(ray, triangle.GetPlane());
             if (planeCollision.Hit == false)
                 return planeCollision;
             var planeHit = planeCollision.NearestOrHitPosition;

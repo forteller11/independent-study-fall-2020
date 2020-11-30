@@ -13,14 +13,18 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
     {
         public float AngleDifferenceFromIdentity;
         private PlayerController Player;
+        private ColliderGroup _floor;
         
         private float _angleAtStartOfOpen;
         private Quaternion _rotFromLastOpen;
         private bool _openingDoor;
+        public bool DoorIsOpen;
+        public MeshCollider BasementToEntranceFloor = new MeshCollider(null, false, SetupMeshes.BasementFloorCollidersDoor);
 
-        public DoorOpen(PlayerController player) : base(new[] {SetupMaterials.DoorOpen})
+        public DoorOpen(PlayerController player, ColliderGroup floor) : base(new[] {SetupMaterials.DoorOpen})
         {
             Player = player;
+            _floor = floor;
         }
 
         public override void OnLoad()
@@ -60,6 +64,20 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                 if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(20f))
                 {
                     Globals.MainCamera.CopyFrom(Globals.UberDriver);
+                }
+
+                if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(60f))
+                {
+                    if (!DoorIsOpen)
+                    {
+                        DoorIsOpen = true;
+                        _floor.Meshes.Add(BasementToEntranceFloor);
+                    }
+                }
+                else if (DoorIsOpen) //if less
+                {
+                    DoorIsOpen = false;
+                    _floor.Meshes.Remove(BasementToEntranceFloor);
                 }
         
             }

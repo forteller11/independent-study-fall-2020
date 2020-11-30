@@ -1,4 +1,5 @@
-﻿using CART_457.EntitySystem;
+﻿using CART_457;
+using CART_457.EntitySystem;
 using CART_457.Helpers;
 using CART_457.PhysicsRelated;
 using CART_457.Scripts.Blueprints;
@@ -12,15 +13,19 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
     {
         private ColliderGroup _floor;
         private PlayerController _player;
+        private DoorOpen _door;
+        
         private bool IsPickedUp;
         private bool _rayHitThisFrame;
         private Vector3 _targetPosition;
+        private bool HasDoorBeenOpen;
         
-        public UberBag(ColliderGroup floor, PlayerController player) : base(new []{SetupMaterials.UberBag})
+        public UberBag(ColliderGroup floor, PlayerController player, DoorOpen door) : base(new []{SetupMaterials.UberBag})
         {
             _floor = floor;
             _player = player;
             AddCollider(new MeshCollider(this, true, SetupMeshes.UberBag));
+            _door = door;
         }
 
         public override void OnLoad()
@@ -32,8 +37,12 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
+            if (_door.DoorIsOpen)
+                HasDoorBeenOpen = true;
+            
+            bool mouseClick = eventArgs.MouseState.IsButtonDown(MouseButton.Left) && !eventArgs.MouseState.WasButtonDown(MouseButton.Left);
             bool mouseDown = eventArgs.MouseState.IsButtonDown(MouseButton.Left);
-            if (!IsPickedUp && mouseDown && _rayHitThisFrame)
+            if (!IsPickedUp && mouseClick && _rayHitThisFrame && HasDoorBeenOpen)
             {
                 IsPickedUp = true;
             }
@@ -41,13 +50,13 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             if (IsPickedUp && !mouseDown)
             {
                 IsPickedUp = false;
-                var ray = new Ray(WorldPosition, new Vector3(0,-1,0));
-                if (_floor.Raycast(ray, out var hits, true, false))
-                {
+                var ray = new Ray(WorldPosition, new Vector3(0,1,0));
+                var hasHit = _floor.Raycast(ray, out var hits, true, false);
+                if (hasHit)
                     _targetPosition = hits[0].NearestOrHitPosition;
-                }
                 else 
-                    _targetPosition -= new Vector3(0,.4f,0);
+                    _targetPosition = new Vector3(_targetPosition.X,_player.WorldPosition.Y - _player.PlayerHeight,_targetPosition.Z);
+                
             }
 
             if (IsPickedUp)
@@ -56,6 +65,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             }
 
             LocalPosition = Vector3.Lerp(LocalPosition, _targetPosition, 0.3f);
+            _rayHitThisFrame = false;
         }
     }
 }

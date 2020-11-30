@@ -46,8 +46,8 @@ namespace CART_457.Scripts.Blueprints
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {  
             Rotate(eventArgs);
-             Move3D(eventArgs);
-            //MoveWalkingSim(eventArgs);
+            //Move3D(eventArgs);
+            MoveWalkingSim(eventArgs);
 
             RaycastAndVisualize(eventArgs.MouseState.IsButtonDown(MouseButton.Left));
 
@@ -115,7 +115,7 @@ namespace CART_457.Scripts.Blueprints
                 }
                 
                 Velocity *= Drag * Drag * Drag * Drag * Drag;
-                lerpAmount -= 0.1f;
+                lerpAmount -= 1f / maxAttempts;
                 maxAttempts--;
             }
  
