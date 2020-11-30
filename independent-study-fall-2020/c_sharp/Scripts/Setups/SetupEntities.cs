@@ -43,7 +43,7 @@ namespace CART_457.Scripts.Setups
             
             #region camera related
 
-            var webcamRotater = new RotateOnHit(new Vector3(1.27f,3f,7.5f), Quaternion.FromEulerAngles(0,0,0));
+            var webcamRotater = new RotateOnHit(new Vector3(1.27f,3f,7.5f), Quaternion.FromEulerAngles(.2f,1f,0));
             webcamRotater.AddCollider(new SphereCollider(webcamRotater, true, 1));
             webcamRotater.LocalScale *= .35f;
             
