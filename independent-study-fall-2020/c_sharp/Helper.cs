@@ -7,6 +7,8 @@ namespace CART_457
          
         public const float DEG_TO_RAD = MathF.PI / 180;
         public static float RAD_TO_DEG = MathF.PI * 180;
+        
+        
 
     }
 }

@@ -66,8 +66,9 @@ namespace CART_457.Scripts.Setups
             doorOpenHandle.LocalPosition = new Vector3(-3.1671f, -0.29577f, -0.26485f);
             
             var uberDriverCameraController = new CameraController(Globals.UberDriver, new Vector3(-23.13793f,-6.2f , 93.552f), Quaternion.Identity);
-      
-            
+            var uberBag = new UberBag(floorColliders, playerCameraController);
+            uberBag.LocalPosition = BlenderToVector3(-19.878f, -56.345f, -11.798f);
+
             //var webcamRotater = new WebcamRotater(webcamController);
             //webcamRotater.Parent = playerCameraController;
 
@@ -121,7 +122,7 @@ namespace CART_457.Scripts.Setups
             Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
  
         }
-        
+        static Vector3 BlenderToVector3(float x, float y, float z) => new Vector3(x, z, -y);
         static Wobble CreateEyeVisualizer(Vector3 position, Entity parent)
         {
             var eyeRotation = Quaternion.FromEulerAngles(0, 0,MathF.PI);

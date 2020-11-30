@@ -25,6 +25,7 @@ namespace CART_457.Scripts.Setups
         public static Mesh Basement = ModelImporter.GetAttribBuffersFromObjFile("basement");
         public static Mesh DoorOpen = ModelImporter.GetAttribBuffersFromObjFile("door_open");
         public static Mesh DoorOpenHandle = ModelImporter.GetAttribBuffersFromObjFile("door_open_handle");
+        public static Mesh UberBag = ModelImporter.GetAttribBuffersFromObjFile("uber_eats_bag");
         public static Mesh ViewSpaceQuad;
 
         static SetupMeshes()

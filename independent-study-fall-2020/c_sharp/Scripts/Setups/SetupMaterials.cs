@@ -18,10 +18,10 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material Basement;
         [IncludeInDrawLoop] public static Material DoorOpen;
         [IncludeInDrawLoop] public static Material DoorOpenHandle;
-        
+        [IncludeInDrawLoop] public static Material UberBag;
         [IncludeInDrawLoop] public static Material RoomDirtyR1OutCamera;
-        
-        
+
+
         [IncludeInDrawLoop] public static Material SolidSphereR1;
         [IncludeInDrawLoop] public static Material DirtSphereR1Frustrum;
         [IncludeInDrawLoop] public static Material CarpetPlaneR1Frustrum;
@@ -260,6 +260,15 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.RoomClean01Diffuse,
                 SetupTextures.RoomClean01Normal,
                 SetupTextures.RoomClean01Specular,
+                normaMaterialUniformSenderNoCull
+            );
+            
+            UberBag = MaterialPreconfigs.NormalNoShadow(
+                SetupFBOs.Room1,
+                SetupMeshes.UberBag,
+                SetupTextures.UberBagDiffuse,
+                SetupTextures.UberBagNormal,
+                SetupTextures.UberBagSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
