@@ -42,11 +42,11 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         {
             _openingDoor = false;
             _rotFromLastOpen = LocalRotation;
+            ScreenManager.SetTarget(Globals.PlayerCameraRoom1);
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
             if (_openingDoor)
             {
                 var angle = GetAngle();
@@ -61,12 +61,12 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                     LocalRotation = rotCache;
                 }
 
-                if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(20f))
+                if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(15f))
                 {
-                    Globals.MainCamera.CopyFrom(Globals.UberDriver);
+                    ScreenManager.SetTarget(Globals.UberDriver);
                 }
 
-                if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(60f))
+                if (AngleDifferenceFromIdentity > MathHelper.DegreesToRadians(45f))
                 {
                     if (!DoorIsOpen)
                     {

@@ -33,7 +33,7 @@ namespace CART_457.Renderer
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.BlendEquation(BlendEquationMode.FuncAdd);
-            GL.ClearColor(0f,0f,0f,1f);
+            GL.ClearColor(.8f,.8f,.8f,1);
         }
 
         public static void SetupStaticRenderingHierarchy()

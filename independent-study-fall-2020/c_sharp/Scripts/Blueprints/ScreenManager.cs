@@ -9,26 +9,27 @@ namespace CART_457.Scripts.Blueprints
 {
     public class ScreenManager : Entity
     {
-        private Screen room1;
-        private Screen room2;
+
+
+        public static Camera Target;
         // ScreenManager(params  Screen[] screens)
         // {
         //     _screens = screens;
         // }
 
-        public ScreenManager(Screen r1, Screen r2)
+        public ScreenManager(Camera initialTarget)
         {
-            room1 = r1;
-            room2 = r2;
+            Target = initialTarget;
         }
 
-
+        public static void SetTarget(Camera camera)
+        {
+            Target = camera;
+        }
         
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            room1.LocalRotation = Globals.MainCamera.Rotation;
-            Vector3 viewDir = Globals.MainCamera.Rotation * Vector3.UnitZ;
-            room1.LocalPosition = Globals.MainCamera.Position - viewDir * 2;
+            Globals.MainCamera.CopyFrom(Target);
         }
 
 

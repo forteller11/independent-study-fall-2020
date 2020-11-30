@@ -65,8 +65,8 @@ namespace CART_457.Scripts.Setups
             doorOpenHandle.Parent = doorOpen;
             doorOpenHandle.LocalPosition = new Vector3(-3.1671f, -0.29577f, -0.26485f);
             
-            var uberDriverCameraController = new CameraController(Globals.UberDriver, new Vector3(-23.13793f,-6.2f , 93.552f), Quaternion.Identity);
-            var uberBag = new UberBag(floorColliders, playerCameraController, doorOpen);
+            var uberDriver = new UberDriver(Globals.UberDriver, new Vector3(-23.13793f,-6.2f , 93.552f), Quaternion.Identity, new Vector3(40f,0,0), .06f);
+            var uberBag = new UberBag(floorColliders, playerCameraController, doorOpen, uberDriver);
             uberBag.LocalPosition = BlenderToVector3(-19.878f, -56.345f, -12.7f);
 
             //var webcamRotater = new WebcamRotater(webcamController);
@@ -90,6 +90,7 @@ namespace CART_457.Scripts.Setups
 
             var monitor = Empty.FromPositionRotationScale(new Vector3(1.3f, 2.177f, 7.4f), Quaternion.FromEulerAngles(0, MathF.PI, 0), new Vector3(0.855f, .563f, 1f), SetupMaterials.ScreenR1);
 
+            new ScreenManager(Globals.PlayerCameraRoom1);
         }
 
         
