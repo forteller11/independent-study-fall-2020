@@ -8,9 +8,10 @@ namespace CART_457.Scripts.Setups
     public class SetupFBOs
     {
 
-        [IncludeInDrawLoop] public static FBO Webcam;
-
         [IncludeInDrawLoop] public static FBO Shadow1;
+        
+        [IncludeInDrawLoop] public static FBO Webcam;
+        
         [IncludeInDrawLoop] public static FBO Room1;
         
         // [IncludeInDrawLoop] public static FBO Shadow2;

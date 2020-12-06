@@ -48,7 +48,7 @@ namespace CART_457.Scripts.Setups
         }
         
         public static Material NormalNoShadowFrustrum(
-            FBO fbo, Mesh mesh, Camera camera, Texture diffuse, Texture normal, Texture specular, Action<Material> perMatSender)
+            FBO fbo, Mesh mesh, Camera frustrumCamera, Texture diffuse, Texture normal, Texture specular, Action<Material> perMatSender)
         {
 
             Material mat = Material.GenericEntityBased(fbo, SetupShaders.NormalFrustrum, mesh, perMatSender, (entity, material) =>
@@ -56,12 +56,33 @@ namespace CART_457.Scripts.Setups
                 UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                 UniformSender.SendLights(material);
                 UniformSender.SendGlobals(material);
-                UniformSender.SendFrustrum(material, camera);
+                UniformSender.SendFrustrum(material, frustrumCamera);
             });
 
             mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);
             mat.SetupSampler(UniformSender.NORMAL_MAP_SAMPLER, normal);
             mat.SetupSampler(UniformSender.SPECULAR_MAP_SAMPLER, specular);
+
+            return mat;
+        }
+        
+        public static Material NormalReceiveShadowFrustrum(
+            FBO fbo, Mesh mesh, Camera cameraFrusturm, FBO shadowMapFBO, Texture diffuse, Texture normal, Texture specular, Action<Material> perMatSender)
+        {
+            
+            Material mat = Material.GenericEntityBased(fbo, SetupShaders.NormalReceiveShadowFrustrum, mesh, perMatSender, (entity, material) =>
+            {
+                UniformSender.SendTransformMatrices(entity, material, shadowMapFBO.Camera, "Light");
+                UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
+                UniformSender.SendLights(material);
+                UniformSender.SendGlobals(material);
+                UniformSender.SendFrustrum(material, cameraFrusturm);
+            });
+
+            mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);
+            mat.SetupSampler(UniformSender.NORMAL_MAP_SAMPLER, normal);
+            mat.SetupSampler(UniformSender.SPECULAR_MAP_SAMPLER, specular);
+            mat.SetupSampler(UniformSender.SHADOW_MAP_SAMPLER, shadowMapFBO.ColorTexture1);
 
             return mat;
         }

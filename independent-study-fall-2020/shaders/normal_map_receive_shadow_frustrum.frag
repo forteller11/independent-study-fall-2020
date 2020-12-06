@@ -14,7 +14,7 @@ in vec4 v2f_viewPosLightSpace;
 uniform sampler2D Color;
 uniform sampler2D Normal;
 uniform sampler2D Gloss;
-
+uniform sampler2D NoiseTexture;
 
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
@@ -22,17 +22,15 @@ uniform float SpecularRoughness;
 uniform bool VisibleInFrustrum;
 uniform FrustrumStruct Frustrum;
 
-
 void main()
 {
-
     bool inFrustrum = IsPointWithinFrustrum(v2f_worldPos, Frustrum);
-    
+
     if (inFrustrum == VisibleInFrustrum){
         discard;
     }
-
-    vec3 lightDir = vec3(0,-1,0);
+    
+    vec3 lightDir = normalize(vec3(-1,-1,0));
     vec2 shadowBias = vec2(0.005,0.05);
     int inShadow = shadow_map(v2f_viewPosLightSpace, v2f_worldNorm, lightDir, shadowBias);
 
@@ -48,22 +46,19 @@ void main()
     vec2 uv = inShadow == 1 ?
     v2f_uv + uvOffset
     : v2f_uv;
-//    if (inFrustrum != ShouldAppearInFrustrum){
-//        discard;
-//    }
-    
-    vec4 diffuseTex = texture(Color, v2f_uv);
-    vec4 normalMapTex = texture(Normal, v2f_uv);
-    vec4 glossMapTex = texture(Gloss, v2f_uv);
+
+    vec4 diffuseTex = texture(Color, uv);
+    vec4 normalMapTex = texture(Normal, uv);
+    vec4 glossMapTex = texture(Gloss, uv);
 
     vec3 normalsWithMapWorld = normal_map_world_space(normalMapTex.xyz, v2f_tangentToModelSpace, mat3(ModelRotation), v2f_norm);
 
     vec3 specular = calculate_specular(normalsWithMapWorld, v2f_worldPos, CamPosition, glossMapTex.x * NormalMapStrength, SpecularRoughness);
     vec3 diffuse = calculate_diffuse(normalsWithMapWorld, v2f_worldPos);
-    
-    
-    vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular+ vec3(.15)) ;
-    
+
+
+    vec3 texColorShaded = diffuseTex.xyz * (diffuse + specular) * shadowMult;
+
     MainFragColor = vec4(texColorShaded.xyz, 1);
     SecondaryFragColor = vec4(vec3(FragCoordToDepth(gl_FragCoord)), 1);
 }

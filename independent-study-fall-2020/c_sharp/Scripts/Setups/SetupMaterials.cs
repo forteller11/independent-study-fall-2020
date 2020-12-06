@@ -127,27 +127,30 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSender
             );
             
-            UberBag = MaterialPreconfigs.NormalNoShadow(
+            UberBag = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
                 SetupMeshes.UberBag,
+                SetupFBOs.Shadow1,
                 SetupTextures.UberBagDiffuse,
                 SetupTextures.UberBagNormal,
                 SetupTextures.UberBagSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
-            BedroomClean = MaterialPreconfigs.NormalNoShadow(
+            BedroomClean = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Webcam,
                 SetupMeshes.BedroomClean,
+                SetupFBOs.Shadow1,
                 SetupTextures.BedroomCleanDiffuse,
                 SetupTextures.BedroomCleanNormal,
                 SetupTextures.BedroomCleanSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
-            BedroomCleanCeilingLamps = MaterialPreconfigs.NormalNoShadow(
+            BedroomCleanCeilingLamps = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Webcam,
                 SetupMeshes.BedroomCleanCeilingLamp,
+                SetupFBOs.Shadow1,
                 SetupTextures.BedroomCeilingLampsDiffuse,
                 SetupTextures.BedroomCeilingLampsNormal,
                 SetupTextures.BedroomCeilingLampsSpecular,
@@ -157,30 +160,33 @@ namespace CART_457.Scripts.Setups
             
             #region frustrum
 
-            BedroomCleanInCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+            BedroomCleanInCamera = MaterialPreconfigs.NormalReceiveShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomClean,
                 Globals.WebCamRoom1,
+                SetupFBOs.Shadow1,
                 SetupTextures.BedroomCleanDiffuse,
                 SetupTextures.BedroomCleanNormal,
                 SetupTextures.BedroomCleanSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
-            BedroomCeilingLampsInCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+            BedroomCeilingLampsInCamera = MaterialPreconfigs.NormalReceiveShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomCleanCeilingLamp,
                 Globals.WebCamRoom1,
+                SetupFBOs.Shadow1,
                 SetupTextures.BedroomCeilingLampsDiffuse,
                 SetupTextures.BedroomCeilingLampsNormal,
                 SetupTextures.BedroomCeilingLampsSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
-            BedroomDirtyOutCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+            BedroomDirtyOutCamera = MaterialPreconfigs.NormalReceiveShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomDirty,
                 Globals.WebCamRoom1,
+                SetupFBOs.Shadow1,
                 SetupTextures.BedroomDirtyDiffuse,
                 SetupTextures.BedroomDirtyNormal,
                 SetupTextures.BedroomDirtySpecular,
