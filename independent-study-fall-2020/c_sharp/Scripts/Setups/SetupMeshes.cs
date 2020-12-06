@@ -13,10 +13,10 @@ namespace CART_457.Scripts.Setups
         public static Mesh Eyeball =  ModelImporter.GetAttribBuffersFromObjFile("eyeball", Quaternion.FromEulerAngles(-MathF.PI/2,0f,0f ));
         public static Mesh Plane = ModelImporter.GetAttribBuffersFromObjFile("Plane");
 
-        public static Mesh RoomClean01 = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
-        public static Mesh RoomCleanCeilingLamp01 = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
+        public static Mesh BedroomClean = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01");
+        public static Mesh BedroomCleanCeilingLamp = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_ceiling_lamps");
         public static Mesh RoomClean01Colliders = ModelImporter.GetAttribBuffersFromObjFile("room_clean_01_colliders");
-        public static Mesh RoomDirty01 = ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01_no_stairs");
+        public static Mesh BedroomDirty = ModelImporter.GetAttribBuffersFromObjFile("room_dirty_01_no_stairs");
         public static Mesh BasementFloorColliders = ModelImporter.GetAttribBuffersFromObjFile("basement_floor_colliders");
         public static Mesh BasementFloorCollidersDoor = ModelImporter.GetAttribBuffersFromObjFile("basement_floor_colliders_door");
         public static Mesh Basement = ModelImporter.GetAttribBuffersFromObjFile("basement");

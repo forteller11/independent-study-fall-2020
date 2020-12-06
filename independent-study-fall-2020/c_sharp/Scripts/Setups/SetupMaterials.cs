@@ -35,6 +35,8 @@ namespace CART_457.Scripts.Setups
         
         [IncludeInDrawLoop] public static Material ShadowMapSphere;
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
+        [IncludeInDrawLoop] public static Material BedroomDirtyShadow;
+        [IncludeInDrawLoop] public static Material BasementShadow;
 
         
         [IncludeInPostFX] public static Material PostProcessing;
@@ -54,6 +56,16 @@ namespace CART_457.Scripts.Setups
             ShadowMapPlane = Material.EntityCastShadow(
                 SetupFBOs.Shadow1,
                 SetupMeshes.Plane,
+                null);
+            
+            BedroomDirtyShadow = Material.EntityCastShadow(
+                SetupFBOs.Shadow1,
+                SetupMeshes.BedroomDirty,
+                null);
+            
+            BasementShadow = Material.EntityCastShadow(
+                SetupFBOs.Shadow1,
+                SetupMeshes.BedroomDirty,
                 null);
 
             #endregion
@@ -126,7 +138,7 @@ namespace CART_457.Scripts.Setups
             
             BedroomClean = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Webcam,
-                SetupMeshes.RoomClean01,
+                SetupMeshes.BedroomClean,
                 SetupTextures.RoomClean01CeilingLampsDiffuse,
                 SetupTextures.RoomClean01CeilingLampsNormal,
                 SetupTextures.RoomClean01CeilingLampsSpecular,
@@ -135,7 +147,7 @@ namespace CART_457.Scripts.Setups
             
             BedroomCleanCielingLamps = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Webcam,
-                SetupMeshes.RoomCleanCeilingLamp01,
+                SetupMeshes.BedroomCleanCeilingLamp,
                 SetupTextures.RoomClean01CeilingLampsDiffuse,
                 SetupTextures.RoomClean01CeilingLampsNormal,
                 SetupTextures.RoomClean01CeilingLampsSpecular,
@@ -147,7 +159,7 @@ namespace CART_457.Scripts.Setups
 
             BedroomCleanInCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
-                SetupMeshes.RoomClean01,
+                SetupMeshes.BedroomClean,
                 Globals.WebCamRoom1,
                 SetupTextures.RoomClean01Diffuse,
                 SetupTextures.RoomClean01Normal,
@@ -157,7 +169,7 @@ namespace CART_457.Scripts.Setups
             
             BedroomCeilingLampsInCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
-                SetupMeshes.RoomCleanCeilingLamp01,
+                SetupMeshes.BedroomCleanCeilingLamp,
                 Globals.WebCamRoom1,
                 SetupTextures.RoomClean01CeilingLampsDiffuse,
                 SetupTextures.RoomClean01CeilingLampsNormal,
@@ -167,7 +179,7 @@ namespace CART_457.Scripts.Setups
             
             BedroomDirtyOutCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
-                SetupMeshes.RoomDirty01,
+                SetupMeshes.BedroomDirty,
                 Globals.WebCamRoom1,
                 SetupTextures.RoomDirty01Diffuse,
                 SetupTextures.RoomDirty01Normal,
