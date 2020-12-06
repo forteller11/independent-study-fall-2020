@@ -51,7 +51,7 @@ namespace CART_457.Scripts.Blueprints
 
             RaycastAndVisualize(eventArgs.MouseState.IsButtonDown(MouseButton.Left));
 
-            Globals.PlayerCameraRoom1.ToEntityOrientation(this);
+            Globals.PlayerCamera.ToEntityOrientation(this);
 
         }
 

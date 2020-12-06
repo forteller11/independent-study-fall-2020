@@ -22,7 +22,7 @@ namespace CART_457.Scripts.Setups
         static SetupFBOs ()
         {
         
-            Shadow1 = FBO.Serial("Shadow1", DrawManager.TKWindowSize*4, Globals.ShadowCastingLightRoom1, true,false, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit,
+            Shadow1 = FBO.Serial("Shadow1", DrawManager.TKWindowSize*4, Globals.ShadowCastingLight, true,false, true,  ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit,
                 () =>
                 {
                     // GL.Enable(EnableCap.Texture2D);
@@ -31,7 +31,7 @@ namespace CART_457.Scripts.Setups
                 GL.DepthFunc(DepthFunction.Less);
                 });
             
-            Webcam = FBO.Serial("Webcam", DrawManager.TKWindowSize, Globals.WebCamRoom1, true, true,true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
+            Webcam = FBO.Serial("Webcam", DrawManager.TKWindowSize, Globals.WebCam, true, true,true, ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit, () => {
                 // GL.Enable(EnableCap.Texture2D);
                 GL.Enable(EnableCap.DepthTest);
                 GL.Enable(EnableCap.CullFace);

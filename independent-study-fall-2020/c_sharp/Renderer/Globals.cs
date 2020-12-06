@@ -12,21 +12,21 @@ namespace CART_457.Renderer
     public static class Globals
     {
         public static readonly Camera MainCamera = new Camera();
-
-        public static readonly Camera PlayerCameraRoom1 = new Camera();
-        public static readonly Camera WebCamRoom1 = new Camera();
-        public static readonly Camera ShadowCastingLightRoom1 = new Camera();
-
+        public static readonly Camera PlayerCamera = new Camera();
+        public static readonly Camera WebCam = new Camera();
+        public static readonly Camera ShadowCastingLight = new Camera();
         public static readonly Camera UberDriver = new Camera();
         
         public static RandomInd Random = new RandomInd(0);
         public static FastNoiseLite Noise = new FastNoiseLite();
-        public static List<DirectionLight> DirectionLights;
-        public static List<PointLight> PointLights;
         public static double AbsTime = 0;
         public static float AbsTimeF = 0;
         public static double DeltaTime = 0;
         public static float DeltaTimeF = 0;
+        
+        public static List<DirectionLight> DirectionLights;
+        public static List<PointLight> PointLights;
+        public static Vector3 ShadowDirection;
 
 
         public static void Init(GameWindow gameWindow)

@@ -42,7 +42,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         {
             _openingDoor = false;
             _rotFromLastOpen = LocalRotation;
-            ScreenManager.SetTarget(Globals.PlayerCameraRoom1);
+            ScreenManager.SetTarget(Globals.PlayerCamera);
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

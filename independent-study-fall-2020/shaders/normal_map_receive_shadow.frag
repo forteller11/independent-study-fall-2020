@@ -18,13 +18,13 @@ uniform sampler2D NoiseTexture;
 
 uniform float NormalMapStrength;
 uniform float SpecularRoughness;
-
+uniform vec3 ShadowCastDirection;
 
 void main()
 {
-    vec3 lightDir = vec3(0,-1,0);
+
     vec2 shadowBias = vec2(0.005,0.05);
-    int inShadow = shadow_map(v2f_viewPosLightSpace, v2f_worldNorm, lightDir, shadowBias);
+    int inShadow = shadow_map(v2f_viewPosLightSpace, v2f_worldNorm, ShadowCastDirection, shadowBias);
 
     float shadowMult = max(0.2, 1-float(inShadow)); //todo change intensity based on difference
     vec4 normalMapNoise = texture(Color, v2f_uv, 4);

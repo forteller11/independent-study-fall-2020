@@ -131,6 +131,11 @@ namespace CART_457.c_sharp.Renderer
             SetVector2(material, GLOBALS + ".WindowSize", new Vector2(DrawManager.TKWindowSize.X, DrawManager.TKWindowSize.Y));
         }
 
+        public static void SendShadowCastingDirection(Material material)
+        {
+            SetVector3(material, "ShadowCastDirection", Globals.ShadowDirection);
+        }
+
         #region type senders helpers
         public static void SetMatrix4(Material mat, string name, Matrix4 matrix4, bool useProgram=true) //set useProgram to false for batch operations for performance gains
         {

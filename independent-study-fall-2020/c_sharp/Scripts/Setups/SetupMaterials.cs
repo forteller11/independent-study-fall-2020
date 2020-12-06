@@ -163,7 +163,7 @@ namespace CART_457.Scripts.Setups
             BedroomCleanInCamera = MaterialPreconfigs.NormalReceiveShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomClean,
-                Globals.WebCamRoom1,
+                Globals.WebCam,
                 SetupFBOs.Shadow1,
                 SetupTextures.BedroomCleanDiffuse,
                 SetupTextures.BedroomCleanNormal,
@@ -174,7 +174,7 @@ namespace CART_457.Scripts.Setups
             BedroomCeilingLampsInCamera = MaterialPreconfigs.NormalReceiveShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomCleanCeilingLamp,
-                Globals.WebCamRoom1,
+                Globals.WebCam,
                 SetupFBOs.Shadow1,
                 SetupTextures.BedroomCeilingLampsDiffuse,
                 SetupTextures.BedroomCeilingLampsNormal,
@@ -185,7 +185,7 @@ namespace CART_457.Scripts.Setups
             BedroomDirtyOutCamera = MaterialPreconfigs.NormalReceiveShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomDirty,
-                Globals.WebCamRoom1,
+                Globals.WebCam,
                 SetupFBOs.Shadow1,
                 SetupTextures.BedroomDirtyDiffuse,
                 SetupTextures.BedroomDirtyNormal,

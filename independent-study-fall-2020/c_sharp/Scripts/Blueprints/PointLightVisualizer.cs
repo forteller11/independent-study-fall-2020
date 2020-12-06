@@ -32,7 +32,7 @@ namespace CART_457.Blueprints
         {
             if (material == SetupMaterials.ShadowMapSphere || material == SetupMaterials.ShadowMapPlane)
             {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLightRoom1, "Light");
+                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
             }
             else
             { 

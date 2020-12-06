@@ -19,6 +19,7 @@ namespace CART_457.Scripts.Setups
                 UniformSender.SendTransformMatrices(entity, material, material.RenderTarget.Camera);
                 UniformSender.SendLights(material);
                 UniformSender.SendGlobals(material);
+                UniformSender.SendShadowCastingDirection(material);
             });
 
             mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);
@@ -77,6 +78,7 @@ namespace CART_457.Scripts.Setups
                 UniformSender.SendLights(material);
                 UniformSender.SendGlobals(material);
                 UniformSender.SendFrustrum(material, cameraFrusturm);
+                UniformSender.SendShadowCastingDirection(material);
             });
 
             mat.SetupSampler(UniformSender.DIFFUSE_SAMPLER, diffuse);

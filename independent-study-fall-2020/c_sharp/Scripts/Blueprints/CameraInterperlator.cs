@@ -15,7 +15,7 @@ namespace CART_457.Scripts.Blueprints
         private const float INTERPOLATION_STEP = 0.02f;
         public override void OnLoad()
         {
-            _interpolationTarget = Globals.PlayerCameraRoom1;
+            _interpolationTarget = Globals.PlayerCamera;
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)

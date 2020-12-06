@@ -21,7 +21,7 @@ namespace CART_457.Scripts.Setups
         {
 
             #region room 1
-
+    
              FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomDirtyOutCamera, SetupMaterials.BedroomDirtyShadow);
              FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCeilingLampsInCamera);
              
@@ -29,15 +29,15 @@ namespace CART_457.Scripts.Setups
              
              FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomClean);
              FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCleanCeilingLamps);
-             
 
+             new ShadowLightController();
             new Empty(SetupMaterials.Basement);
             // s.LocalRotation = Quaternion.FromEulerAngles(1,1,1);
             var floorColliders = new ColliderGroup();
             floorColliders.AddCollider(new MeshCollider(null, false, SetupMeshes.RoomClean01Colliders));
 
             var basementCollider = new MeshCollider(null, false, SetupMeshes.BasementFloorColliders);
-             var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCamRoom1, basementCollider, floorColliders, false,
+             var basementColliderTrigger = new FloorColliderTrigger(Globals.WebCam, basementCollider, floorColliders, false,
                  new Vector3(-7.1744f, -1.49f, 3.5f), new Vector3(-7.1744f, -1.49f, 0.6f),
                  new Vector3(-7.1744f, 4f, 3.5f), new Vector3(-7.1744f, 4f, 0.6f)
                  );
@@ -51,10 +51,10 @@ namespace CART_457.Scripts.Setups
             var webcamVisualizer = new Empty(SetupMaterials.EyeBall, SetupMaterials.ShadowMapSphere);
             webcamVisualizer.Parent = webcamRotater;
             
-            var webcamController = new CameraController(Globals.WebCamRoom1, Vector3.Zero, Quaternion.Identity);
+            var webcamController = new CameraController(Globals.WebCam, Vector3.Zero, Quaternion.Identity);
             webcamController.Parent = webcamRotater;
             
-            var playerCameraController = new PlayerController(floorColliders, Globals.PlayerCameraRoom1);
+            var playerCameraController = new PlayerController(floorColliders, Globals.PlayerCamera);
             CreateEyeVisualizer(new Vector3(0.33f, 0, 0), playerCameraController);
             CreateEyeVisualizer(new Vector3(-0.33f, 0, 0), playerCameraController);
             
@@ -86,7 +86,7 @@ namespace CART_457.Scripts.Setups
 
             var monitor = Empty.FromPositionRotationScale(new Vector3(1.3f, 2.177f, 7.4f), Quaternion.FromEulerAngles(0, MathF.PI, 0), new Vector3(0.855f, .563f, 1f), SetupMaterials.ScreenR1);
 
-            new ScreenManager(Globals.PlayerCameraRoom1);
+            new ScreenManager(Globals.PlayerCamera);
         }
 
         
@@ -105,16 +105,16 @@ namespace CART_457.Scripts.Setups
             float near = 0.1f;
             float far = 100f;
 
-            Globals.PlayerCameraRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
+            Globals.PlayerCamera.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
             Globals.UberDriver.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
             
-            Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(120), near, far));
+            Globals.ShadowCastingLight.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(120), near, far));
             
-            Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(0), Quaternion.Identity, MathHelper.DegreesToRadians(120), near, far));
-            Globals.WebCamRoom1.OverrideFrustrumDimensions(2, 100);
+            Globals.WebCam.CopyFrom(Camera.CreatePerspective(new Vector3(0), Quaternion.Identity, MathHelper.DegreesToRadians(120), near, far));
+            Globals.WebCam.OverrideFrustrumDimensions(2, 100);
       
 
-            Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
+            Globals.MainCamera.CopyFrom(Globals.PlayerCamera);
  
         }
         public static Vector3 BlenderToVector3(float x, float y, float z) => new Vector3(x, z, -y);
