@@ -3,8 +3,6 @@ using CART_457.EntitySystem;
 using CART_457.Helpers;
 using CART_457.PhysicsRelated;
 using CART_457.Renderer;
-using CART_457.Scripts.Blueprints;
-using CART_457.Scripts.Setups;
 using OpenTK.Mathematics;
 
 namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
@@ -31,6 +29,11 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 
         }
 
+        public override void OnLoad()
+        {
+            base.OnLoad();
+        }
+
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
             //Debug.Log(PhysicsHelpersInd.IsPointWithinFrustrum(_triggerPositions[0], _frustrum));
@@ -46,6 +49,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
                     
                     if (!_triggeredWhenInFrustrum && isPointWithinFrustrum)
                         return;
+                    
                     Triggered = true;
                     _floorColliders.Meshes.Add(_colliderSection);
                     return;

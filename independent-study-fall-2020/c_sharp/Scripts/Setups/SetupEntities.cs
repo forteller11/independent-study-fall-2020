@@ -22,11 +22,10 @@ namespace CART_457.Scripts.Setups
 
             #region room 1
 
-             var dirty= FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomDirtyR1OutCamera, SetupMaterials.ShadowMapPlane);
-             var room = FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanR1InCamera, SetupMaterials.ShadowMapPlane);
-             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanWebcam, SetupMaterials.ShadowMapPlane);
-             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingAndLampsWebcam, SetupMaterials.ShadowMapPlane);
-            FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.RoomCleanCeilingLampsR1InCamera, SetupMaterials.ShadowMapPlane);
+             var dirty= FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomDirtyOutCamera, SetupMaterials.ShadowMapPlane);
+             var room = FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCleanInCamera, SetupMaterials.ShadowMapPlane);
+             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomClean, SetupMaterials.ShadowMapPlane);
+            FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCeilingLampsInCamera, SetupMaterials.ShadowMapPlane);
             new Empty(SetupMaterials.Basement);
             // s.LocalRotation = Quaternion.FromEulerAngles(1,1,1);
             var floorColliders = new ColliderGroup();
@@ -37,11 +36,8 @@ namespace CART_457.Scripts.Setups
                  new Vector3(-7.1744f, -1.49f, 3.5f), new Vector3(-7.1744f, -1.49f, 0.6f),
                  new Vector3(-7.1744f, 4f, 3.5f), new Vector3(-7.1744f, 4f, 0.6f)
                  );
-  
-            var dirtPlane02 = Empty.FromPosition(new Vector3(0, -12, 0), SetupMaterials.DirtPlaneR1Frustrum, SetupMaterials.ShadowMapPlane);
-            dirtPlane02.LocalScale = new Vector3(7);
-            
-            #region camera related
+
+             #region camera related
 
             var webcamRotater = new RotateOnHit(new Vector3(1.27f,3f,7.5f), Quaternion.FromEulerAngles(.2f,1f,0));
             webcamRotater.AddCollider(new SphereCollider(webcamRotater, true, 1));
@@ -81,11 +77,6 @@ namespace CART_457.Scripts.Setups
             #endregion
             for (int i = 0; i < Globals.PointLights.Count; i++)
                 new PointLightVisualizer(i,SetupMaterials.SolidSphereR1);
-            #endregion
-            
-            #region room2
-            var head = Wobble.Position(new Vector3(.03f), new Vector3(100f), new Vector3(0, 1.9f, 4), SetupMaterials.WeirdHeadR2);
-            head.LocalRotation = Quaternion.FromEulerAngles(0, MathF.PI/2,0);
             #endregion
 
             var monitor = Empty.FromPositionRotationScale(new Vector3(1.3f, 2.177f, 7.4f), Quaternion.FromEulerAngles(0, MathF.PI, 0), new Vector3(0.855f, .563f, 1f), SetupMaterials.ScreenR1);

@@ -10,40 +10,32 @@ namespace CART_457.Scripts.Setups
 {
     public static class SetupMaterials
     {
-
-        [IncludeInDrawLoop] public static Material RoomCleanR1InCamera;
-        [IncludeInDrawLoop] public static Material RoomCleanCeilingLampsR1InCamera;
-        [IncludeInDrawLoop] public static Material RoomCleanWebcam;
-        [IncludeInDrawLoop] public static Material RoomCleanCeilingAndLampsWebcam;
+        
+        [IncludeInDrawLoop] public static Material BedroomCleanInCamera;
+        [IncludeInDrawLoop] public static Material BedroomCeilingLampsInCamera;
+        [IncludeInDrawLoop] public static Material BedroomDirtyOutCamera;
+        
+        [IncludeInDrawLoop] public static Material BedroomCleanCielingLamps;
+        [IncludeInDrawLoop] public static Material BedroomClean;
+        
         [IncludeInDrawLoop] public static Material Basement;
         [IncludeInDrawLoop] public static Material DoorOpen;
         [IncludeInDrawLoop] public static Material DoorOpenHandle;
         [IncludeInDrawLoop] public static Material UberBag;
-        [IncludeInDrawLoop] public static Material RoomDirtyR1OutCamera;
+        
 
 
         [IncludeInDrawLoop] public static Material SolidSphereR1;
-        [IncludeInDrawLoop] public static Material DirtSphereR1Frustrum;
-        [IncludeInDrawLoop] public static Material CarpetPlaneR1Frustrum;
-        [IncludeInDrawLoop] public static Material DirtPlaneR1Frustrum;
-        [IncludeInDrawLoop] public static Material DirtPathR1Frustrum;
-        [IncludeInDrawLoop] public static Material SolidSphereR2;
         
-        [IncludeInDrawLoop] public static Material DirtSphere;
-        [IncludeInDrawLoop] public static Material DirtPlane;
-        [IncludeInDrawLoop] public static Material TileSphere;
-        [IncludeInDrawLoop] public static Material TableProto;
+        
         [IncludeInDrawLoop] public static Material EyeBall;
-        [IncludeInDrawLoop] public static Material WebcamNormal;
         [IncludeInDrawLoop] public static Material ScreenR1;
-        [IncludeInDrawLoop] public static Material WeirdHeadR2;
-        
+
         //dirt sphere room2
         
         [IncludeInDrawLoop] public static Material ShadowMapSphere;
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
-        [IncludeInDrawLoop] public static Material ShadowMapTable;
-        [IncludeInDrawLoop] public static Material ShadowMapWebcam;
+
         
         [IncludeInPostFX] public static Material PostProcessing;
         static SetupMaterials()
@@ -51,8 +43,6 @@ namespace CART_457.Scripts.Setups
             
             #region solid_color
             SolidSphereR1 = Material.EntitySolid(SetupFBOs.Room1, SetupMeshes.IcoSphereHighPoly, null);
-            SolidSphereR2 = Material.EntitySolid(SetupFBOs.Room2, SetupMeshes.IcoSphereHighPoly, null);
-     
             #endregion
 
             #region shadow maps
@@ -65,16 +55,7 @@ namespace CART_457.Scripts.Setups
                 SetupFBOs.Shadow1,
                 SetupMeshes.Plane,
                 null);
-            
-            ShadowMapTable = Material.EntityCastShadow(
-                SetupFBOs.Shadow1,
-                SetupMeshes.TableProto,
-                null);
-            
-            ShadowMapWebcam = Material.EntityCastShadow(
-                SetupFBOs.Shadow1,
-                SetupMeshes.Webcam,
-                null);
+
             #endregion
 
             #region normal materials
@@ -92,56 +73,7 @@ namespace CART_457.Scripts.Setups
                 GL.Disable(EnableCap.CullFace);
             };
             
-            #region receive shadow
-            DirtSphere  = MaterialPreconfigs.NormalReceiveShadow(
-                SetupFBOs.Room1,
-                SetupMeshes.IcoSphereHighPoly,
-                SetupFBOs.Shadow1,
-                SetupTextures.DirtDiffuse,
-                SetupTextures.DirtNormalMap,
-                SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSender
-                );
-            
-            DirtSphere  = MaterialPreconfigs.NormalReceiveShadow(
-                SetupFBOs.Room1,
-                SetupMeshes.IcoSphereHighPoly,
-                SetupFBOs.Shadow1,
-                SetupTextures.DirtDiffuse,
-                SetupTextures.DirtNormalMap,
-                SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSender
-            );
-            
-            DirtPlane  = MaterialPreconfigs.NormalReceiveShadow(
-                SetupFBOs.Room1,
-                SetupMeshes.Plane,
-                SetupFBOs.Shadow1,
-                SetupTextures.DirtDiffuse,
-                SetupTextures.DirtNormalMap,
-                SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSender
-                );
-            
-            TileSphere = MaterialPreconfigs.NormalReceiveShadow(
-                SetupFBOs.Room1,
-                SetupMeshes.IcoSphereHighPoly,
-                SetupFBOs.Shadow1,
-                SetupTextures.CarpetDiffuse,
-                SetupTextures.CarpetNormalMap,
-                SetupTextures.CarpetSpecularMap,
-                normaMaterialUniformSender
-                );
-            
-            TableProto = MaterialPreconfigs.NormalReceiveShadow(
-                SetupFBOs.Room1,
-                SetupMeshes.TableProto,
-                SetupFBOs.Shadow1,
-                SetupTextures.TableDiffuse,
-                SetupTextures.TableNormal,
-                SetupTextures.TableSpecular,
-                normaMaterialUniformSender
-            );
+            #region normals shadow
             
             EyeBall = MaterialPreconfigs.NormalReceiveShadow(
                 SetupFBOs.Room1,
@@ -182,86 +114,6 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.DoorOpenHandleSpecular,
                 normaMaterialUniformSender
             );
-            #endregion
-            
-            #region noshadow
-            WeirdHeadR2 = MaterialPreconfigs.NormalNoShadow(
-                SetupFBOs.Room2,
-                SetupMeshes.WeirdHead,
-                SetupTextures.WeirdHeadDiffuse,
-                SetupTextures.WeirdHeadNormal,
-                SetupTextures.WeirdHeadSpecular,
-                normaMaterialUniformSender
-            );
-            
-            WebcamNormal = MaterialPreconfigs.NormalNoShadow(
-                SetupFBOs.Room1,
-                SetupMeshes.Webcam,
-                SetupTextures.WebcamDiffuse,
-                SetupTextures.WebcamNormal,
-                SetupTextures.WebcamSpecular,
-                normaMaterialUniformSender
-            );
-            #endregion
-            #region frustrum
-            DirtSphereR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
-                SetupFBOs.Room1,
-                SetupMeshes.IcoSphereHighPoly,
-                Globals.WebCamRoom1,
-                SetupTextures.DirtDiffuse,
-                SetupTextures.DirtNormalMap,
-                SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSenderNoCull
-            );
-            
-            DirtPlaneR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
-                SetupFBOs.Room1,
-                SetupMeshes.Plane,
-                Globals.WebCamRoom1,
-                SetupTextures.DirtDiffuse,
-                SetupTextures.DirtNormalMap,
-                SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSenderNoCull
-            );
-            
-            DirtPathR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
-                SetupFBOs.Room1,
-                SetupMeshes.Path,
-                Globals.WebCamRoom1,
-                SetupTextures.DirtDiffuse,
-                SetupTextures.DirtNormalMap,
-                SetupTextures.DirtSpecularMap,
-                normaMaterialUniformSenderNoCull
-            );
-            
-            CarpetPlaneR1Frustrum = MaterialPreconfigs.NormalNoShadowFrustrum(
-                SetupFBOs.Room1,
-                SetupMeshes.Plane,
-                Globals.WebCamRoom1,
-                SetupTextures.CarpetDiffuse,
-                SetupTextures.CarpetNormalMap,
-                SetupTextures.CarpetSpecularMap,
-                normaMaterialUniformSenderNoCull
-            );
-            
-            RoomCleanR1InCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
-                SetupFBOs.Room1,
-                SetupMeshes.RoomClean01,
-                Globals.WebCamRoom1,
-                SetupTextures.RoomClean01Diffuse,
-                SetupTextures.RoomClean01Normal,
-                SetupTextures.RoomClean01Specular,
-                normaMaterialUniformSenderNoCull
-            );
-            
-            RoomCleanWebcam = MaterialPreconfigs.NormalNoShadow(
-                SetupFBOs.Webcam,
-                SetupMeshes.RoomClean01,
-                SetupTextures.RoomClean01Diffuse,
-                SetupTextures.RoomClean01Normal,
-                SetupTextures.RoomClean01Specular,
-                normaMaterialUniformSenderNoCull
-            );
             
             UberBag = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Room1,
@@ -272,7 +124,16 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSenderNoCull
             );
             
-            RoomCleanCeilingAndLampsWebcam = MaterialPreconfigs.NormalNoShadow(
+            BedroomClean = MaterialPreconfigs.NormalNoShadow(
+                SetupFBOs.Webcam,
+                SetupMeshes.RoomClean01,
+                SetupTextures.RoomClean01CeilingLampsDiffuse,
+                SetupTextures.RoomClean01CeilingLampsNormal,
+                SetupTextures.RoomClean01CeilingLampsSpecular,
+                normaMaterialUniformSenderNoCull
+            );
+            
+            BedroomCleanCielingLamps = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Webcam,
                 SetupMeshes.RoomCleanCeilingLamp01,
                 SetupTextures.RoomClean01CeilingLampsDiffuse,
@@ -280,8 +141,21 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.RoomClean01CeilingLampsSpecular,
                 normaMaterialUniformSenderNoCull
             );
+            #endregion
             
-            RoomCleanCeilingLampsR1InCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+            #region frustrum
+
+            BedroomCleanInCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+                SetupFBOs.Room1,
+                SetupMeshes.RoomClean01,
+                Globals.WebCamRoom1,
+                SetupTextures.RoomClean01Diffuse,
+                SetupTextures.RoomClean01Normal,
+                SetupTextures.RoomClean01Specular,
+                normaMaterialUniformSenderNoCull
+            );
+            
+            BedroomCeilingLampsInCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.RoomCleanCeilingLamp01,
                 Globals.WebCamRoom1,
@@ -291,7 +165,7 @@ namespace CART_457.Scripts.Setups
                 normaMaterialUniformSenderNoCull
             );
             
-            RoomDirtyR1OutCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
+            BedroomDirtyOutCamera = MaterialPreconfigs.NormalNoShadowFrustrum(
                 SetupFBOs.Room1,
                 SetupMeshes.RoomDirty01,
                 Globals.WebCamRoom1,
@@ -300,8 +174,6 @@ namespace CART_457.Scripts.Setups
                 SetupTextures.RoomDirty01Specular,
                 normaMaterialUniformSenderNoCull
             );
-            
-            
             #endregion
             
             

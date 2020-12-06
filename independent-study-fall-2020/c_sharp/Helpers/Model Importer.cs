@@ -27,17 +27,17 @@ namespace CART_457.Helpers
                     throw new DataException($"A face doesn't has \"{obj.Faces[i].Vertices.Count}\" and not {POINTS_IN_TRIANGLE} vertices, was the mesh not triangulated?");
                 
                 
-                int vertexIndex1 = obj.Faces[i].Vertices[0].Vertex  -1;
-                int vertexIndex2 = obj.Faces[i].Vertices[1].Vertex  -1;
+                int vertexIndex1 = obj.Faces[i].Vertices[0].Vertex - 1;
+                int vertexIndex2 = obj.Faces[i].Vertices[1].Vertex - 1;
                 int vertexIndex3 = obj.Faces[i].Vertices[2].Vertex - 1;
 
-                Vector3 p1 = obj.Vertices[vertexIndex1].Position.ToTKVector3();
-                Vector3 p2 = obj.Vertices[vertexIndex2].Position.ToTKVector3();
-                Vector3 p3 = obj.Vertices[vertexIndex3].Position.ToTKVector3();
+                Vector3 p1 = ToTKVector3(obj.Vertices[vertexIndex1].Position);
+                Vector3 p2 = ToTKVector3(obj.Vertices[vertexIndex2].Position);
+                Vector3 p3 = ToTKVector3(obj.Vertices[vertexIndex3].Position);
                 
                 tris[i] = new TriangleCollider(parent, isTransformRelative, p3,p2,p1);
                 
-                int normIndex   = obj.Faces[i].Vertices[0].Normal  -1;
+                int normIndex   = obj.Faces[i].Vertices[0].Normal - 1;
                 Vector3 norm = new Vector3(obj.VertexNormals[normIndex].X, obj.VertexNormals[normIndex].Y, obj.VertexNormals[normIndex].Z);
 
                 var project = Vector3.Dot(tris[i].GetNormal(), norm);
@@ -66,14 +66,14 @@ namespace CART_457.Helpers
                 for (int i = 0; i < obj.Vertices.Count; i++)
                 {
                     var color = obj.Vertices[i].Color ?? new ObjVector4(0, 0, 0,1);
-                    var positionTK = obj.Vertices[i].Position.ToTKVector3();
+                    var positionTK = ToTKVector3(obj.Vertices[i].Position);
                     positionTK = rotation * positionTK;
                     obj.Vertices[i] = new ObjVertex(positionTK.X, positionTK.Y,positionTK.Z, color.X, color.Y, color.Z);
                 }
 
                 for (int i = 0; i < obj.VertexNormals.Count; i++)
                 {
-                    var normalTK = obj.VertexNormals[i].ToTKVector3();
+                    var normalTK = ToTKVector3(obj.VertexNormals[i]);
                     normalTK = rotation * normalTK;
                     obj.VertexNormals[i] = normalTK.ToOBJVector3();
                 }
@@ -97,9 +97,9 @@ namespace CART_457.Helpers
                 
                 for (int j = 0; j < POINTS_IN_TRIANGLE; j++)
                 {
-                    int vertexIndex = obj.Faces[i].Vertices[j].Vertex  -1;
-                    int texIndex    = obj.Faces[i].Vertices[j].Texture -1;
-                    int normIndex   = obj.Faces[i].Vertices[j].Normal  -1;
+                    int vertexIndex = obj.Faces[i].Vertices[j].Vertex  - 1;
+                    int texIndex    = obj.Faces[i].Vertices[j].Texture - 1;
+                    int normIndex   = obj.Faces[i].Vertices[j].Normal  - 1;
                     
                     positionsFlattened[rootIndex + 0] = obj.Vertices[vertexIndex].Position.X;
                     positionsFlattened[rootIndex + 1] = obj.Vertices[vertexIndex].Position.Y;
@@ -127,6 +127,8 @@ namespace CART_457.Helpers
         }
         
 
+        public static Vector3 ToTKVector3( ObjVector4 v) => new Vector3(v.X, v.Y,v.Z);
+        public static Vector3 ToTKVector3( ObjVector3 v) => new Vector3(v.X, v.Y,v.Z);
         
     }
 }

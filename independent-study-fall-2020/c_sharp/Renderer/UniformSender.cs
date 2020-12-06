@@ -59,6 +59,8 @@ namespace CART_457.c_sharp.Renderer
         /// </summary>
         public static void SendTransformMatrices(Entity entity, Material material, Camera camera, string suffix="")
         {
+            
+
             var modelToWorldRotation = Matrix4.CreateFromQuaternion(entity.WorldRotation);
             var worldToViewTranslation = Matrix4.CreateTranslation(-camera.Position);
             var modelToWorldTranslation = Matrix4.CreateTranslation(entity.WorldPosition);
