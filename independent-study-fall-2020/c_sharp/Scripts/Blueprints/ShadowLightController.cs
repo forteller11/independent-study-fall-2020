@@ -7,17 +7,16 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
 {
     public class ShadowLightController : Entity
     {
+        private float sensitivity = 0.008f;
+        private float rotation = 0.08f;
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            if (eventArgs.MouseState.IsButtonDown(MouseButton.Middle))
-            {
-                Globals.ShadowCastingLight.CopyFrom(Globals.PlayerCamera);
-            }
+            Globals.ShadowCastingLight.Position = Vector3.Lerp(Globals.ShadowCastingLight.Position, Globals.PlayerCamera.Position,sensitivity);
+                Globals.ShadowCastingLight.Rotation = Quaternion.Slerp(Globals.ShadowCastingLight.Rotation, Globals.PlayerCamera.Rotation, rotation);
+
+                var targetVec = Globals.PlayerCamera.Rotation * new Vector3(0,0,-1);
+                Globals.ShadowDirection = Vector3.Lerp( Globals.ShadowDirection, targetVec,sensitivity);
             
-            if (eventArgs.MouseState.IsButtonDown(MouseButton.Right))
-            {
-                Globals.ShadowDirection = Globals.PlayerCamera.Rotation * new Vector3(0,0,-1);
-            }
         }
     }
 }

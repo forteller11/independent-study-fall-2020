@@ -24,3 +24,12 @@ vec4 lightSpaceViewPos,
     int shadow = currentDepth - bias > closestDepth  ? 1 : 0;
     return shadow;
 }
+
+vec2 get_shadow_offset(vec2 uv){ 
+    vec3 noiseInput = vec3(uv.xy*12, Globals.TimeAbs/1);
+    vec3 noiseOffset = vec3(0,0,99999);
+    float u = simplex3d(noiseInput);
+    float v = simplex3d(noiseInput+noiseOffset);
+    vec2 uvOffset = vec2(u,v) * 0.007;
+    return uvOffset;
+}

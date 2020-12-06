@@ -25,7 +25,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         private bool IsUpstairs;
         private float HasBeenUpstairsFrameCount = 0;
         
-        public UberBag(ColliderGroup floor, PlayerController player, DoorOpen door, UberDriver driver) : base(new []{SetupMaterials.UberBag})
+        public UberBag(ColliderGroup floor, PlayerController player, DoorOpen door, UberDriver driver) : base(new []{SetupMaterials.UberBag, SetupMaterials.UberShadow})
         {
             _floor = floor;
             _player = player;

@@ -37,6 +37,9 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material ShadowMapPlane;
         [IncludeInDrawLoop] public static Material BedroomDirtyShadow;
         [IncludeInDrawLoop] public static Material BasementShadow;
+        [IncludeInDrawLoop] public static Material UberShadow;
+        [IncludeInDrawLoop] public static Material DoorShadow;
+        [IncludeInDrawLoop] public static Material DoorHandleShadow;
 
         
         [IncludeInPostFX] public static Material PostProcessing;
@@ -65,7 +68,22 @@ namespace CART_457.Scripts.Setups
             
             BasementShadow = Material.EntityCastShadow(
                 SetupFBOs.Shadow1,
-                SetupMeshes.BedroomDirty,
+                SetupMeshes.Basement,
+                null);
+            
+            UberShadow = Material.EntityCastShadow(
+                SetupFBOs.Shadow1,
+                SetupMeshes.UberBag,
+                null);
+            
+            DoorShadow = Material.EntityCastShadow(
+                SetupFBOs.Shadow1,
+                SetupMeshes.DoorOpen,
+                null);
+            
+            DoorHandleShadow = Material.EntityCastShadow(
+                SetupFBOs.Shadow1,
+                SetupMeshes.DoorOpenHandle,
                 null);
 
             #endregion

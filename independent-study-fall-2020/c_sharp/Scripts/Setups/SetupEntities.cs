@@ -31,7 +31,7 @@ namespace CART_457.Scripts.Setups
              FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCleanCeilingLamps);
 
              new ShadowLightController();
-            new Empty(SetupMaterials.Basement);
+            new Empty(SetupMaterials.Basement, SetupMaterials.BasementShadow);
             // s.LocalRotation = Quaternion.FromEulerAngles(1,1,1);
             var floorColliders = new ColliderGroup();
             floorColliders.AddCollider(new MeshCollider(null, false, SetupMeshes.RoomClean01Colliders));

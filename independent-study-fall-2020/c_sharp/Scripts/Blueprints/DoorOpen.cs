@@ -21,7 +21,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         public bool DoorIsOpen;
         public MeshCollider BasementToEntranceFloor = new MeshCollider(null, false, SetupMeshes.BasementFloorCollidersDoor);
 
-        public DoorOpen(PlayerController player, ColliderGroup floor) : base(new[] {SetupMaterials.DoorOpen})
+        public DoorOpen(PlayerController player, ColliderGroup floor) : base(new[] {SetupMaterials.DoorOpen, SetupMaterials.DoorShadow})
         {
             Player = player;
             _floor = floor;

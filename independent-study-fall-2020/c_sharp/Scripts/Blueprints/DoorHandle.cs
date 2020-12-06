@@ -15,7 +15,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         private float _rotationAcceleration;
         private DoorOpen _doorOpen;
 
-        public DoorHandle(DoorOpen doorOpen) : base(new []{SetupMaterials.DoorOpenHandle})
+        public DoorHandle(DoorOpen doorOpen) : base(new []{SetupMaterials.DoorOpenHandle, SetupMaterials.DoorHandleShadow})
         {
             _doorOpen = doorOpen;
         }
