@@ -93,13 +93,13 @@ namespace CART_457.Scripts.Setups
         public static void SetupGlobals()
         {
 
-            Globals.PointLights.Add(new PointLight(new Vector3(0.427837f,6.2f,-1.98f), new Vector3(.4f))); //ceiling light
+            Globals.PointLights.Add(new PointLight(new Vector3(0.427837f,6.2f,-1.98f), new Vector3(.4f), 5f)); //ceiling light
 
-            Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,1f,.8f)*.2f)); //window lighbt
-            Globals.PointLights.Add(new PointLight(new Vector3(6.65284f,3.30652f,1.68395f), new Vector3(1,.8f,.6f)*.4f)); //lamp
+            Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,1f,.8f)*.2f, 5f)); //window lighbt
+            Globals.PointLights.Add(new PointLight(new Vector3(6.65284f,3.30652f,1.68395f), new Vector3(1,.8f,.6f)*.4f, 5f)); //lamp
             
             //Globals.PointLights.Add(new PointLight(new Vector3(30,30,30), new Vector3(0))); //basement
-            Globals.PointLights.Add(new PointLight(new Vector3(-18.98f,-6.76f,51.17f), new Vector3(.4f))); //basement
+            Globals.PointLights.Add(new PointLight(new Vector3(-18.98f,-6.76f,51.17f), new Vector3(.4f), 5f)); //basement
             
             
             float near = 0.1f;

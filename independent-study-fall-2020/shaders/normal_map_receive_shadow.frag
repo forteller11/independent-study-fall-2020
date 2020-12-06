@@ -23,7 +23,7 @@ uniform vec3 ShadowCastDirection;
 void main()
 {
 
-    vec2 shadowBias = vec2(0.004,0.01);
+    vec2 shadowBias = vec2(0.001,0.008);
     int inShadow = shadow_map(v2f_viewPosLightSpace, v2f_worldNorm, ShadowCastDirection, shadowBias);
 
     vec2 uvOffset = get_shadow_offset(v2f_uv);

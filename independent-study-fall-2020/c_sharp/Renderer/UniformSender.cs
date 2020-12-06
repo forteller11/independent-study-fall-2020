@@ -121,6 +121,7 @@ namespace CART_457.c_sharp.Renderer
             {
                 SetVector3(material, $"{POINT_LIGHT}[{i}].Color",    Globals.PointLights[i].Color, false);
                 SetVector3(material, $"{POINT_LIGHT}[{i}].Position", Globals.PointLights[i].Position, false);
+                SetFloat(material, $"{POINT_LIGHT}[{i}].Radius", Globals.PointLights[i].Radius, false);
             }
         }
 
