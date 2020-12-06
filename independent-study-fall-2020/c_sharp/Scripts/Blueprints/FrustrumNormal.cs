@@ -14,6 +14,17 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
         public Action<Entity> UpdateAction;
         public FrustrumNormal (Material[]mats): base(mats){}
         
+        public static FrustrumNormal FromPositionRotationScale (bool appearInFrustrum, Vector3 position, Quaternion rotation, Vector3 scale,  Material frustrumMat)
+        {
+            var frustrumNormal = new FrustrumNormal(new []{frustrumMat});
+            frustrumNormal.LocalPosition = position;
+            frustrumNormal.LocalRotation = rotation;
+            frustrumNormal.LocalScale = scale;
+            frustrumNormal.AppearsInFrustrum = appearInFrustrum;
+            frustrumNormal.FrustrumMaterial = frustrumMat;
+            return frustrumNormal;
+        }
+
         public static FrustrumNormal FromPositionRotationScale (bool appearInFrustrum, Vector3 position, Quaternion rotation, Vector3 scale,  Material frustrumMat, Material shadowMat)
         {
             var frustrumNormal = new FrustrumNormal(new []{frustrumMat, shadowMat});
@@ -24,6 +35,7 @@ namespace Indpendent_Study_Fall_2020.c_sharp.Scripts.Blueprints
             frustrumNormal.FrustrumMaterial = frustrumMat;
             return frustrumNormal;
         }
+        
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {

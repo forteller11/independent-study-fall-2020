@@ -22,10 +22,15 @@ namespace CART_457.Scripts.Setups
 
             #region room 1
 
-             var dirty= FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomDirtyOutCamera, SetupMaterials.ShadowMapPlane);
-             var room = FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCleanInCamera, SetupMaterials.ShadowMapPlane);
-             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomClean, SetupMaterials.ShadowMapPlane);
-            FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCeilingLampsInCamera, SetupMaterials.ShadowMapPlane);
+             FrustrumNormal.FromPositionRotationScale(true, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomDirtyOutCamera, SetupMaterials.BedroomDirtyShadow);
+             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCeilingLampsInCamera);
+             
+             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCleanInCamera);
+             
+             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomClean);
+             FrustrumNormal.FromPositionRotationScale(false, new Vector3(0,0,0),Quaternion.Identity, new Vector3(1f), SetupMaterials.BedroomCleanCeilingLamps);
+             
+
             new Empty(SetupMaterials.Basement);
             // s.LocalRotation = Quaternion.FromEulerAngles(1,1,1);
             var floorColliders = new ColliderGroup();
@@ -102,14 +107,12 @@ namespace CART_457.Scripts.Setups
 
             Globals.PlayerCameraRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
             Globals.UberDriver.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(90), near, far));
-
-            Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreateOrthographic(new Vector3(0,10,0), Quaternion.FromAxisAngle(Vector3.UnitX, -MathF.PI/2), 25, near, far));
-
+            
+            Globals.ShadowCastingLightRoom1.CopyFrom(Camera.CreatePerspective(Vector3.Zero, Quaternion.Identity,  MathHelper.DegreesToRadians(120), near, far));
+            
             Globals.WebCamRoom1.CopyFrom(Camera.CreatePerspective(new Vector3(0), Quaternion.Identity, MathHelper.DegreesToRadians(120), near, far));
             Globals.WebCamRoom1.OverrideFrustrumDimensions(2, 100);
-            
-            Globals.PlayerCameraRoom2.CopyFrom(Globals.PlayerCameraRoom1);
-            Globals.ShadowCastingLightRoom2.CopyFrom( Globals.ShadowCastingLightRoom1);
+      
 
             Globals.MainCamera.CopyFrom(Globals.PlayerCameraRoom1);
  

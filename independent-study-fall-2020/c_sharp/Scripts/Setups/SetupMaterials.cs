@@ -15,7 +15,7 @@ namespace CART_457.Scripts.Setups
         [IncludeInDrawLoop] public static Material BedroomCeilingLampsInCamera;
         [IncludeInDrawLoop] public static Material BedroomDirtyOutCamera;
         
-        [IncludeInDrawLoop] public static Material BedroomCleanCielingLamps;
+        [IncludeInDrawLoop] public static Material BedroomCleanCeilingLamps;
         [IncludeInDrawLoop] public static Material BedroomClean;
         
         [IncludeInDrawLoop] public static Material Basement;
@@ -139,18 +139,18 @@ namespace CART_457.Scripts.Setups
             BedroomClean = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Webcam,
                 SetupMeshes.BedroomClean,
-                SetupTextures.RoomClean01CeilingLampsDiffuse,
-                SetupTextures.RoomClean01CeilingLampsNormal,
-                SetupTextures.RoomClean01CeilingLampsSpecular,
+                SetupTextures.BedroomCleanDiffuse,
+                SetupTextures.BedroomCleanNormal,
+                SetupTextures.BedroomCleanSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
-            BedroomCleanCielingLamps = MaterialPreconfigs.NormalNoShadow(
+            BedroomCleanCeilingLamps = MaterialPreconfigs.NormalNoShadow(
                 SetupFBOs.Webcam,
                 SetupMeshes.BedroomCleanCeilingLamp,
-                SetupTextures.RoomClean01CeilingLampsDiffuse,
-                SetupTextures.RoomClean01CeilingLampsNormal,
-                SetupTextures.RoomClean01CeilingLampsSpecular,
+                SetupTextures.BedroomCeilingLampsDiffuse,
+                SetupTextures.BedroomCeilingLampsNormal,
+                SetupTextures.BedroomCeilingLampsSpecular,
                 normaMaterialUniformSenderNoCull
             );
             #endregion
@@ -161,9 +161,9 @@ namespace CART_457.Scripts.Setups
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomClean,
                 Globals.WebCamRoom1,
-                SetupTextures.RoomClean01Diffuse,
-                SetupTextures.RoomClean01Normal,
-                SetupTextures.RoomClean01Specular,
+                SetupTextures.BedroomCleanDiffuse,
+                SetupTextures.BedroomCleanNormal,
+                SetupTextures.BedroomCleanSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
@@ -171,9 +171,9 @@ namespace CART_457.Scripts.Setups
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomCleanCeilingLamp,
                 Globals.WebCamRoom1,
-                SetupTextures.RoomClean01CeilingLampsDiffuse,
-                SetupTextures.RoomClean01CeilingLampsNormal,
-                SetupTextures.RoomClean01CeilingLampsSpecular,
+                SetupTextures.BedroomCeilingLampsDiffuse,
+                SetupTextures.BedroomCeilingLampsNormal,
+                SetupTextures.BedroomCeilingLampsSpecular,
                 normaMaterialUniformSenderNoCull
             );
             
@@ -181,9 +181,9 @@ namespace CART_457.Scripts.Setups
                 SetupFBOs.Room1,
                 SetupMeshes.BedroomDirty,
                 Globals.WebCamRoom1,
-                SetupTextures.RoomDirty01Diffuse,
-                SetupTextures.RoomDirty01Normal,
-                SetupTextures.RoomDirty01Specular,
+                SetupTextures.BedroomDirtyDiffuse,
+                SetupTextures.BedroomDirtyNormal,
+                SetupTextures.BedroomDirtySpecular,
                 normaMaterialUniformSenderNoCull
             );
             #endregion

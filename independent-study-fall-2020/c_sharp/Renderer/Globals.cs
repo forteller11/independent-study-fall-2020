@@ -16,11 +16,7 @@ namespace CART_457.Renderer
         public static readonly Camera PlayerCameraRoom1 = new Camera();
         public static readonly Camera WebCamRoom1 = new Camera();
         public static readonly Camera ShadowCastingLightRoom1 = new Camera();
-        
-        public static readonly Camera PlayerCameraRoom2 = new Camera();
-        public static readonly Camera WebCamRoom2 = new Camera();
-        public static readonly Camera ShadowCastingLightRoom2 = new Camera();
-        
+
         public static readonly Camera UberDriver = new Camera();
         
         public static RandomInd Random = new RandomInd(0);
