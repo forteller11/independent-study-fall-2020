@@ -8,7 +8,7 @@ void main(){
     vec4 texColor;
 
     texColor = texture(MainTexture, v2f_uv);
-    texColor = mix(texColor, vec4(.6), 0.2);
+    texColor = mix(texColor, vec4(.6,.65,.8,1), 0.2);
     
 
 

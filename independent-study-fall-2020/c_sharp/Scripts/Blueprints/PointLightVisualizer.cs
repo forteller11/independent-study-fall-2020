@@ -17,31 +17,23 @@ namespace CART_457.Blueprints
         public PointLightVisualizer(int index, params Material [] material) : base( material)
         {
             Index = index;
-            LocalScale *= 0.2f;
+
         }
 
         public override void OnUpdate(EntityUpdateEventArgs eventArgs)
         {
-            // var light = Globals.PointLights[Index];
-            // light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);
-            // LocalPosition = light.Position;
+             var light = Globals.PointLights[Index];
+             //light.Position += new Vector3(0, MathF.Sin(Globals.AbsTimeF)/20, 0);
+             LocalPosition = light.Position;
         }
 
 
         public override void SendUniformsPerEntity(Material material)
         {
-            if (material == SetupMaterials.ShadowMapSphere || material == SetupMaterials.ShadowMapPlane)
-            {
-                UniformSender.SendTransformMatrices(this, material, Globals.ShadowCastingLight, "Light");
-            }
-            else
-            { 
+
                 UniformSender.SendTransformMatrices(this, material, Globals.MainCamera);
                 UniformSender.SetVector4(material, "Color", new Vector4(Globals.PointLights[Index].Color, 1), false);
-            }
-            
 
-//            UniformSender.SendLights(this);
         }
     }
 }

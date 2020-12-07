@@ -6,10 +6,10 @@
 struct PointLight{
     vec3 Color;
     vec3 Position;
-    float Radius;
+    vec3 Radius;
 };
 
-#define NR_LIGHTS 4
+#define NR_LIGHTS 8
 #define DIR_LIGHTS_DIST 100000
 uniform DirectionLight DirectionLights [NR_LIGHTS];
 uniform int DirectionLightsLength;
@@ -44,7 +44,8 @@ vec3 calculate_diffuse(vec3 worldNorm, vec3 worldPos){
         float product = dot(worldNorm, lightToVertDir);
         float shade = clamp(product,0,1);
         vec3 diffuse = PointLights[i].Color * shade;
-        float attenuation = attenuation(distance(worldPos, PointLights[i].Position), PointLight[i].Radius);
+        float dist = distance(worldPos, PointLights[i].Position);
+        float attenuation = attenuation(dist, PointLights[i].Radius.x);
         diffuseSum += diffuse * attenuation;
     }
     
@@ -63,7 +64,8 @@ vec3 calculate_specular(vec3 meshNormWorld, vec3 meshPosWorld, vec3 camPosWorld,
         float product = dot(reflectedLightDir, camToMeshDir);
         float shade = max(product, 0);
         float shadeCocentrated = pow(shade, roughness);
-        float attenuation = attenuation(distance(worldPos, PointLights[i].Position), PointLight[i].Radius);
+        float dist = distance(meshPosWorld, PointLights[i].Position);
+        float attenuation = attenuation(dist, PointLights[i].Radius.x);
         
         specSum += shadeCocentrated * strength * attenuation * PointLights[i].Color;
     }

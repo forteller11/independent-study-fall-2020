@@ -80,8 +80,13 @@ namespace CART_457.Scripts.Setups
             new FBOVisualizationInput();
 
             #endregion
-            for (int i = 0; i < Globals.PointLights.Count; i++)
-                new PointLightVisualizer(i,SetupMaterials.SolidSphereR1);
+
+            // for (int i = 0; i < Globals.PointLights.Count; i++)
+            // {
+            //     new PointLightVisualizer(i, SetupMaterials.SolidSphereR1);
+            //     Debug.Log(Globals.PointLights[i].Position);
+            // }
+
             #endregion
 
             var monitor = Empty.FromPositionRotationScale(new Vector3(1.3f, 2.177f, 7.4f), Quaternion.FromEulerAngles(0, MathF.PI, 0), new Vector3(0.855f, .563f, 1f), SetupMaterials.ScreenR1);
@@ -93,13 +98,18 @@ namespace CART_457.Scripts.Setups
         public static void SetupGlobals()
         {
 
-            Globals.PointLights.Add(new PointLight(new Vector3(0.427837f,6.2f,-1.98f), new Vector3(.4f), 5f)); //ceiling light
+            Globals.PointLights.Add(new PointLight(Vector3.Zero, new Vector3(.4f), 20f)); //to be controlled by player
+            Globals.PointLights.Add(new PointLight(BlenderToVector3(1.37f, -6.7f, 2.44f), new Vector3(222,255,250)/150, 1)); //monitor
+            
+            Globals.PointLights.Add(new PointLight(new Vector3(0.427837f,6.2f,-1.98f), new Vector3(.5f), 30f)); //ceiling light
 
-            Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,1f,.8f)*.2f, 5f)); //window lighbt
-            Globals.PointLights.Add(new PointLight(new Vector3(6.65284f,3.30652f,1.68395f), new Vector3(1,.8f,.6f)*.4f, 5f)); //lamp
+            Globals.PointLights.Add(new PointLight(new Vector3(9.3f,2.96f,5.8f), new Vector3(1,.8f,.9f) * .6f, 15f)); //window lighbt
+            Globals.PointLights.Add(new PointLight(new Vector3(6.65284f,3.30652f,1.68395f), new Vector3(1,.6f,.5f)*3, 1.5f)); //lamp
             
             //Globals.PointLights.Add(new PointLight(new Vector3(30,30,30), new Vector3(0))); //basement
-            Globals.PointLights.Add(new PointLight(new Vector3(-18.98f,-6.76f,51.17f), new Vector3(.4f), 5f)); //basement
+            Globals.PointLights.Add(new PointLight(BlenderToVector3(-20, -49f, -8f), new Vector3(.6f), 8f)); //basement door
+            Globals.PointLights.Add(new PointLight(BlenderToVector3(-20, -58f, -8f), new Vector3(.6f), 13f)); //basement door
+            Globals.PointLights.Add(new PointLight(BlenderToVector3(-19.5f, -31f, 4.3f), new Vector3(.8f,.9f,1f), 50f)); //basement
             
             
             float near = 0.1f;

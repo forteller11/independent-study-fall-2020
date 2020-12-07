@@ -27,7 +27,7 @@ void main()
     int inShadow = shadow_map(v2f_viewPosLightSpace, v2f_worldNorm, ShadowCastDirection, shadowBias);
 
     vec2 uvOffset = get_shadow_offset(v2f_uv);
-    float shadowMult = max(0.2, 1-float(inShadow)); //todo change intensity based on difference
+    float shadowMult = max(0.4, 1-float(inShadow)); //todo change intensity based on difference
     
     vec2 uv = inShadow == 1 ?
     v2f_uv + uvOffset 
