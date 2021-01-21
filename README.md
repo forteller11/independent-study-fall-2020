@@ -3,23 +3,32 @@
 a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 
 ##### a features and wishlist
+
+- [x] object-oriented (cache unfriendly) entity system
+- [ ] support for component-based entity system
+- [ ] support for data-oriented entity system which stores all like components in array of structs and have systems which act on them. 
+- [x] support for transform hierachies (parent-child relationships), currently unoptimized (not cached)
+
+- [x] walking sim type 2D movement system where walkable topology can be generated from meshes
+- [x] raycasting against individual triangle, plane and sphere colliders, an entity's colliders, or the world's colliders
+- [ ] physics system
+
 - [x] forward rendering
 - [x] scriptable offscreen buffers
 - [x] multiple lights (direction and point)
 - [x] normal mapping, with roughness maps
 - [ ] reflections/light probes
-- [x] extendable material system that can support sending custom attributes per material or per entity
+- [x] extendable material system that supports sending custom attributes per material or per entity
 - [x] shadow mapping (doesn't follow camera)
-- [x] raycasting against individual triangle, plane and sphere colliders, an entity's colliders, or the world's colliders
-- [x] walking sim type 2D mvoement system where walkable topology can be defined
-- [x] support for transform hierachies (parent-child relationships), currently unoptimized (not cached)
+- [ ] texture atlas support
+- [ ] texture streaming and dynamic atlas creation 
+- [ ] static batching (of static geometry at runtime)
+- [ ] dynamic batching
+
+
 - [ ] serialization
 - [ ] editor gui
-- [ ] physics system
 - [ ] audio
-- [ ] scripts that can be compiled seperately from engine
-- [ ] data oriented, cache friendly entity system
-- [ ] multi-threaded
-- [ ] batching
+- [ ] scripts that can be compiled seperately from engine (multiple assemblies)
+- [ ] simple multi-threading, so that render loop, entity stuff, and audio stuff happen on seperate threads.
 - [ ] profiling 
-- [ ] virtual textures
