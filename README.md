@@ -2,17 +2,20 @@
 ###### an independent study at Concordia University, Fall 2020
 a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 
-##### a features and wishlist
+### a features and wishlist
 
+##### entity architecture
 - [x] object-oriented (cache unfriendly) entity system
 - [ ] support for component-based entity system
 - [ ] support for data-oriented entity system which stores all like components in array of structs and have systems which act on them. 
-- [x] support for transform hierachies (parent-child relationships), currently unoptimized (not cached)
 
+##### common gameplay engine features
+- [x] support for transform hierachies (parent-child relationships), currently unoptimized (not cached)
 - [x] walking sim type 2D movement system where walkable topology can be generated from meshes
 - [x] raycasting against individual triangle, plane and sphere colliders, an entity's colliders, or the world's colliders
 - [ ] physics system
 
+##### rendering
 - [x] forward rendering
 - [x] scriptable offscreen buffers
 - [x] multiple lights (direction and point)
@@ -25,7 +28,7 @@ a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 - [ ] static batching (of static geometry at runtime)
 - [ ] dynamic batching
 
-
+##### misc
 - [ ] serialization
 - [ ] editor gui
 - [ ] audio
