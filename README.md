@@ -14,7 +14,7 @@ a graphics framework, and game, created  in C# to learn OpenGL (OpenTK).
 - [x] support for transform hierachies (parent-child relationships), currently unoptimized (not cached)
 - [x] walking sim type 2D movement system where walkable topology can be generated from meshes
 - [x] raycasting against individual triangle, plane and sphere colliders, an entity's colliders, or the world's colliders
-- [ ] physics system
+- [ ] physics integration (likely gpu-accelerated)
 
 ###### rendering
 - [x] forward rendering
